@@ -1,0 +1,55 @@
+/* Styles for tab labels */
+[aria-label='Tab0'],
+[aria-label='Tab1'],
+[aria-label='Tab2'],
+[aria-label='Tab3'],
+[aria-label='Tab4'],
+[aria-label='Tab5'],
+[aria-label='Tab6'],
+[aria-label='Tab7'] {
+  border-radius: 10px 10px 0px 0px;
+}
+
+[aria-label='Tab7'] {
+  background-color: #50A1CA;
+}
+
+[aria-label='Tab6'] {
+  background-color:  #69AFD2;
+}
+
+[aria-label='Tab5'] {
+  background-color:   #82BCD9;
+}
+
+[aria-label='Tab4'] {
+  background-color:  #9BC9E1;
+}
+
+[aria-label='Tab3'] {
+  background-color: #9BC9E1;
+}
+
+[aria-label='Tab2'] {
+  background-color: #B4D7E8;
+}
+
+[aria-label='Tab1'] {
+  background-color: #CDE4F0;
+}
+
+[aria-label='Tab0'] {
+  background-color: #E6F1F7;
+}
+
+.mat-tab-label {
+  height: 35px !important;
+  opacity:unset !important;
+  background-color: #009fdb !important;
+  color: white !important;
+  border-radius: 0px !important;
+}
+
+.mat-tab-header {
+  margin-top: 0px;
+}

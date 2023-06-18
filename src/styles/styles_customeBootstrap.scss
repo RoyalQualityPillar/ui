@@ -1,0 +1,125 @@
+.greyBG {
+  background-color: #f2f2f2;
+}
+
+.greyBox {
+  background-color: #f2f2f2;
+  height: 230px;
+}
+
+/*-- blue bottons starts --*/
+.containerBTN {
+  background-color: #dceaff;
+  padding: 10px 0 !important;
+  border-top: 1px solid #0041a8;
+  border-bottom: 1px solid #0041a8;
+}
+
+.blueBTN {
+  padding: 5px 20px !important;
+  display: block;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-image: linear-gradient(to bottom right, #0041a8, #0194d2);
+  margin: 0 3%;
+}
+
+.blueBTN:hover {
+  background-image: linear-gradient(to bottom right, #0194d2, #0041a8);
+}
+
+.blueBTN:disabled {
+  background-image: linear-gradient(315deg, #f3f3f3 0%, #d7e1ec 74%);
+}
+
+.csHeading {
+  line-height: 0.8;
+  padding-left: 1.7px;
+}
+
+/*-- blue bottons ends --*/
+
+/*-- material styles starts --*/
+
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+//   height: 40px !important;
+// }
+
+.mat-form-field-flex {
+  height: 40px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-prefix,
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+  top: -8px;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//   padding: 0.5em 0 1em 0;
+// }
+
+.mat-form-field-infix {
+  padding: 0.5em 0;
+  border-top: 0.7em;
+}
+
+.mat-form-field-infix {
+  top: 5px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.6em 0 1em 0;
+}
+
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//   padding: 0;
+// }
+
+// .mat-form-field-infix {
+//   padding: 0.5em 0;
+//   border-top: 0.84375em solid transparent;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//   padding: 0;
+// }
+/*-- material styles stops --*/
+.orangeBTN { 
+  padding: 5px 20px !important; 
+  display: block; 
+  border-radius: 5px; 
+  border: none; 
+  color: white; 
+  background-image: linear-gradient(to bottom right, #ff7700, #ffa916); 
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15); 
+} 
+ 
+.orangeBTN:hover { 
+  background-image: linear-gradient(to bottom right, #ffa916, #ff7700); 
+} 
+.orangeBTN:focus{
+  outline: none;
+}
+.isDisabledBtn
+{
+  opacity: 0.6;
+  pointer-events: none;
+}
+.containerBTN-orange { 
+  background-color: #ffeccb; 
+  padding: 10px 0 !important; 
+  border-top: 1px solid #e76c00; 
+  border-bottom: 1px solid #e76c00; 
+} 
+
+.lovSearchButton {
+  position: absolute;
+  right: 0%;
+  width: 20px;
+  height: 20px;
+}

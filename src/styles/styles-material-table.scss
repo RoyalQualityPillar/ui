@@ -1,0 +1,10 @@
+.ess-table .mat-row:hover {
+  background-color: #c8e4f3;
+  cursor: pointer;
+ }
+
+
+ .mat-row.selected mat-cell {
+   color: #ea7400;
+   font-weight: 900;
+ }

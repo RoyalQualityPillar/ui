@@ -1,0 +1,79 @@
+@import '~@angular/material/theming';
+
+$mt_attblue: (
+
+  50: #e1eff6,
+  100: #b4d7e9,
+  200: #83bdda,
+  300: #51a2cb,
+  400: #2b8ebf,
+  500: #067ab4,
+  600: #0572ad,
+  700: #0467a4,
+  800: #035d9c,
+  900: #024a8c,
+  A100: #b8d9ff,
+  A200: #85bdff,
+  A400: #52a1ff,
+  A700: #3993ff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+    )
+);
+
+
+$mt_attorange: (
+  50: #fceee0,
+  100: #f9d5b3,
+  200: #f5ba80,
+  300: #f09e4d,
+  400: #ed8926,
+  500: #ea7400,
+  600: #e76c00,
+  700: #e46100,
+  800: #e15700,
+  900: #db4400,
+  A100: #ffffff,
+  A200: #ffdbcf,
+  A400: #ffb49c,
+  A700: #ffa183,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+    )
+);
+
+$my-theme-primary: mat-palette($mt_attblue);
+// $my-theme-primary: mat-palette($mat-indigo);
+$my-theme-accent : mat-palette($mt_attorange);
+$my-theme-warn   : mat-palette($mat-red);
+$my-theme: mat-light-theme(
+    $my-theme-primary,
+    $my-theme-accent,
+    $my-theme-warn
+);

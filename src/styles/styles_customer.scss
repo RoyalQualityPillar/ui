@@ -1,0 +1,50 @@
+.header-less-tabs .mat-tab-header { display: none; }
+
+.ess-global-code {
+  background-color: #f3f3f3
+}
+
+.ess-global-no-margin {
+  margin: 0 !important;
+}
+
+.ess-global-card {
+  margin: 5px 20px 20px 20px !important;
+}
+
+.ess-global-card-title {
+  display: flex;
+  justify-content: center;
+}
+
+.ess-global-margin-top-20 {
+  margin-top: 20px;
+}
+
+
+mat-cell > span.ess-global-ellipsis {
+  text-overflow: ellipsis; 
+  overflow: hidden; 
+  white-space: nowrap;
+}
+
+.ess-global-snackbar {
+  background-color: #ed8926;
+  color: white;
+  z-index: 1500;
+}
+
+.ess-global-snackbar-success {
+  background-color: #007a3e;
+  color: white;
+  z-index: 1500;
+}
+
+mat-progress-spinner {
+    z-index: 1500;
+  }
+
+.ess-global-spinner-dialog .mat-dialog-container{
+  box-shadow: none !important;
+    background: rgba(0, 0, 0, 0.0) !important;
+}

@@ -1,0 +1,31 @@
+<!-- 
+
+<div *ngIf="this.toolbarService.isLogin=='loginSuccess'">
+   <app-header></app-header>
+  <router-outlet></router-outlet>
+  <footer class="fixed-bottom">
+    <app-footer></app-footer>
+  </footer>
+   
+</div>
+<div *ngIf="this.toolbarService.isLogin=='loginFaild'||this.toolbarService.isLogin==''||this.toolbarService.isLogin==null">
+  <app-header></app-header>
+  <app-login></app-login>
+  <footer class="fixed-bottom">
+  <app-footer></app-footer>
+  </footer>
+</div>
+<div *ngIf="this.toolbarService.isLogin=='forgetPassword'">
+  <app-header></app-header>
+  <app-forget-password></app-forget-password>
+  <footer class="fixed-bottom">
+  <app-footer></app-footer>
+  </footer>
+</div> -->
+<div>
+  <app-header></app-header>
+ <router-outlet></router-outlet>
+ <footer class="fixed-bottom">
+   <app-footer></app-footer>
+ </footer>
+</div>

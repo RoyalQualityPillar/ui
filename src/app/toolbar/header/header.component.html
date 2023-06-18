@@ -1,0 +1,56 @@
+<mat-toolbar style=" max-width: 100%;padding: 0px;background-color: #ecedf4;" class="maintoolbar">
+  
+    <div class="logo1">
+      <span>
+        <img src="../../../assets/logo1.png">
+      </span>
+    </div>
+    <div class="logo2">
+    
+      <span>
+         <!-- <img src="../../../assets/back1.png">  -->
+        <div class="Top-rightid">
+          <table cellpadding=0 cellspacing=0 *ngIf="this.cookieService.get('isLogin')=='loginSuccess'">
+            <!-- <tr>
+              <td>
+                <div style="text-align: right;">UserId &nbsp;: &nbsp;</div>
+              </td>
+              <td>
+                <div style="text-align: right;">Bharat</div>
+              </td>
+            </tr> -->
+            <tr>
+              <td>
+                <div style="text-align: right;font-weight: 700;color: #462bcd;font-family: inherit;"><mat-icon matSuffix>account_circle</mat-icon> &nbsp;</div>
+              </td>
+              <td>
+                <div style="text-align: right;cursor: pointer;font-weight: 700;color: #462bcd;font-family: inherit;" [matMenuTriggerFor]="userMenu">{{this.userId}}</div>
+              </td>
+            </tr>
+          </table>
+          <mat-menu #userMenu="matMenu" style="background-color: #474668;">
+            <!-- <button mat-menu-item *ngFor="let action of toolbarActions" (click)="onAction(action)"> -->
+              <button  mat-menu-item (click)="onChangePassword()">
+                <span>Change Password</span>
+            </button>
+            <button  mat-menu-item (click)="confirmDialog()">
+                <span>Log Out </span>
+            </button>
+            
+          </mat-menu> 
+        </div>
+      </span>
+    
+    </div>
+
+  </mat-toolbar>
+  <mat-toolbar class="toolbar"*ngIf="this.cookieService.get('isLogin')=='loginSuccess'">
+    <div class="menu-template">
+        <button mat-button class="menu" class="basic" (click)="navigatehome()">Home</button>
+
+    <button mat-button [matMenuTriggerFor]="belowMenu">{{this.cookieService.get('menuHeader')}}</button> 
+     <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1">
+      <button class="mat-menu-item1" style=" color: #fff;" (click)="submenu1(this.cookieService.get('subMenu1'))">{{this.cookieService.get('subMenu1')}}</button>
+    </mat-menu>
+        </div>
+  </mat-toolbar>

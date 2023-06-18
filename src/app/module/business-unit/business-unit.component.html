@@ -1,0 +1,162 @@
+<div class="container-fluid">
+
+
+    <form [formGroup]="BusinessUnit" style="margin-top: 7px;">
+        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Business Unit Master</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-2">
+
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Business Organisation Name</mat-label>
+                                <input type="text" matInput formControlName="userid"
+                                    placeholder="Business Organisation Name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Business Organisation Code</mat-label>
+                                <input type="text" matInput formControlName="userid"
+                                    placeholder="Business Organisation Code">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Business Unit Name</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Business Unit Name">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Business Unit Code</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Business Unit Code">
+                            </mat-form-field>
+                        </div>
+
+
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Street-1</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Street-1">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Street-2</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Street-2">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>City</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="City">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>State</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="State">
+                            </mat-form-field>
+                        </div>
+
+
+
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Pincode</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Pincode">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Mobile No.</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Mobile No">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Email Id</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="Email Id">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>PAN No</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="PAN No">
+                            </mat-form-field>
+                        </div>
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>GST No.</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="GST No">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>DL No</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="DL No">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Category</mat-label>
+                                <mat-select>
+                                    <mat-option>None</mat-option>
+                                    <mat-option value="option1">Option 1</mat-option>
+                                    <mat-option value="option2">Option 2</mat-option>
+                                    <mat-option value="option3">Option 3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-label>Status</mat-label>
+                                <mat-select>
+                                    <mat-option>None</mat-option>
+                                    <mat-option value="option1">Option 1</mat-option>
+                                    <mat-option value="option2">Option 2</mat-option>
+                                    <mat-option value="option3">Option 3</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+
+                            <mat-form-field appearance="outline" class="col-6 px-1">
+                                <mat-label>State Code</mat-label>
+                                <input type="text" matInput formControlName="userid" placeholder="State Code">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-6 px-1">
+                                <mat-label>Ref Business Unit Code</mat-label>
+                                <input type="text" matInput formControlName="userid"
+                                    placeholder="Ref Business Unit Code">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </mat-card>
+        <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
+            <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="col-12">
+                    <div class="p-2">
+                        <div class="row no-gutters ms-1 me-1">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Comments</mat-label>
+                                <textarea type="text" matInput formControlName="userid"
+                                    placeholder="Ref Business Unit Code">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </form>
+    <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
+        <div class="btn-group" class="headers"
+            style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+            <div style="float: left;">
+                <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+            </div>
+        </div>
+        </mat-card>
+</div>
+
+<div style="min-height: 100px;"></div>
