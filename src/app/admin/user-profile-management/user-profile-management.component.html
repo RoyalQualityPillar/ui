@@ -1,1 +1,144 @@
-<p>user-profile-management works!</p>
+<div>
+    <div class="adjust">
+      <div class="example-table-container">
+        <!-- Table Part-->
+        <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+        
+          <div class="btn-group" class="headers"
+            style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+            <div style="float: left;">
+              <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Business Unit Information</p>
+            </div>
+            <div style="float: right;">
+            
+              <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">
+              
+            </div>
+          </div>
+        </div>
+       
+        <div style="margin-left: 10px;margin-right: 10px;">
+           
+                <button  mat-raised-button color="primary"
+                style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;" (click)="onOpenUserProfilePOPUP()">Add New Record</button>
+                <!-- <button  style="background-color: #06b413; outline: none" mat-mini-fab (click)="onOpenUserProfilePOPUP()"
+                color="accent"><span style="font-size: 30px;">+</span></button> -->
+              
+            </div>
+        <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
+  
+          <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
+            style="background-color: ghostwhite;" matSort id="dataTable">
+            <!-- Position Column -->
+            
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>Selection </mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <mat-radio-button
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row):null"
+                [checked]="selection.isSelected(row)"
+                (keyup.enter)="handleKeyPress('view')"
+                 class="smallRadio"></mat-radio-button>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="sNo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> S No. </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.sNo}} </mat-cell>
+              </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="BusinessUnitName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Name </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.BusinessUnitName}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="BusinessUnitCode">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Business Unit Code </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.BusinessUnitCode}} </mat-cell>
+            </ng-container>
+  
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="unitType">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Unit Type </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.unitType}} </mat-cell>
+            </ng-container>
+  
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="modificationNo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Modification No </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.modificationNo}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="auditTrail">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Audittrail </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.auditTrail}} </mat-cell>
+              </ng-container>
+  
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+  
+          <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
+          </mat-paginator>
+          <button mat-raised-button color="primary" 
+            style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onSelectRow('view')">Update</button>
+        </div>
+      </div>
+      <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
+        <div class="filter-box">
+          <!-- Filter part-->
+          <div class="headers" style="height: 30px;">Data Filter</div>
+          <div style="background-color: ghostwhite;">
+            <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field">
+              <option value="SELECT">Please select field</option>
+              <option value="userid">User ID</option>
+              <option value="role">Role</option>
+              <option value="lifeCycle">Life Cycle</option>
+              <option value="moduleName">Module Name</option>
+              <option value="module">Module</option>
+            </select>
+            <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+              [(ngModel)]="filterObject.value">
+            <!-- </div> -->
+            <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+              <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+                (click)="applyFilterByColumn()">Apply</button>
+              <button mat-raised-button color="primary"
+                style="font-size: smaller;background-color: #295ea3;height: 25px;">Clear</button>
+            </div>
+          
+          </div>
+        </div>
+        <div class="filter-box">
+          <!-- Filter part-->
+          <div class="headers" style="height: 30px;">Export</div>
+          <div style="background-color: ghostwhite;">
+            <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
+            <div style="text-align: center;">
+              
+              <button  class="exportIconBtn"
+              ><img  class="exportIcon" src="../../../assets/copy.png"></button>
+              <!-- <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button> -->
+              <!-- <button (click)="exporter.exportTable('txt')" class="exportIconBtn"><img class="exportIcon"
+                  src="../../../assets/txt.png"></button> -->
+                  <button (click)="downloadTxt()" class="exportIconBtn"><img class="exportIcon"
+                    src="../../../assets/txt.png"></button>
+              <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+                  src="../../../assets/csv.png"></button>
+              <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+              <!-- <button (click)="exporter.exportTable('xlsx')" class="exportIconBtn"> <img class="exportIcon"
+                  src="../../../assets/excel.png"></button> -->
+                  <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                    src="../../../assets/excel.png"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 100px;"></div>

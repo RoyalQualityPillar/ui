@@ -1,1 +1,172 @@
-<p>user-profile-create works!</p>
+
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="col-10 d-flex justify-content-start">
+            <h1 class="customeHeading">User Profile</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+              </button>
+        </div>
+        </div>
+        <form [formGroup]="BusinessUnit" style="margin-top: 7px;">
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">User Profile Registration</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="p-2">
+    
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+    
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Employee ID</mat-label>
+                                    <input type="text" matInput formControlName="userid"
+                                        placeholder="Employee ID">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>User ID</mat-label>
+                                    <input type="text" matInput formControlName="userid"
+                                        placeholder="User ID">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>First Name</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="First Name">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Last Name</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Last Name">
+                                </mat-form-field>
+                            </div>
+    
+    
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+    
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Branch Code</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Branch Code">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Department</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Department">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Section</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Section">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Designation</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Designation">
+                                </mat-form-field>
+                            </div>
+    
+    
+    
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>E-Mail</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="E-Mail">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Alternate E-Mail</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Alternate E-Mail">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Mobile No</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Mobile No">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Alternate Mobile No</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Alternate Mobile No">
+                                </mat-form-field>
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Level-1 Manager</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Level-1 Manager">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Level-2 Manager</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Level-2 Manager">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Date of Birth</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Level-2 Manager">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Gender</mat-label>
+                                    <mat-select>
+                                        <mat-option>None</mat-option>
+                                        <mat-option value="option1">Male</mat-option>
+                                        <mat-option value="option2">Female</mat-option>
+                                        <mat-option value="option3">Other</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+    
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+    
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Date of joined</mat-label>
+                                    <input type="text" matInput formControlName="userid" placeholder="Date of joined">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Effective Date</mat-label>
+                                    <input type="text" matInput formControlName="userid"
+                                        placeholder="Effective Date">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select>
+                                        <mat-option>None</mat-option>
+                                        <mat-option value="option1">Locked</mat-option>
+                                        <mat-option value="option2">Disabled</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </mat-card>
+            <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
+                <div class="btn-group" class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+                    </div>
+                </div>
+    
+    
+                <div>
+                    <div class="col-12">
+                        <div class="p-2">
+                            <div class="row no-gutters ms-1 me-1">
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Comments</mat-label>
+                                    <textarea type="text" matInput formControlName="userid"
+                                        placeholder="Comments">
+                                    </textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </form>
+        <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+            <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+              >Create</button>
+            <button mat-raised-button color="primary"
+              style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
+          </div>
+            </div>
+            <div style="min-height: 50px;"></div>
+            
