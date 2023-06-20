@@ -14,6 +14,7 @@ import *as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { UserProfileCreateComponent } from '../user-profile-create/user-profile-create.component';
+import { ReviewCommentsHistoryComponent } from '../review-comments-history/review-comments-history.component';
 
 @Component({
   selector: 'app-user-profile-management',
@@ -256,6 +257,16 @@ applyFilter(filterValue: string) {
 }
 onOpenUserProfilePOPUP(){
   const dialogRef = this.dialog.open(UserProfileCreateComponent, {
+    minWidth: "80%",
+   // data: dialogData
+  });
+
+  dialogRef.afterClosed().subscribe(dialogResult => {
+   // this.result = dialogResult;
+  });
+}
+onReview(){
+  const dialogRef = this.dialog.open(ReviewCommentsHistoryComponent, {
     minWidth: "80%",
    // data: dialogData
   });

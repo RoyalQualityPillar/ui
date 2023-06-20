@@ -36,6 +36,7 @@ import { MasterDataManagementComponent } from './admin/master-data-management/ma
 import { UserProfileManagementComponent } from './admin/user-profile-management/user-profile-management.component';
 import { UserProfileCreateComponent } from './admin/user-profile-create/user-profile-create.component';
 import { LogoutConfirmComponent } from './toolbar/logout-confirm/logout-confirm.component';
+import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/review-comments-history.component';
 
 
 
@@ -54,7 +55,8 @@ import { LogoutConfirmComponent } from './toolbar/logout-confirm/logout-confirm.
     MasterDataManagementComponent,
     UserProfileManagementComponent,
     UserProfileCreateComponent,
-    LogoutConfirmComponent
+    LogoutConfirmComponent,
+    ReviewCommentsHistoryComponent
     
   ],
   imports: [

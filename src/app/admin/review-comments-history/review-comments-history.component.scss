@@ -1,0 +1,75 @@
+.customeHeading{
+    margin-top: 19px;
+    margin-bottom: 1px;
+    font-size: 15px;
+    font-weight: 700;
+    color:  #0472b6;
+  }
+  .headers{
+    background:#474668;
+    color: white;
+    font-size: 15px;
+    font-weight: 550;
+    padding-left: 5px;
+    padding-top: 4px;
+    }
+.headers1{
+    /* font-weight:700; */
+    background: #369 !important;
+    color: white;
+    /* font-weight: bold; */
+    font-size: 15px;
+    font-weight: 550;
+    padding-left: 14px;
+  }
+
+  .supplier-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5px;
+    margin-top: 3px;
+    font-size: 15px;
+    font-family: Arial, Verdana, sans-serif;
+  }
+  .supplier-content > div{
+    flex: 0 1 50%;
+    /* padding: 3px; */
+  }
+  .sup-head{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 3px;
+  }
+  .sup-head > div{
+    flex: 0 1 50%;
+  }
+  
+  .sup-fields{
+    /* display: flex;
+    flex-wrap: wrap; */
+    color: black;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .sup-values{
+    color: rgb(29, 2, 71);
+    font-weight: 500;
+    font-size: 15px; 
+  }
+
+  .sup-head1{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 3px;
+  }
+  .sup-head1 > div{
+    flex: 0 1 100%;
+  }
+  .table-box{
+    box-shadow: 0px 0px 2px 2px #b6b5c0;
+    padding: 0px;
+    margin-top: 9px;
+  }
