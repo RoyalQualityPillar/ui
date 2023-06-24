@@ -1,15 +1,19 @@
 
 <div class="container-fluid">
     <div class="row no-gutters">
-        <div class="col-10 d-flex justify-content-start">
+        <div class="col-8 d-flex justify-content-start">
             <h1 class="customeHeading">User Profile</h1>
         </div>
-        <div class="col-2 d-flex justify-content-end">
+        <div class="col-4 d-flex justify-content-end">
+            <button mat-icon-button  (click)="onCreate()">
+                <mat-icon class="close-icon" color="primary">save</mat-icon>
+              </button>
             <button mat-icon-button class="close-button" [mat-dialog-close]="true">
                 <mat-icon class="close-icon" color="warn">close</mat-icon>
               </button>
         </div>
         </div>
+        <div class="tabOverFlowY">
         <form [formGroup]="BusinessUnit" style="margin-top: 7px;">
             <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
                 <div class="btn-group" class="headers"
@@ -21,26 +25,30 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="p-2">
-    
+                            <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                                <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are denoted by an asterisk(<span
+                                        style="color: red">*</span>).</span>
+                            </div>
                             <div class="row no-gutters ms-1 me-1 dense-4">
-    
-                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                 <div formGroupName="id" class="col-6 px-1">
+                                <mat-form-field appearance="outline" class="col-6 px-1">
                                     <mat-label>Employee ID</mat-label>
-                                    <input type="text" matInput formControlName="userid"
-                                        placeholder="Employee ID">
+                                    <input type="text" matInput formControlName="employeeId"
+                                        placeholder="Employee ID" maxlength="6">
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-form-field appearance="outline" class="col-6 px-1">
                                     <mat-label>User ID</mat-label>
-                                    <input type="text" matInput formControlName="userid"
-                                        placeholder="User ID">
+                                    <input type="text" matInput formControlName="userId"
+                                        placeholder="User ID" maxlength="8">
                                 </mat-form-field>
+                            </div>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>First Name</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="First Name">
+                                    <input type="text" matInput formControlName="firstName" placeholder="First Name" maxlength="25">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Last Name</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Last Name">
+                                    <input type="text" matInput formControlName="lastName" placeholder="Last Name" maxlength="25">
                                 </mat-form-field>
                             </div>
     
@@ -49,19 +57,27 @@
     
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Branch Code</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Branch Code">
+                                    <mat-select formControlName="branchName">
+                                        <mat-option *ngFor="let plant of plantList" [value]="plant">{{plant}}</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Department</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Department">
+                                    <mat-select formControlName="department">
+                                        <mat-option *ngFor="let deptCode of deptCodeList" [value]="deptCode">{{deptCode}}</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Section</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Section">
+                                    <mat-select formControlName="branchId">
+                                        <mat-option *ngFor="let subdeptCode of subDeptList" [value]="subdeptCode">{{subdeptCode}}</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Designation</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Designation">
+                                    <mat-select formControlName="designation">
+                                        <mat-option *ngFor="let designation of designationList" [value]="designation">{{designation}}</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
     
@@ -70,41 +86,43 @@
                             <div class="row no-gutters ms-1 me-1 dense-4">
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>E-Mail</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="E-Mail">
+                                    <input type="email" matInput formControlName="email" placeholder="E-Mail"maxlength="50">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Alternate E-Mail</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Alternate E-Mail">
+                                    <input type="text" matInput formControlName="altEmail" placeholder="Alternate E-Mail" maxlength="50">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Mobile No</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Mobile No">
+                                    <input type="text" matInput formControlName="mobile" placeholder="Mobile No" maxlength="10">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Alternate Mobile No</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Alternate Mobile No">
+                                    <input type="text" matInput formControlName="altMobile" placeholder="Alternate Mobile No" maxlength="10">
                                 </mat-form-field>
                             </div>
                             <div class="row no-gutters ms-1 me-1 dense-4">
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Level-1 Manager</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Level-1 Manager">
+                                    <input type="text" matInput formControlName="levelOneManager" placeholder="Level-1 Manager"maxlength="6">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Level-2 Manager</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Level-2 Manager">
+                                    <input type="text" matInput formControlName="levelTwoManager" placeholder="Level-2 Manager" maxlength="6">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Date of Birth</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Level-2 Manager">
+                                    <input type="text" matInput formControlName="dob"[matDatepicker]="picker">
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Gender</mat-label>
-                                    <mat-select>
-                                        <mat-option>None</mat-option>
-                                        <mat-option value="option1">Male</mat-option>
-                                        <mat-option value="option2">Female</mat-option>
-                                        <mat-option value="option3">Other</mat-option>
+                                    <mat-select formControlName="gender">
+                                        <mat-option>Select</mat-option>
+                                        <mat-option value="Male">Male</mat-option>
+                                        <mat-option value="Female">Female</mat-option>
+                                        <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -113,19 +131,24 @@
     
                                 <mat-form-field appearance="outline" class="col-4 px-1">
                                     <mat-label>Date of joined</mat-label>
-                                    <input type="text" matInput formControlName="userid" placeholder="Date of joined">
+                                    <input type="text" matInput formControlName="joinedDate" placeholder="Date of joined"[matDatepicker]="picker1">
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-4 px-1">
                                     <mat-label>Effective Date</mat-label>
-                                    <input type="text" matInput formControlName="userid"
-                                        placeholder="Effective Date">
+                                    <input type="text" matInput formControlName="effectiveDate"
+                                        placeholder="Effective Date" [matDatepicker]="picker2">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-4 px-1">
                                     <mat-label>Status</mat-label>
-                                    <mat-select>
-                                        <mat-option>None</mat-option>
-                                        <mat-option value="option1">Locked</mat-option>
-                                        <mat-option value="option2">Disabled</mat-option>
+                                    <mat-select formControlName="status">
+                                        <mat-option>Select</mat-option>
+                                        <mat-option value="1004">Locked</mat-option>
+                                        <mat-option value="1001">Enabled</mat-option>
+                                        <mat-option value="1003">Disabled</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -151,7 +174,7 @@
                             <div class="row no-gutters ms-1 me-1">
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Comments</mat-label>
-                                    <textarea type="text" matInput formControlName="userid"
+                                    <textarea type="text" matInput formControlName="urpcomments"
                                         placeholder="Comments">
                                     </textarea>
                                 </mat-form-field>
@@ -161,12 +184,14 @@
                 </div>
             </mat-card>
         </form>
+        </div>
         <div class="example-button-row" style="text-align: center;padding-top: 12px;">
             <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
-              >Create</button>
+              (click)="onCreate()">Create</button>
             <button mat-raised-button color="primary"
               style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
           </div>
+
             </div>
             <div style="min-height: 50px;"></div>
             

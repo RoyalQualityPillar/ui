@@ -25,6 +25,8 @@ import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 import { ChangePasswordComponent } from './toolbar/change-password/change-password.component';
@@ -37,6 +39,7 @@ import { UserProfileManagementComponent } from './admin/user-profile-management/
 import { UserProfileCreateComponent } from './admin/user-profile-create/user-profile-create.component';
 import { LogoutConfirmComponent } from './toolbar/logout-confirm/logout-confirm.component';
 import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/review-comments-history.component';
+import { MessageDialogComponent } from './common/message-dialog/message-dialog.component';
 
 
 
@@ -56,7 +59,8 @@ import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/
     UserProfileManagementComponent,
     UserProfileCreateComponent,
     LogoutConfirmComponent,
-    ReviewCommentsHistoryComponent
+    ReviewCommentsHistoryComponent,
+    MessageDialogComponent
     
   ],
   imports: [
@@ -79,7 +83,9 @@ import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/
     HttpClientModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    DragDropModule
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
