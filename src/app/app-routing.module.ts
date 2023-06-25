@@ -8,20 +8,23 @@ import { LoginComponent } from './toolbar/login/login.component';
 import { BusinessUnitComponent } from './module/business-unit/business-unit.component';
 import { UserProfileManagementComponent } from './admin/user-profile-management/user-profile-management.component';
 import { MasterDataManagementComponent } from './admin/master-data-management/master-data-management.component';
+import {AuthGuard} from '../interceptor/auth.guard';
 
 const routes: Routes = [
+ // {path:'',redirectTo:'login'},
   { path: "login", component: LoginComponent },
-  { path: "data-table", component: DataTableComponent },
+  { path: "data-table", component: DataTableComponent,canActivate:[AuthGuard] },
   { path: "forget-password", component: ForgetPasswordComponent },
-  { path: "change-password", component: ChangePasswordComponent },
-  {path:  "module-home-page",component:ModuleHomePageComponent},
-  {path:  "business-unit",component:BusinessUnitComponent},
-  {path: "master-data-management",component:MasterDataManagementComponent},
-  {path: "user-profile-management",component:UserProfileManagementComponent}
+  { path: "change-password", component: ChangePasswordComponent,canActivate:[AuthGuard] },
+  {path:  "module-home-page",component:ModuleHomePageComponent,canActivate:[AuthGuard]},
+  {path:  "business-unit",component:BusinessUnitComponent,canActivate:[AuthGuard]},
+  {path: "master-data-management",component:MasterDataManagementComponent,canActivate:[AuthGuard]},
+  {path: "user-profile-management",component:UserProfileManagementComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[AuthGuard]
 })
 export class AppRoutingModule { }

@@ -24,7 +24,7 @@
                 <div style="text-align: right;font-weight: 700;color: #462bcd;font-family: inherit;"><mat-icon matSuffix>account_circle</mat-icon> &nbsp;</div>
               </td>
               <td>
-                <div style="text-align: right;cursor: pointer;font-weight: 700;color: #462bcd;font-family: inherit;" [matMenuTriggerFor]="userMenu">{{this.userId}}</div>
+                <div style="text-align: right;cursor: pointer;font-weight: 700;color: #462bcd;font-family: inherit;" [matMenuTriggerFor]="userMenu">{{this.cookieService.get('userId')}}</div>
               </td>
             </tr>
           </table>

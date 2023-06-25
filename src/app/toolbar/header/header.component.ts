@@ -48,7 +48,8 @@ export class HeaderComponent implements OnInit{
     this.cookieService.delete('isLogin');
     this.cookieService.delete('menuHeader');
     this.cookieService.delete('subMenu1');
-    this.route.navigate(['./login'])
+    this.route.navigate(['./login']);
+    this.cookieService.delete('isAuth');
   }
   onChangePassword(){
     console.log('working')

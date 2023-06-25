@@ -41,6 +41,7 @@ import { UserProfileCreateComponent } from './admin/user-profile-create/user-pro
 import { LogoutConfirmComponent } from './toolbar/logout-confirm/logout-confirm.component';
 import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/review-comments-history.component';
 import { MessageDialogComponent } from './common/message-dialog/message-dialog.component';
+import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
 
 
 
@@ -89,7 +90,8 @@ import { MessageDialogComponent } from './common/message-dialog/message-dialog.c
     MatNativeDateModule,
     MatSnackBarModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,
+  {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
