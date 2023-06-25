@@ -7,6 +7,7 @@ import { AdminService } from 'src/app/service/admin.service';
 import * as moment from 'moment';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MessageService} from '../../service/message.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -39,7 +40,8 @@ export class UserProfileCreateComponent implements OnInit  {
   constructor(public fb: FormBuilder,
               private route:Router,
               private adminService:AdminService,
-              public dialog: MatDialog,){
+              public dialog: MatDialog,
+              private messageService:MessageService,){
     this.BusinessUnit = this.fb.group({
       id:this.fb.group({
         employeeId:['',Validators.required],
@@ -96,13 +98,17 @@ export class UserProfileCreateComponent implements OnInit  {
       console.log(data);
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
-          data: { 'message': data.errorInfo.message, 'heading': "Error" }
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
         });
       }else{
-        this.dialog.open(MessageDialogComponent, {
-          data: { 'message': "Record Created Successfully.", 'heading': "Information" }
-        });
+        // this.dialog.open(MessageDialogComponent, {
+        //   data: { 'message': "Record Created Successfully.", 'heading': "Information" }
+        // });
+        this.messageService.sendSnackbar('success','Record Created Successfully');
       }
     })
+  }
+  onClear(){
+   this.BusinessUnit.reset();
   }
 }

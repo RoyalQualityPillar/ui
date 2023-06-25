@@ -100,5 +100,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 10px;
   font-weight: 600;
 }
+.global-snackbar-success {
+  background-color: #007a3e;
+  color: white;
+  z-index: 1500;
+}
+.isDisabledBtn
+{
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 
 

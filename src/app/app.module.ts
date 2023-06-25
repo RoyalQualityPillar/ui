@@ -27,6 +27,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { ChangePasswordComponent } from './toolbar/change-password/change-password.component';
@@ -85,7 +86,8 @@ import { MessageDialogComponent } from './common/message-dialog/message-dialog.c
     MatGridListModule,
     DragDropModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
