@@ -46,6 +46,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   @include mat.form-field-density($density);
   margin-bottom: -18px;   //  leaving a bottom margin 8px
 }
+.mdc-text-field--outlined.mdc-notched-outline--upgraded .mdc-floating-label--float-above, .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  font-size: .75rem;
+}
+
+mat-label{
+  font-size: .70rem;
+}
 
 .dense-5 {
   @include my-form-field-density(-5);

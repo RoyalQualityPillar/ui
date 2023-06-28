@@ -92,19 +92,40 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   //   console.log(this.dataSource)
   // }
   processdata:any;
+  filterFieldError=false;
+  filterValueError=false;
   applyFilterByColumn(){
-    let tableData=this.toolbarService.getData()
+    this.filterFieldError=false
+    this.filterValueError=false;
+    if(this.filterObject.field==''|| this.filterObject.field==null || this.filterObject.field==undefined ||this.filterObject.field=='SELECT'){
+      console.log('test1')
+      this.filterFieldError=true;
+      return;
+    }
+    if(this.filterObject.value==''|| this.filterObject.value==null || this.filterObject.value==undefined){
+      console.log('test2')
+      this.filterValueError=true;
+      return;
+    }
+
     let field=this.filterObject.field;
     let value=this.filterObject.value;  
-    console.log('field = '+field+' value = '+value)
-    this.processdata = new MatTableDataSource(tableData);
-    console.log(this.processdata)
-    this.processdata.filterPredicate= (data:any, filter: string) => {
-      return data[field] == filter;
+    console.log('field = '+field+' value = '+value);
+    
+   this.tableData.filterPredicate= (data:any, filter: string) => {
+      const textToSearch = data[field] && data[field].toLowerCase() || '';
+      return textToSearch.indexOf(filter) !== -1;
     }
-   console.log(this.processdata)
-   this.processdata.filter = value;
-   console.log(this.processdata.filteredData)
+    this.tableData.filter = value.trim().toLowerCase();
+  }
+  
+  onClearFilter(){
+    this.tableData.filter = '';
+    this.filterObject.field='SELECT';
+    this.filterObject.value='';
+    this.filterFieldError=false
+    this.filterValueError=false;
+
   }
  
   ngAfterViewInit() {

@@ -88,11 +88,13 @@
         <!-- Filter part-->
         <div class="headers" style="height: 30px;">Data Filter</div>
         <div style="background-color: ghostwhite;">
-          <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field">
+          <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
+          <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
+          <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" required>
             <option value="SELECT">Please select field</option>
-            <option value="userid">User ID</option>
-            <option value="role">Role</option>
-            <option value="lifeCycle">Life Cycle</option>
+            <option value="userId">User ID</option>
+            <option value="fullName">Role</option>
+            <option value="lifecyclecode">Life Cycle</option>
             <option value="moduleName">Module Name</option>
             <option value="module">Module</option>
           </select>
@@ -107,13 +109,13 @@
            <!-- <div style="width: 100%;display: flex;"class="example-button-row">
              Value -->
           <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
-            [(ngModel)]="filterObject.value">
+            [(ngModel)]="filterObject.value" required>
           <!-- </div> -->
           <div class="example-button-row" style="text-align: center;padding-top: 12px;">
             <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
               (click)="applyFilterByColumn()">Apply</button>
             <button mat-raised-button color="primary"
-              style="font-size: smaller;background-color: #295ea3;height: 25px;">Clear</button>
+              style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onClearFilter()">Clear</button>
           </div>
         
         </div>
