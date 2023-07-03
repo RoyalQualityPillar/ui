@@ -1,4 +1,6 @@
 <div>
+  <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
+mode="indeterminate" ></mat-spinner>
     <div class="adjust">
       <div class="example-table-container">
         <!-- Table Part-->
@@ -48,31 +50,31 @@
                 <mat-cell *matCellDef="let row"> {{row.sNo}} </mat-cell>
               </ng-container>
             <!-- Name Column -->
-            <ng-container matColumnDef="BusinessUnitName">
+            <ng-container matColumnDef="branchName">
               <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Name </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.BusinessUnitName}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{row.branchName}} </mat-cell>
             </ng-container>
   
-            <ng-container matColumnDef="BusinessUnitCode">
+            <ng-container matColumnDef="branchId">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Business Unit Code </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.BusinessUnitCode}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{row.branchId}} </mat-cell>
             </ng-container>
   
             <!-- Symbol Column -->
-            <ng-container matColumnDef="unitType">
+            <ng-container matColumnDef="department">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Unit Type </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.unitType}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{row.department}} </mat-cell>
             </ng-container>
   
             <!-- Symbol Column -->
             <ng-container matColumnDef="status">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{checkStatus(row.status)}} </mat-cell>
             </ng-container>
   
-            <ng-container matColumnDef="modificationNo">
+            <ng-container matColumnDef="version">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Modification No </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.modificationNo}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="auditTrail">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Audittrail </mat-header-cell>
@@ -87,6 +89,8 @@
           </mat-paginator>
           <button mat-raised-button color="primary" 
             style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onSelectRow('view')">Update</button>
+            <button mat-raised-button color="primary" 
+            style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onReviewUserData()">Review</button>
         </div>
       </div>
       <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
@@ -94,22 +98,24 @@
           <!-- Filter part-->
           <div class="headers" style="height: 30px;">Data Filter</div>
           <div style="background-color: ghostwhite;">
+            <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
+            <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
             <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field">
               <option value="SELECT">Please select field</option>
-              <option value="userid">User ID</option>
-              <option value="role">Role</option>
-              <option value="lifeCycle">Life Cycle</option>
-              <option value="moduleName">Module Name</option>
-              <option value="module">Module</option>
+              <option value="branchName">Business unit name</option>
+              <option value="branchId">Business unit code</option>
+              <option value="department">Unit type</option>
+              <option value="status">Status</option>
+              <option value="version">Modification No.</option>
             </select>
             <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
               [(ngModel)]="filterObject.value">
             <!-- </div> -->
             <div class="example-button-row" style="text-align: center;padding-top: 12px;">
               <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
-                (click)="applyFilterByColumn()">Apply</button>
-              <button mat-raised-button color="primary"
-                style="font-size: smaller;background-color: #295ea3;height: 25px;">Clear</button>
+              (click)="applyFilterByColumn()">Apply</button>
+            <button mat-raised-button color="primary"
+              style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onClearFilter()">Clear</button>
             </div>
           
           </div>
@@ -121,8 +127,7 @@
             <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
             <div style="text-align: center;">
               
-              <button  class="exportIconBtn"
-              ><img  class="exportIcon" src="../../../assets/copy.png"></button>
+              <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
               <!-- <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button> -->
               <!-- <button (click)="exporter.exportTable('txt')" class="exportIconBtn"><img class="exportIcon"
                   src="../../../assets/txt.png"></button> -->
@@ -141,5 +146,5 @@
       </div>
     </div>
   </div>
-  <button (click)="onReview()">Review</button>
+  <!-- <button (click)="onReview()">Review</button> -->
   <div style="height: 100px;"></div>

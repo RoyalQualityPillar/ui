@@ -40,4 +40,15 @@ export class AdminService {
     return this.http.post(createUserURL,body,httpOptions)
 
   }
+  getUserProfileList(){
+    let token = this.cookieService.get('token');
+    let fetchProfileListURL=this.API_URL+"admin/userprofile/get";
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token
+      })
+    };
+    return this.http.post(fetchProfileListURL,'',httpOptions)
+  }
 }

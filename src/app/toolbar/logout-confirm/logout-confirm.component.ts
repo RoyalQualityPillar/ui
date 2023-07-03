@@ -29,6 +29,10 @@ export class LogoutConfirmComponent implements OnInit {
     this.cookieService.delete('isLogin');
     this.cookieService.delete('menuHeader');
     this.cookieService.delete('subMenu1');
+    this.cookieService.delete('tokenId');
+    this.cookieService.delete('attESHr');
+    this.cookieService.delete('isAuth');
+    this.cookieService.delete('expiration');
     this.route.navigate(['./login'])
     this.dialogRef.close(true);
   }

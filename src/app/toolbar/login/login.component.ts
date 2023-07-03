@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit{
        const expirationDate= new Date(now.getTime() + expireInDuration*1000);
        console.log(expirationDate);
        let isAuth=true;
+       this.cookieService.set('isAuth','true');
        this.authService.setIsAuth(isAuth)
        this.authService.saveAuthData(this.tokenData,expirationDate,this.userId,this.tokenId);
         this.route.navigate(['./data-table'])

@@ -15,6 +15,8 @@ import { saveAs } from 'file-saver';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { UserProfileCreateComponent } from '../user-profile-create/user-profile-create.component';
 import { ReviewCommentsHistoryComponent } from '../review-comments-history/review-comments-history.component';
+import { AdminService } from 'src/app/service/admin.service';
+import { elements } from 'chart.js';
 
 @Component({
   selector: 'app-user-profile-management',
@@ -27,7 +29,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
-  displayedColumns: string[] = ['action','sNo','BusinessUnitName', 'BusinessUnitCode','unitType', 'status','modificationNo','auditTrail'];
+  displayedColumns: string[] = ['action','sNo','branchName', 'branchId','department', 'status','version','auditTrail'];
 
   dataSource:any;
   filterObject:any;
@@ -38,7 +40,8 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
                public toolbarService:ToolbarService,
                public lifeCycleDataService:LifeCycleDataService,
                public cookieService:CookieService,
-               public dialog: MatDialog){
+               public dialog: MatDialog,
+               private adminService:AdminService){
 
    }
    tableData:MatTableDataSource<any>;
@@ -54,11 +57,83 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
     
   }
   lifeCycleInfoDataLength:any;
+  tableDataLoaded:any;
+  copiedData:any;
+  initinalData:any
+  isLoading=false;
   onSearch(){
+  //fetch Table Data
+  this.isLoading=true;
+  this.adminService.getUserProfileList().subscribe((data: any) => {
+    // this.dataSource =JSON.stringify(data);
+    // this.dataSource=JSON.parse(this.dataSource)
+    this.initinalData=data.data;
+   // console.log(this.dataSource);
+    let finalList=[];
+    let i=0;
+    this.initinalData.forEach(element =>{
+     let newDataList={
+        'sNo':++i,
+        'employeeId':element.id.employeeId,
+        'userId':element.id.userId,
+        'version':element.id.version,
 
+        'altEmail':element.altEmail,
+        'altMobile':element.altMobile,
+        'branchId':element.branchId,
+        'branchName':element.branchName,
+        'dob':element.dob,
+        'department':element.department,
+        'designation':element.designation,
+        'email':element.email,
+        'effectiveDate':element.effectiveDate,
+        'firstName':element.firstName,
+        'gender':element.gender,
+        'lastName':element.lastName,
+        'levelOneManager':element.levelOneManager,
+        'levelTwoManager':element.levelTwoManager,
+        'lifecyclecode':element.lifecyclecode,
+        'mobile':element.mobile,
+        'userStatus':element.userStatus,
+        'status':element.status,
+        'createdDate':element.createdDate,
+        'joinedDate':element.joinedDate,
+        'urpcomments':element.urpcomments,
+      }
+      finalList.push(newDataList)
+    })
+    console.log(finalList)
+    this.dataSource=finalList;
+    this.lifeCycleInfoDataLength = this.dataSource.length;
+         this.copiedData = JSON.stringify(this.dataSource);
+      this.tableData = new MatTableDataSource(this.dataSource);
+      this.tableData.paginator = this.paginator;
+      this.tableData.sort = this.sort;
+      this.isLoading=false;
+  //   if (this.dataSource) {
+  //     this.lifeCycleInfoDataLength = this.dataSource.length;
+  //     console.log(this.lifeCycleInfoDataLength)
+  //     this.copiedData = JSON.stringify(this.dataSource);
+  //     this.tableData = new MatTableDataSource(this.dataSource);
+  //     this.tableData.paginator = this.paginator;
+  //     this.tableData.sort = this.sort;
+      this.tableDataLoaded=true;
+  //     this.toolbarService.setTableData(this.dataSource)
+  // }
+  })
   }
-   //copyToClipboard:any;
-   copyData() {
+  checkStatus(status){
+    if(status=='1001'){
+      return 'Enabled'
+    }else if(status=='1003'){
+      return 'Disabled'
+    }else if(status='1004'){
+      return 'Locked'
+    }else{
+      return ''
+    }
+  }
+  copyData() {
     var dataArray = "";
     let tableData:any;
     tableData=this.dataSource;
@@ -93,7 +168,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
  totalRow:any;
 
  downloadPdf() {
-   let header: string[] = ['S No.', 'User Id', 'Role', 'Life Cycle','Module Name','Module'];
+   let header: string[] = ['S No.', 'Businesss Unit Name', 'Business Unit Code', 'Unit Type','Status','Modification No'];
    this.totalRow=this.lifeCycleInfoDataLength;
    var img = new Image();
    img.src = 'assets/logo1.png'
@@ -104,21 +179,21 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
 
    this.dataSource.forEach((element: {
      'sNo':any
-     'userId': any;
-     'fullName':any;
-     'lifecyclecode':any;
-     'moduleName':any;
-     'module':any;
+     'branchName': any;
+     'branchId':any;
+     'department':any;
+     'status':any;
+     'version':any;
 
 
    }) => {
      var temp = [
        element['sNo'],
-       element['userId'],
-       element['fullName'],
-       element['lifecyclecode'],
-       element['moduleName'],
-       element['module'],
+       element['branchName'],
+       element['branchId'],
+       element['department'],
+       element['status'],
+       element['version'],
 
      ];
      rows.push(temp);
@@ -126,7 +201,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
    doc.setFillColor(255, 128,0);
    doc.rect(5, 24, 200, 8, "F");
    doc.setFontSize(14); 
-   doc.text("User Right & Life Cycle data (" + this.totalRow + ")", 66, 30);
+   doc.text("Business Unit Information (" + this.totalRow + ")", 66, 30);
    doc.addImage(img, 'gif', 170, 5, 30, 15);
    autoTable(doc, {
      head: col,
@@ -141,7 +216,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
 
      }
    });
-   let fileName='lifeCycle';
+   let fileName='user-list';
    doc.save(fileName + '.pdf');
  }
  downloadExcel(){
@@ -151,7 +226,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      delete exportData[i].action;
      delete exportData[i].sNo
    }
- const fileName = "lifeCycle.xlsx";
+ const fileName = "user-list.xlsx";
  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
  const wb: XLSX.WorkBook = XLSX.utils.book_new();
  XLSX.utils.book_append_sheet(wb, ws, fileName);
@@ -164,7 +239,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      delete exportDataForTxt[i].action;
      delete exportDataForTxt[i].sNo
    }
- const fileName = "lifeCycle.txt";
+ const fileName = "user-list.txt";
  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
  const wb: XLSX.WorkBook = XLSX.utils.book_new();
  XLSX.utils.book_append_sheet(wb, ws, fileName);
@@ -185,7 +260,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
    let csvArray = csv.join('\r\n');
 
    var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "lifeCycle.csv");
+   saveAs(blob, "user-list.csv");
 }
 
     //Redirect To Home Page
@@ -199,54 +274,93 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
     selectedUserId:any;
     selectedModuleName:any;
     selectedLifecycleCode:any;
+    selectedRowData:any;
     onSelectRow(val:any){
-      console.log(val);
-      console.log(this.selection.selected)
       this.cureentSelectedRow=this.selection.selected;
       if(this.cureentSelectedRow.length==1){
-        console.log(this.cureentSelectedRow[0].userId)
+        console.log(this.cureentSelectedRow[0])
+        this.selectedRowData=this.cureentSelectedRow[0];
           console.log(' one')
-          this.selectedUserId=this.cureentSelectedRow[0].userId;
-          console.log(this.selectedUserId)
-          this.selectedLifecycleCode=this.cureentSelectedRow[0].lifecyclecode;
-          this.selectedModuleName=this.cureentSelectedRow[0].moduleName;
       }else if(this.cureentSelectedRow.length>1){
         console.log('more than one')
         let arrayLength=this.cureentSelectedRow.length-1;
         console.log(arrayLength)
-        this.selectedUserId=this.cureentSelectedRow[arrayLength].userId;
-          this.selectedLifecycleCode=this.cureentSelectedRow[arrayLength].lifecyclecode;
-          this.selectedModuleName=this.cureentSelectedRow[arrayLength].moduleName;
+        console.log(this.cureentSelectedRow[arrayLength]);
+        this.selectedRowData=this.cureentSelectedRow[arrayLength]
       }else{
         //do nothing
         console.log('else block')
       }
-      let body={
-        userId:'',
-        lifecycleCode:'',
-        moduleName:''
+     console.log(this.selectedRowData)
+    
+    }
+    onReviewUserData(){
+      this.cureentSelectedRow=this.selection.selected;
+      if(this.cureentSelectedRow.length==1){
+        console.log(this.cureentSelectedRow[0])
+        this.selectedRowData=this.cureentSelectedRow[0];
+          console.log(' one')
+      }else if(this.cureentSelectedRow.length>1){
+        console.log('more than one')
+        let arrayLength=this.cureentSelectedRow.length-1;
+        console.log(arrayLength)
+        console.log(this.cureentSelectedRow[arrayLength]);
+        this.selectedRowData=this.cureentSelectedRow[arrayLength]
+      }else{
+        //do nothing
+        console.log('else block')
       }
-      console.log(this.selectedUserId)
-      body.userId=this.selectedUserId;
-      body.lifecycleCode=this.selectedLifecycleCode;
-      body.moduleName=this.selectedModuleName;
-      console.log(body);
-      this.selection.clear();
-      this.lifeCycleDataService.getModuleName(body).subscribe((data: any) => {
-        console.log(data)
-        this.cookieService.set('menuHeader',data[0].moduleName);
-        this.cookieService.set('subMenu1',data[0].links)
-        this.route.navigate(['./module-home-page'])
-      })
+     console.log(this.selectedRowData)
+     const dialogRef = this.dialog.open(ReviewCommentsHistoryComponent, {
+      minWidth: "80%",
+      data: {userData:this.selectedRowData},
+      disableClose: true,
+    });
+  
+    dialogRef.afterClosed().subscribe(dialogResult => {
+     // this.result = dialogResult;
+    });
     }
 
 onSelect(row:any){
   console.log(row);
 }
 
+filterFieldError=false;
+filterValueError=false;
 applyFilterByColumn(){
+  this.filterFieldError=false
+  this.filterValueError=false;
+  if(this.filterObject.field==''|| this.filterObject.field==null || this.filterObject.field==undefined ||this.filterObject.field=='SELECT'){
+    console.log('test1')
+    this.filterFieldError=true;
+    return;
+  }
+  if(this.filterObject.value==''|| this.filterObject.value==null || this.filterObject.value==undefined){
+    console.log('test2')
+    this.filterValueError=true;
+    return;
+  }
+
+  let field=this.filterObject.field;
+  let value=this.filterObject.value;  
+  console.log('field = '+field+' value = '+value);
+  
+ this.tableData.filterPredicate= (data:any, filter: string) => {
+    const textToSearch = data[field] && data[field].toLowerCase() || '';
+    return textToSearch.indexOf(filter) !== -1;
+  }
+  this.tableData.filter = value.trim().toLowerCase();
+}
+onClearFilter(){
+  this.tableData.filter = '';
+  this.filterObject.field='SELECT';
+  this.filterObject.value='';
+  this.filterFieldError=false
+  this.filterValueError=false;
 
 }
+
 applyFilter(filterValue: string) {
   filterValue = filterValue.trim(); // Remove whitespace
   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
