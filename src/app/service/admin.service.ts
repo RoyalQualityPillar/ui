@@ -30,7 +30,7 @@ export class AdminService {
      body.effectiveDate=moment(body.effectiveDate,'DD-MM-YYYY').format('DD-MM-YYYY');
      console.log(body);
     let token = this.cookieService.get('token');
-    let createUserURL=this.API_URL+"admin/save-profile";
+    let createUserURL=this.API_URL+"admin/userprofile/save-update";
     const httpOptions = {
       headers: new HttpHeaders({      
        'Content-Type':  'application/json',
@@ -44,7 +44,7 @@ export class AdminService {
     const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
     let token = this.cookieService.get('token');
     let fetchProfileListURL:any;
-    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-active"+queryParams;
+    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-active";
     let fetchProfileListUrlAll=this.API_URL+"admin/userprofile/get-all"+queryParams;
     if(selectedTab==1){
       fetchProfileListURL=fetchProfileListURLActive;

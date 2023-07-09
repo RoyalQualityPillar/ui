@@ -118,7 +118,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
    // console.log(finalList)
     //this.dataSource=finalList;
     this.lifeCycleInfoDataLength = this.dataSource.length;
-         this.copiedData = JSON.stringify(this.dataSource);
+        this.copiedData = JSON.stringify(this.dataSource);
       this.tableData = new MatTableDataSource(this.dataSource);
       this.tableData.paginator = this.paginator;
       this.tableData.sort = this.sort;
@@ -393,6 +393,11 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
         console.log('else block')
       }
      console.log(this.selectedRowData)
+     const dialogRef = this.dialog.open(UserProfileCreateComponent, {
+      minWidth: "80%",
+      data: {userData:this.selectedRowData,type:'Update',tableData:this.copiedData},
+      disableClose: true,
+    });
     
     }
     onReviewUserData(){
@@ -473,7 +478,7 @@ applyFilter(filterValue: string) {
 onOpenUserProfilePOPUP(){
   const dialogRef = this.dialog.open(UserProfileCreateComponent, {
     minWidth: "80%",
-   // data: dialogData
+    data:{userData:this.selectedRowData,type:'Create'},
   });
 
   dialogRef.afterClosed().subscribe(dialogResult => {
@@ -517,6 +522,7 @@ onPaginationCall(){
   this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
     this.newList=data.data.content;
     this.dataSource.push(...this.newList);
+    this.copiedData.push(...this.newList);
     this.tableData = new MatTableDataSource(this.dataSource);
     this.tableData.paginator = this.paginator;
     this.tableData.sort = this.sort;
@@ -530,4 +536,9 @@ tabChanged(tabChangeEvent:any) {
   this.selectedTab=tabChangeEvent.index;
   this.onSearch();
 };
+
+
+// OnSelectRow(row:any){
+//   console.log(row)
+//}
 }
