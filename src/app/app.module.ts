@@ -28,6 +28,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 import { ChangePasswordComponent } from './toolbar/change-password/change-password.component';
@@ -88,7 +89,8 @@ import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
     DragDropModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   providers: [CookieService,
   {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}],

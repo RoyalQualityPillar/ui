@@ -338,6 +338,25 @@ onSelect(row:any){
   console.log(row);
 }
 
+//Pagination
+pageChanged(event){
+  console.log(event)
+  if(this.dataSource.length==24){
+    console.log('page length'+event.length);
+    console.log('page index'+event.pageIndex);
+    console.log('page size'+event.pageSize);
+    console.log('previous page'+event.previousPageIndex);
+    //24-((2+1)*(10))
+    if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
+      this.onPaginationCall();
+    }
+  }
+}
+onPaginationCall(){
+  console.log('calling')
+  //this.dataSource.push(...this.getNewList);
+  //add dataSorce,pagination, sort
+}
   }
 
 

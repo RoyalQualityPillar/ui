@@ -14,7 +14,7 @@ export class AdminService {
 
   getDropDownList(){
     let token = this.cookieService.get('token');
-    let listURL=this.API_URL+"admin/profile-input";
+    let listURL=this.API_URL+"admin/userprofile/input";
     const httpOptions = {
       headers: new HttpHeaders({      
        'Content-Type':  'application/json',
@@ -40,13 +40,21 @@ export class AdminService {
     return this.http.post(createUserURL,body,httpOptions)
 
   }
-  getUserProfileList(){
+  getUserProfileList(size:any,pageIndex:any,selectedTab:any){
+    const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
     let token = this.cookieService.get('token');
-    let fetchProfileListURL=this.API_URL+"admin/userprofile/get";
+    let fetchProfileListURL:any;
+    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-active"+queryParams;
+    let fetchProfileListUrlAll=this.API_URL+"admin/userprofile/get-all"+queryParams;
+    if(selectedTab==1){
+      fetchProfileListURL=fetchProfileListURLActive;
+    }else{
+      fetchProfileListURL=fetchProfileListUrlAll;
+    }
     const httpOptions = {
       headers: new HttpHeaders({      
        'Content-Type':  'application/json',
-       'Authorization': 'Bearer ' + token
+       'Authorization': 'Bearer ' + token,
       })
     };
     return this.http.post(fetchProfileListURL,'',httpOptions)

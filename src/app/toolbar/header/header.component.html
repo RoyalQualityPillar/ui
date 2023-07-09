@@ -50,6 +50,45 @@
 
     <button mat-button [matMenuTriggerFor]="belowMenu">{{this.cookieService.get('menuHeader')}}</button> 
      <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1">
+      <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="submenu1(this.cookieService.get('subMenu1'))">{{this.cookieService.get('subMenu1')}}</button>
+    </mat-menu>
+        </div>
+  </mat-toolbar>
+ 
+  <!--Menu Without login-->
+  <mat-toolbar class="toolbar"*ngIf="this.cookieService.get('isLogin')!='loginSuccess'">
+    <div class="menu-template">
+        <button mat-button class="menu" class="basic" (click)="onHome()">Home</button>
+        <button mat-button class="menu" [matMenuTriggerFor]="belowMenu" style="padding: 0px !important;">Service</button>
+        <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1" st>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;"  (click)="onHome()">Excel Sheet Validation</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Computer System Validation (CSV)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Training & Certification</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Implementation</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Customer Support</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Evolution For Compliance</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Supplier Qualification</button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="belowMenu1">RQP APPS</button>
+        <mat-menu #belowMenu1="matMenu" yPosition="below" class="dropdown1">
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Document Management System (DMS)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Change Management</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Non-Conformance Investigation (NCI)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">CAPA Managemnt</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Training Management System (TMS)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Manufacturing Execution System (MES)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Laboratory Management System (LMS)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">LogBook Management</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Eqipment Management System (EMS)</button>
+          <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="onHome()">Audit Management</button>
+        </mat-menu>
+        <button mat-button class="menu" class="basic" (click)="onHome()">About</button>
+        <button mat-button class="menu" class="basic" (click)="onHome()">Contact</button>
+        <button mat-button class="menu" class="basic" (click)="onHome()">Careers</button>
+        <button mat-button class="menu" class="basic" (click)="onHome()">Demo Request</button>
+        
+    <button mat-button [matMenuTriggerFor]="belowMenu">{{this.cookieService.get('menuHeader')}}</button> 
+     <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1">
       <button class="mat-menu-item1" style=" color: #fff;" (click)="submenu1(this.cookieService.get('subMenu1'))">{{this.cookieService.get('subMenu1')}}</button>
     </mat-menu>
         </div>

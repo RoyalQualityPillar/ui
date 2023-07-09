@@ -63,4 +63,8 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./master-data-management'])
     }
   }
+  //without login
+  onHome(){
+    //on home
+  }
 }

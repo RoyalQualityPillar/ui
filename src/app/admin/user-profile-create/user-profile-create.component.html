@@ -110,12 +110,7 @@
                                     <mat-label>Level-2 Manager</mat-label>
                                     <input type="text" matInput formControlName="levelTwoManager" placeholder="Level-2 Manager" maxlength="6">
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" class="col-3 px-1">
-                                    <mat-label>Date of Birth</mat-label>
-                                    <input type="text" matInput formControlName="dob"[matDatepicker]="picker">
-                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
+                              
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Gender</mat-label>
                                     <mat-select formControlName="gender">
@@ -125,10 +120,24 @@
                                         <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                 </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select formControlName="status">
+                                        <mat-option>Select</mat-option>
+                                        <mat-option value="1004">Locked</mat-option>
+                                        <mat-option value="1001">Enabled</mat-option>
+                                        <mat-option value="1003">Disabled</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                             </div>
     
                             <div class="row no-gutters ms-1 me-1 dense-4">
-    
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Date of Birth</mat-label>
+                                    <input type="text" matInput formControlName="dob"[matDatepicker]="picker">
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-4 px-1">
                                     <mat-label>Date of joined</mat-label>
                                     <input type="text" matInput formControlName="joinedDate" placeholder="Date of joined"[matDatepicker]="picker1">
@@ -142,15 +151,7 @@
                                         <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" class="col-4 px-1">
-                                    <mat-label>Status</mat-label>
-                                    <mat-select formControlName="status">
-                                        <mat-option>Select</mat-option>
-                                        <mat-option value="1004">Locked</mat-option>
-                                        <mat-option value="1001">Enabled</mat-option>
-                                        <mat-option value="1003">Disabled</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                              
                             </div>
     
                         </div>

@@ -17,6 +17,7 @@ import { UserProfileCreateComponent } from '../user-profile-create/user-profile-
 import { ReviewCommentsHistoryComponent } from '../review-comments-history/review-comments-history.component';
 import { AdminService } from 'src/app/service/admin.service';
 import { elements } from 'chart.js';
+import {GlobalConstants} from '../../common/global-constants';
 
 @Component({
   selector: 'app-user-profile-management',
@@ -29,11 +30,11 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
-  displayedColumns: string[] = ['action','sNo','branchName', 'branchId','department', 'status','version','auditTrail'];
+  displayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
 
   dataSource:any;
   filterObject:any;
- 
+  selectedTab=0;
    constructor(private _liveAnnouncer: LiveAnnouncer,
                private route: Router,
                private router: ActivatedRoute,
@@ -61,49 +62,61 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   copiedData:any;
   initinalData:any
   isLoading=false;
+  currentApiResLength:any;
+  pageIndex:any;
+  size:any;
   onSearch(){
   //fetch Table Data
   this.isLoading=true;
-  this.adminService.getUserProfileList().subscribe((data: any) => {
+  this.size=GlobalConstants.size;
+ this.pageIndex=0;
+  this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
+   // this.initinalData=data.data;
+    // this.initinalData.forEach(element =>{
+    //   //'employeeName':element.firstName+element.lastName
+    // })
+    this.dataSource=data.data.content;
+    this.currentApiResLength=data.data.content.length;
+
     // this.dataSource =JSON.stringify(data);
     // this.dataSource=JSON.parse(this.dataSource)
-    this.initinalData=data.data;
+   // this.initinalData=data.data;
    // console.log(this.dataSource);
-    let finalList=[];
-    let i=0;
-    this.initinalData.forEach(element =>{
-     let newDataList={
-        'sNo':++i,
-        'employeeId':element.id.employeeId,
-        'userId':element.id.userId,
-        'version':element.id.version,
+   // let finalList=[];
+    //let i=0;
+    // this.initinalData.forEach(element =>{
+    //  let newDataList={
+    //     'sNo':++i,
+    //     'employeeId':element.id.employeeId,
+    //     'userId':element.id.userId,
+    //     'version':element.id.version,
 
-        'altEmail':element.altEmail,
-        'altMobile':element.altMobile,
-        'branchId':element.branchId,
-        'branchName':element.branchName,
-        'dob':element.dob,
-        'department':element.department,
-        'designation':element.designation,
-        'email':element.email,
-        'effectiveDate':element.effectiveDate,
-        'firstName':element.firstName,
-        'gender':element.gender,
-        'lastName':element.lastName,
-        'levelOneManager':element.levelOneManager,
-        'levelTwoManager':element.levelTwoManager,
-        'lifecyclecode':element.lifecyclecode,
-        'mobile':element.mobile,
-        'userStatus':element.userStatus,
-        'status':element.status,
-        'createdDate':element.createdDate,
-        'joinedDate':element.joinedDate,
-        'urpcomments':element.urpcomments,
-      }
-      finalList.push(newDataList)
-    })
-    console.log(finalList)
-    this.dataSource=finalList;
+    //     'altEmail':element.altEmail,
+    //     'altMobile':element.altMobile,
+    //     'branchId':element.branchId,
+    //     'branchName':element.branchName,
+    //     'dob':element.dob,
+    //     'department':element.department,
+    //     'designation':element.designation,
+    //     'email':element.email,
+    //     'effectiveDate':element.effectiveDate,
+    //     'firstName':element.firstName,
+    //     'gender':element.gender,
+    //     'lastName':element.lastName,
+    //     'levelOneManager':element.levelOneManager,
+    //     'levelTwoManager':element.levelTwoManager,
+    //     'lifecyclecode':element.lifecyclecode,
+    //     'mobile':element.mobile,
+    //     'userStatus':element.userStatus,
+    //     'status':element.status,
+    //     'createdDate':element.createdDate,
+    //     'joinedDate':element.joinedDate,
+    //     'urpcomments':element.urpcomments,
+    //   }
+    //   finalList.push(newDataList)
+    // })
+   // console.log(finalList)
+    //this.dataSource=finalList;
     this.lifeCycleInfoDataLength = this.dataSource.length;
          this.copiedData = JSON.stringify(this.dataSource);
       this.tableData = new MatTableDataSource(this.dataSource);
@@ -136,7 +149,33 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   copyData() {
     var dataArray = "";
     let tableData:any;
-    tableData=this.dataSource;
+    let exportData:any
+    tableData=this.tableData.filteredData;
+    for(let i=0;i<tableData.length;i++){
+      delete tableData[i].action;
+      delete tableData[i].altEmail;
+      delete tableData[i].altMobile
+      delete tableData[i].branchId
+      delete tableData[i].branchName
+      delete tableData[i].dob
+      delete tableData[i].department
+      delete tableData[i].designation
+      delete tableData[i].email
+      delete tableData[i].effectiveDate;
+      delete tableData[i].gender
+      delete tableData[i].levelOneManager
+      delete tableData[i].lastName
+      delete tableData[i].levelOneManager
+      delete tableData[i].levelTwoManager
+      delete tableData[i].lifecyclecode
+      delete tableData[i].mobile
+      delete tableData[i].userStatus
+      delete tableData[i].createdDate
+      delete tableData[i].joinedDate
+      delete tableData[i].urpcomments
+    }
+
+
     tableData.forEach(row => {
       dataArray += this.ObjectToArray(row)
     })
@@ -168,7 +207,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
  totalRow:any;
 
  downloadPdf() {
-   let header: string[] = ['S No.', 'Businesss Unit Name', 'Business Unit Code', 'Unit Type','Status','Modification No'];
+   let header: string[] = ['User Id.', 'Employee Id', 'Name', 'Unit Type','Status','Modification No'];
    this.totalRow=this.lifeCycleInfoDataLength;
    var img = new Image();
    img.src = 'assets/logo1.png'
@@ -176,22 +215,20 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
    let col: any = [];
    col = [header];
    let rows: any = [];
-
+   this.dataSource=this.tableData.filteredData
    this.dataSource.forEach((element: {
-     'sNo':any
-     'branchName': any;
-     'branchId':any;
-     'department':any;
+     'userId': any;
+     'employeeId':any;
+     'firstName':any;
      'status':any;
      'version':any;
 
 
    }) => {
      var temp = [
-       element['sNo'],
-       element['branchName'],
-       element['branchId'],
-       element['department'],
+       element['userId'],
+       element['employeeId'],
+       element['firstName'],
        element['status'],
        element['version'],
 
@@ -201,7 +238,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
    doc.setFillColor(255, 128,0);
    doc.rect(5, 24, 200, 8, "F");
    doc.setFontSize(14); 
-   doc.text("Business Unit Information (" + this.totalRow + ")", 66, 30);
+   doc.text("User Profile Information", 66, 30);
    doc.addImage(img, 'gif', 170, 5, 30, 15);
    autoTable(doc, {
      head: col,
@@ -221,10 +258,29 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
  }
  downloadExcel(){
    let exportData:any
-   exportData=JSON.parse(JSON.stringify(this.dataSource))
+   exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
    for(let i=0;i<exportData.length;i++){
      delete exportData[i].action;
-     delete exportData[i].sNo
+     delete exportData[i].altEmail;
+     delete exportData[i].altMobile
+     delete exportData[i].branchId
+     delete exportData[i].branchName
+     delete exportData[i].dob
+     delete exportData[i].department
+     delete exportData[i].designation
+     delete exportData[i].email
+     delete exportData[i].effectiveDate;
+     delete exportData[i].gender
+     delete exportData[i].levelOneManager
+     delete exportData[i].lastName
+     delete exportData[i].levelOneManager
+     delete exportData[i].levelTwoManager
+     delete exportData[i].lifecyclecode
+     delete exportData[i].mobile
+     delete exportData[i].userStatus
+     delete exportData[i].createdDate
+     delete exportData[i].joinedDate
+     delete exportData[i].urpcomments
    }
  const fileName = "user-list.xlsx";
  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
@@ -232,12 +288,38 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
  XLSX.utils.book_append_sheet(wb, ws, fileName);
  XLSX.writeFile(wb, fileName);
  }
+ downloadData:any;
  downloadTxt(){
+  //this.downloadData = JSON.stringify(this.tableData);
    let exportDataForTxt:any
-   exportDataForTxt=JSON.parse(JSON.stringify(this.dataSource))
+  //  console.log(this.dataSource);
+  //  console.log(this.tableData)
+   exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
+   //console.log(newData)
+  // exportDataForTxt=JSON.parse(JSON.stringify(this.dataSource))
    for(let i=0;i<exportDataForTxt.length;i++){
      delete exportDataForTxt[i].action;
-     delete exportDataForTxt[i].sNo
+     delete exportDataForTxt[i].altEmail;
+     delete exportDataForTxt[i].altMobile
+     delete exportDataForTxt[i].branchId
+     delete exportDataForTxt[i].branchName
+     delete exportDataForTxt[i].dob
+     delete exportDataForTxt[i].department
+     delete exportDataForTxt[i].designation
+     delete exportDataForTxt[i].email
+     delete exportDataForTxt[i].effectiveDate;
+     delete exportDataForTxt[i].gender
+     delete exportDataForTxt[i].levelOneManager
+     delete exportDataForTxt[i].lastName
+     delete exportDataForTxt[i].levelOneManager
+     delete exportDataForTxt[i].levelTwoManager
+     delete exportDataForTxt[i].lifecyclecode
+     delete exportDataForTxt[i].mobile
+     delete exportDataForTxt[i].userStatus
+     delete exportDataForTxt[i].createdDate
+     delete exportDataForTxt[i].joinedDate
+     delete exportDataForTxt[i].urpcomments
+
    }
  const fileName = "user-list.txt";
  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
@@ -248,10 +330,29 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
 
  downloadCsvFile() {
    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.dataSource))
+   exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
    for(let i=0;i<exportDataForCsv.length;i++){
      delete exportDataForCsv[i].action;
-     delete exportDataForCsv[i].sNo
+     delete exportDataForCsv[i].altEmail;
+     delete exportDataForCsv[i].altMobile
+     delete exportDataForCsv[i].branchId
+     delete exportDataForCsv[i].branchName
+     delete exportDataForCsv[i].dob
+     delete exportDataForCsv[i].department
+     delete exportDataForCsv[i].designation
+     delete exportDataForCsv[i].email
+     delete exportDataForCsv[i].effectiveDate;
+     delete exportDataForCsv[i].gender
+     delete exportDataForCsv[i].levelOneManager
+     delete exportDataForCsv[i].lastName
+     delete exportDataForCsv[i].levelOneManager
+     delete exportDataForCsv[i].levelTwoManager
+     delete exportDataForCsv[i].lifecyclecode
+     delete exportDataForCsv[i].mobile
+     delete exportDataForCsv[i].userStatus
+     delete exportDataForCsv[i].createdDate
+     delete exportDataForCsv[i].joinedDate
+     delete exportDataForCsv[i].urpcomments
    }
    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
    const header = Object.keys(exportDataForCsv[0]);
@@ -389,4 +490,44 @@ onReview(){
    // this.result = dialogResult;
   });
 }
+
+
+//Pagination
+pageChanged(event){
+  console.log(event)
+  if(this.currentApiResLength==50){
+    console.log('page length'+event.length);
+    console.log('page index'+event.pageIndex);
+    console.log('page size'+event.pageSize);
+    console.log('previous page'+event.previousPageIndex);
+    //24-((2+1)*(10))
+    if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
+      this.onPaginationCall();
+    }
+  }
+}
+newList:any;
+onPaginationCall(){
+  console.log('calling')
+  //this.dataSource.push(...this.getNewList);
+  //add dataSorce,pagination, sort
+  this.pageIndex=this.pageIndex+1;
+  this.size=GlobalConstants.size;
+  this.isLoading=true;
+  this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
+    this.newList=data.data.content;
+    this.dataSource.push(...this.newList);
+    this.tableData = new MatTableDataSource(this.dataSource);
+    this.tableData.paginator = this.paginator;
+    this.tableData.sort = this.sort;
+    this.isLoading=false;
+    console.log(this.newList)
+  })
+}
+//Tab Selection
+tabChanged(tabChangeEvent:any) {
+  console.log('index => ', tabChangeEvent.index);
+  this.selectedTab=tabChangeEvent.index;
+  this.onSearch();
+};
 }
