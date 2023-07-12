@@ -4,6 +4,8 @@ import { jsPDF } from 'jspdf';
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 export interface userData {
   userData: any;
+  type:any;
+  tableData:any;
 }
 @Component({
   selector: 'app-review-comments-history',
@@ -20,10 +22,52 @@ export class ReviewCommentsHistoryComponent implements OnInit{
 
     data:any;
   ngOnInit() {
-    this.data=this.userData.userData
+    //this.data=this.userData.userData
     console.log(this.data)
-
+    this.setFormValue();
   }
+    setFormValue(){
+      let tableCurrentData:any
+      tableCurrentData=JSON.parse(this.userData.tableData);
+      let finalList=[];
+      tableCurrentData.forEach(element =>{
+        if(element.employeeId == this.userData.userData.employeeId){
+          console.log(element.userId)
+         
+          let newDataList={
+          'employeeId':element.employeeId,
+          'userId':element.userId,
+          'version':element.version,
+  
+          'altEmail':element.altEmail,
+          'altMobile':element.altMobile,
+          'branchId':element.branchId,
+          'branchName':element.branchName,
+          'dob':element.dob,
+          'department':element.department,
+          'designation':element.designation,
+          'email':element.email,
+          'effectiveDate':element.effectiveDate,
+          'firstName':element.firstName,
+          'gender':element.gender,
+          'lastName':element.lastName,
+          'levelOneManager':element.levelOneManager,
+          'levelTwoManager':element.levelTwoManager,
+          'lifecyclecode':element.lifecyclecode,
+          'mobile':element.mobile,
+          'userStatus':element.userStatus,
+          'status':element.status,
+          'createdDate':element.createdDate,
+          'joinedDate':element.joinedDate,
+          'urpcomments':element.urpcomments,
+          }
+          finalList.push(newDataList)
+        }
+      })
+    //  console.log(finalList)
+    this.data=finalList[0];
+    }
+  
   public openPDF(): void {
     let DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {

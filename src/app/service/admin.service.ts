@@ -40,23 +40,29 @@ export class AdminService {
     return this.http.post(createUserURL,body,httpOptions)
 
   }
-  getUserProfileList(size:any,pageIndex:any,selectedTab:any){
+  getActiveUserList(size:any,pageIndex:any){
     const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
     let token = this.cookieService.get('token');
-    let fetchProfileListURL:any;
-    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-active";
-    let fetchProfileListUrlAll=this.API_URL+"admin/userprofile/get-all"+queryParams;
-    if(selectedTab==1){
-      fetchProfileListURL=fetchProfileListURLActive;
-    }else{
-      fetchProfileListURL=fetchProfileListUrlAll;
-    }
+    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-max"+queryParams;
     const httpOptions = {
       headers: new HttpHeaders({      
        'Content-Type':  'application/json',
        'Authorization': 'Bearer ' + token,
       })
     };
-    return this.http.post(fetchProfileListURL,'',httpOptions)
+    return this.http.post(fetchProfileListURLActive,'',httpOptions)
+  }
+  
+  getUserProfileList(size:any,pageIndex:any,selectedTab:any){
+    const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
+    let token = this.cookieService.get('token');
+    let fetchProfileListUrlAll=this.API_URL+"admin/userprofile/get-all"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchProfileListUrlAll,'',httpOptions)
   }
 }

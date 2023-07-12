@@ -1,4 +1,4 @@
-import { Component,AfterViewInit,ViewChild,OnInit,ViewEncapsulation,ElementRef } from '@angular/core';
+import { Component,AfterViewInit,ViewChild,OnInit,ViewEncapsulation,ElementRef,ViewChildren,QueryList  } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -28,12 +28,20 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   selection = new SelectionModel<any>(true,[])
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
+  //@ViewChild(MatSort) sort: MatSort;
+  //@ViewChild(MatSort) sort =new MatSort();
+  // @ViewChild('t1Sort') t1Sort:MatSort;
+  // @ViewChild('t2Sort') t2Sort:MatSort;
+  // @ViewChild(MatPaginator)paginator1: MatPaginator;
+  // @ViewChild(MatPaginator)paginator2: MatPaginator;
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   displayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
+  ActiveUserdisplayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
 
   dataSource:any;
   filterObject:any;
+  activeUserFilterObject:any;
   selectedTab=0;
    constructor(private _liveAnnouncer: LiveAnnouncer,
                private route: Router,
@@ -43,8 +51,15 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
                public cookieService:CookieService,
                public dialog: MatDialog,
                private adminService:AdminService){
+                
 
    }
+activeUserCurrentPageIndex=0;
+activeUserDataSource:any;
+currentActiveUserApiResLength:any;
+activeUsertableData:MatTableDataSource<any>;
+activeUserTableLoded=false;
+//Active user Tab Work
    tableData:MatTableDataSource<any>;
   ngOnInit(): void {
     this.filterObject = {
@@ -52,9 +67,15 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
       "value": "",
       "condition":"SELECT"
     }
+    this.activeUserFilterObject = {
+      "field": "SELECT",
+      "value": "",
+      "condition":"SELECT"
+    }
   }
   ngAfterViewInit() {
     this.onSearch();
+    this.OnActiveUserSearch();
     
   }
   lifeCycleInfoDataLength:any;
@@ -66,9 +87,12 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   pageIndex:any;
   size:any;
   onSearch(){
+    console.log('working')
   //fetch Table Data
   this.isLoading=true;
   this.size=GlobalConstants.size;
+  this.dataSource=null;
+  //this.tableData=null;
  this.pageIndex=0;
   this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
    // this.initinalData=data.data;
@@ -77,7 +101,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
     // })
     this.dataSource=data.data.content;
     this.currentApiResLength=data.data.content.length;
-
+    console.log(this.currentApiResLength)
     // this.dataSource =JSON.stringify(data);
     // this.dataSource=JSON.parse(this.dataSource)
    // this.initinalData=data.data;
@@ -120,8 +144,8 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
     this.lifeCycleInfoDataLength = this.dataSource.length;
         this.copiedData = JSON.stringify(this.dataSource);
       this.tableData = new MatTableDataSource(this.dataSource);
-      this.tableData.paginator = this.paginator;
-      this.tableData.sort = this.sort;
+      this.tableData.paginator = this.paginator.toArray()[0];
+      this.tableData.sort = this.sort.toArray()[0];
       this.isLoading=false;
   //   if (this.dataSource) {
   //     this.lifeCycleInfoDataLength = this.dataSource.length;
@@ -419,7 +443,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      console.log(this.selectedRowData)
      const dialogRef = this.dialog.open(ReviewCommentsHistoryComponent, {
       minWidth: "80%",
-      data: {userData:this.selectedRowData},
+      data: {userData:this.selectedRowData,type:'AuditTrail',tableData:this.copiedData},
       disableClose: true,
     });
   
@@ -434,6 +458,8 @@ onSelect(row:any){
 
 filterFieldError=false;
 filterValueError=false;
+activeUserFilterFieldError=false;
+activeUserFilterValueError=false;
 applyFilterByColumn(){
   this.filterFieldError=false
   this.filterValueError=false;
@@ -458,6 +484,31 @@ applyFilterByColumn(){
   }
   this.tableData.filter = value.trim().toLowerCase();
 }
+applyActiveUserFilterByColumn(){
+  this.activeUserFilterFieldError=false
+  this.activeUserFilterValueError=false;
+  console.log(this.activeUserFilterObject.field)
+  if(this.activeUserFilterObject.field==''|| this.activeUserFilterObject.field==null || this.activeUserFilterObject.field==undefined ||this.activeUserFilterObject.field=='SELECT'){
+    console.log('test1')
+    this.activeUserFilterFieldError=true;
+    return;
+  }
+  if(this.activeUserFilterObject.value==''|| this.activeUserFilterObject.value==null || this.activeUserFilterObject.value==undefined){
+    console.log('test2')
+    this.activeUserFilterValueError=true;
+    return;
+  }
+
+  let field=this.activeUserFilterObject.field;
+  let value=this.activeUserFilterObject.value;  
+  console.log('field = '+field+' value = '+value);
+  
+ this.activeUsertableData.filterPredicate= (data:any, filter: string) => {
+    const textToSearch = data[field] && data[field].toLowerCase() || '';
+    return textToSearch.indexOf(filter) !== -1;
+  }
+  this.activeUsertableData.filter = value.trim().toLowerCase();
+}
 onClearFilter(){
   this.tableData.filter = '';
   this.filterObject.field='SELECT';
@@ -466,7 +517,14 @@ onClearFilter(){
   this.filterValueError=false;
 
 }
+onAcctiveUserClearFilter(){
+  this.activeUsertableData.filter = '';
+  this.activeUserFilterObject.field='SELECT';
+  this.activeUserFilterObject.value='';
+  this.activeUserFilterFieldError=false
+  this.activeUserFilterValueError=false;
 
+}
 applyFilter(filterValue: string) {
   filterValue = filterValue.trim(); // Remove whitespace
   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -488,7 +546,7 @@ onOpenUserProfilePOPUP(){
 onReview(){
   const dialogRef = this.dialog.open(ReviewCommentsHistoryComponent, {
     minWidth: "80%",
-   // data: dialogData
+    //data: userData:this.selectedRowData,currentTableData:this.
   });
 
   dialogRef.afterClosed().subscribe(dialogResult => {
@@ -522,10 +580,10 @@ onPaginationCall(){
   this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
     this.newList=data.data.content;
     this.dataSource.push(...this.newList);
-    this.copiedData.push(...this.newList);
+    //this.copiedData.push(...this.newList);
     this.tableData = new MatTableDataSource(this.dataSource);
-    this.tableData.paginator = this.paginator;
-    this.tableData.sort = this.sort;
+    this.tableData.paginator = this.paginator.toArray()[0];
+    this.tableData.sort = this.sort.toArray()[0];
     this.isLoading=false;
     console.log(this.newList)
   })
@@ -534,11 +592,112 @@ onPaginationCall(){
 tabChanged(tabChangeEvent:any) {
   console.log('index => ', tabChangeEvent.index);
   this.selectedTab=tabChangeEvent.index;
-  this.onSearch();
+  
+  if(this.selectedTab==0){
+    this.onSearch();
+  }else if(this.selectedTab==1){
+    this.OnActiveUserSearch();
+  }
 };
 
 
 // OnSelectRow(row:any){
 //   console.log(row)
 //}
+
+
+OnActiveUserSearch(){
+    console.log('active working')
+  this.isLoading=true;
+  this.size=GlobalConstants.size;
+ // this.activeUserDataSource=null;
+ this.activeUserCurrentPageIndex=0;
+ console.log(this.size+"current page"+this.activeUserCurrentPageIndex)
+  this.adminService.getActiveUserList(this.size,this.activeUserCurrentPageIndex).subscribe((data: any) => {
+
+    this.activeUserDataSource=data.data.content;
+    this.currentActiveUserApiResLength=data.data.content.length;
+    console.log(this.currentActiveUserApiResLength)
+
+
+    // this.lifeCycleInfoDataLength = this.dataSource.length;
+    //     this.copiedData = JSON.stringify(this.dataSource);
+      this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
+      this.activeUsertableData.paginator = this.paginator.toArray()[1];
+      this.activeUsertableData.sort = this.sort.toArray()[1];
+      this.isLoading=false;
+ 
+      this.activeUserTableLoded=true;
+  // }
+  })
+  }
+  activeUserNewList:any;
+  onActiveUserTablePagination(){
+    console.log('calling')
+    this.pageIndex=this.pageIndex+1;
+    this.isLoading=true;
+    this.adminService.getActiveUserList(this.size,this.pageIndex).subscribe((data: any) => {
+      this.activeUserNewList=data.data.content;
+      this.activeUserDataSource.push(...this.activeUserNewList);
+      //this.copiedData.push(...this.newList);
+      this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
+      setTimeout(()=>{
+        this.activeUsertableData.paginator = this.paginator.toArray()[1];
+        this.activeUsertableData.sort = this.sort.toArray()[1];
+      })
+     
+      this.isLoading=false;
+    })
+  }
+  activeUSerPageChanged(event){
+    if(this.currentActiveUserApiResLength==this.size){
+      if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
+        this.onActiveUserTablePagination();
+      }
+    }
+  }
+
+  //Filter Part for Active User
+  activeUserApplyFilter(filterValue: string) {
+    console.log(filterValue)
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase(); 
+    this.activeUsertableData.filter = filterValue;
+  }
+
+  //Export Data for active user
+  activeUserDownloadTxt(){
+   let exportDataForTxt:any
+    exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(let i=0;i<exportDataForTxt.length;i++){
+      delete exportDataForTxt[i].action;
+      delete exportDataForTxt[i].altEmail;
+      delete exportDataForTxt[i].altMobile
+      delete exportDataForTxt[i].branchId
+      delete exportDataForTxt[i].branchName
+      delete exportDataForTxt[i].dob
+      delete exportDataForTxt[i].department
+      delete exportDataForTxt[i].designation
+      delete exportDataForTxt[i].email
+      delete exportDataForTxt[i].effectiveDate;
+      delete exportDataForTxt[i].gender
+      delete exportDataForTxt[i].levelOneManager
+      delete exportDataForTxt[i].lastName
+      delete exportDataForTxt[i].levelOneManager
+      delete exportDataForTxt[i].levelTwoManager
+      delete exportDataForTxt[i].lifecyclecode
+      delete exportDataForTxt[i].mobile
+      delete exportDataForTxt[i].userStatus
+      delete exportDataForTxt[i].createdDate
+      delete exportDataForTxt[i].joinedDate
+      delete exportDataForTxt[i].urpcomments
+ 
+    }
+  const fileName = "active-user-list.txt";
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, fileName);
+  XLSX.writeFile(wb, fileName,{bookType:'txt'});
+  }
 }
+

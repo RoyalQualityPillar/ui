@@ -5,6 +5,7 @@
       All User
     </div>
   </ng-template> 
+  <!--all user start-->
   <div>
     <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
   mode="indeterminate" ></mat-spinner>
@@ -30,8 +31,7 @@
              
                   <button  mat-raised-button color="primary"
                   style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;width: max-content;" (click)="onOpenUserProfilePOPUP()">Add New Record</button>
-                  <!-- <button  style="background-color: #06b413; outline: none" mat-mini-fab (click)="onOpenUserProfilePOPUP()"
-                  color="accent"><span style="font-size: 30px;">+</span></button> -->
+
                 
               </div>
           <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
@@ -128,16 +128,13 @@
               <div style="text-align: center;">
                 
                 <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
-                <!-- <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button> -->
-                <!-- <button (click)="exporter.exportTable('txt')" class="exportIconBtn"><img class="exportIcon"
-                    src="../../../assets/txt.png"></button> -->
+  
                     <button (click)="downloadTxt()" class="exportIconBtn"><img class="exportIcon"
                       src="../../../assets/txt.png"></button>
                 <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
                     src="../../../assets/csv.png"></button>
                 <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
-                <!-- <button (click)="exporter.exportTable('xlsx')" class="exportIconBtn"> <img class="exportIcon"
-                    src="../../../assets/excel.png"></button> -->
+   
                     <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
                       src="../../../assets/excel.png"></button>
               </div>
@@ -146,6 +143,7 @@
         </div>
       </div>
     </div>
+  <!-- active user end-->
 </mat-tab>
   <mat-tab  aria-label="Tab6"> 
      <ng-template mat-tab-label>
@@ -168,7 +166,7 @@
               </div>
               <div style="float: right;">
               
-                <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">
+                <input type="text" (keyup)="activeUserApplyFilter(activeUserfilterField.value)" #activeUserfilterField placeholder="Search">
                 
               </div>
             </div>
@@ -178,14 +176,12 @@
              
                   <button  mat-raised-button color="primary"
                   style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;width: max-content;" (click)="onOpenUserProfilePOPUP()">Add New Record</button>
-                  <!-- <button  style="background-color: #06b413; outline: none" mat-mini-fab (click)="onOpenUserProfilePOPUP()"
-                  color="accent"><span style="font-size: 30px;">+</span></button> -->
                 
               </div>
           <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
     
-            <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
-              style="background-color: ghostwhite;" matSort id="dataTable">
+            <mat-table [dataSource]="activeUsertableData"
+              style="background-color: ghostwhite;"  matSort id="activeUserDataTable">
               <!-- Position Column -->
               
               <!-- Action Column -->
@@ -228,12 +224,13 @@
               </ng-container>
     
     
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              <mat-header-row *matHeaderRowDef="ActiveUserdisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: ActiveUserdisplayedColumns;"></mat-row>
             </mat-table>
     
-            <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
+            <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  (page)="activeUSerPageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
             </mat-paginator>
+            <!-- <mat-paginator #paginator2 [length]="currentActiveUserApiResLength" [pageSizeOptions]="[10,20,30,50,100]"(page)="activeUSerPageChanged($event)"showFirstLastButtons></mat-paginator> -->
             <!-- <button mat-raised-button color="primary" 
               style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onSelectRow('view')">Update</button>
               <button mat-raised-button color="primary" 
@@ -245,9 +242,9 @@
             <!-- Filter part-->
             <div class="headers" style="height: 30px;">Data Filter</div>
             <div style="background-color: ghostwhite;">
-              <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
-              <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
-              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field">
+              <span *ngIf= "this.activeUserFilterFieldError" class="errorMsg">Please select filter field </span>
+              <span *ngIf= "this.activeUserFilterValueError" class="errorMsg">Please enter filter field value</span>
+              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field">
                 <option value="SELECT">Please select field</option>
                 <option value="userId">User Id</option>
                 <option value="employeeId">Employee Id</option>
@@ -256,13 +253,13 @@
                 <option value="version">Modification No.</option>
               </select>
               <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
-                [(ngModel)]="filterObject.value">
+                [(ngModel)]="activeUserFilterObject.value">
               <!-- </div> -->
               <div class="example-button-row" style="text-align: center;padding-top: 12px;">
                 <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
-                (click)="applyFilterByColumn()">Apply</button>
+                (click)="applyActiveUserFilterByColumn()">Apply</button>
               <button mat-raised-button color="primary"
-                style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onClearFilter()">Clear</button>
+                style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onAcctiveUserClearFilter()">Clear</button>
               </div>
             
             </div>
@@ -273,18 +270,15 @@
             <div style="background-color: ghostwhite;">
               <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
               <div style="text-align: center;">
-                
-                <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
-                <!-- <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button> -->
-                <!-- <button (click)="exporter.exportTable('txt')" class="exportIconBtn"><img class="exportIcon"
-                    src="../../../assets/txt.png"></button> -->
-                    <button (click)="downloadTxt()" class="exportIconBtn"><img class="exportIcon"
+               
+                <button *ngIf="this.activeUserTableLoded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+       
+                    <button (click)="activeUserDownloadTxt()" class="exportIconBtn"><img class="exportIcon"
                       src="../../../assets/txt.png"></button>
                 <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
                     src="../../../assets/csv.png"></button>
                 <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
-                <!-- <button (click)="exporter.exportTable('xlsx')" class="exportIconBtn"> <img class="exportIcon"
-                    src="../../../assets/excel.png"></button> -->
+          
                     <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
                       src="../../../assets/excel.png"></button>
               </div>

@@ -54,7 +54,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   tableDataLoaded=false;
   onSearch(){
     this.lifeCycleDataService.getLifeCycleInfo().subscribe((data: any) => {
-      this.dataSource = data;
+      this.dataSource = data.data.content;
       if (this.dataSource) {
         this.lifeCycleInfoDataLength = this.dataSource.length;
         console.log(this.lifeCycleInfoDataLength)

@@ -12,10 +12,13 @@ export class LifeCycleDataService {
 
 
   getLifeCycleInfo(){
+    let size =50;
+    let pageIndex=0;
     let token = this.cookieService.get('token');
-    let userId=this.cookieService.get('userId')
+    let userId=this.cookieService.get('userId');
+    const queryParams = `?userId=${userId}&pageIndex=${pageIndex}&size=${size}`;
     console.log(token)
-    let lifeCycleURL=this.API_URL+"login/lifecycleinfo?userId="+userId;
+    let lifeCycleURL=this.API_URL+"login/lifecycleinfo"+queryParams;
     const httpOptions = {
       headers: new HttpHeaders({      
        'Content-Type':  'application/json',
