@@ -570,6 +570,7 @@ pageChanged(event){
   }
 }
 newList:any;
+previousTableList:any;
 onPaginationCall(){
   console.log('calling')
   //this.dataSource.push(...this.getNewList);
@@ -580,7 +581,11 @@ onPaginationCall(){
   this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
     this.newList=data.data.content;
     this.dataSource.push(...this.newList);
-    //this.copiedData.push(...this.newList);
+    this.previousTableList=JSON.parse(this.copiedData);
+    console.log(this.previousTableList)
+    //this.copiedData.push(...this.newTableList);
+    this.previousTableList.push(...this.newList);
+    this.copiedData=this.previousTableList;
     this.tableData = new MatTableDataSource(this.dataSource);
     this.tableData.paginator = this.paginator.toArray()[0];
     this.tableData.sort = this.sort.toArray()[0];
@@ -605,7 +610,7 @@ tabChanged(tabChangeEvent:any) {
 //   console.log(row)
 //}
 
-
+activeUserCopiedData:any;
 OnActiveUserSearch(){
     console.log('active working')
   this.isLoading=true;
@@ -621,7 +626,7 @@ OnActiveUserSearch(){
 
 
     // this.lifeCycleInfoDataLength = this.dataSource.length;
-    //     this.copiedData = JSON.stringify(this.dataSource);
+      this.activeUserCopiedData = JSON.stringify(this.dataSource);
       this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
       this.activeUsertableData.paginator = this.paginator.toArray()[1];
       this.activeUsertableData.sort = this.sort.toArray()[1];
@@ -632,6 +637,7 @@ OnActiveUserSearch(){
   })
   }
   activeUserNewList:any;
+  previousActiveTableList:any;
   onActiveUserTablePagination(){
     console.log('calling')
     this.pageIndex=this.pageIndex+1;
@@ -639,7 +645,9 @@ OnActiveUserSearch(){
     this.adminService.getActiveUserList(this.size,this.pageIndex).subscribe((data: any) => {
       this.activeUserNewList=data.data.content;
       this.activeUserDataSource.push(...this.activeUserNewList);
-      //this.copiedData.push(...this.newList);
+      this.previousActiveTableList=JSON.parse(this.activeUserCopiedData);
+      this.previousActiveTableList.push(...this.activeUserNewList);
+      this.activeUserCopiedData=this.previousActiveTableList;
       this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
       setTimeout(()=>{
         this.activeUsertableData.paginator = this.paginator.toArray()[1];
@@ -650,7 +658,7 @@ OnActiveUserSearch(){
     })
   }
   activeUSerPageChanged(event){
-    if(this.currentActiveUserApiResLength==this.size){
+    if(this.currentActiveUserApiResLength==50){
       if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
         this.onActiveUserTablePagination();
       }
@@ -698,6 +706,168 @@ OnActiveUserSearch(){
   const wb: XLSX.WorkBook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, fileName);
   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+  }
+  activeUserDownloadCsvFile(){
+    let exportDataForCsv:any
+   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   for(let i=0;i<exportDataForCsv.length;i++){
+     delete exportDataForCsv[i].action;
+     delete exportDataForCsv[i].altEmail;
+     delete exportDataForCsv[i].altMobile
+     delete exportDataForCsv[i].branchId
+     delete exportDataForCsv[i].branchName
+     delete exportDataForCsv[i].dob
+     delete exportDataForCsv[i].department
+     delete exportDataForCsv[i].designation
+     delete exportDataForCsv[i].email
+     delete exportDataForCsv[i].effectiveDate;
+     delete exportDataForCsv[i].gender
+     delete exportDataForCsv[i].levelOneManager
+     delete exportDataForCsv[i].lastName
+     delete exportDataForCsv[i].levelOneManager
+     delete exportDataForCsv[i].levelTwoManager
+     delete exportDataForCsv[i].lifecyclecode
+     delete exportDataForCsv[i].mobile
+     delete exportDataForCsv[i].userStatus
+     delete exportDataForCsv[i].createdDate
+     delete exportDataForCsv[i].joinedDate
+     delete exportDataForCsv[i].urpcomments
+   }
+   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+   const header = Object.keys(exportDataForCsv[0]);
+   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+   csv.unshift(header.join(','));
+   let csvArray = csv.join('\r\n');
+
+   var blob = new Blob([csvArray], {type: 'text/csv' })
+   saveAs(blob, "active-user-list.csv");
+  }
+  activeUserDownloadPdf(){
+    let header: string[] = ['User Id.', 'Employee Id', 'Name', 'Unit Type','Status','Modification No'];
+   this.totalRow=this.lifeCycleInfoDataLength;
+   var img = new Image();
+   img.src = 'assets/logo1.png'
+   let doc = new jsPDF('p', 'mm', 'A4')
+   let col: any = [];
+   col = [header];
+   let rows: any = [];
+   this.activeUserDataSource=this.activeUsertableData.filteredData
+   this.activeUserDataSource.forEach((element: {
+     'userId': any;
+     'employeeId':any;
+     'firstName':any;
+     'status':any;
+     'version':any;
+
+
+   }) => {
+     var temp = [
+       element['userId'],
+       element['employeeId'],
+       element['firstName'],
+       element['status'],
+       element['version'],
+
+     ];
+     rows.push(temp);
+   });
+   doc.setFillColor(255, 128,0);
+   doc.rect(5, 24, 200, 8, "F");
+   doc.setFontSize(14); 
+   doc.text("User Profile Information", 66, 30);
+   doc.addImage(img, 'gif', 170, 5, 30, 15);
+   autoTable(doc, {
+     head: col,
+     body: rows,
+     showHead: "everyPage",
+     startY: 35,
+     margin: {right:5,left:5},
+     tableWidth: 'auto',
+     didDrawPage: (dataArg) => {
+
+       doc.text('', dataArg.settings.margin.left, 20);
+
+     }
+   });
+   let fileName='active-user-list';
+   doc.save(fileName + '.pdf');
+  }
+  activeUserDownloadExcel(){
+    let exportDataForCsv:any
+   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   for(let i=0;i<exportDataForCsv.length;i++){
+     delete exportDataForCsv[i].action;
+     delete exportDataForCsv[i].altEmail;
+     delete exportDataForCsv[i].altMobile
+     delete exportDataForCsv[i].branchId
+     delete exportDataForCsv[i].branchName
+     delete exportDataForCsv[i].dob
+     delete exportDataForCsv[i].department
+     delete exportDataForCsv[i].designation
+     delete exportDataForCsv[i].email
+     delete exportDataForCsv[i].effectiveDate;
+     delete exportDataForCsv[i].gender
+     delete exportDataForCsv[i].levelOneManager
+     delete exportDataForCsv[i].lastName
+     delete exportDataForCsv[i].levelOneManager
+     delete exportDataForCsv[i].levelTwoManager
+     delete exportDataForCsv[i].lifecyclecode
+     delete exportDataForCsv[i].mobile
+     delete exportDataForCsv[i].userStatus
+     delete exportDataForCsv[i].createdDate
+     delete exportDataForCsv[i].joinedDate
+     delete exportDataForCsv[i].urpcomments
+   }
+   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+   const header = Object.keys(exportDataForCsv[0]);
+   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+   csv.unshift(header.join(','));
+   let csvArray = csv.join('\r\n');
+
+   var blob = new Blob([csvArray], {type: 'text/csv' })
+   saveAs(blob, "active-user-list.csv");
+  }
+  activeUserCopyData(){
+    var dataArray = "";
+    let tableData:any;
+    let exportData:any
+    tableData=this.activeUsertableData.filteredData;
+    for(let i=0;i<tableData.length;i++){
+      delete tableData[i].action;
+      delete tableData[i].altEmail;
+      delete tableData[i].altMobile
+      delete tableData[i].branchId
+      delete tableData[i].branchName
+      delete tableData[i].dob
+      delete tableData[i].department
+      delete tableData[i].designation
+      delete tableData[i].email
+      delete tableData[i].effectiveDate;
+      delete tableData[i].gender
+      delete tableData[i].levelOneManager
+      delete tableData[i].lastName
+      delete tableData[i].levelOneManager
+      delete tableData[i].levelTwoManager
+      delete tableData[i].lifecyclecode
+      delete tableData[i].mobile
+      delete tableData[i].userStatus
+      delete tableData[i].createdDate
+      delete tableData[i].joinedDate
+      delete tableData[i].urpcomments
+    }
+
+
+    tableData.forEach(row => {
+      dataArray += this.activeUserObjectToArray(row)
+    })
+    return dataArray;
+  }
+  activeUserObjectToArray(obj: any): string {
+    let result = Object.keys(obj).map((key: keyof typeof obj) => {
+      let value = obj[key];
+      return value;
+    });
+    return result.toString() + "\n";
   }
 }
 

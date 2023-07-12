@@ -271,15 +271,15 @@
               <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
               <div style="text-align: center;">
                
-                <button *ngIf="this.activeUserTableLoded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+                <button *ngIf="this.activeUserTableLoded" [cdkCopyToClipboard]="activeUserCopyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
        
                     <button (click)="activeUserDownloadTxt()" class="exportIconBtn"><img class="exportIcon"
                       src="../../../assets/txt.png"></button>
-                <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+                <button (click)="activeUserDownloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
                     src="../../../assets/csv.png"></button>
-                <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+                <button (click)="activeUserDownloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
           
-                    <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                    <button (click)="activeUserDownloadExcel()" class="exportIconBtn"> <img class="exportIcon"
                       src="../../../assets/excel.png"></button>
               </div>
             </div>
