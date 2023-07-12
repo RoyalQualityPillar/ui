@@ -29,9 +29,11 @@ export class AppComponent implements OnInit{
     console.log(window.location.href);
     localStorage.setItem('currentURL',window.location.href)
     this.token = this.cookieService.get('token');
+    this.cookieService.set('subMenuFlag','false');
     this.getLoginDetail()
   }
   getLoginDetail(){
+
     console.log(this.cookieService.get('token'))
     if(this.token == undefined || this.token == ""){
       console.log('without login')

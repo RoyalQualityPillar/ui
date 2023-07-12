@@ -87,8 +87,8 @@
     
             <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
             </mat-paginator>
-            <button mat-raised-button color="primary" 
-              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onSelectRow('view')">Update</button>
+            <!-- <button mat-raised-button color="primary" 
+              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onSelectRow('view')">Update</button> -->
               <button mat-raised-button color="primary" 
               style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onReviewUserData()">Audit trial</button>
           </div>
@@ -230,11 +230,11 @@
     
             <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  (page)="activeUSerPageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
             </mat-paginator>
-            <!-- <mat-paginator #paginator2 [length]="currentActiveUserApiResLength" [pageSizeOptions]="[10,20,30,50,100]"(page)="activeUSerPageChanged($event)"showFirstLastButtons></mat-paginator> -->
-            <!-- <button mat-raised-button color="primary" 
-              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onSelectRow('view')">Update</button>
+      
+            <button mat-raised-button color="primary" 
+              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveUserSelectRow('view')">Update</button>
               <button mat-raised-button color="primary" 
-              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onReviewUserData()">Audit trial</button> -->
+              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveUserReviewUserData()">Audit trial</button>
           </div>
         </div>
         <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">

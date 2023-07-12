@@ -47,12 +47,13 @@
   <mat-toolbar class="toolbar"*ngIf="this.cookieService.get('isLogin')=='loginSuccess'">
     <div class="menu-template">
         <button mat-button class="menu" class="basic" (click)="navigatehome()">Home</button>
-
-    <button mat-button [matMenuTriggerFor]="belowMenu">{{this.cookieService.get('menuHeader')}}</button> 
+    
+    <button *ngIf="this.cookieService.get('subMenuFlag')=='true'" mat-button [matMenuTriggerFor]="belowMenu">{{this.cookieService.get('menuHeader')}}</button> 
      <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1">
       <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="submenu1(this.cookieService.get('subMenu1'))">{{this.cookieService.get('subMenu1')}}</button>
     </mat-menu>
-        </div>
+       
+      </div>
   </mat-toolbar>
  
   <!--Menu Without login-->

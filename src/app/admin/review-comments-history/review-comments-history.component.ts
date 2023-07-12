@@ -28,7 +28,11 @@ export class ReviewCommentsHistoryComponent implements OnInit{
   }
     setFormValue(){
       let tableCurrentData:any
+      if(this.userData.type=='auditTrail'){
       tableCurrentData=JSON.parse(this.userData.tableData);
+      }else{
+        tableCurrentData=this.userData.tableData;
+      }
       let finalList=[];
       tableCurrentData.forEach(element =>{
         if(element.employeeId == this.userData.userData.employeeId){

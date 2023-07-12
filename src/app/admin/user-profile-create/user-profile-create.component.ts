@@ -92,17 +92,58 @@ export class UserProfileCreateComponent implements OnInit  {
       this.isReadOnly=true;
       this.isUpdate=true;
        this.onLoadFormValue();
-    }else{
+    }else if(this.userData.type=="active_User_Update"){
+      this.isReadOnly=true;
+      this.isUpdate=true;
+      this.onActiveUserOnLoad()
+    }
+    else if(this.userData.type=="Create"){
       this.isReadOnly=false;
       this.isUpdate=false;
       console.log('create condition')
     }
   }
+  onActiveUserOnLoad(){
+    let finalList=[];
+    this.userData.tableData.forEach(element =>{
+      if(element.employeeId == this.userData.userData.employeeId){
+        console.log(element.userId)
+       
+        let newDataList={
+        'employeeId':element.employeeId,
+        'userId':element.userId,
+        'version':element.version,
+
+        'altEmail':element.altEmail,
+        'altMobile':element.altMobile,
+        'branchId':element.branchId,
+        'branchName':element.branchName,
+        'dob':element.dob,
+        'department':element.department,
+        'designation':element.designation,
+        'email':element.email,
+        'effectiveDate':element.effectiveDate,
+        'firstName':element.firstName,
+        'gender':element.gender,
+        'lastName':element.lastName,
+        'levelOneManager':element.levelOneManager,
+        'levelTwoManager':element.levelTwoManager,
+        'lifecyclecode':element.lifecyclecode,
+        'mobile':element.mobile,
+        'userStatus':element.userStatus,
+        'status':element.status,
+        'createdDate':element.createdDate,
+        'joinedDate':element.joinedDate,
+        'urpcomments':element.urpcomments,
+        }
+        finalList.push(newDataList)
+      }
+    })
+    this.formValue=finalList[0];
+    this.loadFormValue();
+    }
   formValue:any;
   onLoadFormValue(){
-    //load functionality
-    // console.log(this.userData.userData.employeeId);
-    // console.log(this.userData.tableData);
     let tableCurrentData:any
     tableCurrentData=JSON.parse(this.userData.tableData);
     let finalList=[];
@@ -140,44 +181,47 @@ export class UserProfileCreateComponent implements OnInit  {
         finalList.push(newDataList)
       }
     })
-  //  console.log(finalList)
   this.formValue=finalList[0];
-  console.log(this.formValue)
-  this.BusinessUnit.controls['employeeId'].setValue(this.formValue.employeeId);
-  this.BusinessUnit.controls['userId'].setValue(this.formValue.userId);
-  this.BusinessUnit.controls['firstName'].setValue(this.formValue.firstName);
-  this.BusinessUnit.controls['lastName'].setValue(this.formValue.lastName);
-  this.BusinessUnit.controls['branchName'].setValue(this.formValue.branchId);
-  this.BusinessUnit.controls['branchId'].setValue(this.formValue.branchId);
-  this.BusinessUnit.controls['department'].setValue(this.formValue.department);
-  this.BusinessUnit.controls['email'].setValue(this.formValue.email);
-  this.BusinessUnit.controls['altEmail'].setValue(this.formValue.altEmail);
-  this.BusinessUnit.controls['mobile'].setValue(this.formValue.mobile);
-  this.BusinessUnit.controls['altMobile'].setValue(this.formValue.altMobile);
-  this.BusinessUnit.controls['levelOneManager'].setValue(this.formValue.levelOneManager)
-  this.BusinessUnit.controls['levelTwoManager'].setValue(this.formValue.levelTwoManager)
-  this.BusinessUnit.controls['gender'].setValue(this.formValue.gender);
- console.log(this.formValue.status)
- if(this.formValue.status==1001){
-  this.formValue.status='1001'
- }else if(this.formValue.status==1004){
-  this.formValue.status='1004'
- }else if(this.formValue.status==1003){
-  this.formValue.status='1003'
- }
-  this.BusinessUnit.controls['status'].setValue(this.formValue.status)
-  let dob= moment(this.formValue.dob,'DD-MM-YYYY').format();
-  this.BusinessUnit.controls['dob'].setValue(dob)
-
-  let newFormatDate1= moment(this.formValue.createdDate,'DD-MM-YYYY').format();
-  console.log(newFormatDate1);
-  this.BusinessUnit.controls['joinedDate'].setValue(newFormatDate1);
-
-  let newFormatDate11= moment(this.formValue.effectiveDate,'DD-MM-YYYY').format();
-  console.log(newFormatDate11)
-  this.BusinessUnit.controls['effectiveDate'].setValue(newFormatDate11)
-
-  this.BusinessUnit.controls['urpcomments'].setValue(this.formValue.urpcomments)
+  this.loadFormValue();
+ 
+  }
+  loadFormValue(){
+    console.log(this.formValue)
+    this.BusinessUnit.controls['employeeId'].setValue(this.formValue.employeeId);
+    this.BusinessUnit.controls['userId'].setValue(this.formValue.userId);
+    this.BusinessUnit.controls['firstName'].setValue(this.formValue.firstName);
+    this.BusinessUnit.controls['lastName'].setValue(this.formValue.lastName);
+    this.BusinessUnit.controls['branchName'].setValue(this.formValue.branchId);
+    this.BusinessUnit.controls['branchId'].setValue(this.formValue.branchId);
+    this.BusinessUnit.controls['department'].setValue(this.formValue.department);
+    this.BusinessUnit.controls['email'].setValue(this.formValue.email);
+    this.BusinessUnit.controls['altEmail'].setValue(this.formValue.altEmail);
+    this.BusinessUnit.controls['mobile'].setValue(this.formValue.mobile);
+    this.BusinessUnit.controls['altMobile'].setValue(this.formValue.altMobile);
+    this.BusinessUnit.controls['levelOneManager'].setValue(this.formValue.levelOneManager)
+    this.BusinessUnit.controls['levelTwoManager'].setValue(this.formValue.levelTwoManager)
+    this.BusinessUnit.controls['gender'].setValue(this.formValue.gender);
+   console.log(this.formValue.status)
+   if(this.formValue.status==1001){
+    this.formValue.status='1001'
+   }else if(this.formValue.status==1004){
+    this.formValue.status='1004'
+   }else if(this.formValue.status==1003){
+    this.formValue.status='1003'
+   }
+    this.BusinessUnit.controls['status'].setValue(this.formValue.status)
+    let dob= moment(this.formValue.dob,'DD-MM-YYYY').format();
+    this.BusinessUnit.controls['dob'].setValue(dob)
+  
+    let newFormatDate1= moment(this.formValue.createdDate,'DD-MM-YYYY').format();
+    console.log(newFormatDate1);
+    this.BusinessUnit.controls['joinedDate'].setValue(newFormatDate1);
+  
+    let newFormatDate11= moment(this.formValue.effectiveDate,'DD-MM-YYYY').format();
+    console.log(newFormatDate11)
+    this.BusinessUnit.controls['effectiveDate'].setValue(newFormatDate11)
+  
+    this.BusinessUnit.controls['urpcomments'].setValue(this.formValue.urpcomments)
   }
   deptCodeList:any;
   plantList:any;

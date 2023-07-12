@@ -18,6 +18,7 @@ import { ReviewCommentsHistoryComponent } from '../review-comments-history/revie
 import { AdminService } from 'src/app/service/admin.service';
 import { elements } from 'chart.js';
 import {GlobalConstants} from '../../common/global-constants';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-user-profile-management',
@@ -28,56 +29,20 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   selection = new SelectionModel<any>(true,[])
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
-  //@ViewChild(MatSort) sort: MatSort;
-  //@ViewChild(MatSort) sort =new MatSort();
-  // @ViewChild('t1Sort') t1Sort:MatSort;
-  // @ViewChild('t2Sort') t2Sort:MatSort;
-  // @ViewChild(MatPaginator)paginator1: MatPaginator;
-  // @ViewChild(MatPaginator)paginator2: MatPaginator;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   displayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
   ActiveUserdisplayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
 
-  dataSource:any;
-  filterObject:any;
-  activeUserFilterObject:any;
-  selectedTab=0;
-   constructor(private _liveAnnouncer: LiveAnnouncer,
-               private route: Router,
-               private router: ActivatedRoute,
-               public toolbarService:ToolbarService,
-               public lifeCycleDataService:LifeCycleDataService,
-               public cookieService:CookieService,
-               public dialog: MatDialog,
-               private adminService:AdminService){
-                
-
-   }
-activeUserCurrentPageIndex=0;
-activeUserDataSource:any;
-currentActiveUserApiResLength:any;
-activeUsertableData:MatTableDataSource<any>;
-activeUserTableLoded=false;
-//Active user Tab Work
-   tableData:MatTableDataSource<any>;
-  ngOnInit(): void {
-    this.filterObject = {
-      "field": "SELECT",
-      "value": "",
-      "condition":"SELECT"
-    }
-    this.activeUserFilterObject = {
-      "field": "SELECT",
-      "value": "",
-      "condition":"SELECT"
-    }
-  }
-  ngAfterViewInit() {
-    this.onSearch();
-    this.OnActiveUserSearch();
-    
-  }
+  dataSource: any;
+  filterObject: any;
+  activeUserFilterObject: any;
+  selectedTab = 0;
+  activeUserCurrentPageIndex = 0;
+  activeUserDataSource: any;
+  currentActiveUserApiResLength: any;
+  activeUsertableData: MatTableDataSource<any>;
+  activeUserTableLoded = false;
   lifeCycleInfoDataLength:any;
   tableDataLoaded:any;
   copiedData:any;
@@ -86,77 +51,49 @@ activeUserTableLoded=false;
   currentApiResLength:any;
   pageIndex:any;
   size:any;
+  tableData:MatTableDataSource<any>;
+   constructor(private _liveAnnouncer: LiveAnnouncer,
+               private route: Router,
+               private router: ActivatedRoute,
+               public toolbarService:ToolbarService,
+               public lifeCycleDataService:LifeCycleDataService,
+               public cookieService:CookieService,
+               public dialog: MatDialog,
+               private adminService:AdminService){        
+   }
+
+  ngOnInit(): void {
+    this.filterObject = {
+      "field": "SELECT",
+      "value": "",
+      "condition": "SELECT"
+    }
+    this.activeUserFilterObject = {
+      "field": "SELECT",
+      "value": "",
+      "condition": "SELECT"
+    }
+  }
+  ngAfterViewInit() {
+    this.onSearch();
+    this.OnActiveUserSearch();
+  }
+ 
   onSearch(){
-    console.log('working')
-  //fetch Table Data
   this.isLoading=true;
   this.size=GlobalConstants.size;
   this.dataSource=null;
-  //this.tableData=null;
  this.pageIndex=0;
   this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
-   // this.initinalData=data.data;
-    // this.initinalData.forEach(element =>{
-    //   //'employeeName':element.firstName+element.lastName
-    // })
     this.dataSource=data.data.content;
     this.currentApiResLength=data.data.content.length;
-    console.log(this.currentApiResLength)
-    // this.dataSource =JSON.stringify(data);
-    // this.dataSource=JSON.parse(this.dataSource)
-   // this.initinalData=data.data;
-   // console.log(this.dataSource);
-   // let finalList=[];
-    //let i=0;
-    // this.initinalData.forEach(element =>{
-    //  let newDataList={
-    //     'sNo':++i,
-    //     'employeeId':element.id.employeeId,
-    //     'userId':element.id.userId,
-    //     'version':element.id.version,
-
-    //     'altEmail':element.altEmail,
-    //     'altMobile':element.altMobile,
-    //     'branchId':element.branchId,
-    //     'branchName':element.branchName,
-    //     'dob':element.dob,
-    //     'department':element.department,
-    //     'designation':element.designation,
-    //     'email':element.email,
-    //     'effectiveDate':element.effectiveDate,
-    //     'firstName':element.firstName,
-    //     'gender':element.gender,
-    //     'lastName':element.lastName,
-    //     'levelOneManager':element.levelOneManager,
-    //     'levelTwoManager':element.levelTwoManager,
-    //     'lifecyclecode':element.lifecyclecode,
-    //     'mobile':element.mobile,
-    //     'userStatus':element.userStatus,
-    //     'status':element.status,
-    //     'createdDate':element.createdDate,
-    //     'joinedDate':element.joinedDate,
-    //     'urpcomments':element.urpcomments,
-    //   }
-    //   finalList.push(newDataList)
-    // })
-   // console.log(finalList)
-    //this.dataSource=finalList;
     this.lifeCycleInfoDataLength = this.dataSource.length;
         this.copiedData = JSON.stringify(this.dataSource);
       this.tableData = new MatTableDataSource(this.dataSource);
       this.tableData.paginator = this.paginator.toArray()[0];
       this.tableData.sort = this.sort.toArray()[0];
       this.isLoading=false;
-  //   if (this.dataSource) {
-  //     this.lifeCycleInfoDataLength = this.dataSource.length;
-  //     console.log(this.lifeCycleInfoDataLength)
-  //     this.copiedData = JSON.stringify(this.dataSource);
-  //     this.tableData = new MatTableDataSource(this.dataSource);
-  //     this.tableData.paginator = this.paginator;
-  //     this.tableData.sort = this.sort;
       this.tableDataLoaded=true;
-  //     this.toolbarService.setTableData(this.dataSource)
-  // }
   })
   }
   checkStatus(status){
@@ -438,12 +375,18 @@ activeUserTableLoded=false;
         this.selectedRowData=this.cureentSelectedRow[arrayLength]
       }else{
         //do nothing
-        console.log('else block')
+        this.dialog.open(MessageDialogComponent, {
+          width:"400px",
+          data: { 'message': "Please select any row", 'heading': "Error Information" }
+        });
+        return
       }
-     console.log(this.selectedRowData)
+     console.log(this.copiedData)
+     let activeUserTableData=JSON.parse(JSON.stringify(this.copiedData))
+   activeUserTableData=JSON.parse(activeUserTableData)
      const dialogRef = this.dialog.open(ReviewCommentsHistoryComponent, {
       minWidth: "80%",
-      data: {userData:this.selectedRowData,type:'AuditTrail',tableData:this.copiedData},
+      data: {userData:this.selectedRowData,type:'AuditTrail',tableData:activeUserTableData},
       disableClose: true,
     });
   
@@ -558,12 +501,7 @@ onReview(){
 //Pagination
 pageChanged(event){
   console.log(event)
-  if(this.currentApiResLength==50){
-    console.log('page length'+event.length);
-    console.log('page index'+event.pageIndex);
-    console.log('page size'+event.pageSize);
-    console.log('previous page'+event.previousPageIndex);
-    //24-((2+1)*(10))
+  if(this.currentApiResLength==GlobalConstants.size){
     if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
       this.onPaginationCall();
     }
@@ -626,7 +564,7 @@ OnActiveUserSearch(){
 
 
     // this.lifeCycleInfoDataLength = this.dataSource.length;
-      this.activeUserCopiedData = JSON.stringify(this.dataSource);
+      this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
       this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
       this.activeUsertableData.paginator = this.paginator.toArray()[1];
       this.activeUsertableData.sort = this.sort.toArray()[1];
@@ -658,7 +596,7 @@ OnActiveUserSearch(){
     })
   }
   activeUSerPageChanged(event){
-    if(this.currentActiveUserApiResLength==50){
+    if(this.currentActiveUserApiResLength==GlobalConstants.size){
       if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
         this.onActiveUserTablePagination();
       }
@@ -868,6 +806,57 @@ OnActiveUserSearch(){
       return value;
     });
     return result.toString() + "\n";
+  }
+  
+  //update User
+  activeUserSelectedRowData:any;
+  onActiveUserSelectRow(val:any){
+   let currentSelectedRow=this.selection.selected;
+   if(currentSelectedRow.length==1){
+    this.activeUserSelectedRowData=currentSelectedRow[0];
+   }
+   else if(currentSelectedRow.length>1){
+    //this.activeUserSelectedRowData=currentSelectedRow[0];
+    let arrayLength=currentSelectedRow.length-1;
+    this.activeUserSelectedRowData=currentSelectedRow[arrayLength]
+   }else{
+    this.dialog.open(MessageDialogComponent, {
+      width:"400px",
+      data: { 'message': "Please select any row", 'heading': "Error Information" }
+    });
+    return;
+   }
+   let activeUserTableData=JSON.parse(JSON.stringify(this.activeUserCopiedData))
+   activeUserTableData=JSON.parse(activeUserTableData)
+   const dialogRef=this.dialog.open(UserProfileCreateComponent,{
+    minWidth:"80%",
+    data:{userData:this.activeUserSelectedRowData,type:'active_User_Update',tableData:activeUserTableData}
+   })
+
+  }
+  //Review Page for active user
+  onActiveUserReviewUserData(){
+    let currentSelectedRow=this.selection.selected;
+    if(currentSelectedRow.length==1){
+     this.activeUserSelectedRowData=currentSelectedRow[0];
+    }
+    else if(currentSelectedRow.length>1){
+     //this.activeUserSelectedRowData=currentSelectedRow[0];
+     let arrayLength=currentSelectedRow.length-1;
+     this.activeUserSelectedRowData=currentSelectedRow[arrayLength]
+    }else{
+      this.dialog.open(MessageDialogComponent, {
+        width:"400px",
+        data: { 'message': "Please select any row", 'heading': "Error Information" }
+      });
+      return;
+    }
+    let activeUserTableData=JSON.parse(JSON.stringify(this.activeUserCopiedData))
+    activeUserTableData=JSON.parse(activeUserTableData);
+    const dialogRef=this.dialog.open(ReviewCommentsHistoryComponent,{
+      minWidth:"80%",
+      data:{userData:this.activeUserSelectedRowData,type:'active_User_AuditTrail',tableData:activeUserTableData}
+    })
   }
 }
 

@@ -11,9 +11,8 @@ export class LifeCycleDataService {
   constructor(private http:HttpClient,private cookieService:CookieService) { }
 
 
-  getLifeCycleInfo(){
-    let size =50;
-    let pageIndex=0;
+  getLifeCycleInfo(pageIndex:any,size:any){
+  
     let token = this.cookieService.get('token');
     let userId=this.cookieService.get('userId');
     const queryParams = `?userId=${userId}&pageIndex=${pageIndex}&size=${size}`;

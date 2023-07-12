@@ -12,6 +12,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {CookieService} from 'ngx-cookie-service';
 import *as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import {GlobalConstants} from '../../common/global-constants';
 
 @Component({
   selector: 'app-data-table',
@@ -37,7 +40,8 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
               private router: ActivatedRoute,
               public toolbarService:ToolbarService,
               public lifeCycleDataService:LifeCycleDataService,
-              public cookieService:CookieService){
+              public cookieService:CookieService,
+              private dialog:MatDialog){
    // this.dataSource=tableData.tableData;
   
   }
@@ -52,8 +56,11 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   copiedData:any
   lifeCycleInfoDataLength:any
   tableDataLoaded=false;
+  size:any;
   onSearch(){
-    this.lifeCycleDataService.getLifeCycleInfo().subscribe((data: any) => {
+    this.pageIndex=0;
+    this.size=GlobalConstants.size;
+    this.lifeCycleDataService.getLifeCycleInfo(this.pageIndex,this.size).subscribe((data: any) => {
       this.dataSource = data.data.content;
       if (this.dataSource) {
         this.lifeCycleInfoDataLength = this.dataSource.length;
@@ -312,8 +319,11 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
           this.selectedLifecycleCode=this.cureentSelectedRow[arrayLength].lifecyclecode;
           this.selectedModuleName=this.cureentSelectedRow[arrayLength].moduleName;
       }else{
-        //do nothing
-        console.log('else block')
+        this.dialog.open(MessageDialogComponent, {
+          width:"400px",
+          data: { 'message': "Please select any row", 'heading': "Error Information" }
+        });
+        return;
       }
       let body={
         userId:'',
@@ -327,7 +337,8 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
       console.log(body);
       this.selection.clear();
       this.lifeCycleDataService.getModuleName(body).subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
+        this.cookieService.set('subMenuFlag','true');
         this.cookieService.set('menuHeader',data[0].moduleName);
         this.cookieService.set('subMenu1',data[0].links)
         this.route.navigate(['./module-home-page'])
@@ -341,7 +352,7 @@ onSelect(row:any){
 //Pagination
 pageChanged(event){
   console.log(event)
-  if(this.dataSource.length==24){
+  if(this.dataSource.length==GlobalConstants.size){
     console.log('page length'+event.length);
     console.log('page index'+event.pageIndex);
     console.log('page size'+event.pageSize);
@@ -352,10 +363,28 @@ pageChanged(event){
     }
   }
 }
+pageIndex=0;
+isLoading=false;
+newList:any;
 onPaginationCall(){
-  console.log('calling')
-  //this.dataSource.push(...this.getNewList);
-  //add dataSorce,pagination, sort
+  console.log('calling');
+  this.pageIndex=this.pageIndex+1;
+  this.size=GlobalConstants.size;
+  this.isLoading=true;
+  this.lifeCycleDataService.getLifeCycleInfo(this.pageIndex,this.size).subscribe((data: any) => {
+    this.newList = data.data.content;
+    this.dataSource.push(...this.newList);
+    this.lifeCycleInfoDataLength = this.dataSource.length;
+        console.log(this.lifeCycleInfoDataLength)
+        this.copiedData = JSON.stringify(this.dataSource);
+        this.tableData = new MatTableDataSource(this.dataSource);
+        this.tableData.paginator = this.paginator;
+        this.tableData.sort = this.sort;
+        this.tableDataLoaded=true;
+        this.toolbarService.setTableData(this.dataSource)
+
+
+  })
 }
   }
 
