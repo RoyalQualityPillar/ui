@@ -18,7 +18,7 @@ export class MessageService {
     const panelClass = 'global-snackbar-success';
 
     this.snackBarRef = this.snackBar.open(message, action, {
-      duration: 300,
+      duration: 3000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
       panelClass: ['global-snackbar-success']

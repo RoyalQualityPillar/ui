@@ -19,6 +19,10 @@ import { AdminService } from 'src/app/service/admin.service';
 import { elements } from 'chart.js';
 import {GlobalConstants} from '../../common/global-constants';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
+import { ActiveAuditTrailComponent } from '../active-audit-trail/active-audit-trail.component';
 
 @Component({
   selector: 'app-user-profile-management',
@@ -31,8 +35,8 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
-  displayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
-  ActiveUserdisplayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version'];
+  displayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version','createdDate'];
+  ActiveUserdisplayedColumns: string[] = ['action','userId', 'employeeId','firstName', 'status','version','createdDate'];
 
   dataSource: any;
   filterObject: any;
@@ -59,19 +63,24 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
                public lifeCycleDataService:LifeCycleDataService,
                public cookieService:CookieService,
                public dialog: MatDialog,
-               private adminService:AdminService){        
+               private adminService:AdminService,
+               private datepipe:DatePipe){        
    }
 
   ngOnInit(): void {
     this.filterObject = {
       "field": "SELECT",
       "value": "",
-      "condition": "SELECT"
+      "condition": "equals",
+      "DateFieldvalue1":"",
+      "DateFieldvalue2":""
     }
     this.activeUserFilterObject = {
       "field": "SELECT",
       "value": "",
-      "condition": "SELECT"
+      "condition": "equals",
+      "DateFieldvalue1":"",
+      "DateFieldvalue2":""
     }
   }
   ngAfterViewInit() {
@@ -85,6 +94,8 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   this.dataSource=null;
  this.pageIndex=0;
   this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
+    console.log(data)
+    console.log(data.data.content)
     this.dataSource=data.data.content;
     this.currentApiResLength=data.data.content.length;
     this.lifeCycleInfoDataLength = this.dataSource.length;
@@ -131,7 +142,6 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
       delete tableData[i].lifecyclecode
       delete tableData[i].mobile
       delete tableData[i].userStatus
-      delete tableData[i].createdDate
       delete tableData[i].joinedDate
       delete tableData[i].urpcomments
     }
@@ -183,6 +193,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      'firstName':any;
      'status':any;
      'version':any;
+     'createdDate':any;
 
 
    }) => {
@@ -192,6 +203,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
        element['firstName'],
        element['status'],
        element['version'],
+       element['createdDate']
 
      ];
      rows.push(temp);
@@ -239,7 +251,6 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      delete exportData[i].lifecyclecode
      delete exportData[i].mobile
      delete exportData[i].userStatus
-     delete exportData[i].createdDate
      delete exportData[i].joinedDate
      delete exportData[i].urpcomments
    }
@@ -277,7 +288,6 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      delete exportDataForTxt[i].lifecyclecode
      delete exportDataForTxt[i].mobile
      delete exportDataForTxt[i].userStatus
-     delete exportDataForTxt[i].createdDate
      delete exportDataForTxt[i].joinedDate
      delete exportDataForTxt[i].urpcomments
 
@@ -311,7 +321,6 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
      delete exportDataForCsv[i].lifecyclecode
      delete exportDataForCsv[i].mobile
      delete exportDataForCsv[i].userStatus
-     delete exportDataForCsv[i].createdDate
      delete exportDataForCsv[i].joinedDate
      delete exportDataForCsv[i].urpcomments
    }
@@ -413,19 +422,66 @@ applyFilterByColumn(){
   }
   if(this.filterObject.value==''|| this.filterObject.value==null || this.filterObject.value==undefined){
     console.log('test2')
+    if(this.filterObject.field !='createdDate'){
     this.filterValueError=true;
     return;
+  }else if(this.filterObject.DateFieldvalue1==''){
+    console.log('test4')
+      this.filterValueError=true;
+      return;
+  }else{
+    console.log('test6')
+  }
   }
 
   let field=this.filterObject.field;
   let value=this.filterObject.value;  
+  let condition=this.filterObject.condition;
   console.log('field = '+field+' value = '+value);
-  
- this.tableData.filterPredicate= (data:any, filter: string) => {
-    const textToSearch = data[field] && data[field].toLowerCase() || '';
-    return textToSearch.indexOf(filter) !== -1;
+  let filetrDataBody={
+    field:'',
+    value1: '',
+    value2: '',
+    condition: ''
   }
-  this.tableData.filter = value.trim().toLowerCase();
+  filetrDataBody.field=field;
+  filetrDataBody.value1=value;
+  filetrDataBody.condition=condition;
+  if(this.filterObject.field =='createdDate'){
+    filetrDataBody.value1=moment(this.filterObject.DateFieldvalue1).format('DD-MM-YYYY HH:mm:ss.SSS');
+    filetrDataBody.value2=moment(this.filterObject.DateFieldvalue2).format('DD-MM-YYYY HH:mm:ss.SSS');
+    filetrDataBody.condition='between';
+  }
+  this.isLoading=true;
+  this.adminService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
+    console.log(data)
+    if(data.data){
+    this.dataSource=data.data;
+    this.currentApiResLength=data.data.length;
+    this.lifeCycleInfoDataLength = this.dataSource.length;
+        this.copiedData = JSON.stringify(this.dataSource);
+      this.tableData = new MatTableDataSource(this.dataSource);
+      this.tableData.paginator = this.paginator.toArray()[0];
+      this.tableData.sort = this.sort.toArray()[0];
+      this.isLoading=false;
+      this.tableDataLoaded=true;
+    }else{
+      this.isLoading=false;
+      this.dialog.open(MessageDialogComponent, {
+        width:"400px",
+        data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+      });
+    }
+  })
+
+
+//  this.tableData.filterPredicate= (data:any, filter: string) => {
+//     const textToSearch = data[field] && data[field].toLowerCase() || '';
+//     return textToSearch.indexOf(filter) !== -1;
+//   }
+//   this.tableData.filter = value.trim().toLowerCase();
+
+
 }
 applyActiveUserFilterByColumn(){
   this.activeUserFilterFieldError=false
@@ -436,37 +492,121 @@ applyActiveUserFilterByColumn(){
     this.activeUserFilterFieldError=true;
     return;
   }
+  
   if(this.activeUserFilterObject.value==''|| this.activeUserFilterObject.value==null || this.activeUserFilterObject.value==undefined){
     console.log('test2')
+    if(this.activeUserFilterObject.field !='createdDate'){
+      console.log('test3')
     this.activeUserFilterValueError=true;
     return;
+    }else if(this.activeUserFilterObject.DateFieldvalue1==''){
+      console.log('test4')
+        this.activeUserFilterValueError=true;
+        return;
+    }else{
+      console.log('test6')
+    }
   }
 
   let field=this.activeUserFilterObject.field;
   let value=this.activeUserFilterObject.value;  
-  console.log('field = '+field+' value = '+value);
+  let condition=this.activeUserFilterObject.condition;
   
- this.activeUsertableData.filterPredicate= (data:any, filter: string) => {
-    const textToSearch = data[field] && data[field].toLowerCase() || '';
-    return textToSearch.indexOf(filter) !== -1;
+  console.log('field = '+field+' value = '+value);
+  let filetrDataBody={
+    field:'',
+    value1: '',
+    value2: '',
+    condition: ''
   }
-  this.activeUsertableData.filter = value.trim().toLowerCase();
+  filetrDataBody.field=field;
+  filetrDataBody.value1=value;
+  filetrDataBody.condition=condition;
+  if(this.activeUserFilterObject.field =='createdDate'){
+    filetrDataBody.value1=moment(this.activeUserFilterObject.DateFieldvalue1).format('DD-MM-YYYY HH:mm:ss.SSS');
+    filetrDataBody.value2=moment(this.activeUserFilterObject.DateFieldvalue2).format('DD-MM-YYYY HH:mm:ss.SSS');
+    filetrDataBody.condition='between';
+  }
+  this.isLoading=true;
+  this.adminService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
+    console.log(data)
+    if(data.data){
+    this.activeUserDataSource=data.data;
+    this.currentActiveUserApiResLength=data.data.length;
+    console.log(this.currentActiveUserApiResLength)
+
+
+    // this.lifeCycleInfoDataLength = this.dataSource.length;
+      this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
+      this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
+      this.activeUsertableData.paginator = this.paginator.toArray()[1];
+      this.activeUsertableData.sort = this.sort.toArray()[1];
+      this.isLoading=false;
+ 
+      this.activeUserTableLoded=true;
+    }else{
+      this.isLoading=false;
+      this.dialog.open(MessageDialogComponent, {
+        width:"400px",
+        data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+      });
+    }
+
+  })
+//  this.activeUsertableData.filterPredicate= (data:any, filter: string) => {
+//     const textToSearch = data[field] && data[field].toLowerCase() || '';
+//     return textToSearch.indexOf(filter) !== -1;
+//   }
+//   this.activeUsertableData.filter = value.trim().toLowerCase();
 }
 onClearFilter(){
   this.tableData.filter = '';
   this.filterObject.field='SELECT';
   this.filterObject.value='';
+  this.filterObject.condition='equals'
   this.filterFieldError=false
   this.filterValueError=false;
+  this.onSearch();
 
 }
 onAcctiveUserClearFilter(){
   this.activeUsertableData.filter = '';
   this.activeUserFilterObject.field='SELECT';
   this.activeUserFilterObject.value='';
+  this.activeUserFilterObject.condition='equals'
   this.activeUserFilterFieldError=false
   this.activeUserFilterValueError=false;
+  this.OnActiveUserSearch();
 
+}
+addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+  this.activeUserFilterObject.DateFieldvalue1 =this.datepipe.transform(event.value, 'dd-MMM-YYYY');
+}
+onChangeEvent(event: any){
+
+  console.log(event.target.value);
+  if(event.target.value instanceof Date){
+    this.activeUserFilterObject.DateFieldvalue1 =this.datepipe.transform(event.value, 'dd-MMM-YYYY');
+  }else{
+    this.activeUserFilterObject.DateFieldvalue1=event.target.value;
+    }
+
+  }
+onChangeSelctedField(){
+  console.log('testing')
+  if(this.filterObject.field!='createdDate'){
+    this.filterObject.condition='equals'
+  }else{
+    this.filterObject.condition='between'
+  }
+}
+onChangeActiveSelctedField(){
+  console.log('testing')
+  if(this.activeUserFilterObject.field!='createdDate'){
+    this.activeUserFilterObject.condition='equals'
+  }else{
+    this.activeUserFilterObject.condition='between'
+  }
 }
 applyFilter(filterValue: string) {
   filterValue = filterValue.trim(); // Remove whitespace
@@ -634,7 +774,6 @@ OnActiveUserSearch(){
       delete exportDataForTxt[i].lifecyclecode
       delete exportDataForTxt[i].mobile
       delete exportDataForTxt[i].userStatus
-      delete exportDataForTxt[i].createdDate
       delete exportDataForTxt[i].joinedDate
       delete exportDataForTxt[i].urpcomments
  
@@ -667,7 +806,6 @@ OnActiveUserSearch(){
      delete exportDataForCsv[i].lifecyclecode
      delete exportDataForCsv[i].mobile
      delete exportDataForCsv[i].userStatus
-     delete exportDataForCsv[i].createdDate
      delete exportDataForCsv[i].joinedDate
      delete exportDataForCsv[i].urpcomments
    }
@@ -696,6 +834,7 @@ OnActiveUserSearch(){
      'firstName':any;
      'status':any;
      'version':any;
+     'createdDate':any;
 
 
    }) => {
@@ -705,6 +844,7 @@ OnActiveUserSearch(){
        element['firstName'],
        element['status'],
        element['version'],
+       element['createdDate'],
 
      ];
      rows.push(temp);
@@ -752,7 +892,6 @@ OnActiveUserSearch(){
      delete exportDataForCsv[i].lifecyclecode
      delete exportDataForCsv[i].mobile
      delete exportDataForCsv[i].userStatus
-     delete exportDataForCsv[i].createdDate
      delete exportDataForCsv[i].joinedDate
      delete exportDataForCsv[i].urpcomments
    }
@@ -789,7 +928,6 @@ OnActiveUserSearch(){
       delete tableData[i].lifecyclecode
       delete tableData[i].mobile
       delete tableData[i].userStatus
-      delete tableData[i].createdDate
       delete tableData[i].joinedDate
       delete tableData[i].urpcomments
     }
@@ -853,7 +991,7 @@ OnActiveUserSearch(){
     }
     let activeUserTableData=JSON.parse(JSON.stringify(this.activeUserCopiedData))
     activeUserTableData=JSON.parse(activeUserTableData);
-    const dialogRef=this.dialog.open(ReviewCommentsHistoryComponent,{
+    const dialogRef=this.dialog.open(ActiveAuditTrailComponent,{
       minWidth:"80%",
       data:{userData:this.activeUserSelectedRowData,type:'active_User_AuditTrail',tableData:activeUserTableData}
     })

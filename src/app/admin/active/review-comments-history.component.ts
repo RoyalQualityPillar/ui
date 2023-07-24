@@ -22,7 +22,6 @@ export class ReviewCommentsHistoryComponent implements OnInit{
     ) {}
 
     data:any;
-    isLoading=false;
   ngOnInit() {
     //this.data=this.userData.userData
     console.log(this.userData.userData.employeeId)
@@ -32,11 +31,9 @@ export class ReviewCommentsHistoryComponent implements OnInit{
   }
   onSearch(){
     if(this.userData.type=='AuditTrail'){
-      this.isLoading=true;
     this.adminService.onAuditTrail(this.userData.userData.employeeId).subscribe((data: any) => {
       console.log(data);
       this.data=data.data;
-      this.isLoading=false;
     })
   }else{
     this.adminService.onActiveAuditTrail(this.userData.userData.employeeId).subscribe((data: any) => {
@@ -115,5 +112,5 @@ export class ReviewCommentsHistoryComponent implements OnInit{
       return ''
      }
      }
-    
+  
 }

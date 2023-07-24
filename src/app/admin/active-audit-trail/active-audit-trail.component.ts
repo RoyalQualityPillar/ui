@@ -8,21 +8,21 @@ export interface userData {
   type:any;
   tableData:any;
 }
+
 @Component({
-  selector: 'app-review-comments-history',
-  templateUrl: './review-comments-history.component.html',
-  styleUrls: ['./review-comments-history.component.scss']
+  selector: 'app-active-audit-trail',
+  templateUrl: './active-audit-trail.component.html',
+  styleUrls: ['./active-audit-trail.component.scss']
 })
-export class ReviewCommentsHistoryComponent implements OnInit{
+export class ActiveAuditTrailComponent implements OnInit{
   @ViewChild('htmlData') htmlData!: ElementRef;
 
   constructor(public adminService:AdminService,
-    public dialogRef: MatDialogRef<ReviewCommentsHistoryComponent>,
+    public dialogRef: MatDialogRef<ActiveAuditTrailComponent>,
     @Inject(MAT_DIALOG_DATA) public userData: userData
     ) {}
 
     data:any;
-    isLoading=false;
   ngOnInit() {
     //this.data=this.userData.userData
     console.log(this.userData.userData.employeeId)
@@ -32,11 +32,9 @@ export class ReviewCommentsHistoryComponent implements OnInit{
   }
   onSearch(){
     if(this.userData.type=='AuditTrail'){
-      this.isLoading=true;
     this.adminService.onAuditTrail(this.userData.userData.employeeId).subscribe((data: any) => {
       console.log(data);
       this.data=data.data;
-      this.isLoading=false;
     })
   }else{
     this.adminService.onActiveAuditTrail(this.userData.userData.employeeId).subscribe((data: any) => {
@@ -115,5 +113,5 @@ export class ReviewCommentsHistoryComponent implements OnInit{
       return ''
      }
      }
-    
+  
 }

@@ -29,6 +29,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
+import { DatePipe } from '@angular/common';
 
 
 import { ChangePasswordComponent } from './toolbar/change-password/change-password.component';
@@ -43,6 +44,7 @@ import { LogoutConfirmComponent } from './toolbar/logout-confirm/logout-confirm.
 import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/review-comments-history.component';
 import { MessageDialogComponent } from './common/message-dialog/message-dialog.component';
 import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
+import { ActiveAuditTrailComponent } from './admin/active-audit-trail/active-audit-trail.component';
 
 
 
@@ -63,7 +65,8 @@ import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
     UserProfileCreateComponent,
     LogoutConfirmComponent,
     ReviewCommentsHistoryComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    ActiveAuditTrailComponent
     
   ],
   imports: [
@@ -92,7 +95,7 @@ import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
     MatSnackBarModule,
     MatTabsModule
   ],
-  providers: [CookieService,
+  providers: [CookieService,DatePipe,
   {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })

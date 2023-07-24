@@ -79,6 +79,11 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Modification </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
               </ng-container>
+
+              <ng-container matColumnDef="createdDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.createdDate}} </mat-cell>
+              </ng-container>
     
     
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -100,16 +105,48 @@
             <div style="background-color: ghostwhite;">
               <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
               <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
-              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field">
+              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
                 <option value="SELECT">Please select field</option>
                 <option value="userId">User Id</option>
                 <option value="employeeId">Employee Id</option>
                 <option value="firstName">Employee Name</option>
                 <option value="status">Status</option>
                 <option value="version">Modification No.</option>
+                <option value="createdDate"> Created Date</option>
               </select>
+              <div *ngIf="(this.filterObject.field != 'createdDate')">
+              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+                <option value="SELECT">Please select condition</option>
+                <option value="equals">Equals</option>
+                <option value="contains">Contains</option>
+              </select>
+            </div>
+            <div *ngIf="(this.filterObject.field == 'createdDate')">
+              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+              
+                <option value="between" selected>Between</option>
+              </select>
+            </div>
+              <div *ngIf="(this.filterObject.field == 'createdDate')">
+                <div class="supplier-content">
+                 <div class="sup-head">
+                   <div class="sup-fields"> From:-</div>
+                   <div class="sup-values">  <input type="date" [(ngModel)]="filterObject.DateFieldvalue1"></div>
+               </div>
+               </div>
+             </div>
+               <div *ngIf="(this.filterObject.field == 'createdDate')"style="font-size: 0.95em; width: 100%;margin-top: 5px;">
+                 <div class="supplier-content">
+                   <div class="sup-head">
+                     <div class="sup-fields"> To:-</div>
+                     <div class="sup-values">  <input type="date" [(ngModel)]="filterObject.DateFieldvalue2"></div>
+                 </div>
+                 </div>
+             </div>
+             <div *ngIf="(this.filterObject.field != 'createdDate')">
               <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
                 [(ngModel)]="filterObject.value">
+                </div>
               <!-- </div> -->
               <div class="example-button-row" style="text-align: center;padding-top: 12px;">
                 <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
@@ -222,6 +259,11 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Modification </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
               </ng-container>
+
+              <ng-container matColumnDef="createdDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.createdDate}} </mat-cell>
+              </ng-container>
     
     
               <mat-header-row *matHeaderRowDef="ActiveUserdisplayedColumns"></mat-header-row>
@@ -244,16 +286,48 @@
             <div style="background-color: ghostwhite;">
               <span *ngIf= "this.activeUserFilterFieldError" class="errorMsg">Please select filter field </span>
               <span *ngIf= "this.activeUserFilterValueError" class="errorMsg">Please enter filter field value</span>
-              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field">
+              <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field"(change)="onChangeActiveSelctedField()">
                 <option value="SELECT">Please select field</option>
                 <option value="userId">User Id</option>
                 <option value="employeeId">Employee Id</option>
                 <option value="firstName">Employee Name</option>
                 <option value="status">Status</option>
                 <option value="version">Modification No.</option>
+                <option value="createdDate"> Created Date</option>
               </select>
-              <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+              <div *ngIf="(this.activeUserFilterObject.field != 'createdDate')">
+               <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">
+            <option value="SELECT">Please select condition</option>
+            <option value="equals">Equals</option>
+            <option value="contains">Contains</option>
+          </select>
+        </div>
+        <div *ngIf="(this.activeUserFilterObject.field == 'createdDate')">
+          <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">
+            <option value="between">Between</option>
+          </select>
+        </div>
+              <div *ngIf="(this.activeUserFilterObject.field == 'createdDate')">
+               <div class="supplier-content">
+                <div class="sup-head">
+                  <div class="sup-fields"> From:-</div>
+                  <div class="sup-values">  <input type="date" [(ngModel)]="activeUserFilterObject.DateFieldvalue1"></div>
+              </div>
+              </div>
+            </div>
+              <div *ngIf="(this.activeUserFilterObject.field == 'createdDate')"style="font-size: 0.95em; width: 100%;margin-top: 5px;">
+                <div class="supplier-content">
+                  <div class="sup-head">
+                    <div class="sup-fields"> To:-</div>
+                    <div class="sup-values">  <input type="date" [(ngModel)]="activeUserFilterObject.DateFieldvalue2"></div>
+                </div>
+                </div>
+            </div>
+              <div *ngIf="(this.activeUserFilterObject.field != 'createdDate')">
+                <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
                 [(ngModel)]="activeUserFilterObject.value">
+              </div>
+             
               <!-- </div> -->
               <div class="example-button-row" style="text-align: center;padding-top: 12px;">
                 <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
@@ -287,6 +361,13 @@
         </div>
       </div>
     </div>
+</mat-tab>
+<mat-tab  aria-label="Tab4"> 
+  <ng-template mat-tab-label>
+ <div style="color: white;">
+   User Dashboard
+ </div>
+</ng-template> 
 </mat-tab>
 </mat-tab-group>
 

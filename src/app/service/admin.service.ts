@@ -43,7 +43,7 @@ export class AdminService {
   getActiveUserList(size:any,pageIndex:any){
     const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
     let token = this.cookieService.get('token');
-    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-max"+queryParams;
+    let fetchProfileListURLActive=this.API_URL+"admin/userprofile/get-max-all"+queryParams;
     const httpOptions = {
       headers: new HttpHeaders({      
        'Content-Type':  'application/json',
@@ -64,5 +64,41 @@ export class AdminService {
       })
     };
     return this.http.post(fetchProfileListUrlAll,'',httpOptions)
+  }
+
+  getUserProfileFilterData(body){
+    let token = this.cookieService.get('token');
+    let fetchProfileListUrlAll=this.API_URL+"admin/userprofile/serach";
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchProfileListUrlAll,body,httpOptions)
+  }
+  onAuditTrail(employeeId:any){
+    const queryParams = `?employeeId=${employeeId}`;
+    let token = this.cookieService.get('token');
+    let fetchAuditTrailUrlAll=this.API_URL+"admin/userprofile/get-by-code"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchAuditTrailUrlAll,'',httpOptions)
+  }
+  onActiveAuditTrail(employeeId:any){
+    const queryParams = `?employeeId=${employeeId}`;
+    let token = this.cookieService.get('token');
+    let fetchAuditTrailUrlAll=this.API_URL+"admin/userprofile/get-max-by-code"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchAuditTrailUrlAll,'',httpOptions)
   }
 }
