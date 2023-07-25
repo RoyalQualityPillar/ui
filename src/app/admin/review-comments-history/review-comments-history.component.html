@@ -4,7 +4,7 @@
         <h1 class="customeHeading">Review Comments History</h1>
     </div>
     <div class="col-4 d-flex justify-content-end">
-        <button mat-icon-button  (click)="openPDF()">
+        <button mat-icon-button  (click)="onDownloadPDF()">
             <mat-icon class="close-icon" color="primary">download</mat-icon>
           </button>
           <button mat-icon-button [mat-dialog-close]="true"  >
@@ -16,9 +16,9 @@
     </div> -->
 
     </div>
-<div class="table-box" id="htmlData"style="padding: 25px;background: #edf0f8;" *ngIf="this.data" class="tabOverFlowY">
+<div class="table-box" id="htmlData"  style="padding: 25px;background: #edf0f8;"  class="tabOverFlowY">
     <div style="margin-top: 10px;">
-<div class="sup-head1"style="margin-top: 10px;">
+<div class="sup-head1"style="margin-top: 10px;" id="header">
   <div class="logo2">
       <span style="    float: left;
       font-size: 18px;
@@ -36,12 +36,13 @@
 <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
 mode="indeterminate" ></mat-spinner>
 <!-- <div class="headers">Business Unit Information</div> -->
-<div *ngFor="let data of this.data">
-  <div >
+<div *ngFor="let data of this.data" [attr.id]="'Location' + data.version">
+
+  <div id="data.version">
 <div  class="headers"
 style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
 
-    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Business Unit Information</p>
+    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Business Unit Information-{{data.version}}</p>
 
 </div>
 <div class="supplier-content">
@@ -52,6 +53,7 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
  <div class="sup-head">
    <div class="sup-fields">Status</div>
    <div class="sup-values">{{onChangeStatus(data.status)}}</div>
+   <!-- <div class="sup-values">{{data.version}}</div> -->
  </div>
  <div class="sup-head"style="background-color: #bcceea;">
   <div class="sup-fields">User ID</div>
@@ -135,9 +137,10 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
 </div>
 </div>
 </div>
-bharat
+
 
 </div>
+
 <!-- <div class="sup-head">
   <div class="sup-fields">Initiated On</div>
   <div class="sup-values">{{this.data.joinedDate}}</div>

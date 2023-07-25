@@ -3,6 +3,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { AdminService } from 'src/app/service/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MessageService} from '../../service/message.service';
 export interface userData {
   userData: any;
   type:any;
@@ -17,7 +18,7 @@ export interface userData {
 export class ActiveAuditTrailComponent implements OnInit{
   @ViewChild('htmlData') htmlData!: ElementRef;
 
-  constructor(public adminService:AdminService,
+  constructor(public adminService:AdminService,public messageService:MessageService,
     public dialogRef: MatDialogRef<ActiveAuditTrailComponent>,
     @Inject(MAT_DIALOG_DATA) public userData: userData
     ) {}
@@ -91,6 +92,7 @@ export class ActiveAuditTrailComponent implements OnInit{
     }
   
   public openPDF(): void {
+    this.messageService.sendSnackbar('success','File will get downloaded once its ready');
     let DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
