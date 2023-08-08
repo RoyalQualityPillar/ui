@@ -9,6 +9,7 @@ import { BusinessUnitComponent } from './module/business-unit/business-unit.comp
 import { UserProfileManagementComponent } from './admin/user-profile-management/user-profile-management.component';
 import { MasterDataManagementComponent } from './admin/master-data-management/master-data-management.component';
 import {AuthGuard} from '../interceptor/auth.guard';
+import { LifeCycleHomeComponent } from './admin/life-cycle/life-cycle-home/life-cycle-home.component';
 
 const routes: Routes = [
  // {path:'',redirectTo:'login'},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path:  "module-home-page",component:ModuleHomePageComponent,canActivate:[AuthGuard]},
   {path:  "business-unit",component:BusinessUnitComponent,canActivate:[AuthGuard]},
   {path: "master-data-management",component:MasterDataManagementComponent,canActivate:[AuthGuard]},
-  {path: "user-profile-management",component:UserProfileManagementComponent,canActivate:[AuthGuard]}
+  {path: "user-profile-management",component:UserProfileManagementComponent,canActivate:[AuthGuard]},
+  {path: "life-cycle",component:LifeCycleHomeComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

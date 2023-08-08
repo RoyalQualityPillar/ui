@@ -450,6 +450,9 @@ applyFilterByColumn(){
   if(this.filterObject.field =='createdDate'){
     filetrDataBody.value1=moment(this.filterObject.DateFieldvalue1).format('DD-MM-YYYY HH:mm:ss.SSS');
     filetrDataBody.value2=moment(this.filterObject.DateFieldvalue2).format('DD-MM-YYYY HH:mm:ss.SSS');
+    filetrDataBody.value2=(moment(this.filterObject.DateFieldvalue2).add(1,'days').format('DD-MM-YYYY HH:mm:ss.SSS'));
+   // filetrDataBody.value2=moment(filetrDataBody.value2,'DD-MM-YYYY HH:mm:ss.SSS').add(2,'days');
+   // filetrDataBody.value2=newDate;
     filetrDataBody.condition='between';
   }
   this.isLoading=true;

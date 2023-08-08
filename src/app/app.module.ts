@@ -30,6 +30,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 import { ChangePasswordComponent } from './toolbar/change-password/change-password.component';
@@ -45,6 +46,12 @@ import { ReviewCommentsHistoryComponent } from './admin/review-comments-history/
 import { MessageDialogComponent } from './common/message-dialog/message-dialog.component';
 import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
 import { ActiveAuditTrailComponent } from './admin/active-audit-trail/active-audit-trail.component';
+import { LifeCycleHomeComponent } from './admin/life-cycle/life-cycle-home/life-cycle-home.component';
+import { UserListComponent } from './admin/life-cycle/user-list/user-list.component';
+import { SelectedUserListComponent } from './admin/life-cycle/selected-user-list/selected-user-list.component';
+import { CreateActiveLifeCycleComponent } from './admin/life-cycle/create-active-life-cycle/create-active-life-cycle.component';
+import { CreateAllLifeCycleComponent } from './admin/life-cycle/create-all-life-cycle/create-all-life-cycle.component';
+
 
 
 
@@ -66,7 +73,12 @@ import { ActiveAuditTrailComponent } from './admin/active-audit-trail/active-aud
     LogoutConfirmComponent,
     ReviewCommentsHistoryComponent,
     MessageDialogComponent,
-    ActiveAuditTrailComponent
+    ActiveAuditTrailComponent,
+    LifeCycleHomeComponent,
+    UserListComponent,
+    SelectedUserListComponent,
+    CreateActiveLifeCycleComponent,
+    CreateAllLifeCycleComponent
     
   ],
   imports: [
@@ -93,7 +105,8 @@ import { ActiveAuditTrailComponent } from './admin/active-audit-trail/active-aud
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCheckboxModule
   ],
   providers: [CookieService,DatePipe,
   {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}],

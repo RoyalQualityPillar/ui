@@ -18,4 +18,7 @@ ngOnInit(): void {}
     console.log('working');
     this.route.navigate(['./user-profile-management'])
   }
+  onLifeCycle(){
+    this.route.navigate(['./life-cycle'])
+  }
 }
