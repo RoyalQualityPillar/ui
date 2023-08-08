@@ -51,6 +51,7 @@ import { UserListComponent } from './admin/life-cycle/user-list/user-list.compon
 import { SelectedUserListComponent } from './admin/life-cycle/selected-user-list/selected-user-list.component';
 import { CreateActiveLifeCycleComponent } from './admin/life-cycle/create-active-life-cycle/create-active-life-cycle.component';
 import { CreateAllLifeCycleComponent } from './admin/life-cycle/create-all-life-cycle/create-all-life-cycle.component';
+import { ActiveUserListComponent } from './admin/life-cycle/active-user-list/active-user-list.component';
 
 
 
@@ -78,7 +79,8 @@ import { CreateAllLifeCycleComponent } from './admin/life-cycle/create-all-life-
     UserListComponent,
     SelectedUserListComponent,
     CreateActiveLifeCycleComponent,
-    CreateAllLifeCycleComponent
+    CreateAllLifeCycleComponent,
+    ActiveUserListComponent
     
   ],
   imports: [

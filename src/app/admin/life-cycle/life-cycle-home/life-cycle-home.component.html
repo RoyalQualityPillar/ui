@@ -5,7 +5,14 @@
         All Life Cycle
       </div>
     </ng-template> 
-    <form [formGroup]="LifeCycleForm" style="margin-top: 7px;">
+    <div style="margin-left: 10px;margin-right: 10px;">
+             
+        <button  mat-raised-button color="primary"
+        style="font-size: smaller;background-color: #22773e;height: 25px;margin-left: 86%;width: max-content;" (click)="onCreateAllLifeCyclePOPUP()">Add New Record</button>
+
+      
+    </div>
+    <!-- <form [formGroup]="LifeCycleForm" style="margin-top: 7px;">
     <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
     <div class="btn-group" class="headers"style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                     <div style="float: left;">
@@ -38,7 +45,6 @@
                     </mat-form-field>
                 </div>
                 <div class="row no-gutters ms-1 me-1 dense-4">
-                    <!-- <div formGroupName="id" class="col-6 px-1"> -->
                    <mat-form-field appearance="outline" class="col-4 px-1">
                        <mat-label>Life Cycle Code</mat-label>
                        <input type="text" matInput formControlName="lifeCycleCode" value="LC" [readonly]="isReadOnly"
@@ -49,10 +55,7 @@
                     <mat-select formControlName="status">
                         <mat-option>Select</mat-option>
                         <mat-option *ngFor="let status of statusInfo" [value]="status.code">{{status.description}}</mat-option>
-                        <!-- <mat-option value="1001">ACTIVE</mat-option>
-                        <mat-option value="1004">LOCKED</mat-option> 
-                        <mat-option value="1005">UNLOCKED</mat-option>
-                        <mat-option value="1003">DISABLE</mat-option> -->
+                   
                     </mat-select>
                 </mat-form-field>
                 </div>
@@ -167,8 +170,8 @@
                                 </div>
                             </div>
                         </mat-card>
-                    </form>
-                    <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onSubmit()">Submit</button>
+                    </form> -->
+                    <!-- <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onSubmit()">Submit</button> -->
     </mat-tab>
     <mat-tab  aria-label="Tab6">  
         <ng-template mat-tab-label>
@@ -176,6 +179,13 @@
          Active Life Cycle
        </div>
      </ng-template> 
+     <div style="margin-left: 10px;margin-right: 10px;">
+             
+        <button  mat-raised-button color="primary"
+        style="font-size: smaller;background-color: #22773e;height: 25px;margin-left: 86%;width: max-content;" (click)="onCreateActiveLifeCyclePOPUP()">Add New Record</button>
+
+      
+    </div>
      </mat-tab>
     </mat-tab-group>
     <div style="height: 100px;"></div>

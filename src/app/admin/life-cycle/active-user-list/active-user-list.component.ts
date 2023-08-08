@@ -12,12 +12,13 @@ export interface userData {
   type:any;
 }
 
+
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  selector: 'app-active-user-list',
+  templateUrl: './active-user-list.component.html',
+  styleUrls: ['./active-user-list.component.scss']
 })
-export class UserListComponent implements OnInit  {
+export class ActiveUserListComponent implements OnInit  {
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
@@ -36,7 +37,7 @@ export class UserListComponent implements OnInit  {
     private adminService:AdminService,
     public dialog: MatDialog,
     private messageService:MessageService,
-    public dialogRef: MatDialogRef<UserListComponent>,
+    public dialogRef: MatDialogRef<ActiveUserListComponent>,
     @Inject(MAT_DIALOG_DATA) public userData: userData){}
 
     ngOnInit(): void {
@@ -51,7 +52,7 @@ export class UserListComponent implements OnInit  {
       this.size=GlobalConstants.size;
       this.dataSource=null;
       this.pageIndex=0;
-      this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
+      this.adminService.getActiveUserList(this.size,this.pageIndex).subscribe((data: any) => {
         console.log(data)
         console.log(data.data.content)
         this.data1=data.data.content;
@@ -99,7 +100,7 @@ onPaginationCall(){
   this.pageIndex=this.pageIndex+1;
   this.size=GlobalConstants.size;
   this.isLoading=true;
-  this.adminService.getUserProfileList(this.size,this.pageIndex,this.selectedTab).subscribe((data: any) => {
+  this.adminService.getActiveUserList(this.size,this.pageIndex).subscribe((data: any) => {
     this.newList=data.data.content;
 
     // this.newList.forEach(element =>{
@@ -195,3 +196,4 @@ onSave(){
   
 }
 }
+

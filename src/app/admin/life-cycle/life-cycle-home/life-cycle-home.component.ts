@@ -9,6 +9,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { SelectedUserListComponent } from '../selected-user-list/selected-user-list.component';
+import { CreateAllLifeCycleComponent } from '../create-all-life-cycle/create-all-life-cycle.component';
+import { CreateActiveLifeCycleComponent } from '../create-active-life-cycle/create-active-life-cycle.component';
 
 @Component({
   selector: 'app-life-cycle-home',
@@ -208,5 +210,31 @@ dialogRef.afterClosed().subscribe(dialogResult => {
 }
 onSubmit(){
   //todo
+}
+onCreateAllLifeCyclePOPUP(){
+  const dialogRef = this.dialog.open(CreateAllLifeCycleComponent, {
+    minWidth: "80%",
+    data:{},
+  });
+  
+  dialogRef.afterClosed().subscribe(dialogResult => {
+    if(dialogResult){
+   console.log(dialogResult);
+  }
+    
+  }); 
+}
+onCreateActiveLifeCyclePOPUP(){
+  const dialogRef = this.dialog.open(CreateActiveLifeCycleComponent, {
+    minWidth: "80%",
+    data:{},
+  });
+  
+  dialogRef.afterClosed().subscribe(dialogResult => {
+    if(dialogResult){
+   console.log(dialogResult);
+  }
+    
+  }); 
 }
 }
