@@ -34,7 +34,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
  // dataSource = ELEMENT_DATA;
  dataSource:any;
  filterObject:any;
-
+ isLoading=false;
   constructor(private _liveAnnouncer: LiveAnnouncer,
               private route: Router,
               private router: ActivatedRoute,
@@ -60,6 +60,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   onSearch(){
     this.pageIndex=0;
     this.size=GlobalConstants.size;
+    this.isLoading=true;
     this.lifeCycleDataService.getLifeCycleInfo(this.pageIndex,this.size).subscribe((data: any) => {
       this.dataSource = data.data.content;
       if (this.dataSource) {
@@ -72,6 +73,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
         this.tableDataLoaded=true;
         this.toolbarService.setTableData(this.dataSource)
     }
+    this.isLoading=false;
     })
     // this.dataSource=this.toolbarService.getData();
     // if(this.dataSource){
@@ -364,7 +366,6 @@ pageChanged(event){
   }
 }
 pageIndex=0;
-isLoading=false;
 newList:any;
 onPaginationCall(){
   console.log('calling');

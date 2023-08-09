@@ -17,20 +17,22 @@
         <div class="tabOverFlowY">
   <div class="adjust">
   <div class="example-table-container">
-    <!-- <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
-          
-        <div class="btn-group" class="headers"
-          style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
-          <div style="float: left;">
-            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">User Profile Information</p>
-          </div>
-          <div style="float: right;">
-          
-            <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">
-            
-          </div>
+    <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+      <div class="btn-group" class="headers"
+        style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+        <div style="float: left;">
+          <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">User List</p>
         </div>
-      </div> -->
+        <div style="float: right;">
+        
+          <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">
+          
+        </div>
+      </div>
+    </div>
+
+
+    <div class="table-box" style="margin-left: 10px; margin-right: 10px;">
 
 
 
@@ -72,7 +74,7 @@
         <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
         </mat-paginator>
 
-      </div>
+      </div></div>
   </div>
   <div class="buttonBox">
     <div style="background-color: #198754;padding: 5px; height: 100%;">
@@ -85,6 +87,20 @@
 </div>
 </div>
   <div class="filter">
+    <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+      <div class="btn-group" class="headers"
+        style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+        <div style="float: left;">
+          <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Selected User List</p>
+        </div>
+        <div style="float: right;">
+        
+          <input type="text" (keyup)="selectedApplyFilter(selectedFilterField.value)" #selectedFilterField placeholder="Search">
+          
+        </div>
+      </div>
+    </div>
+    <div class="table-box" style="margin-left: 10px; margin-right: 10px;">
     <div style="background-color: #167448;padding: 5px;">
     
         <mat-table [dataSource]="removedTable" matTableExporter #exporter="matTableExporter"
@@ -124,6 +140,7 @@
        </mat-paginator>
 
      </div>
+  </div>
   </div>
   </div>
   <div style="margin-bottom: 50px;"></div>

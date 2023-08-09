@@ -90,6 +90,12 @@ applyFilter(filterValue: string) {
   console.log(this.tableData)
   console.log(this.tableData)
 }
+selectedApplyFilter(filterValue: string){
+  filterValue = filterValue.trim(); // Remove whitespace
+  filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+  console.log(filterValue)
+  this.removedTable.filter = filterValue;
+}
 newList:any;
 previousTableList:any;
 paginationFinalList=[];
