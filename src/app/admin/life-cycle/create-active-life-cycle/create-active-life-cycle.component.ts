@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { SelectedUserListComponent } from '../selected-user-list/selected-user-list.component';
 import { ActiveUserListComponent } from '../active-user-list/active-user-list.component';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class CreateActiveLifeCycleComponent implements OnInit{
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
 
   LifeCycleForm: FormGroup;
-  AddedUserdisplayedColumns: string[] = ['index','role','userList','download', 'signature','print','esign'];
+  AddedUserdisplayedColumns: string[] = ['stage','role','userList','download', 'signature','print','esign','allUser'];
   constructor(public fb: FormBuilder,
     private adminService:AdminService,
     public messageService:MessageService,
@@ -35,7 +36,7 @@ export class CreateActiveLifeCycleComponent implements OnInit{
       module:['',Validators.required],
       lifeCycleCode:['',Validators.required],
       status:['',Validators.required],
-      role:['',Validators.required]
+      comments:[''],
     })
   }
   deptCodeList:any;
@@ -102,7 +103,8 @@ selectedDataList={
   download:false,
   signature:false,
   print:false,
-  esign:false
+  esign:false,
+  allUser :false,
 }
 UserRoleTable:any[]=[]
 //selectedDataList:any;
@@ -111,15 +113,23 @@ tableData:any;
 onCreateSelectedDataList(){
 console.log("click")
 this.selectedDataList.userList=this.selectedUser;
-let index =this.UserRoleTable.length;
+let useridList=[]
+console.log(this.UserRoleTable)
+this.selectedUser.forEach(ele=>{
+  console.log(ele.userId)
+  useridList.push(ele.userId)
+})
+console.log(useridList)
+let stage =this.UserRoleTable.length;
 this.UserRoleTable.push({
-  index:++index,
+  stage:++stage,
   role:this.selectedDataList.role,
   download:this.selectedDataList.download,
   signature:this.selectedDataList.signature,
   print:this.selectedDataList.print,
   esign:this.selectedDataList.esign,
-  userList:this.selectedDataList.userList
+  allUser:this.selectedDataList.allUser ,
+  userList:useridList
 })
 this.tableData = new MatTableDataSource(this.UserRoleTable);
 this.tableData.paginator = this.paginator;
@@ -144,7 +154,35 @@ onDisplayList(row:any){
   });
   }
   onSubmit(){
-    //todo
+     //todo
+     let body={
+      lifeCycleStageList:[],
+      businessUnit:this.LifeCycleForm.controls['businessUnit'].value,
+      department:this.LifeCycleForm.controls['department'].value,
+      module:this.LifeCycleForm.controls['module'].value,
+      lifecycle:this.LifeCycleForm.controls['lifeCycleCode'].value,
+      status:this.LifeCycleForm.controls['status'].value,
+      //role:this.LifeCycleForm.controls['role'].value,
+      comments:this.LifeCycleForm.controls['comments'].value,
+    }
+   
+    body.lifeCycleStageList=this.UserRoleTable
+    console.log(this.UserRoleTable)
+    console.log(this.LifeCycleForm.value)
+    let merge =Object.assign(this.UserRoleTable,this.LifeCycleForm.value);
+    console.log(merge)
+    this.isLoading=true;
+    this.adminService.createAllLifeCycle(body).subscribe((data: any) => {
+      console.log(data)
+      this.isLoading=false;
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+      }else{
+        this.messageService.sendSnackbar('success',data.status);
+      }
+    })
   }
   onRole(role){
     return this.LifeCycleForm.controls['module'].value+" - "+role

@@ -9,6 +9,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { SelectedUserListComponent } from '../selected-user-list/selected-user-list.component';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-create-all-life-cycle',
@@ -25,7 +26,7 @@ export class CreateAllLifeCycleComponent implements OnInit{
   constructor(public fb: FormBuilder,
     private adminService:AdminService,
     public messageService:MessageService,
-    public dialog: MatDialog,){
+    public dialog: MatDialog){
 
     this.LifeCycleForm = this.fb.group({
       businessUnit:['',Validators.required],
@@ -33,7 +34,7 @@ export class CreateAllLifeCycleComponent implements OnInit{
       module:['',Validators.required],
       lifeCycleCode:['',Validators.required],
       status:['',Validators.required],
-      role:['',Validators.required]
+      comments:[''],
     })
   }
   deptCodeList:any;
@@ -143,6 +144,33 @@ onDisplayList(row:any){
   }
   onSubmit(){
     //todo
+    let body={
+      lifeCycleStageList:[],
+      businessUnit:this.LifeCycleForm.controls['businessUnit'].value,
+      department:this.LifeCycleForm.controls['department'].value,
+      module:this.LifeCycleForm.controls['module'].value,
+      lifecycle:this.LifeCycleForm.controls['lifeCycleCode'].value,
+      status:this.LifeCycleForm.controls['status'].value,
+      //role:this.LifeCycleForm.controls['role'].value,
+      comments:this.LifeCycleForm.controls['comments'].value,
+    }
+    body.lifeCycleStageList=this.UserRoleTable
+    console.log(this.UserRoleTable)
+    console.log(this.LifeCycleForm.value)
+    let merge =Object.assign(this.UserRoleTable,this.LifeCycleForm.value);
+    console.log(merge)
+    this.isLoading=true;
+    this.adminService.createAllLifeCycle(body).subscribe((data: any) => {
+      console.log(data)
+      this.isLoading=false;
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+      }else{
+        this.messageService.sendSnackbar('success',data.status);
+      }
+    })
   }
   onRole(role){
     return this.LifeCycleForm.controls['module'].value+" - "+role

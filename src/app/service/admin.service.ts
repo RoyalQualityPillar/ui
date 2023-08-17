@@ -101,4 +101,18 @@ export class AdminService {
     };
     return this.http.post(fetchAuditTrailUrlAll,'',httpOptions)
   }
+  createAllLifeCycle(body:any){
+    console.log(body)
+    let token = this.cookieService.get('token');
+    
+    let createLifeCycleUrlAll=this.API_URL+"admin/lifecycle/create";
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(createLifeCycleUrlAll,body,httpOptions)
+
+  }
 }

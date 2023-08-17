@@ -12,6 +12,10 @@
         </div>
         </div>
 <div class="tabOverFlowY">
+    <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+        <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are denoted by an asterisk(<span
+                style="color: red">*</span>).</span>
+    </div>
 <form [formGroup]="LifeCycleForm" style="margin-top: 7px;">
     <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
     <div class="btn-group" class="headers"style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
@@ -164,7 +168,7 @@
                                         <div class="row no-gutters ms-1 me-1">
                                             <mat-form-field appearance="outline" style="width: 100%;">
                                                 <mat-label>Comments</mat-label>
-                                                <textarea type="text" matInput 
+                                                <textarea type="text" matInput formControlName="comments"
                                                     placeholder="Comments">
                                                 </textarea>
                                             </mat-form-field>
@@ -174,6 +178,6 @@
                             </div>
                         </mat-card>
                     </form>
-                    <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onSubmit()">Submit</button>
+                    <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;"[class.isDisabledBtn]="LifeCycleForm.invalid" (click)="onSubmit()" >Submit</button>
                 </div>
                     </div>
