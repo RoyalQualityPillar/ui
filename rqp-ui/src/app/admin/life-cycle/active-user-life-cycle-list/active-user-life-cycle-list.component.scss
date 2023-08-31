@@ -6,6 +6,20 @@
     padding-left: 5px;
     padding-top: 4px;
     }
+    .customeHeading{
+        margin-top: 19px;
+        margin-bottom: 1px;
+        font-size: 15px;
+        font-weight: 700;
+        color:  #0472b6;
+      }
+      .tabOverFlowY{
+        max-height: 400px;
+        min-height: 400px;
+        overflow-y: auto;
+        margin-top: 5px;
+        overflow-x: hidden;
+    } 
     mat-row:nth-child(odd) {
         background-color :rgb(204 217 255);
          

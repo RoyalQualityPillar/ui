@@ -115,4 +115,76 @@ export class AdminService {
     return this.http.post(createLifeCycleUrlAll,body,httpOptions)
 
   }
+
+  // LIFE CYCLE
+  getAllLifeCycleList(size:any,pageIndex:any){
+    const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
+    let token = this.cookieService.get('token');
+    let fetchAllLifeCycleListUrlAll=this.API_URL+"admin/lifecycle/get-all"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchAllLifeCycleListUrlAll,'',httpOptions)
+  }
+  getActiveLifeCycleList(size:any,pageIndex:any){
+    const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
+    let token = this.cookieService.get('token');
+    let fetchAllLifeCycleListUrlAll=this.API_URL+"admin/lifecycle/get-max-all"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchAllLifeCycleListUrlAll,'',httpOptions)
+  }
+  getFilterDataForAllLifeCycle(body:any){
+    let token = this.cookieService.get('token');
+    let fetchProfileListUrlAll=this.API_URL+"admin/lifecycle/search";
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchProfileListUrlAll,body,httpOptions)
+  }
+  getByLCNoList(lcNo:any){
+    const queryParams = `?lcnum=${lcNo}`;
+    let token = this.cookieService.get('token');
+    let fetchLcNumUrl=this.API_URL+"admin/lifecycle/userlc/get-by-lcnum"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchLcNumUrl,'',httpOptions)
+  }
+  getUpdateFormData(lcNo:any,stage:any){
+    const queryParams = `?lcnum=${lcNo}&stage=${stage}`;
+    let token = this.cookieService.get('token');
+    let fetchLcNumUrl=this.API_URL+"admin/lifecycle/userlc/get-by-lcnum-stage"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(fetchLcNumUrl,'',httpOptions)
+  }
+  getUpdate(body:any){
+    let token = this.cookieService.get('token');
+    let updateUrl=this.API_URL+"admin/lifecycle/userlc/update-lc-previlege";
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(updateUrl,body,httpOptions)
+  }
 }
