@@ -4,174 +4,197 @@
       <div style="color: white;">
         All Life Cycle
       </div>
-    </ng-template> 
-    <div style="margin-left: 10px;margin-right: 10px;">
-             
-        <!-- <button  mat-raised-button color="primary"
-        style="font-size: smaller;background-color: #22773e;height: 25px;margin-left: 86%;width: max-content;" (click)="onCreateAllLifeCyclePOPUP()">Add New Record</button> -->
-
-      
-    </div>
-    <!-- <form [formGroup]="LifeCycleForm" style="margin-top: 7px;">
-    <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-    <div class="btn-group" class="headers"style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
-                    <div style="float: left;">
-                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Life Cycle Header</p>
-                    </div>
-                </div>
-                <div style="margin-top: 5px;">
-                <div class="row no-gutters ms-1 me-1 dense-4">
+    </ng-template>    
     
-                    <mat-form-field appearance="outline" class="col-4 px-1">
-                        <mat-label>Business Unit</mat-label>
-                        <mat-select formControlName="businessUnit">
-                            <mat-option>Select</mat-option>
-                            <mat-option *ngFor="let plant of plantList" [value]="plant">{{plant}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-4 px-1">
-                        <mat-label>Department</mat-label>
-                        <mat-select formControlName="department">
-                            <mat-option>Select</mat-option>
-                            <mat-option *ngFor="let deptCode of deptCodeList" [value]="deptCode">{{deptCode}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-4 px-1">
-                        <mat-label>Module</mat-label>
-                        <mat-select formControlName="module">
-                            <mat-option>Select</mat-option>
-                            <mat-option *ngFor="let module of moduleList" [value]="module">{{module}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="row no-gutters ms-1 me-1 dense-4">
-                   <mat-form-field appearance="outline" class="col-4 px-1">
-                       <mat-label>Life Cycle Code</mat-label>
-                       <input type="text" matInput formControlName="lifeCycleCode" value="LC" [readonly]="isReadOnly"
-                           placeholder="Life Cycle Code" maxlength="6">
-                   </mat-form-field>
-                   <mat-form-field appearance="outline" class="col-4 px-1">
-                    <mat-label>Status</mat-label>
-                    <mat-select formControlName="status">
-                        <mat-option>Select</mat-option>
-                        <mat-option *ngFor="let status of statusInfo" [value]="status.code">{{status.description}}</mat-option>
-                   
-                    </mat-select>
-                </mat-form-field>
-                </div>
-            </div>
-            </mat-card>
-            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-                <div class="btn-group" class="headers"style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
-                                <div style="float: left;">
-                                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Life Cycle Stage</p>
-                                </div>
-                            </div>
-                            <div> 
-                                <div class="row no-gutters ms-1 me-1 dense-4">
-                             
-                                <mat-form-field appearance="outline" class="col-2 px-1">
-                                    <mat-label>Role</mat-label>
-                                    <mat-select [(ngModel)]="selectedDataList.role"[ngModelOptions]="{standalone: true}">
-                                        <mat-option>Select</mat-option>
-                                        <mat-option *ngFor="let roles of rolesList" [value]="roles">{{roles}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <div class="col-2 px-1" style="margin-top: 0px;">
-                                    <button mat-raised-button color="primary" 
-                                    style="background-color: #295ea3;font-size: smaller;width: 100%;"(click)="onUserList()">User List</button>
-                                </div>
-                                <div class="col-2 px-1">
-                                    <mat-checkbox class="example-margin" [(ngModel)]="selectedDataList.download"[ngModelOptions]="{standalone: true}"><span style="font-weight: 700;">Download</span></mat-checkbox>
-                                </div>
-                                <div class="col-2 px-1">
-                                    <mat-checkbox class="example-margin"[(ngModel)]="selectedDataList.signature"[ngModelOptions]="{standalone: true}"><span style="font-weight: 700;">Signature</span></mat-checkbox>
-                                </div>
-                                <div class="col-2 px-1">
-                                    <mat-checkbox class="example-margin"[(ngModel)]="selectedDataList.print"[ngModelOptions]="{standalone: true}"><span style="font-weight: 700;">Print</span></mat-checkbox>
-                                </div>
-                                <div class="col-2 px-1">
-                                    <mat-checkbox class="example-margin"[(ngModel)]="selectedDataList.esign"[ngModelOptions]="{standalone: true}"><span style="font-weight: 700;">E-sign</span></mat-checkbox>
-                                </div>
-                                </div>
-
-                            </div>
-                            <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onCreateSelectedDataList()"> Add Row</button>
-                            <mat-card style="margin-top: 2px;background-color: #fdfdfd;" *ngIf="this.UserRoleTable.length>0">
+    <div>
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
+      mode="indeterminate" ></mat-spinner>
+          <div class="adjust">
+        
+          
+          
+            <div class="example-table-container">
+                <div>
+                 <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+                    <div  class="headers"
+                      style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+                      <div class="row">
+                        <div class="row no-gutters">
+                            <div style="padding-left: 5px; width: 60%;">
+                                <p style="color: aliceblue;font-size: 12px;margin-top: 2px; margin-left: 5px;">Life Cycle</p>
+                              </div>
+                              <div style="width: 40%;">
+                                <div style="margin-left: 66%;">
+                                <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">                     
+                              </div>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                
+                 <div>
+                    </div>
+                  <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
+    
+                 
+                            <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
                                 <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
                                 style="background-color: ghostwhite;" matSort id="dataTable">
-                         
-                               
-                                <ng-container matColumnDef="role">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.role}} </mat-cell>
-                                  </ng-container>
-                             
-                       
-                              
-                                <ng-container matColumnDef="userList">
-                                    <mat-header-cell *matHeaderCellDef>User List </mat-header-cell>
+                                <ng-container matColumnDef="action">
+                                    <mat-header-cell *matHeaderCellDef>Selection </mat-header-cell>
                                     <mat-cell *matCellDef="let row">
-                                    <button mat-icon-button  style="margin: 0px;" (click)="onDisplayList(row)">
-                                    <mat-icon class="close-icon" color="primary">description</mat-icon>
-                                    </button> List
+                                      <mat-radio-button
+                                      (click)="$event.stopPropagation()"
+                                      (change)="$event ? selection.toggle(row):null"
+                                      [checked]="selection.isSelected(row)"
+                                      (keyup.enter)="handleKeyPress('view')"
+                                       class="smallRadio"></mat-radio-button>
                                     </mat-cell>
                                   </ng-container>
+                               
+                                <ng-container matColumnDef="lcnum">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>LC no.</mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.lcnum}} </mat-cell>
+                                  </ng-container>
+                             
+                                <ng-container matColumnDef="businessunit">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.businessunit}} </mat-cell>
+                                  </ng-container>
                        
                                
-                                <ng-container matColumnDef="download">
-                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Download </mat-header-cell>
-                                  <mat-cell *matCellDef="let row"> {{row.download}}</mat-cell>
+                                <ng-container matColumnDef="comments">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Comments </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.comments}}</mat-cell>
                                 </ng-container>
-                                <ng-container matColumnDef="signature">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Signature </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.signature}}</mat-cell>
+                            
+                                  <ng-container matColumnDef="createdon">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Created </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.createdon}}</mat-cell>
                                   </ng-container>
-                                  <ng-container matColumnDef="print">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Print </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.print}}</mat-cell>
+
+                                  <ng-container matColumnDef="department">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Department </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.department}}</mat-cell>
                                   </ng-container>
-                                  <ng-container matColumnDef="esign">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header>E-sign </mat-header-cell>
-                                    <mat-cell *matCellDef="let row"> {{row.esign}}</mat-cell>
+
+                                  <ng-container matColumnDef="lifecycle">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Life Cycle </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.lifecycle}}</mat-cell>
                                   </ng-container>
-                                <mat-header-row *matHeaderRowDef="AddedUserdisplayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: AddedUserdisplayedColumns;"></mat-row>
+
+                                  <ng-container matColumnDef="module">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Module </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.module}}</mat-cell>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.status}}</mat-cell>
+                                  </ng-container>
+
+                                  <ng-container matColumnDef="version">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header>Version </mat-header-cell>
+                                    <mat-cell *matCellDef="let row"> {{row.version}}</mat-cell>
+                                  </ng-container>
+                                <mat-header-row *matHeaderRowDef="allLifeCycleisplayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: allLifeCycleisplayedColumns;"></mat-row>
                               </mat-table> 
                        
-                              <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
+                              <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="pageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
                               </mat-paginator>
+                              <!-- <button mat-raised-button color="primary" 
+                              style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onReviewUserData()">User List</button> -->
                             </mat-card>
-                        </mat-card>
-
-
-                        <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
-                            
-                            <div class="btn-group" class="headers"
-                                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
-                                <div style="float: left;">
-                                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
-                                </div>
+</div>
+</div>
                             </div>
-                
-                
-                            <div>
-                                <div class="col-12">
-                                    <div class="p-2">
-                                        <div class="row no-gutters ms-1 me-1">
-                                            <mat-form-field appearance="outline" style="width: 100%;">
-                                                <mat-label>Comments</mat-label>
-                                                <textarea type="text" matInput 
-                                                    placeholder="Comments">
-                                                </textarea>
-                                            </mat-form-field>
-                                        </div>
+
+                            <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
+                                <div class="filter-box">
+                                  <!-- Filter part-->
+                                  <div class="headers" style="height: 30px;">Data Filter</div>
+                                  <div style="background-color: ghostwhite;">
+                                    <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
+                                    <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
+                                    <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
+                                      <option value="SELECT">Please select field</option>
+                                      <option value="lcnum">LC No.</option>
+                                      <option value="businessunit">Business Unit</option>
+                                      <option value="createdon">Created Date</option>
+                                      <option value="department">Department</option>
+                                      <option value="module">Module</option>
+                                      <option value="status"> Status</option>
+                                      <option value="version"> Version</option>
+                                    </select>
+                                    <div *ngIf="(this.filterObject.field != 'createdon')">
+                                    <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+                                      <option value="SELECT">Please select condition</option>
+                                      <option value="equals">Equals</option>
+                                      <option value="contains">Contains</option>
+                                    </select>
+                                  </div>
+                                  <div *ngIf="(this.filterObject.field == 'createdon')">
+                                    <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+                                    
+                                      <option value="between" selected>Between</option>
+                                    </select>
+                                  </div>
+                                    <div *ngIf="(this.filterObject.field == 'createdon')">
+                                      <div class="supplier-content">
+                                       <div class="sup-head">
+                                         <div class="sup-fields"> From:-</div>
+                                         <div class="sup-values">  <input type="date" [(ngModel)]="filterObject.DateFieldvalue1"></div>
+                                     </div>
+                                     </div>
+                                   </div>
+                                     <div *ngIf="(this.filterObject.field == 'createdon')"style="font-size: 0.95em; width: 100%;margin-top: 5px;">
+                                       <div class="supplier-content">
+                                         <div class="sup-head">
+                                           <div class="sup-fields"> To:-</div>
+                                           <div class="sup-values">  <input type="date" [(ngModel)]="filterObject.DateFieldvalue2"></div>
+                                       </div>
+                                       </div>
+                                   </div>
+                                   <div *ngIf="(this.filterObject.field != 'createdon')">
+                                    <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+                                      [(ngModel)]="filterObject.value">
+                                      </div>
+                                    <!-- </div> -->
+                                    <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+                                      <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+                                      (click)="applyFilterByColumn()">Apply</button>
+                                    <button mat-raised-button color="primary"
+                                      style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onClearFilter()">Clear</button>
                                     </div>
+                                  
+                                  </div>
                                 </div>
-                            </div>
-                        </mat-card>
-                    </form> -->
-                    <!-- <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onSubmit()">Submit</button> -->
+                                <div class="filter-box">
+                                  <!-- Filter part-->
+                                  <div class="headers" style="height: 30px;">Export</div>
+                                  <div style="background-color: ghostwhite;">
+                                    <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
+                                    <div style="text-align: center;">
+                                      
+                                      <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+                        
+                                          <button (click)="downloadTxt()" class="exportIconBtn"><img class="exportIcon"
+                                            src="../../../assets/txt.png"></button>
+                                      <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+                                          src="../../../assets/csv.png"></button>
+                                      <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+                                      
+                         
+                                           <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                                            src="../../../assets/excel.png"></button> 
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>                        
+</div>
+</div>
     </mat-tab>
     <mat-tab  aria-label="Tab6">  
         <ng-template mat-tab-label>
@@ -179,13 +202,200 @@
          Active Life Cycle
        </div>
      </ng-template> 
-     <div style="margin-left: 10px;margin-right: 10px;">
-             
-        <button  mat-raised-button color="primary"
-        style="font-size: smaller;background-color: #22773e;height: 25px;margin-left: 86%;width: max-content;" (click)="onCreateActiveLifeCyclePOPUP()">Add New Record</button>
+   
 
-      
-    </div>
+    <div>
+      <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
+    mode="indeterminate" ></mat-spinner>
+        <div class="adjust">
+          <div class="example-table-container">
+            <div style="margin-left: 10px;margin-right: 10px;">     
+              <button  mat-raised-button color="primary"
+              style="font-size: smaller;background-color: #22773e;height: 25px;margin-left: 86%;width: max-content;" (click)="onCreateActiveLifeCyclePOPUP()">Add New Record</button>
+          </div>
+              <div>
+               <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+                  <div  class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+                    <div class="row">
+                      <div class="row no-gutters">
+                          <div style="padding-left: 5px; width: 60%;">
+                              <p style="color: aliceblue;font-size: 12px;margin-top: 2px; margin-left: 5px;">Active Life Cycle</p>
+                            </div>
+                            <div style="width: 40%;">
+                              <div style="margin-left: 66%;">
+                              <input type="text" (keyup)="activeLifeCycleApplyFilter(activeUserfilterField.value)" #activeUserfilterField placeholder="Search">                     
+                            </div>
+                            </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+              
+               <div>
+                  </div>
+                <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
+  
+               
+                          <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
+                              <mat-table [dataSource]="activeUsertableData" matTableExporter #exporter="matTableExporter"
+                              style="background-color: ghostwhite;" matSort id="activeUserDataTable">
+                              <ng-container matColumnDef="action">
+                                  <mat-header-cell *matHeaderCellDef>Selection </mat-header-cell>
+                                  <mat-cell *matCellDef="let row">
+                                    <!-- <mat-radio-button
+                                    (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row):null"
+                                    [checked]="selection.isSelected(row)"
+                                    (keyup.enter)="handleKeyPress('view')"
+                                     class="smallRadio"></mat-radio-button> -->
+                                     <mat-radio-button name="selectuop" (change)="setSelectedId(row)">
+                                      </mat-radio-button>
+                                  </mat-cell>
+                                </ng-container>
+                             
+                              <ng-container matColumnDef="lcnum">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>LC no.</mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.lcnum}} </mat-cell>
+                                </ng-container>
+                           
+                              <ng-container matColumnDef="businessunit">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit </mat-header-cell>
+                                      <mat-cell *matCellDef="let row"> {{row.businessunit}} </mat-cell>
+                                </ng-container>
+                     
+                             
+                              <ng-container matColumnDef="comments">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Comments </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.comments}}</mat-cell>
+                              </ng-container>
+                          
+                                <ng-container matColumnDef="createdon">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Created </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.createdon}}</mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="department">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Department </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.department}}</mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="lifecycle">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Life Cycle </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.lifecycle}}</mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="module">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Module </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.module}}</mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.status}}</mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="version">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header>Version </mat-header-cell>
+                                  <mat-cell *matCellDef="let row"> {{row.version}}</mat-cell>
+                                </ng-container>
+                              <mat-header-row *matHeaderRowDef="activeLifeCycleisplayedColumns"></mat-header-row>
+                              <mat-row *matRowDef="let row; columns: activeLifeCycleisplayedColumns;"></mat-row>
+                            </mat-table> 
+                     
+                            <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="pageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
+                            </mat-paginator>
+                            <button mat-raised-button color="primary" 
+                            style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onReviewUserData()">User List</button>
+                          </mat-card>
+</div>
+</div>
+                          </div>
+
+                          <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
+                              <div class="filter-box">
+                                <!-- Filter part-->
+                                <div class="headers" style="height: 30px;">Data Filter</div>
+                                <div style="background-color: ghostwhite;">
+                                  <span *ngIf= "this.activeUserFilterFieldError" class="errorMsg">Please select filter field </span>
+                                  <span *ngIf= "this.activeUserFilterValueError" class="errorMsg">Please enter filter field value</span>
+                                  <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field" (change)="onChangeActiveSelctedField()">
+                                    <option value="SELECT">Please select field</option>
+                                    <option value="lcnum">LC No.</option>
+                                    <option value="businessunit">Business Unit</option>
+                                    <option value="createdon">Created Date</option>
+                                    <option value="department">Department</option>
+                                    <option value="module">Module</option>
+                                    <option value="status"> Status</option>
+                                    <option value="version"> Version</option>
+                                  </select>
+                                  <div *ngIf="(this.activeUserFilterObject.field != 'createdon')">
+                                  <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">
+                                    <option value="SELECT">Please select condition</option>
+                                    <option value="equals">Equals</option>
+                                    <option value="contains">Contains</option>
+                                  </select>
+                                </div>
+                                <div *ngIf="(this.activeUserFilterObject.field == 'createdon')">
+                                  <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">
+                                  
+                                    <option value="between" selected>Between</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="(this.activeUserFilterObject.field == 'createdon')">
+                                    <div class="supplier-content">
+                                     <div class="sup-head">
+                                       <div class="sup-fields"> From:-</div>
+                                       <div class="sup-values">  <input type="date" [(ngModel)]="activeUserFilterObject.DateFieldvalue1"></div>
+                                   </div>
+                                   </div>
+                                 </div>
+                                   <div *ngIf="(this.activeUserFilterObject.field == 'createdon')"style="font-size: 0.95em; width: 100%;margin-top: 5px;">
+                                     <div class="supplier-content">
+                                       <div class="sup-head">
+                                         <div class="sup-fields"> To:-</div>
+                                         <div class="sup-values">  <input type="date" [(ngModel)]="activeUserFilterObject.DateFieldvalue2"></div>
+                                     </div>
+                                     </div>
+                                 </div>
+                                 <div *ngIf="(this.activeUserFilterObject.field != 'createdon')">
+                                  <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+                                    [(ngModel)]="activeUserFilterObject.value">
+                                    </div>
+                                  <!-- </div> -->
+                                  <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+                                    <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+                                    (click)="applyActiveUserFilterByColumn()">Apply</button>
+                                  <button mat-raised-button color="primary"
+                                    style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onAcctiveUserClearFilter()">Clear</button>
+                                  </div>
+                                
+                                </div>
+                              </div>
+                              <div class="filter-box">
+                                <!-- Filter part-->
+                                <div class="headers" style="height: 30px;">Export</div>
+                                <div style="background-color: ghostwhite;">
+                                  <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
+                                  <div style="text-align: center;">
+                                    
+                                    <button *ngIf="this.activeUserTableLoded" [cdkCopyToClipboard]="activeUserCopyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+                      
+                                        <button (click)="activeUserDownloadTxt()" class="exportIconBtn"><img class="exportIcon"
+                                          src="../../../assets/txt.png"></button>
+                                    <button (click)="activeUserDownloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+                                        src="../../../assets/csv.png"></button>
+                                    <button (click)="activeUserDownloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+                                    
+                       
+                                         <button (click)="activeUserDownloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                                          src="../../../assets/excel.png"></button> 
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                        
+</div>
+</div>
      </mat-tab>
     </mat-tab-group>
     <div style="height: 100px;"></div>
