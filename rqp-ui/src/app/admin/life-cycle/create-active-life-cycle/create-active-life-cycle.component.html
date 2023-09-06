@@ -1,6 +1,6 @@
 
 <div class="container-fluid">
-    <div class="row no-gutters">
+    <div class="row no-gutters" style="background-color: #18155b;">
         <div class="col-10 d-flex justify-content-start">
             <h1 class="customeHeading">Create Life Cycle</h1>
         </div>
@@ -58,7 +58,11 @@
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="status">
                         <mat-option>Select</mat-option>
-                        <mat-option *ngFor="let status of statusInfo" [value]="status.code">{{status.description}}</mat-option>
+                        <mat-option value="1001">ACTIVE</mat-option>
+                        <mat-option value="1004">LOCKED</mat-option>
+                        <mat-option value="1005">UNLOCKED</mat-option>
+                        <mat-option value="1003">DISABLE</mat-option>
+                        <!-- <mat-option *ngFor="let status of statusInfo" [value]="status.code">{{status.description}}</mat-option> -->
                   
                     </mat-select>
                 </mat-form-field>
@@ -112,6 +116,12 @@
                                 <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
                                 style="background-color: ghostwhite;" matSort id="dataTable">
                          
+                                <ng-container matColumnDef="action">
+                                    <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+                                    <mat-cell *matCellDef="let row">
+                                    <img src="/assets/delete.png" (click)="onUserRemove(row)">
+                                    </mat-cell>
+                                  </ng-container>
                                 <ng-container matColumnDef="stage">
                                     <mat-header-cell *matHeaderCellDef mat-sort-header>S.No</mat-header-cell>
                                     <mat-cell *matCellDef="let row"> {{row.stage}} </mat-cell>
@@ -190,6 +200,10 @@
                             </div>
                         </mat-card>
                     </form>
+                    <div class="containerBTN" style="margin-top: 26px; margin-bottom: 20px;">
+                        <div  class="d-flex justify-content-center">
                     <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;"[class.isDisabledBtn]="LifeCycleForm.invalid" (click)="onSubmit()">Submit</button>
                 </div>
+                    </div>
+                    </div>
                     </div>

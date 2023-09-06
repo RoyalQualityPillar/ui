@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DataTableComponent } from './details/life-cycle-data/data-table.component';
 import { ChangePasswordComponent } from './toolbar/change-password/change-password.component';
@@ -10,6 +10,7 @@ import { UserProfileManagementComponent } from './admin/user-profile-management/
 import { MasterDataManagementComponent } from './admin/master-data-management/master-data-management.component';
 import {AuthGuard} from '../interceptor/auth.guard';
 import { LifeCycleHomeComponent } from './admin/life-cycle/life-cycle-home/life-cycle-home.component';
+import { GuidelinesComponent } from './home-page-menubar/guidelines/guidelines.component';
 
 const routes: Routes = [
  // {path:'',redirectTo:'login'},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path:  "business-unit",component:BusinessUnitComponent,canActivate:[AuthGuard]},
   {path: "master-data-management",component:MasterDataManagementComponent,canActivate:[AuthGuard]},
   {path: "user-profile-management",component:UserProfileManagementComponent,canActivate:[AuthGuard]},
-  {path: "life-cycle",component:LifeCycleHomeComponent,canActivate:[AuthGuard]}
+  {path: "life-cycle",component:LifeCycleHomeComponent,canActivate:[AuthGuard]},
+  {path: "guidelines", component:GuidelinesComponent}
 ];
 
 @NgModule({

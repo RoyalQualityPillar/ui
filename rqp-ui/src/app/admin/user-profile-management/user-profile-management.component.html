@@ -1,12 +1,12 @@
-<mat-tab-group animationDuration="500ms" class="m-1" #tabGroup (selectedTabChange)="tabChanged($event)">
-  <mat-tab  aria-label="Tab7">  
-     <ng-template mat-tab-label>
-    <div style="color: white;">
+<mat-tab-group animationDuration="500ms" class="m-1" #tabGroup (selectedTabChange)="tabChanged($event)"style="overflow: hidden;">
+  <mat-tab  aria-label="Tab7" style="overflow: hidden;">  
+     <ng-template mat-tab-label style="overflow: hidden;">
+    <div style="color: white;" style="overflow: hidden;">
       All User
     </div>
   </ng-template> 
   <!--all user start-->
-  <div>
+  <div >
     <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
   mode="indeterminate" ></mat-spinner>
       <div class="adjust">
@@ -34,6 +34,7 @@
 
                 
               </div>
+              <div class="tableOverFlowY">
           <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
     
             <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
@@ -97,6 +98,7 @@
               <button mat-raised-button color="primary" 
               style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onReviewUserData()">Audit trial</button>
           </div>
+        </div>
         </div>
         <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
           <div class="filter-box">
@@ -215,6 +217,7 @@
                   style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;width: max-content;" (click)="onOpenUserProfilePOPUP()">Add New Record</button>
                 
               </div>
+              <div class="tableOverFlowY">
           <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
     
             <mat-table [dataSource]="activeUsertableData"
@@ -278,6 +281,7 @@
               <button mat-raised-button color="primary" 
               style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveUserReviewUserData()">Audit trial</button>
           </div>
+        </div>
         </div>
         <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
           <div class="filter-box">

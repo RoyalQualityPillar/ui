@@ -1,0 +1,74 @@
+
+<div class="container-fluid">
+    <div class="row no-gutters" style="background-color: #18155b;">
+        <div class="col-10 d-flex justify-content-start">
+            <h1 class="customeHeading">Create Guidelines</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+       
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+              </button>
+        </div>
+        </div>
+<div class="tabOverFlowY">
+    <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
+        <form [formGroup]="GuideLines" style="margin-top: 7px; margin-bottom: 7px;">
+            <div class="row no-gutters ms-1 me-1 dense-4">
+        
+                <mat-form-field appearance="outline" class="col-12 px-1">
+                    <mat-label>Document Name</mat-label>
+                    <input type="text" matInput formControlName="documentName"
+                        placeholder="Document Name" >
+                </mat-form-field>
+                </div>
+                <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-12 px-1">
+                    <mat-label>Document Number</mat-label>
+                    <input type="text" matInput formControlName="documentNumber"
+                        placeholder="Document Number" >
+                </mat-form-field>
+                </div>
+                <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-12 px-1">
+                    <mat-label>Category</mat-label>
+                    <input type="text" matInput formControlName="category"
+                        placeholder="Category" >
+                </mat-form-field>
+                </div>
+                <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-12 px-1">
+                    <mat-label>Sub Category</mat-label>
+                    <input type="text" matInput formControlName="subCategory"
+                        placeholder="Sub Category" >
+                </mat-form-field>
+                </div>
+                <div class="row no-gutters ms-1 me-1 dense-4">
+                   <div class="col-6 px-1">  
+                <span style="font-weight: 700;">Attachment 1: </span><input type="file" id="file1" (change)="onFileSelected1($event)">
+                <button (click)="onPreview1('fileNo1')" class="exportIconBtn"><img class="exportIcon"
+                    src="../../../assets/preview.png"></button>
+                </div>
+                <div class="col-6 px-1">
+                    <span style="font-weight: 700;">Attachment 2: </span> <input type="file" id="file2" (change)="onFileSelected2($event)">
+                    <button (click)="onPreview2('fileNo2')" class="exportIconBtn"><img class="exportIcon"
+                        src="../../../assets/preview.png"></button>
+                </div>
+                <!-- <div class="col-4 px-1">
+                    Attachment 3:<input type="file" id="file" (change)="onFileSelected($event)">
+                    <button (click)="onPreview()" class="exportIconBtn"><img class="exportIcon"
+                        src="../../../assets/preview.png"></button>
+                
+                </div> -->
+            </div>
+        </form>
+        <div class="containerBTN" style="margin-top: 26px;">
+        <div  class="d-flex justify-content-center">
+            <button mat-raised-button color="primary" style="width: max-content;" >Save</button>
+            <button mat-raised-button  style="width: max-content;margin-left: 5px;" >Clear</button>
+          </div>
+        </div>
+        </mat-card>
+
+    </div>
+</div>

@@ -1,13 +1,13 @@
 <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
   mode="indeterminate" ></mat-spinner>
   <div class="container-fluid">
-    <div class="row no-gutters">
+    <div class="row no-gutters" style="background-color: #18155b;">
         <div class="col-9 d-flex justify-content-start">
             <h1 class="customeHeading"> User List</h1>
         </div>
         <div class="col-3 d-flex justify-content-end">
             <button mat-icon-button  (click)="onSave()">
-                <mat-icon class="close-icon" color="primary">save</mat-icon>
+                <mat-icon class="close-icon" style="color: white;">save</mat-icon>
               </button>
             <button mat-icon-button class="close-button" [mat-dialog-close]="true">
                 <mat-icon class="close-icon" color="warn">close</mat-icon>
