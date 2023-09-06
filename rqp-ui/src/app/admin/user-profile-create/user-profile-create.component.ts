@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms
 import {ActivatedRoute,Router} from '@angular/router';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import * as moment from 'moment';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';

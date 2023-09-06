@@ -1,7 +1,7 @@
 import { Component,AfterViewInit,ViewChild,OnInit,ViewEncapsulation,ElementRef,Inject } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MessageService} from '../../service/message.service';
 export interface userData {

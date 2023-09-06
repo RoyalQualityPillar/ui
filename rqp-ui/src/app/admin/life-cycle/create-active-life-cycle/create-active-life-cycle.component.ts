@@ -1,7 +1,7 @@
 import { Component,OnInit,ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
 import {MessageService} from '../../../service/message.service';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import {GlobalConstants} from '../../../common/global-constants';
 import { UserListComponent } from '../user-list/user-list.component';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
@@ -24,11 +24,11 @@ export class CreateActiveLifeCycleComponent implements OnInit{
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
 
   LifeCycleForm: FormGroup;
-  AddedUserdisplayedColumns: string[] = ['stage','role','userList','download', 'signature','print','esign','allUser'];
+  AddedUserdisplayedColumns: string[] = ['action','stage','role','userList','download', 'signature','print','esign','allUser'];
   constructor(public fb: FormBuilder,
     private adminService:AdminService,
     public messageService:MessageService,
-    public dialog: MatDialog,){
+    public dialog: MatDialog, public refDialog :MatDialogRef<CreateActiveLifeCycleComponent>,){
 
     this.LifeCycleForm = this.fb.group({
       businessUnit:['',Validators.required],
@@ -57,6 +57,8 @@ export class CreateActiveLifeCycleComponent implements OnInit{
     this.onloadDropDown();
     this.onSearchUser();
     this.LifeCycleForm.controls['lifeCycleCode'].setValue('LC')
+    this.LifeCycleForm.controls['status'].setValue('1001')
+    console.log( this.LifeCycleForm.controls['status'].value)
   }
 
   onloadDropDown(){
@@ -112,6 +114,18 @@ selectedDataTable:any;
 tableData:any;
 onCreateSelectedDataList(){
 console.log("click")
+if(this.selectedDataList.role==''){
+  this.dialog.open(MessageDialogComponent, {
+    data: { 'message': "Please select role before add row", 'heading': "Error Information" }
+  });
+return; 
+}
+if(this.selectedUser==undefined ){
+  this.dialog.open(MessageDialogComponent, {
+    data: { 'message': "Please select user before add row", 'heading': "Error Information" }
+  });
+return;
+}
 this.selectedDataList.userList=this.selectedUser;
 let useridList=[]
 console.log(this.UserRoleTable)
@@ -129,7 +143,8 @@ this.UserRoleTable.push({
   print:this.selectedDataList.print,
   esign:this.selectedDataList.esign,
   allUser:this.selectedDataList.allUser ,
-  userList:useridList
+  userList:useridList,
+  useridList:this.selectedUser
 })
 this.tableData = new MatTableDataSource(this.UserRoleTable);
 this.tableData.paginator = this.paginator;
@@ -137,6 +152,13 @@ this.tableData.sort = this.sort;
 
 console.log(this.UserRoleTable)
 console.log(this.selectedDataList)
+}
+
+onUserRemove(row:any){
+  this.UserRoleTable.splice(this.UserRoleTable.indexOf(row),1);
+  this.tableData = new MatTableDataSource(this.UserRoleTable);
+  this.tableData.paginator = this.paginator;
+  this.tableData.sort = this.sort;
 }
 //onSubmit
 onDisplayList(row:any){
@@ -155,6 +177,12 @@ onDisplayList(row:any){
   }
   onSubmit(){
      //todo
+    //  if(this.LifeCycleForm.invalid){
+    //   this.dialog.open(MessageDialogComponent, {
+    //     data: { 'message': "Please enter all required field", 'heading': "Error Information" }
+    //   });
+    //   return
+    //  }
      let body={
       lifeCycleStageList:[],
       businessUnit:this.LifeCycleForm.controls['businessUnit'].value,
@@ -166,11 +194,23 @@ onDisplayList(row:any){
       comments:this.LifeCycleForm.controls['comments'].value,
     }
    
-    body.lifeCycleStageList=this.UserRoleTable
+    body.lifeCycleStageList=this.UserRoleTable;
+    console.log(this.UserRoleTable.length)
+    console.log(body)
+    if(this.UserRoleTable.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': "Please add user list before submit", 'heading': "Error Information" }
+      });
+      return;
+    }
     console.log(this.UserRoleTable)
     console.log(this.LifeCycleForm.value)
     let merge =Object.assign(this.UserRoleTable,this.LifeCycleForm.value);
     console.log(merge)
+    //Validation Part
+
+
+
     this.isLoading=true;
     this.adminService.createAllLifeCycle(body).subscribe((data: any) => {
       console.log(data)
@@ -181,6 +221,7 @@ onDisplayList(row:any){
         });
       }else{
         this.messageService.sendSnackbar('success',data.status);
+        this.refDialog.close();
       }
     })
   }

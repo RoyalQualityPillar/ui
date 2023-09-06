@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 import { MatSnackBar } from '@angular/material/snack-bar';
 //declare let html2canvas: any;
 import { jsPDF } from 'jspdf';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MessageService} from '../../service/message.service';
 export interface userData {

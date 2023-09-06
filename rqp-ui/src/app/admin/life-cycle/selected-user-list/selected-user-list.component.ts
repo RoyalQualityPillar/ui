@@ -2,7 +2,7 @@ import { Component,OnInit,AfterViewInit,Inject,ViewChild,ElementRef,ViewChildren
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MessageService} from '../../../service/message.service';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import {GlobalConstants} from '../../../common/global-constants';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -35,7 +35,7 @@ export class SelectedUserListComponent implements OnInit  {
 
     onLoadTableData(){
       console.log(this.userData.tableData)
-      this.tableData = new MatTableDataSource(this.userData.tableData.userList);
+      this.tableData = new MatTableDataSource(this.userData.tableData.useridList);
       this.tableData.paginator = this.paginator;
       this.tableData.sort = this.sort;
     }

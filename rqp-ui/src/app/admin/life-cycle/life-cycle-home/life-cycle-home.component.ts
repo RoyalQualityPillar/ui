@@ -1,7 +1,7 @@
 import { Component,OnInit,ViewChild,ElementRef,QueryList,ViewChildren,AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
 import {MessageService} from '../../../service/message.service';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import {GlobalConstants} from '../../../common/global-constants';
 import { UserListComponent } from '../user-list/user-list.component';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';

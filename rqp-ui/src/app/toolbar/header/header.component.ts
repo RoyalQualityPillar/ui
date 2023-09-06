@@ -67,4 +67,7 @@ export class HeaderComponent implements OnInit{
   onHome(){
     //on home
   }
+  onGuildeLines(){
+    this.route.navigate(['./guidelines'])
+  }
 }

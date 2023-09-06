@@ -15,7 +15,7 @@ import { saveAs } from 'file-saver';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { UserProfileCreateComponent } from '../user-profile-create/user-profile-create.component';
 import { ReviewCommentsHistoryComponent } from '../review-comments-history/review-comments-history.component';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import { elements } from 'chart.js';
 import {GlobalConstants} from '../../common/global-constants';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';

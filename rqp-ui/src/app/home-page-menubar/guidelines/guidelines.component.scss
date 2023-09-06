@@ -6,7 +6,24 @@
     padding-left: 5px;
     padding-top: 4px;
     }
-    mat-row:nth-child(odd) {
+    .table-box{
+        box-shadow: 0px 0px 2px 2px #b6b5c0;
+        padding: 0px;
+        margin-top: 9px;
+      }
+      .login_card{
+        margin: 5px 20px 20px 20px !important;
+        display:inline-block;
+        min-width: 40%;
+        min-height: 60%;
+        background-color: ghostwhite;
+    }
+    .mat-card-cvr{
+        width: 100%;
+        text-align:center;
+     }
+
+     mat-row:nth-child(odd) {
         background-color :rgb(204 217 255);
          
          }
@@ -43,11 +60,6 @@
             border-bottom: 1;;
        
           }
-          .table-box{
-           box-shadow: 0px 0px 2px 2px #b6b5c0;
-           padding: 0px;
-           margin-top: 9px;
-         }
          mat-cell {
            word-break: unset;
            padding: 4px;
@@ -91,20 +103,3 @@
            height: 10px !important;
            
        }
-       .customeHeading{
-        margin-top: 19px;
-        margin-bottom: 1px;
-        font-size: 15px;
-        font-weight: 700;
-        color:  white;
-      }
-      .tabOverFlowY{
-        max-height: 400px;
-        min-height: 400px;
-        overflow-y: auto;
-        margin-top: 5px;
-        overflow-x: hidden;
-    } 
-    .mat-column-index{
-        flex: 0 0 7%;
-      }

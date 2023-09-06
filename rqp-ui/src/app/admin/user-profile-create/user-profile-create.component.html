@@ -1,6 +1,6 @@
 
 <div class="container-fluid">
-    <div class="row no-gutters">
+    <div class="row no-gutters"style="background-color: #18155b;">
         <div class="col-10 d-flex justify-content-start">
             <h1 class="customeHeading">{{this.userData.type}} User Profile</h1>
         </div>
@@ -187,13 +187,14 @@
             </mat-card>
         </form>
         </div>
-        <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+        <div class="containerBTN" style="margin-top: 26px; margin-bottom: 20px;">
+            <div  class="d-flex justify-content-center">
             <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
               (click)="isUpdate ? onUpdate() : onCreate()" [class.isDisabledBtn]="BusinessUnit.invalid">{{isUpdate ? "Update" : "Create"}}</button>
              <button mat-raised-button color="primary"
               style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;"(click)="onClear()">Clear</button>
           </div>
-
+</div>
             </div>
-            <div style="min-height: 50px;"></div>
+            <!-- <div style="min-height: 20px;"></div> -->
             

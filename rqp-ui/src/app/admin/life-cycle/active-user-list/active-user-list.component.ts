@@ -2,7 +2,7 @@ import { Component,OnInit,AfterViewInit,Inject,ViewChild,ElementRef,ViewChildren
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MessageService} from '../../../service/message.service';
-import { AdminService } from 'src/app/service/admin.service';
+import { AdminService } from 'src/app/admin/admin.service';
 import {GlobalConstants} from '../../../common/global-constants';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
@@ -151,6 +151,7 @@ onUser(row:any){
   this.removedTable.paginator = this.paginator.toArray()[1];
   this.removedTable.sort = this.sort.toArray()[1];
 }
+
 onUserRemove(row:any){
   if(this.removedTableData.length ==1){
     console.log("inside remove null");
