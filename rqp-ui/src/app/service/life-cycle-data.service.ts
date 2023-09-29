@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LifeCycleDataService {
-
-   private API_URL='http://103.10.234.106:8081/';
+  private API_URL=environment.apiBaseURL;
+  // private API_URL='http://103.10.234.106:8081/';
   constructor(private http:HttpClient,private cookieService:CookieService) { }
 
 

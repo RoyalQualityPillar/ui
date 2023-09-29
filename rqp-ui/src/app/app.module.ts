@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
@@ -29,9 +29,9 @@ import { AdminModule } from './admin/admin/admin.module';
 import { GuidelinesComponent } from './home-page-menubar/guidelines/guidelines.component';
 import { AttachmentPreviewComponent } from './home-page-menubar/attachment-preview/attachment-preview.component';
 import { CreateGuidelineComponent } from './home-page-menubar/create-guideline/create-guideline.component';
-
-
-
+import { CreateBusinessUnitComponent } from './admin/business-unit/create-business-unit/create-business-unit.component';
+import { LovDialogComponent } from './common/lov-dialog/lov-dialog.component';
+//import { RqpTableModule} from 'rqp-table'
 
 
 @NgModule({
@@ -49,7 +49,11 @@ import { CreateGuidelineComponent } from './home-page-menubar/create-guideline/c
     MessageDialogComponent,
     GuidelinesComponent,
     AttachmentPreviewComponent,
-    CreateGuidelineComponent
+    CreateGuidelineComponent,
+    CreateBusinessUnitComponent,
+    LovDialogComponent,
+    
+    
     
   ],
   imports: [
@@ -61,9 +65,12 @@ import { CreateGuidelineComponent } from './home-page-menubar/create-guideline/c
     ReactiveFormsModule,
     HttpClientModule,
     AdminModule,
-    PdfViewerModule
+    PdfViewerModule,
+   // RqpTableModule
     
-    
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [CookieService,DatePipe,
   {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}],

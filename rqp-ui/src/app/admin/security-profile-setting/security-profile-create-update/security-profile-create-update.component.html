@@ -1,0 +1,183 @@
+<div class="container-fluid">
+    <div class="row no-gutters dialogHeaderColor" >
+        <div class="col-10 d-flex justify-content-start">
+            <h1 class="customeHeading">{{this.userData.type}} Security Profile Settings</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="tabOverFlowY">
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
+
+        <form [formGroup]="DepartmentMaster" style="margin-top: 7px;">
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Security Profile Settings</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="p-2">
+                            <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                                <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
+                                    denoted by an asterisk(<span style="color: red">*</span>).</span>
+                            </div>
+                          
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Security Profile Code</mat-label>
+                                    <input type="text" matInput formControlName="uc0001" maxlength="9"
+                                        placeholder="Security Profile Code" >
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Plant Code</mat-label>
+                                    <input type="text" matInput formControlName="ff0001" maxlength="5"
+                                        placeholder="Plant Code" (change)="onUnitListChange()" >
+                                        <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openUnitListCodeLOV()">   
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Minimum Password Length (in Chararecter)</mat-label>
+                                    <input type="text" matInput formControlName="ff0002" maxlength="10"
+                                        placeholder="Minimum Password Length (in Chararecter)" >
+                                </mat-form-field>
+                                </div>
+                             
+                                <div class="row no-gutters ms-1 me-1 dense-4">
+                                    <mat-form-field appearance="outline" class="col-4 px-1">
+                                        <mat-label>password expiry days (in days)</mat-label>
+                                        <input type="text" matInput formControlName="ff0003" maxlength="3"
+                                            placeholder="password expiry days (in days)" >
+                                    </mat-form-field> 
+                                       <mat-form-field appearance="outline" class="col-4 px-1">
+                                        <mat-label>Password expiry Alert  (in days before)</mat-label>
+                                        <input type="text" matInput formControlName="ff0004" maxlength="2"
+                                            placeholder="Password expiry Alert  (in days before)" >
+                                    </mat-form-field> 
+                                    <mat-form-field appearance="outline" class="col-4 px-1">
+                                        <mat-label> Enforce password history (last)</mat-label>
+                                        <input type="text" matInput formControlName="ff0005" maxlength="2"
+                                            placeholder=" Enforce password history (last)" >
+                                    </mat-form-field> 
+                                   
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4">
+                                    <mat-form-field appearance="outline" class="col-4 px-1">
+                                        <mat-label> Session Time Out (screen is idle in min)</mat-label>
+                                        <input type="text" matInput formControlName="ff0012" maxlength="3"
+                                            placeholder="Session Time Out (screen is idle in min)" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-4 px-1">
+                                        <mat-label> Auto unlock (In Hours)</mat-label>
+                                        <input type="text" matInput formControlName="ff0013" maxlength="2"
+                                            placeholder="Auto unlock (In Hours)" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-4 ">
+                                        <mat-label> Account Lock ( Wrong Password Consecutive attempts)</mat-label>
+                                        <input type="text" matInput formControlName="ff0011" maxlength="2"
+                                            placeholder="Account Lock ( Wrong Password Consecutive attempts)" >
+                                    </mat-form-field>
+                                 </div>
+                                        <div *ngIf="isUpdate" class="row no-gutters ms-1 me-1 dense-4">
+                                            <mat-form-field appearance="outline" class="col-12 px-1">
+                                                <mat-label>Status</mat-label>
+                                                <input type="text" matInput formControlName="status" 
+                                                    placeholder="Status" (change)="onChangeStatus()" >
+                                                    <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                                    class="icon-size lovSearchButton" color="primary"(click)="openStatusLOV()">
+                                            </mat-form-field> 
+                                        </div>
+                           
+                    </div>
+                    </div>
+                    </div>
+                    </mat-card>
+                           
+                            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                                <div class="btn-group" class="headers"
+                                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                                <div style="float: left;">
+                                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Password Complexity</p>
+                                </div>
+                            </div>
+                           
+                         
+                                <div class="row no-gutters ms-1 me-1 dense-4" style="padding: 10px;">
+                               
+                                    <div class="col-9 px-1">
+                                        <mat-label><span class="checkBoxLabel">Number</span> </mat-label>
+                                        <mat-radio-group aria-label="Select an option" formControlName="ff0007">
+                                    <mat-radio-button name="selectNumber"value="1" [checked]="this.checkBoxValue.ff0007=='1'" >True</mat-radio-button>
+                                    <mat-radio-button name="selectNumber" value="0" [checked]="this.checkBoxValue.ff0007=='0'">False</mat-radio-button>
+                                </mat-radio-group>
+                                </div>
+                                <div class="col-3 px-1">
+                                    <mat-label> <span class="checkBoxLabel">Letter</span></mat-label>
+                                    <mat-radio-group aria-label="Select an option" formControlName="ff0008">
+                                <mat-radio-button name="selectLetter"value="1" [checked]="this.checkBoxValue.ff0008=='1'" >True</mat-radio-button>
+                                <mat-radio-button name="selectLetter" value="0" [checked]="this.checkBoxValue.ff0008=='0'" >False</mat-radio-button>
+                            </mat-radio-group>
+                            </div>
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4"style="padding: 20px; padding-left:7px">
+                                    <div class="col-9 px-1">
+                                        <mat-label><span class="checkBoxLabel">Caps Letter</span></mat-label>
+                                        <mat-radio-group aria-label="Select an option" formControlName="ff0009">
+                                    <mat-radio-button name="selectCL"value="1" [checked]="this.checkBoxValue.ff0009=='1'" >True</mat-radio-button>
+                                    <mat-radio-button name="selectCL" value="0" [checked]="this.checkBoxValue.ff0009=='0'" >False</mat-radio-button>
+                                </mat-radio-group>
+                                </div>
+                                <div class="col-3 px-1">
+                                    <mat-label><span class="checkBoxLabel">Special Letter</span> </mat-label>
+                                    <mat-radio-group aria-label="Select an option" formControlName="ff0010">
+                                <mat-radio-button name="selectSLetter"value="1" [checked]="this.checkBoxValue.ff0010=='1'" >True</mat-radio-button>
+                                <mat-radio-button name="selectSLetter" value="0" [checked]="this.checkBoxValue.ff0010=='0'" >False</mat-radio-button>
+                            </mat-radio-group>
+                            </div> 
+                                </div>
+                                </mat-card>
+                           
+             
+           
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="col-12">
+                    <div class="p-2">
+                        <div class="row no-gutters ms-1 me-1" >
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Comments</mat-label>
+                                <textarea type="text" matInput formControlName="comments"
+                                    placeholder="Comments">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </mat-card>
+        </form>
+       
+</div>
+    </div>
+    <div class="containerBTN" style="margin-top: 26px; margin-bottom: 1px;">
+        <div  class="d-flex justify-content-center">
+
+        <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+          (click)="isUpdate ? onUpdate() : onCreate()" [class.isDisabledBtn]="DepartmentMaster.invalid">{{isUpdate ? "Update" : "Create"}}</button>
+         <button mat-raised-button color="primary"*ngIf="!isUpdate"
+          style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;"(click)="onClear()">Clear</button>
+      </div>
+</div>

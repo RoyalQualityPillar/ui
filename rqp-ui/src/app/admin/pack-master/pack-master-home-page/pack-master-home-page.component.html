@@ -1,0 +1,339 @@
+<mat-tab-group animationDuration="500ms" class="m-1" #tabGroup (selectedTabChange)="tabChanged($event)">
+    <mat-tab aria-label="Tab7">
+        <ng-template mat-tab-label>
+            <div style="color: white;">
+                All Pack Master
+            </div>
+        </ng-template>
+        <div>
+            <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
+                mode="indeterminate"></mat-spinner>
+            <div class="adjust">
+
+                <div class="example-table-container">
+                    <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+                        <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+                            <div style="float: left;">
+                                <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Pack Master</p>
+                            </div>
+                            <div style="float: right;">
+                                <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-left: 10px;margin-right: 10px;">
+                        <button mat-raised-button color="primary"
+                            style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;width: max-content;"
+                            (click)="onOpenRolePOPUP()">Add New Record</button>
+                    </div>
+
+                    <div class="tableOverFlowY">
+                        <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 1px;">
+                        <mat-table [dataSource]="tableData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
+                            style="background-color: ghostwhite;">
+                            <!-- <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+                                <mat-cell *matCellDef="let row">
+                                <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell>
+                            </ng-container> -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="ff0001">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Pack Name</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="ff0002">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="version">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="uc0001">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Pack Code</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="createdon">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="createdby">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
+                            </ng-container>
+                            <mat-header-row *matHeaderRowDef="allRoleMasterdisplayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns:allRoleMasterdisplayedColumns"></mat-row>
+                        </mat-table>
+                        <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="pageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
+                        </mat-paginator>
+
+                        </div><!--Table Box Closed-->
+                    </div><!--OverFlow Closed-->  
+
+
+                </div>
+
+             
+                <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
+                    <div class="filter-box">
+                      <!-- Filter part-->
+                      <div class="headers" style="height: 30px;">Data Filter</div>
+                      <div style="background-color: ghostwhite;">
+                        <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
+                        <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
+                        <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
+                          <option value="SELECT">Please select field</option>
+                          <option value="id">Id</option>
+                      <option value="ff0001">Pack Name</option>
+                      <option value="ff0002">Business Unit Code</option>
+                      <option value="status">Status</option>
+                      <option value="version">version</option>
+                      <option value="uc0001">Pack Code</option>
+                      <option value="createdon"> Created Date</option>
+                      <option value="createdby"> Created By</option>
+                        </select>
+                        <div *ngIf="(this.filterObject.field != 'createdon')">
+                        <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+                          <option value="SELECT">Please select condition</option>
+                          <option value="equals">Equals</option>
+                          <option value="contains">Contains</option>
+                        </select>
+                      </div>
+                      <div *ngIf="(this.filterObject.field == 'createdon')">
+                        <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+                        
+                          <option value="between" selected>Between</option>
+                        </select>
+                      </div>
+                        <div *ngIf="(this.filterObject.field == 'createdon')">
+                          <div class="supplier-content">
+                           <div class="sup-head">
+                             <div class="sup-fields"> From:-</div>
+                             <div class="sup-values">  <input type="date" [(ngModel)]="filterObject.DateFieldvalue1"></div>
+                         </div>
+                         </div>
+                       </div>
+                         <div *ngIf="(this.filterObject.field == 'createdon')"style="font-size: 0.95em; width: 100%;margin-top: 5px;">
+                           <div class="supplier-content">
+                             <div class="sup-head">
+                               <div class="sup-fields"> To:-</div>
+                               <div class="sup-values">  <input type="date" [(ngModel)]="filterObject.DateFieldvalue2"></div>
+                           </div>
+                           </div>
+                       </div>
+                       <div *ngIf="(this.filterObject.field != 'createdon')">
+                        <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+                          [(ngModel)]="filterObject.value">
+                          </div>
+                        <!-- </div> -->
+                        <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+                          <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+                          (click)="applyFilterByColumn()">Apply</button>
+                        <button mat-raised-button color="primary"
+                          style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onClearFilter()">Clear</button>
+                        </div>
+                      
+                      </div>
+                    </div>
+                    <div class="filter-box">
+                      <!-- Filter part-->
+                      <div class="headers" style="height: 30px;">Export</div>
+                      <div style="background-color: ghostwhite;">
+                        <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
+                        <div style="text-align: center;">
+                          
+                            <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+            
+                              <button (click)="downloadTxt()" class="exportIconBtn"><img class="exportIcon"
+                                src="../../../assets/txt.png"></button>
+                             
+                          <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+                              src="../../../assets/csv.png"></button>
+                               
+                          <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+
+                              <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                                src="../../../assets/excel.png"></button>  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab  aria-label="Tab6"> 
+        <ng-template mat-tab-label>
+       <div style="color: white;">
+         Active Pack Master
+       </div>
+     </ng-template> 
+     <div >
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
+
+
+      <div class="adjust">
+
+        <div class="example-table-container">
+            <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+                <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Active Pack Master</p>
+                    </div>
+                    <div style="float: right;">
+                        <input type="text" (keyup)="activeUserApplyFilter(activeUserfilterField.value)" #activeUserfilterField placeholder="Search">
+                    </div>
+                </div>
+            </div>
+            <div style="margin-left: 10px;margin-right: 10px;">
+                <button mat-raised-button color="primary"
+                    style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;width: max-content;"
+                    (click)="onOpenRolePOPUP()">Add New Record</button>
+            </div>
+            <div class="tableOverFlowY">
+                <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 1px;">
+                <mat-table [dataSource]="activeUsertableData"id="datTable" id="activeUserDataTable"  matSort
+                    style="background-color: ghostwhite;">
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                        <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell> 
+                    </ng-container> 
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ff0001">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Pack Name</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ff0002">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="version">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="uc0001">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Pack Code</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="createdon">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="createdby">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="activeRoleMasterdisplayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns:activeRoleMasterdisplayedColumns"></mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="activeUSerPageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
+                </mat-paginator>
+                <button mat-raised-button color="primary" 
+                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveSelectRow()">View Details</button>
+                </div><!--Table Box Closed-->
+            </div><!--OverFlow Closed-->  
+
+
+            </div>
+            <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
+                <div class="filter-box">
+                  <!-- Filter part-->
+                  <div class="headers" style="height: 30px;">Data Filter</div>
+                  <div style="background-color: ghostwhite;">
+                    <span *ngIf= "this.activeUserFilterFieldError" class="errorMsg">Please select filter field </span>
+                    <span *ngIf= "this.activeUserFilterValueError" class="errorMsg">Please enter filter field value</span>
+                    <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field" (change)="onChangeActiveSelctedField()">
+                      <option value="SELECT">Please select field</option>
+                      <option value="id">Id</option>
+                      <option value="ff0001">Pack Name</option>
+                      <option value="ff0002">Business Unit Code</option>
+                      <option value="status">Status</option>
+                      <option value="version">version</option>
+                      <option value="uc0001">Pack Code</option>
+                      <option value="createdon"> Created Date</option>
+                      <option value="createdby"> Created By</option>
+                    </select>
+                    <div *ngIf="(this.activeUserFilterObject.field != 'createdon')">
+                    <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">
+                      <option value="SELECT">Please select condition</option>
+                      <option value="equals">Equals</option>
+                      <option value="contains">Contains</option>
+                    </select>
+                  </div>
+                  <div *ngIf="(this.activeUserFilterObject.field == 'createdon')">
+                    <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">
+                    
+                      <option value="between" selected>Between</option>
+                    </select>
+                  </div>
+                    <div *ngIf="(this.activeUserFilterObject.field == 'createdon')">
+                      <div class="supplier-content">
+                       <div class="sup-head">
+                         <div class="sup-fields"> From:-</div>
+                         <div class="sup-values">  <input type="date" [(ngModel)]="activeUserFilterObject.DateFieldvalue1"></div>
+                     </div>
+                     </div>
+                   </div>
+                     <div *ngIf="(this.activeUserFilterObject.field == 'createdon')"style="font-size: 0.95em; width: 100%;margin-top: 5px;">
+                       <div class="supplier-content">
+                         <div class="sup-head">
+                           <div class="sup-fields"> To:-</div>
+                           <div class="sup-values">  <input type="date" [(ngModel)]="activeUserFilterObject.DateFieldvalue2"></div>
+                       </div>
+                       </div>
+                   </div>
+                   <div *ngIf="(this.activeUserFilterObject.field != 'createdon')">
+                    <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+                      [(ngModel)]="activeUserFilterObject.value">
+                      </div>
+                    <!-- </div> -->
+                    <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+                      <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+                      (click)="applyActiveUserFilterByColumn()">Apply</button>
+                    <button mat-raised-button color="primary"
+                      style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onAcctiveUserClearFilter()">Clear</button>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div class="filter-box">
+                  <!-- Filter part-->
+                  <div class="headers" style="height: 30px;">Export</div>
+                  <div style="background-color: ghostwhite;">
+                    <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
+                    <div style="text-align: center;">
+                       <button *ngIf="this.activeUserTableLoded" [cdkCopyToClipboard]="activeUserCopyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+  
+                        <button (click)="activeUserDownloadTxt()" class="exportIconBtn"><img class="exportIcon"
+                          src="../../../assets/txt.png"></button>
+                          
+                    <button (click)="activeUserDownloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+                        src="../../../assets/csv.png"></button>
+                    <button (click)="activeUserDownloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+              
+                        <button (click)="activeUserDownloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                          src="../../../assets/excel.png"></button> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            </div>
+     </mat-tab> 
+</mat-tab-group>
