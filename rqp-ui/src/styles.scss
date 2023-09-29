@@ -119,6 +119,10 @@ mat-label{
   opacity: 0.6;
   pointer-events: none;
 }
+.isReadonlyField
+{
+  opacity: 0.6;
+}
 .errorMsg{
   color: red;
   font-size: 11px;
@@ -254,7 +258,12 @@ mat-row:nth-child(odd) {
   margin-top: 5px;
   overflow-x: hidden;
 } 
-
+.dialogHeaderColor{
+  background-color: #18155b;
+}
+.sectionHeaderColor{
+  background-color: #474668;
+}
 
 
 

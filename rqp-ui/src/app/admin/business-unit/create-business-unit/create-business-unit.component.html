@@ -1,0 +1,206 @@
+<div class="container-fluid">
+    <div class="row no-gutters dialogHeaderColor">
+        <div class="col-10 d-flex justify-content-start">
+            <h1 class="customeHeading">{{this.userData.type}} Business Unit</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="tabOverFlowY">
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
+
+        <form [formGroup]="BusinessUnit" style="margin-top: 7px;">
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Business Unit Registration</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="p-2">
+                            <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                                <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
+                                    denoted by an asterisk(<span style="color: red">*</span>).</span>
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Business Organisation Code</mat-label>
+                                    <input type="text" matInput formControlName="ff0002"
+                                        placeholder="Business Organisation Code" (change)="onChangeOrgCode()">
+                                        <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openBusinessOrgCodeLOV()">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-9 px-1">
+                                    <mat-label>Business Organisation Name</mat-label>
+                                    <input type="text" matInput formControlName="ff0001"[readonly]="this.isReadOnly"[class.isReadonlyField]="this.isReadOnly"
+                                        placeholder="Business Organisation Name" >
+                                </mat-form-field>
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Business Unit Code</mat-label>
+                                    <input type="text" matInput formControlName="uc0001"
+                                        placeholder="Business Unit Code" [readonly]="isUpdate" [class.isReadonlyField]="isUpdate">
+                                    
+                                </mat-form-field>            
+                                <mat-form-field appearance="outline" class="col-9 px-1">
+                                    <mat-label>Business Unit Name</mat-label>
+                                    <input type="text" matInput formControlName="ff0003"
+                                        placeholder="Business Unit Name" >
+                                </mat-form-field>
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-6 px-1">
+                                    <mat-label>Street-1</mat-label>
+                                    <input type="text" matInput formControlName="ff0004"
+                                        placeholder="Street-1" maxlength="45">
+                                </mat-form-field>  
+                                <mat-form-field appearance="outline" class="col-6 px-1">
+                                    <mat-label>Street-2</mat-label>
+                                    <input type="text" matInput formControlName="ff0005"
+                                        placeholder="Street-2" maxlength="45">
+                                </mat-form-field>    
+                              
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>City</mat-label>
+                                    <input type="text" matInput formControlName="ff0006"
+                                        placeholder="City" maxlength="45">
+                                </mat-form-field>  
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>State</mat-label>
+                                    <input type="text" matInput formControlName="ff0007"
+                                        placeholder="State" maxlength="25">
+                                </mat-form-field>    
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Pincode</mat-label>
+                                    <input type="text" matInput formControlName="ff0008"
+                                        placeholder="Pincode" maxlength="7">
+                                </mat-form-field> 
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Mobile No.</mat-label>
+                                    <input type="text" matInput formControlName="ff0009"
+                                        placeholder="Mobile No." maxlength="10">
+                                </mat-form-field> 
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Email Id</mat-label>
+                                    <input type="text" matInput formControlName="ff0010"
+                                        placeholder="Email Id" maxlength="25">
+                                </mat-form-field>  
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>PAN No.</mat-label>
+                                    <input type="text" matInput formControlName="ff0011"
+                                        placeholder="PAN No." maxlength="10">
+                                </mat-form-field>    
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>GST No.</mat-label>
+                                    <input type="text" matInput formControlName="ff0012"
+                                        placeholder="GST No." maxlength="15">
+                                </mat-form-field> 
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>State Code</mat-label>
+                                    <input type="text" matInput formControlName="ff0013"
+                                        placeholder="State Code" maxlength="2">
+                                </mat-form-field> 
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Account No.</mat-label>
+                                    <input type="text" matInput formControlName="ff0014"
+                                        placeholder="Account No." maxlength="25">
+                                </mat-form-field>  
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>IFSC Code</mat-label>
+                                    <input type="text" matInput formControlName="ff0015"
+                                        placeholder="IFSC Code" maxlength="25">
+                                </mat-form-field>    
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>DL No.</mat-label>
+                                    <input type="text" matInput formControlName="ff0016"
+                                        placeholder="DL No." maxlength="45">
+                                </mat-form-field> 
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <!-- <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Valid From</mat-label>
+                                    <input type="text" matInput formControlName="ff0017"
+                                        placeholder="Effective Date" [matDatepicker]="picker1">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field> -->
+                                <!-- <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Valid To</mat-label>
+                                    <input type="text" matInput formControlName="ff0018"
+                                        placeholder="Effective Date" [matDatepicker]="picker2">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>    -->
+                                <mat-form-field appearance="outline" class="col-4 px-1">
+                                    <mat-label>Category</mat-label>
+                                    <input type="text" matInput formControlName="uc0002" 
+                                        placeholder="Category" (change)="onChangeCategory()">
+                                        <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openCategoryLOV()">
+                                </mat-form-field> 
+                                <div *ngIf="isUpdate"class="col-4 px-1">
+                                <mat-form-field appearance="outline" class="col-12" >
+                                    <mat-label>Status</mat-label>
+                                    <input type="text" matInput formControlName="status" (change)="onChangeStatus()"
+                                        placeholder="Status" >
+                                        <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openStatusLOV()">
+                                </mat-form-field> 
+                                </div>
+                            </div>
+                            <!-- <div class="row no-gutters ms-1 me-1 dense-4" >
+                             
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="col-12">
+                    <div class="p-2">
+                        <div class="row no-gutters ms-1 me-1" >
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Comments</mat-label>
+                                <textarea type="text" matInput formControlName="comments"
+                                    placeholder="Comments">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </mat-card>
+        </form>
+       
+</div>
+    </div>
+    <div class="containerBTN" style="margin-top: 26px; margin-bottom: 1px;">
+        <div  class="d-flex justify-content-center">
+
+        <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+          (click)="isUpdate ? onUpdate() : onCreate()" [class.isDisabledBtn]="BusinessUnit.invalid">{{isUpdate ? "Update" : "Create"}}</button>
+         <button mat-raised-button color="primary"*ngIf="!isUpdate"
+          style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;"(click)="onClear()">Clear</button>
+      </div>
+</div>

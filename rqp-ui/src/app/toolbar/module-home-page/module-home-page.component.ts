@@ -27,9 +27,10 @@ export class ModuleHomePageComponent implements OnInit,AfterViewInit  {
     },
   ]
   ngOnInit(): void {
-    this.createChart();
+   // this.createChart();
   }
-  ngAfterViewInit() {
+  ngAfterViewInit(){}
+  ngAfterViewInit123() {
     const canvas = document.getElementById('marimekkoChart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   
