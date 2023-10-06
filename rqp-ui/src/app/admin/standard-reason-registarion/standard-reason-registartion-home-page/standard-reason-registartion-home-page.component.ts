@@ -16,8 +16,11 @@ import { GlobalConstants } from '../../../common/global-constants';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
+import { exportData } from 'bk-export';
 import { StandardReasonRegistartionService } from '../standard-reason-registartion.service';
 import { StandardReasonRegistartionCreateUpdateComponent } from '../standard-reason-registartion-create-update/standard-reason-registartion-create-update.component';
+import { ActiveSrrAuditTrailComponent } from '../active-srr-audit-trail/active-srr-audit-trail.component';
+import { AllSrrAuditTrailComponent } from '../all-srr-audit-trail/all-srr-audit-trail.component';
 
 @Component({
   selector: 'app-standard-reason-registartion-home-page',
@@ -31,7 +34,7 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001','ff0002','ff0003', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002','ff0003', 'status','version', 'uc0001','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002','ff0003', 'status','version', 'uc0001','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
@@ -370,32 +373,40 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "sd-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Business Unit Code":excelData[i].ff0001,
+       "Module Code":excelData[i].ff0002,
+       "Standard Reason":excelData[i].ff0003,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Standard Reason Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
+   }
+   exportData(arrExcel,'srr','srr','txt')
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Business Unit Code":excelData[i].ff0001,
+       "Module Code":excelData[i].ff0002,
+       "Standard Reason":excelData[i].ff0003,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Standard Reason Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "sd-list.csv");
+   exportData(arrExcel,'srr','srr','csv')
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Business Unit Code', 'Module Code','Standard Reason', 'Status','Version','Standard Reason Code','Created Date','CreatedBy'];
@@ -455,20 +466,24 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
    let fileName='sd-list';
    doc.save(fileName + '.pdf');
   }
-  activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+  activeUserDownloadExcel1(){
+ 
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Business Unit Code":excelData[i].ff0001,
+       "Module Code":excelData[i].ff0002,
+       "Standard Reason":excelData[i].ff0003,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Standard Reason Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "sd-list.csv");
+   exportData(arrExcel,'srr','srr','excel')
   }
   copyData() {
     var dataArray = "";
@@ -492,32 +507,40 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
       return result.toString() + "\n";
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
-      }
-    const fileName = "sd-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Business Unit Code":excelData[i].ff0001,
+        "Module Code":excelData[i].ff0002,
+        "Standard Reason":excelData[i].ff0003,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Standard Reason Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'srr','srr','txt')
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      let arrExcel=[];
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Business Unit Code":excelData[i].ff0001,
+          "Module Code":excelData[i].ff0002,
+          "Standard Reason":excelData[i].ff0003,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Standard Reason Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "sd-list.csv");
+      exportData(arrExcel,'srr','srr','csv')
    }
 
    totalRow:any;
@@ -580,17 +603,23 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
     doc.save(fileName + '.pdf');
   }
 
-  downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
-    }
-  const fileName = "sd-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+  downloadExcel1(){
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Business Unit Code":excelData[i].ff0001,
+      "Module Code":excelData[i].ff0002,
+      "Standard Reason":excelData[i].ff0003,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Standard Reason Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,'srr','srr','excel')
   }
   newList:any;
   previousTableList:any;
@@ -619,6 +648,38 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
   setSelectedID(row:any){
    this.selectedRow=row;
   }
+  selectedAllRow=[];
+  setSelectedAllID(row:any){
+    this.selectedAllRow=row;
+  }
+  onAllAuditSelectRow(){
+    if(this.selectedAllRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(AllSrrAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }
+  }
+  onActiveAuditSelectRow(){
+    if(this.selectedRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveSrrAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }
+  }
   onActiveSelectRow(){
     if(this.selectedRow.length==0){
       this.dialog.open(MessageDialogComponent, {
@@ -645,6 +706,42 @@ export class StandardReasonRegistartionHomePageComponent implements OnInit, Afte
       this.onLoadAllRoleMaster();
     })
   }
-  
+ 
+  downloadExcel(){ 
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Business Unit Code":excelData[i].ff0001,
+        "Module Code":excelData[i].ff0002,
+        "Standard Reason":excelData[i].ff0003,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Standard Reason Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'srr','srr','excel')
+  }
+  activeUserDownloadExcel(){ 
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Business Unit Code":excelData[i].ff0001,
+        "Module Code":excelData[i].ff0002,
+        "Standard Reason":excelData[i].ff0003,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Standard Reason Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'srr','srr','excel')
+  } 
 }
 

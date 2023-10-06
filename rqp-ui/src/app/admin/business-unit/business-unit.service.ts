@@ -84,4 +84,16 @@ export class BusinessUnitService {
     };
      return this.http.post(fetchAllBusinessUnitInfoApiUrl,'',httpOptions)
   }
+  onActiveAuditTrail(UC0001:any,UC0002:any){
+    let queryParams=`?UC0001=${UC0001}&UC0002=${UC0002}`;
+    let token=this.cookieService.get('token');
+    let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"gm/bu-master/get-by-code-all"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token
+      })
+    };
+     return this.http.get(fetchAllBusinessUnitInfoApiUrl,httpOptions) 
+  }
 }

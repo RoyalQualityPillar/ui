@@ -26,6 +26,7 @@ import { TaxMasterHomePageComponent } from './admin/tax-master/tax-master-home-p
 import { OrganizationHomePageComponent } from './admin/organization/organization-home-page/organization-home-page.component';
 import { BusinessUnitTypeHomePageComponent } from './admin/business-unit-type/business-unit-type-home-page/business-unit-type-home-page.component';
 import { SecurityProfileHomePageComponent } from './admin/security-profile-setting/security-profile-home-page/security-profile-home-page.component';
+import { GuidelinesHomePageComponent } from './admin/guidelines/guidelines-home-page/guidelines-home-page.component';
 
 const routes: Routes = [
  // {path:'',redirectTo:'login'},
@@ -53,7 +54,9 @@ const routes: Routes = [
   {path:"orginazation-home-page",component:OrganizationHomePageComponent,canActivate:[AuthGuard]}, 
   {path:"business-unit-type-home-page",component:BusinessUnitTypeHomePageComponent,canActivate:[AuthGuard]},  
   {path:"security-profile-type-home-page",component:SecurityProfileHomePageComponent,canActivate:[AuthGuard]}, 
-  {path: "guidelines", component:GuidelinesComponent}
+  {path:"guidelines-home-page",component:GuidelinesHomePageComponent,canActivate:[AuthGuard]}, 
+  {path: "guidelines", component:GuidelinesComponent},
+  
 ];
 
 @NgModule({

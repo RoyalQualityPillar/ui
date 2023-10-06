@@ -84,5 +84,17 @@ export class SubDepartmentService {
     };
      return this.http.post(fetchAllBusinessUnitInfoApiUrl,'',httpOptions)
   }
+  onAllRoleAuditTrail(uc0001:any){
+    let queryParams=`?UC0001=${uc0001}`;
+  let token=this.cookieService.get('token');
+  let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"gm/sd-master/get-by-code-all"+queryParams;
+  const httpOptions = {
+    headers: new HttpHeaders({      
+     'Content-Type':  'application/json',
+     'Authorization': 'Bearer ' + token
+    })
+  };
+   return this.http.get(fetchAllBusinessUnitInfoApiUrl,httpOptions) 
+  }
 }
 

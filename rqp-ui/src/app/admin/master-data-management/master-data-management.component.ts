@@ -66,4 +66,7 @@ ngOnInit(): void {}
   onSecurityProfile(){
     this.route.navigate(['./security-profile-type-home-page'])
   }
+  onGuidelines(){
+    this.route.navigate(['./guidelines-home-page'])
+  }
 }

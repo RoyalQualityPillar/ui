@@ -18,6 +18,9 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { ModuleService } from '../module.service';
 import { ModuleCreateUpdateComponent } from '../module-create-update/module-create-update.component';
+import { exportData } from 'bk-export';
+import { AllModuleAuditTrailComponent } from '../all-module-audit-trail/all-module-audit-trail.component';
+import { ActiveModuleAuditTrailComponent } from '../active-module-audit-trail/active-module-audit-trail.component';
 
 @Component({
   selector: 'app-module-home-page',
@@ -31,7 +34,7 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
@@ -370,32 +373,38 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "module-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Module Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Module Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'module','module','txt') 
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "module-list.csv");
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Module Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Module Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'module','module','csv') 
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Module Name', 'Module Code', 'Status','Version','Business Unit Code','Created Date','CreatedBy'];
@@ -453,20 +462,22 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
    let fileName='module-list';
    doc.save(fileName + '.pdf');
   }
-  activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "module-list.csv");
+  activeUserDownloadExcel1(){
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Module Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Module Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'module','module','csv')   
   }
   copyData() {
     var dataArray = "";
@@ -490,32 +501,38 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
       return result.toString() + "\n";
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Module Name":excelData[i].ff0001,
+          "Business Unit Code":excelData[i].ff0002,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Module Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-    const fileName = "module-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+      exportData(arrExcel,'module','module','txt')   
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Module Name":excelData[i].ff0001,
+          "Business Unit Code":excelData[i].ff0002,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Module Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "module-list.csv");
+      exportData(arrExcel,'module','module','csv')   
    }
 
    totalRow:any;
@@ -576,17 +593,22 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
     doc.save(fileName + '.pdf');
   }
 
-  downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
+  downloadExcel1(){
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Module Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Module Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
     }
-  const fileName = "module-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+    exportData(arrExcel,'module','module','excel')   
   }
   newList:any;
   previousTableList:any;
@@ -630,6 +652,38 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
         })
       }
   }
+  selectedAllRow=[];
+  setAllSelectedID(row:any){
+    this.selectedAllRow=row;
+  }
+  onActiveAuditSelectRow(){
+    if(this.selectedRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveModuleAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }
+  }
+  onAllAuditSelectRow(){
+    if(this.selectedAllRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(AllModuleAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }
+  }
   onOpenRolePOPUP(){
     const dialogRef=this.dialog.open(ModuleCreateUpdateComponent,{
       minWidth:"80%",
@@ -640,4 +694,40 @@ export class ModuleMasterHomePageComponent implements OnInit, AfterViewInit {
       this.onLoadAllRoleMaster();
     })
   } 
+   
+  downloadExcel(){
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Module Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Module Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'module','module','excel')    
+  
+  }
+  activeUserDownloadExcel(){ 
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Module Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Module Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'module','module','excel')    
+  }
 }

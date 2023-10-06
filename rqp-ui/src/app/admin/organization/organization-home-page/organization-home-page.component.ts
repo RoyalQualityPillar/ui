@@ -19,7 +19,8 @@ import * as moment from 'moment';
 import { OrganizationService } from '../organization.service';
 import { OrganizationCreateUpdateComponent } from '../organization-create-update/organization-create-update.component';
 
-
+import { exportData } from 'bk-export'
+import { ActiveOrgMasterAuditTrailComponent } from '../active-org-master-audit-trail/active-org-master-audit-trail.component';
 @Component({
   selector: 'app-organization-home-page',
   templateUrl: './organization-home-page.component.html',
@@ -32,7 +33,7 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
@@ -371,32 +372,37 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "org-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Organization Name":excelData[i].ff0001,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Organization Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
+   }
+   exportData(arrExcel,'org','org','txt')
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
 
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "org-list.csv");
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Organization Name":excelData[i].ff0001,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Organization Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
+   }
+   exportData(arrExcel,'org','org','csv')
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Oraganization Name', 'Status','Version','Oraganiztion Code','Created Date','CreatedBy'];
@@ -452,20 +458,21 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
    let fileName='org-list';
    doc.save(fileName + '.pdf');
   }
-  activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+  activeUserDownloadExcel1(){
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Organization Name":excelData[i].ff0001,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Organization Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "org-list.csv");
+   exportData(arrExcel,'org','org','csv')
   }
   copyData() {
     var dataArray = "";
@@ -489,32 +496,37 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
       return result.toString() + "\n";
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
-      }
-    const fileName = "org-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Organization Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Organization Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'org','org','txt')
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      let arrExcel=[];
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Organization Name":excelData[i].ff0001,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Organization Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "org-list.csv");
+      exportData(arrExcel,'org','org','csv')
    }
 
    totalRow:any;
@@ -575,17 +587,21 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     doc.save(fileName + '.pdf');
   }
 
-  downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
-    }
-  const fileName = "org-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+  downloadExcel1(){
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Organization Name":excelData[i].ff0001,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Organization Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,'org','org','excel')
   }
 
  
@@ -615,7 +631,10 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
   setSelectedID(row:any){
    this.selectedRow=row;
   }
-  
+  selectedAllRow=[];
+  setSelectedAllID(row:any){
+    this.selectedAllRow=row; 
+  }
   onActiveSelectRow(){
     if(this.selectedRow.length==0){
       this.dialog.open(MessageDialogComponent, {
@@ -632,6 +651,34 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
         })
       }
   }
+  onActiveSelectAuditTrailRow(){
+    if(this.selectedRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveOrgMasterAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }
+  }
+  onAllSelectAuditTrailRow(){
+    if(this.selectedAllRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveOrgMasterAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }
+  }
   onOpenRolePOPUP(){
     const dialogRef=this.dialog.open(OrganizationCreateUpdateComponent,{
       minWidth:"80%",
@@ -641,7 +688,41 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
       this.OnLoadActiveRoleMaster();
       this.onLoadAllRoleMaster();
     })
-  } 
+  }
+  
+  downloadExcel(){
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Organization Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Organization Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'org','org','excel')
+  
+  }
+  activeUserDownloadExcel(){ 
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Organization Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Organization Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'org','org','excel')
+  }
 }
 
 

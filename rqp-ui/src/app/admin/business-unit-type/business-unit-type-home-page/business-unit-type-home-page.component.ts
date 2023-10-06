@@ -16,8 +16,11 @@ import { GlobalConstants } from '../../../common/global-constants';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
+import { exportData } from 'bk-export'
 import { BusinessUnitTypeService } from '../business-unit-type.service';
 import { BusinessUnitTypeCreateUpdateComponent } from '../business-unit-type-create-update/business-unit-type-create-update.component';
+import { ActiveButAuditTrailComponent } from '../active-but-audit-trail/active-but-audit-trail.component';
+import { AllButAuditTrailComponent } from '../all-but-audit-trail/all-but-audit-trail.component';
 
 
 @Component({
@@ -32,7 +35,7 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
@@ -371,32 +374,36 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "but-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Business Unit Type Name":excelData[i].ff0001,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Business Unit Type Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
+   }
+   exportData(arrExcel,'but','but','txt')
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Business Unit Type Name":excelData[i].ff0001,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Business Unit Type Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "but-list.csv");
+   exportData(arrExcel,'but','but','csv')
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Business Unit Type Name', 'Status','Version','Business Unit Type Code','Created Date','CreatedBy'];
@@ -452,20 +459,21 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
    let fileName='but-list';
    doc.save(fileName + '.pdf');
   }
-  activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+  activeUserDownloadExcel1(){
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Business Unit Type Name":excelData[i].ff0001,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Business Unit Type Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "but-list.csv");
+   exportData(arrExcel,'but','but','excel')
   }
   copyData() {
     var dataArray = "";
@@ -488,33 +496,38 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
       });
       return result.toString() + "\n";
     }
-    downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
+    downloadTxt(){ 
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      let arrExcel=[];
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Business Unit Type Name":excelData[i].ff0001,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Business Unit Type Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-    const fileName = "but-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+      exportData(arrExcel,'but','but','txt')
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      let arrExcel=[];
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Business Unit Type Name":excelData[i].ff0001,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Business Unit Type Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "but-list.csv");
+      exportData(arrExcel,'but','but','csv')
    }
 
    totalRow:any;
@@ -574,18 +587,53 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
     let fileName='but-list';
     doc.save(fileName + '.pdf');
   }
-
   downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Business Unit Type Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Business Unit Type Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
     }
-  const fileName = "but-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+    exportData(arrExcel,'but','but','excel')
+  }
+  activeUserDownloadExcel(){ 
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Business Unit Type Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Business Unit Type Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'but','but','excel')
+  }
+  downloadExcel1(){
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Business Unit Type Name":excelData[i].ff0001,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Business Unit Type Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,'but','but','excel')
   }
 
  
@@ -615,7 +663,38 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
   setSelectedID(row:any){
    this.selectedRow=row;
   }
-  
+  selectedAllRow=[];
+  setSelectedAllID(row:any){
+   this.selectedAllRow=row;
+  }
+  onActiveSelectAuditTrailRow(){
+    if(this.selectedRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveButAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      } 
+  }
+  onAllSelectAuditTrailRow(){
+    if(this.selectedAllRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(AllButAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }  
+  }
   onActiveSelectRow(){
     if(this.selectedRow.length==0){
       this.dialog.open(MessageDialogComponent, {

@@ -20,6 +20,7 @@ import { jsPDF } from 'jspdf';
 import * as moment from 'moment';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { ActiveUserLifeCycleListComponent } from '../active-user-life-cycle-list/active-user-life-cycle-list.component';
+import { exportData } from 'bk-export';
 
 @Component({
   selector: 'app-life-cycle-home',
@@ -243,14 +244,26 @@ onClearFilter(){
 
 //DOWNLOAD PART
 downloadExcel(){
-  let exportData:any
-  exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
- 
-const fileName = "LC-list.xlsx";
-const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-const wb: XLSX.WorkBook = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, fileName);
-XLSX.writeFile(wb, fileName);
+  let type='excel';
+  let screenName='lifecycle';
+  let fileName='lifecycle';
+  let arrExcel=[];
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "LC Number":excelData[i].lcnum,
+      "Business Unit":excelData[i].businessunit,
+      "Comments":excelData[i].comments,
+      "Department":excelData[i].department,
+      "Life Cycle":excelData[i].lifecycle,
+      "Module":excelData[i].module,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
 }
 totalRow:any;
 downloadPdf() {
@@ -313,26 +326,49 @@ downloadPdf() {
 }
 
 downloadCsvFile() {
-  let exportDataForCsv:any
-  exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
- 
-  const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-  const header = Object.keys(exportDataForCsv[0]);
-  let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-  csv.unshift(header.join(','));
-  let csvArray = csv.join('\r\n');
+  let type='csv';
+  let screenName='lifecycle';
+  let fileName='lifecycle';
+  let arrExcel=[];
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "LC Number":excelData[i].lcnum,
+      "Business Unit":excelData[i].businessunit,
+      "Comments":excelData[i].comments,
+      "Department":excelData[i].department,
+      "Life Cycle":excelData[i].lifecycle,
+      "Module":excelData[i].module,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
 
-  var blob = new Blob([csvArray], {type: 'text/csv' })
-  saveAs(blob, "life-cycle.csv");
 }
 downloadTxt(){
-   let exportDataForTxt:any
-  exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
- const fileName = "life-cycle.txt";
- const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
- const wb: XLSX.WorkBook = XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb, ws, fileName);
- XLSX.writeFile(wb, fileName,{bookType:'txt'});
+  let type='txt';
+  let screenName='lifecycle';
+  let fileName='lifecycle';
+  let arrExcel=[];
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "LC Number":excelData[i].lcnum,
+      "Business Unit":excelData[i].businessunit,
+      "Comments":excelData[i].comments,
+      "Department":excelData[i].department,
+      "Life Cycle":excelData[i].lifecycle,
+      "Module":excelData[i].module,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
  }
  copyData() {
   var dataArray = "";
@@ -620,33 +656,49 @@ activeUserObjectToArray(obj: any): string {
 }
 
 activeUserDownloadTxt(){
-  let exportDataForTxt:any
-   exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForTxt.length;i++){
-     delete exportDataForTxt[i].action;
-
-   }
- const fileName = "active-life-cycle-list.txt";
- const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
- const wb: XLSX.WorkBook = XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb, ws, fileName);
- XLSX.writeFile(wb, fileName,{bookType:'txt'});
+  let type='txt';
+  let screenName='lifecycle';
+  let fileName='lifecycle';
+  let arrExcel=[];
+  let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "LC Number":excelData[i].lcnum,
+      "Business Unit":excelData[i].businessunit,
+      "Comments":excelData[i].comments,
+      "Department":excelData[i].department,
+      "Life Cycle":excelData[i].lifecycle,
+      "Module":excelData[i].module,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
  }
  activeUserDownloadCsvFile(){
-  let exportDataForCsv:any
- exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
- for(let i=0;i<exportDataForCsv.length;i++){
-   delete exportDataForCsv[i].action;
-   
- const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
- const header = Object.keys(exportDataForCsv[0]);
- let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
- csv.unshift(header.join(','));
- let csvArray = csv.join('\r\n');
+  let type='csv';
+  let screenName='lifecycle';
+  let fileName='lifecycle';
+  let arrExcel=[];
+  let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "LC Number":excelData[i].lcnum,
+      "Business Unit":excelData[i].businessunit,
+      "Comments":excelData[i].comments,
+      "Department":excelData[i].department,
+      "Life Cycle":excelData[i].lifecycle,
+      "Module":excelData[i].module,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
 
- var blob = new Blob([csvArray], {type: 'text/csv' })
- saveAs(blob, "active-life-cycle-list.csv");
-}
  }
 
  activeUserDownloadPdf(){
@@ -706,20 +758,26 @@ activeUserDownloadTxt(){
  doc.save(fileName + '.pdf');
 }
 activeUserDownloadExcel(){
-  let exportDataForCsv:any
- exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
- for(let i=0;i<exportDataForCsv.length;i++){
-   delete exportDataForCsv[i].action;
-  
- }
- const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
- const header = Object.keys(exportDataForCsv[0]);
- let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
- csv.unshift(header.join(','));
- let csvArray = csv.join('\r\n');
-
- var blob = new Blob([csvArray], {type: 'text/csv' })
- saveAs(blob, "active-life-cycle-list.csv");
+  let type='excel';
+  let screenName='lifecycle';
+  let fileName='lifecycle';
+  let arrExcel=[];
+  let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "LC Number":excelData[i].lcnum,
+      "Business Unit":excelData[i].businessunit,
+      "Comments":excelData[i].comments,
+      "Department":excelData[i].department,
+      "Life Cycle":excelData[i].lifecycle,
+      "Module":excelData[i].module,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
 }
 selectedUser:any
 onUserList(){

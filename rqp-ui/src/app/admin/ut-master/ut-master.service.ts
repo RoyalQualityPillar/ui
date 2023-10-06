@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import * as moment from 'moment';
+import { environment } from 'src/app/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtMasterService {
-  private API_URL='http://103.10.234.106:8081/';
+ // private API_URL='http://103.10.234.106:8081/';
+  private API_URL=environment.apiBaseURL;
   constructor(
     private http:HttpClient,private cookieService:CookieService
   ) { }
@@ -80,6 +82,18 @@ export class UtMasterService {
       })
     };
      return this.http.post(fetchAllBusinessUnitInfoApiUrl,'',httpOptions)
+  }
+  onAllRoleAuditTrail(uc0001:any){
+    let queryParams=`?UC0001=${uc0001}`;
+  let token=this.cookieService.get('token');
+  let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"gm/ut-master/get-by-code-all"+queryParams;
+  const httpOptions = {
+    headers: new HttpHeaders({      
+     'Content-Type':  'application/json',
+     'Authorization': 'Bearer ' + token
+    })
+  };
+   return this.http.get(fetchAllBusinessUnitInfoApiUrl,httpOptions) 
   }
 }
 

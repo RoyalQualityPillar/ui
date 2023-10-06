@@ -1,0 +1,188 @@
+<div class="container-fluid">
+    <div class="row no-gutters dialogHeaderColor" >
+        <div class="col-10 d-flex justify-content-start">
+            <h1 class="customeHeading">{{this.userData.type}} Organization</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="tabOverFlowY">
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
+
+        <form [formGroup]="DepartmentMaster" style="margin-top: 7px;">
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Header</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="p-2">
+                            <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                                <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
+                                    denoted by an asterisk(<span style="color: red">*</span>).</span>
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4">
+                                <mat-form-field appearance="outline" class="col-12 px-1">
+                                    <mat-label>Category</mat-label>
+                                    <input type="text" matInput formControlName="category" maxlength="4"
+                                        placeholder="Category" >
+                                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openCategoryLOV()">
+                                </mat-form-field>
+                               
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4">
+                                    <mat-form-field appearance="outline" class="col-12 px-1">
+                                        <mat-label>Sub Category</mat-label>
+                                        <input type="text" matInput formControlName="subCategory"(change)="onChangePlantCode()"
+                                            placeholder="Sub Category" >
+                                             <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openSubCategoryCodeLOV()"> 
+                                    </mat-form-field>
+                                </div>
+                         
+                                <div class="row no-gutters ms-1 me-1 dense-4" *ngIf="isUpdate">
+                                    <mat-form-field appearance="outline" class="col-12 px-1" >
+                                        <mat-label>Status</mat-label>
+                                        <input type="text" matInput formControlName="status" 
+                                            placeholder="Status" (change)="onChangeStatus()" >
+                                            <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                            class="icon-size lovSearchButton" color="primary"(click)="openStatusLOV()">
+                                    </mat-form-field> 
+                                    </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Document Detail</p>
+                </div>
+            </div>
+
+
+            <div>
+              <!--Table for multi record-->
+              <div class="col-12">
+                <div class="p-2">
+              <div class="row no-gutters ms-1 me-1">
+                <div class="col-3 px-1" >
+                    Document Number 
+                </div>
+                <div class="col-3 px-1" >
+                    <input type="text" [(ngModel)]="selectedDataList.docNos"[ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col-3 px-1" >
+                   Document Name 
+                </div>
+                <div class="col-3 px-1" >
+                    <input type="text" [(ngModel)]="selectedDataList.docNames"[ngModelOptions]="{standalone: true}">
+                </div>
+                </div>
+                <div class="row no-gutters ms-1 me-1"style="padding-top:5px">
+                <div class="col-3 px-1" >
+                  Document Type  
+                </div>
+                <div class="col-3 px-1" >
+                    <select [(ngModel)]="selectedDataList.categoryTypes"[ngModelOptions]="{standalone: true}" style="width: 83%;">
+                        <option value="">Select</option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                        <option value="A">A</option>
+                    </select>     
+                </div>
+                <div class="col-3 px-1" >
+                   Attachement 
+                </div>
+                <div class="col-3 px-1" >
+                    <input type="file" [(ngModel)]="selectedDataList.attachement"[ngModelOptions]="{standalone: true}" id="file"(change)="handleFileInput($event)">
+                </div>
+              </div>
+              <div class="row no-gutters ms-1 me-1" style="margin-top: 20px;">
+                <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onCreateSelectedDataList()"> Add Row</button>
+            </div>
+            </div>
+</div>
+<mat-card style="margin-top: 2px;background-color: #fdfdfd;" *ngIf="this.UserRoleTable.length>0">
+    <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
+    style="background-color: ghostwhite;" matSort id="dataTable">
+
+    <!-- <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+        <img src="/assets/delete.png" (click)="onUserRemove(row)">
+        </mat-cell>
+      </ng-container> -->
+    <ng-container matColumnDef="docNos">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Document Number</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.docNos}} </mat-cell>
+      </ng-container>
+    <ng-container matColumnDef="docNames">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</mat-header-cell>
+        <mat-cell *matCellDef="let row">docNames  </mat-cell>
+      </ng-container>
+    <ng-container matColumnDef="categoryTypes">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Category Types </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.categoryTypes}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="attachmentName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Attachment </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.attachmentName}}</mat-cell>
+      </ng-container>
+   
+ 
+    <mat-header-row *matHeaderRowDef="AddedUserdisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: AddedUserdisplayedColumns;"></mat-row>
+  </mat-table> 
+
+  <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
+  </mat-paginator>
+</mat-card>
+</div>
+                </mat-card>
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="col-12">
+                    <div class="p-2">
+                        <div class="row no-gutters ms-1 me-1" >
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Comments</mat-label>
+                                <textarea type="text" matInput formControlName="comments"
+                                    placeholder="Comments">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </mat-card>
+        </form>
+       
+</div>
+    </div>
+    <div class="containerBTN" style="margin-top: 26px; margin-bottom: 1px;">
+        <div  class="d-flex justify-content-center">
+
+        <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+          (click)="isUpdate ? onUpdate() : onCreate()" [class.isDisabledBtn]="DepartmentMaster.invalid">{{isUpdate ? "Update" : "Create"}}</button>
+         <button mat-raised-button color="primary"*ngIf="!isUpdate"
+          style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;"(click)="onClear()">Clear</button>
+      </div>
+</div>
