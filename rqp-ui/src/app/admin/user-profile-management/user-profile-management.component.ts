@@ -23,6 +23,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { ActiveAuditTrailComponent } from '../active-audit-trail/active-audit-trail.component';
+import { exportData } from 'bk-export';
 
 @Component({
   selector: 'app-user-profile-management',
@@ -230,108 +231,63 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
    doc.save(fileName + '.pdf');
  }
  downloadExcel(){
-   let exportData:any
-   exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-   for(let i=0;i<exportData.length;i++){
-     delete exportData[i].action;
-     delete exportData[i].altEmail;
-     delete exportData[i].altMobile
-     delete exportData[i].branchId
-     delete exportData[i].branchName
-     delete exportData[i].dob
-     delete exportData[i].department
-     delete exportData[i].designation
-     delete exportData[i].email
-     delete exportData[i].effectiveDate;
-     delete exportData[i].gender
-     delete exportData[i].levelOneManager
-     delete exportData[i].lastName
-     delete exportData[i].levelOneManager
-     delete exportData[i].levelTwoManager
-     delete exportData[i].lifecyclecode
-     delete exportData[i].mobile
-     delete exportData[i].userStatus
-     delete exportData[i].joinedDate
-     delete exportData[i].urpcomments
-   }
- const fileName = "user-list.xlsx";
- const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
- const wb: XLSX.WorkBook = XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb, ws, fileName);
- XLSX.writeFile(wb, fileName);
+  let type='excel';
+  let status='active';
+  let screenName='userprofile';
+  let fileName='userprofile'
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData));
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "User Id":excelData[i].userId,
+      "Employee Id":excelData[i].employeeId,
+      "Employee Name":excelData[i].firstName,
+      "Status":excelData[i].status,
+      "Modification":excelData[i].version,
+      "Creation Date":excelData[i].createdDate,
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
  }
  downloadData:any;
  downloadTxt(){
-  //this.downloadData = JSON.stringify(this.tableData);
-   let exportDataForTxt:any
-  //  console.log(this.dataSource);
-  //  console.log(this.tableData)
-   exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-   //console.log(newData)
-  // exportDataForTxt=JSON.parse(JSON.stringify(this.dataSource))
-   for(let i=0;i<exportDataForTxt.length;i++){
-     delete exportDataForTxt[i].action;
-     delete exportDataForTxt[i].altEmail;
-     delete exportDataForTxt[i].altMobile
-     delete exportDataForTxt[i].branchId
-     delete exportDataForTxt[i].branchName
-     delete exportDataForTxt[i].dob
-     delete exportDataForTxt[i].department
-     delete exportDataForTxt[i].designation
-     delete exportDataForTxt[i].email
-     delete exportDataForTxt[i].effectiveDate;
-     delete exportDataForTxt[i].gender
-     delete exportDataForTxt[i].levelOneManager
-     delete exportDataForTxt[i].lastName
-     delete exportDataForTxt[i].levelOneManager
-     delete exportDataForTxt[i].levelTwoManager
-     delete exportDataForTxt[i].lifecyclecode
-     delete exportDataForTxt[i].mobile
-     delete exportDataForTxt[i].userStatus
-     delete exportDataForTxt[i].joinedDate
-     delete exportDataForTxt[i].urpcomments
-
-   }
- const fileName = "user-list.txt";
- const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
- const wb: XLSX.WorkBook = XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb, ws, fileName);
- XLSX.writeFile(wb, fileName,{bookType:'txt'});
+  let type='txt';
+  let status='active';
+  let screenName='userprofile';
+  let fileName='userprofile'
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData));
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "User Id":excelData[i].userId,
+      "Employee Id":excelData[i].employeeId,
+      "Employee Name":excelData[i].firstName,
+      "Status":excelData[i].status,
+      "Modification":excelData[i].version,
+      "Creation Date":excelData[i].createdDate,
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
  }
 
  downloadCsvFile() {
-   let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-     delete exportDataForCsv[i].altEmail;
-     delete exportDataForCsv[i].altMobile
-     delete exportDataForCsv[i].branchId
-     delete exportDataForCsv[i].branchName
-     delete exportDataForCsv[i].dob
-     delete exportDataForCsv[i].department
-     delete exportDataForCsv[i].designation
-     delete exportDataForCsv[i].email
-     delete exportDataForCsv[i].effectiveDate;
-     delete exportDataForCsv[i].gender
-     delete exportDataForCsv[i].levelOneManager
-     delete exportDataForCsv[i].lastName
-     delete exportDataForCsv[i].levelOneManager
-     delete exportDataForCsv[i].levelTwoManager
-     delete exportDataForCsv[i].lifecyclecode
-     delete exportDataForCsv[i].mobile
-     delete exportDataForCsv[i].userStatus
-     delete exportDataForCsv[i].joinedDate
-     delete exportDataForCsv[i].urpcomments
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "user-list.csv");
+  let type='csv';
+  let status='active';
+  let screenName='userprofile';
+  let fileName='userprofile'
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData));
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "User Id":excelData[i].userId,
+      "Employee Id":excelData[i].employeeId,
+      "Employee Name":excelData[i].firstName,
+      "Status":excelData[i].status,
+      "Modification":excelData[i].version,
+      "Creation Date":excelData[i].createdDate,
+    })
+  }
+  exportData(arrExcel,screenName,fileName,type)
 }
 
     //Redirect To Home Page
@@ -756,70 +712,45 @@ OnActiveUserSearch(){
 
   //Export Data for active user
   activeUserDownloadTxt(){
-   let exportDataForTxt:any
-    exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-    for(let i=0;i<exportDataForTxt.length;i++){
-      delete exportDataForTxt[i].action;
-      delete exportDataForTxt[i].altEmail;
-      delete exportDataForTxt[i].altMobile
-      delete exportDataForTxt[i].branchId
-      delete exportDataForTxt[i].branchName
-      delete exportDataForTxt[i].dob
-      delete exportDataForTxt[i].department
-      delete exportDataForTxt[i].designation
-      delete exportDataForTxt[i].email
-      delete exportDataForTxt[i].effectiveDate;
-      delete exportDataForTxt[i].gender
-      delete exportDataForTxt[i].levelOneManager
-      delete exportDataForTxt[i].lastName
-      delete exportDataForTxt[i].levelOneManager
-      delete exportDataForTxt[i].levelTwoManager
-      delete exportDataForTxt[i].lifecyclecode
-      delete exportDataForTxt[i].mobile
-      delete exportDataForTxt[i].userStatus
-      delete exportDataForTxt[i].joinedDate
-      delete exportDataForTxt[i].urpcomments
- 
+    let type='txt';
+    let status='active';
+    let screenName='userprofile';
+    let fileName='userprofile'
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData));
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "User Id":excelData[i].userId,
+        "Employee Id":excelData[i].employeeId,
+        "Employee Name":excelData[i].firstName,
+        "Status":excelData[i].status,
+        "Modification":excelData[i].version,
+        "Creation Date":excelData[i].createdDate,
+      })
     }
-  const fileName = "active-user-list.txt";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    exportData(arrExcel,screenName,fileName,type)
+   
   }
   activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-     delete exportDataForCsv[i].altEmail;
-     delete exportDataForCsv[i].altMobile
-     delete exportDataForCsv[i].branchId
-     delete exportDataForCsv[i].branchName
-     delete exportDataForCsv[i].dob
-     delete exportDataForCsv[i].department
-     delete exportDataForCsv[i].designation
-     delete exportDataForCsv[i].email
-     delete exportDataForCsv[i].effectiveDate;
-     delete exportDataForCsv[i].gender
-     delete exportDataForCsv[i].levelOneManager
-     delete exportDataForCsv[i].lastName
-     delete exportDataForCsv[i].levelOneManager
-     delete exportDataForCsv[i].levelTwoManager
-     delete exportDataForCsv[i].lifecyclecode
-     delete exportDataForCsv[i].mobile
-     delete exportDataForCsv[i].userStatus
-     delete exportDataForCsv[i].joinedDate
-     delete exportDataForCsv[i].urpcomments
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-user-list.csv");
+    let type='csv';
+    let status='active';
+    let screenName='userprofile';
+    let fileName='userprofile'
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData));
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "User Id":excelData[i].userId,
+        "Employee Id":excelData[i].employeeId,
+        "Employee Name":excelData[i].firstName,
+        "Status":excelData[i].status,
+        "Modification":excelData[i].version,
+        "Creation Date":excelData[i].createdDate,
+      })
+    }
+    exportData(arrExcel,screenName,fileName,type)
+   
+  
   }
   activeUserDownloadPdf(){
     let header: string[] = ['User Id.', 'Employee Id', 'Name', 'Unit Type','Status','Modification No'];
@@ -874,38 +805,23 @@ OnActiveUserSearch(){
    doc.save(fileName + '.pdf');
   }
   activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-     delete exportDataForCsv[i].altEmail;
-     delete exportDataForCsv[i].altMobile
-     delete exportDataForCsv[i].branchId
-     delete exportDataForCsv[i].branchName
-     delete exportDataForCsv[i].dob
-     delete exportDataForCsv[i].department
-     delete exportDataForCsv[i].designation
-     delete exportDataForCsv[i].email
-     delete exportDataForCsv[i].effectiveDate;
-     delete exportDataForCsv[i].gender
-     delete exportDataForCsv[i].levelOneManager
-     delete exportDataForCsv[i].lastName
-     delete exportDataForCsv[i].levelOneManager
-     delete exportDataForCsv[i].levelTwoManager
-     delete exportDataForCsv[i].lifecyclecode
-     delete exportDataForCsv[i].mobile
-     delete exportDataForCsv[i].userStatus
-     delete exportDataForCsv[i].joinedDate
-     delete exportDataForCsv[i].urpcomments
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-user-list.csv");
+    let type='excel';
+    let status='active';
+    let screenName='userprofile';
+    let fileName='userprofile'
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData));
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "User Id":excelData[i].userId,
+        "Employee Id":excelData[i].employeeId,
+        "Employee Name":excelData[i].firstName,
+        "Status":excelData[i].status,
+        "Modification":excelData[i].version,
+        "Creation Date":excelData[i].createdDate,
+      })
+    }
+    exportData(arrExcel,screenName,fileName,type)
   }
   activeUserCopyData(){
     var dataArray = "";

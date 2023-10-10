@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BkTableModule } from 'bk-angular-table';
 
 import { ActiveAuditTrailComponent } from './../../admin/active-audit-trail/active-audit-trail.component';
 import { LifeCycleHomeComponent } from './../../admin/life-cycle/life-cycle-home/life-cycle-home.component';
@@ -106,7 +107,8 @@ import { UtMasterHomePageComponent } from '../ut-master/ut-master-home-page/ut-m
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    BrowserModule
+    BrowserModule,
+    BkTableModule
   ]
 })
 export class AdminModule { }

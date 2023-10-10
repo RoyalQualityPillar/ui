@@ -18,6 +18,9 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DepartmentService } from '../department.service';
 import { DepartmentCreateUpdateComponent } from '../department-create-update/department-create-update.component';
+import { exportData } from 'bk-export';
+import { AllDepartmentAuditTrailComponent } from '../all-department-audit-trail/all-department-audit-trail.component';
+import { ActiveDepartmentAuditTrailComponent } from '../active-department-audit-trail/active-department-audit-trail.component';
 
 
 @Component({
@@ -32,8 +35,24 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  // displayedColumn = [
+  //   { field: 'id', title: 'Name' },
+  //   { field: 'ff0001', title: 'Department Code' },
+  //   { field: 'ff0002', title: 'Department Name' },
+  //   { field: 'status', title: 'Status' },
+  //   { field: 'version', title: 'Version' },
+  //   { field: 'uc0001', title: 'Business Unit Code' },
+  //   { field: 'createdon', title: 'Created Date' },
+  //   { field: 'createdby', title: 'Created By' },
+  // ];
+  // onSelectedChange(row:any){
+  // console.log(row)
+  // }
+  // onPagination(row:any){
+  //   console.log(row)
+  // }
   isLoading=false;
   filterObject:any;
   activeUserFilterObject:any;
@@ -371,32 +390,39 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "active-department-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let arrExcel=[];
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Department Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Department Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,'department','department','txt')
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-department-list.csv");
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+       arrExcel.push({
+         "Id":excelData[i].id,
+         "Department Name":excelData[i].ff0001,
+         "Business Unit Code":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Department Code":excelData[i].uc0001,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
+       })
+     }
+     exportData(arrExcel,'department','department','csv')
+  
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Plant Code', 'Role Name', 'Status','Version','Role Code','Created Date','CreatedBy'];
@@ -454,20 +480,22 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
    let fileName='active-department-list';
    doc.save(fileName + '.pdf');
   }
-  activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-department-list.csv");
+  activeUserDownloadExcel1(){
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+       arrExcel.push({
+         "Id":excelData[i].id,
+         "Department Name":excelData[i].ff0001,
+         "Business Unit Code":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Department Code":excelData[i].uc0001,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
+       })
+     }
+     exportData(arrExcel,'department','department','excel')
   }
   copyData() {
     var dataArray = "";
@@ -491,32 +519,38 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
       return result.toString() + "\n";
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
-      }
-    const fileName = "department-master-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+       for(var i=0, len=excelData.length; i<len; i++){
+         arrExcel.push({
+           "Id":excelData[i].id,
+           "Department Name":excelData[i].ff0001,
+           "Business Unit Code":excelData[i].ff0002,
+           "Status":excelData[i].status,
+           "Vesrion":excelData[i].version,
+           "Department Code":excelData[i].uc0001,
+           "Creation Date":excelData[i].createdon,
+           "CreatedBy":excelData[i].createdby
+         })
+       }
+       exportData(arrExcel,'department','department','txt')
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
-      }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "department-master-list.csv");
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+       for(var i=0, len=excelData.length; i<len; i++){
+         arrExcel.push({
+           "Id":excelData[i].id,
+           "Department Name":excelData[i].ff0001,
+           "Business Unit Code":excelData[i].ff0002,
+           "Status":excelData[i].status,
+           "Vesrion":excelData[i].version,
+           "Department Code":excelData[i].uc0001,
+           "Creation Date":excelData[i].createdon,
+           "CreatedBy":excelData[i].createdby
+         })
+       }
+       exportData(arrExcel,'department','department','csv')
    }
 
    totalRow:any;
@@ -577,17 +611,22 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     doc.save(fileName + '.pdf');
   }
 
-  downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
-    }
-  const fileName = "department-master-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+  downloadExcel1(){
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+       arrExcel.push({
+         "Id":excelData[i].id,
+         "Department Name":excelData[i].ff0001,
+         "Business Unit Code":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Department Code":excelData[i].uc0001,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
+       })
+     }
+     exportData(arrExcel,'department','department','excel')
   }
   newList:any;
   previousTableList:any;
@@ -615,6 +654,38 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
   setSelectedID(row:any){
    this.selectedRow=row;
   }
+  selectedAllRow=[];
+  setAllSelectedID(row:any){
+    this.selectedAllRow=row;
+  }
+  onAllAuditTrailRow(){
+    if(this.selectedAllRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(AllDepartmentAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      } 
+  }
+  onActiveAuditTrailRow(){
+    if(this.selectedRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveDepartmentAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      } 
+  }
   onActiveSelectRow(){
     if(this.selectedRow.length==0){
       this.dialog.open(MessageDialogComponent, {
@@ -640,5 +711,43 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
       this.OnLoadActiveRoleMaster();
       this.onLoadAllRoleMaster();
     })
+  }
+  
+  downloadExcel(){
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+       arrExcel.push({
+         "Id":excelData[i].id,
+         "Department Name":excelData[i].ff0001,
+         "Business Unit Code":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Department Code":excelData[i].uc0001,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
+       })
+     }
+     exportData(arrExcel,'department','department','excel')
+
+  
+  }
+  activeUserDownloadExcel(){ 
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+       arrExcel.push({
+         "Id":excelData[i].id,
+         "Department Name":excelData[i].ff0001,
+         "Business Unit Code":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Department Code":excelData[i].uc0001,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
+       })
+     }
+     exportData(arrExcel,'department','department','excel')
+   
   }
 }

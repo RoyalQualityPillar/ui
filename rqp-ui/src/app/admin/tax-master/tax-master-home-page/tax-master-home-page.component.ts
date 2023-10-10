@@ -17,7 +17,10 @@ import { MessageDialogComponent } from 'src/app/common/message-dialog/message-di
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { TaxMasterService } from '../tax-master.service';
+import { exportData } from 'bk-export'
 import { TaxMasterCreateUpdateComponent } from '../tax-master-create-update/tax-master-create-update.component';
+import { ActiveTaxMasterAuditTrailComponent } from '../active-tax-master-audit-trail/active-tax-master-audit-trail.component';
+import { AllTaxMasterAuditTrailComponent } from '../all-tax-master-audit-trail/all-tax-master-audit-trail.component';
 @Component({
   selector: 'app-tax-master-home-page',
   templateUrl: './tax-master-home-page.component.html',
@@ -30,8 +33,8 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
-  activeRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = ['action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  activeRoleMasterdisplayedColumns: string[] = ['action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
   activeUserFilterObject:any;
@@ -370,32 +373,38 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "tax-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Tax Name":excelData[i].ff0001,
+       "Business Unit Code":excelData[i].ff0002,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Tax Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
+   }
+  exportData(arrExcel,'tax','tax','txt')
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Tax Name":excelData[i].ff0001,
+       "Business Unit Code":excelData[i].ff0002,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Tax Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "tax-list.csv");
+  exportData(arrExcel,'tax','tax','csv')
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Tax Name', 'Business Unit Code', 'Status','Version','Tax Code','Created Date','CreatedBy'];
@@ -453,20 +462,22 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
    let fileName='tax-list';
    doc.save(fileName + '.pdf');
   }
-  activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
+  activeUserDownloadExcel1(){
+   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   let arrExcel=[];
+   for(var i=0, len=excelData.length; i<len; i++){
+     arrExcel.push({
+       "Id":excelData[i].id,
+       "Tax Name":excelData[i].ff0001,
+       "Business Unit Code":excelData[i].ff0002,
+       "Status":excelData[i].status,
+       "Vesrion":excelData[i].version,
+       "Tax Code":excelData[i].uc0001,
+       "Creation Date":excelData[i].createdon,
+       "CreatedBy":excelData[i].createdby
+     })
    }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "tax-list.csv");
+  exportData(arrExcel,'tax','tax','csv')
   }
   copyData() {
     var dataArray = "";
@@ -490,32 +501,40 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
       return result.toString() + "\n";
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
-      }
-    const fileName = "tax-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Tax Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Tax Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+   exportData(arrExcel,'tax','tax','txt')
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      let arrExcel=[];
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Tax Name":excelData[i].ff0001,
+          "Business Unit Code":excelData[i].ff0002,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Tax Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "tax-list.csv");
+     exportData(arrExcel,'tax','tax','csv')
    }
 
    totalRow:any;
@@ -576,17 +595,22 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
     doc.save(fileName + '.pdf');
   }
 
-  downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
-    }
-  const fileName = "tax-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+  downloadExcel1(){
+  let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+  let arrExcel=[];
+  for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Tax Name":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Tax Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+ exportData(arrExcel,'tax','tax','excel')
   }
 
   newList:any;
@@ -616,7 +640,38 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
   setSelectedID(row:any){
    this.selectedRow=row;
   }
-  
+  selectedAllRow=[];
+  setSelectedAllID(row:any){
+   this.selectedAllRow=row;
+  }
+  onAllSelectAuditRow(){
+    if(this.selectedAllRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(AllTaxMasterAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      }  
+  }
+  onActiveSelectAuditRow(){
+    if(this.selectedRow.length==0){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'Please select any row', 'heading': "Error Information" }
+     })
+      }else{
+      const dialogRef=this.dialog.open(ActiveTaxMasterAuditTrailComponent,{
+          minWidth:"80%",
+          data:{tableData:this.selectedRow,type:'AuditTrail'}
+        })
+        dialogRef.afterClosed().subscribe(result => {
+        })
+      } 
+  }
   onActiveSelectRow(){
     if(this.selectedRow.length==0){
       this.dialog.open(MessageDialogComponent, {
@@ -642,6 +697,41 @@ export class TaxMasterHomePageComponent implements OnInit, AfterViewInit {
       this.OnLoadActiveRoleMaster();
       this.onLoadAllRoleMaster();
     })
+  }
+  downloadExcel(){
+
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Tax Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Tax Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+   exportData(arrExcel,'tax','tax','excel')
+  }
+  activeUserDownloadExcel(){ 
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    let arrExcel=[];
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Tax Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Tax Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+   exportData(arrExcel,'tax','tax','excel')
   } 
 }
 

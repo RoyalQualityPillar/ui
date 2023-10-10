@@ -18,6 +18,9 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { BusinessUnitService } from '../business-unit.service';
 import * as moment from 'moment';
 import { CreateBusinessUnitComponent } from '../create-business-unit/create-business-unit.component';
+import { exportData } from 'bk-export';
+import { ActiveBusinessUnitAuditTrailComponent } from '../active-business-unit-audit-trail/active-business-unit-audit-trail.component';
+import { AllBusinessUnitAuditTrailComponent } from '../all-business-unit-audit-trail/all-business-unit-audit-trail.component';
 
 @Component({
   selector: 'app-business-unit-home-page',
@@ -31,7 +34,7 @@ export class BusinessUnitHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allBusinessUnitdisplayedColumns: string[] = ['uc0001', 'uc0002','ff0001', 'status','version', 'createdon', 'createdby'];
+  allBusinessUnitdisplayedColumns: string[] = ['action','uc0001', 'uc0002','ff0001', 'status','version', 'createdon', 'createdby'];
   ActiveBusinessUnitdisplayedColumns: string[] = ['action', 'uc0001', 'uc0002','ff0001', 'status','version', 'createdon', 'createdby'];
 
   constructor(private _liveAnnouncer: LiveAnnouncer,
@@ -405,32 +408,42 @@ activeUserSelectedRowData:any;
       return result.toString() + "\n";
     }
     downloadTxt(){
-       let exportDataForTxt:any
-       exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-       for(let i=0;i<exportDataForTxt.length;i++){
-         delete exportDataForTxt[i].action;
-    
-       }
-     const fileName = "business-unit-list.txt";
-     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-     XLSX.utils.book_append_sheet(wb, ws, fileName);
-     XLSX.writeFile(wb, fileName,{bookType:'txt'});
+      let type='txt';
+      let screenName='businessunit';
+      let fileName='businessunit';
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Business Unit Code":excelData[i].uc0001,
+          "Category":excelData[i].uc0002,
+          "Name":excelData[i].ff0001,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
+      }
+      exportData(arrExcel,screenName,fileName,type)
      }
      downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+      let type='csv';
+      let screenName='businessunit';
+      let fileName='businessunit';
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Business Unit Code":excelData[i].uc0001,
+          "Category":excelData[i].uc0002,
+          "Name":excelData[i].ff0001,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "Business-unit-list.csv");
+      exportData(arrExcel,screenName,fileName,type)
    }
    totalRow:any;
    downloadPdf() {
@@ -488,16 +501,24 @@ activeUserSelectedRowData:any;
     doc.save(fileName + '.pdf');
   }
   downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
+    let type='excel';
+    let screenName='businessunit';
+    let fileName='businessunit'
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Business Unit Code":excelData[i].uc0001,
+        "Category":excelData[i].uc0002,
+        "Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
     }
-  const fileName = "business-unit-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+    exportData(arrExcel,screenName,fileName,type)
+
   }
   activeUserCopyData(){
     var dataArray = "";
@@ -522,32 +543,42 @@ activeUserSelectedRowData:any;
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "active-business-unit-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let type='txt';
+    let screenName='businessunit';
+    let fileName='businessunit';
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Business Unit Code":excelData[i].uc0001,
+        "Category":excelData[i].uc0002,
+        "Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,screenName,fileName,type)
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-business-unit-list.csv");
+    let type='csv';
+    let screenName='businessunit';
+    let fileName='businessunit';
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Business Unit Code":excelData[i].uc0001,
+        "Category":excelData[i].uc0002,
+        "Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,screenName,fileName,type)
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Business Unit Code', 'Category', 'Name', 'Status','Version','Created Date','CreatedBy'];
@@ -604,24 +635,33 @@ activeUserSelectedRowData:any;
    doc.save(fileName + '.pdf');
   }
   activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
+    let type='excel';
+    let screenName='businessunit';
+    let fileName='businessunit';
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+    for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Business Unit Code":excelData[i].uc0001,
+        "Category":excelData[i].uc0002,
+        "Name":excelData[i].ff0001,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+    exportData(arrExcel,screenName,fileName,type)
 
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-business-unit-list.csv");
   }
   //selected Row
   setSelectedID(row:any){
     console.log(row)
     this.selectedID=row;
+  }
+  selectedAllId:any;
+  setSelectedAllID(row:any){
+  this.selectedAllId=row;
   }
   onActiveSelectRow(){
  console.log(this.selectedID);
@@ -635,9 +675,36 @@ activeUserSelectedRowData:any;
       data:{tableData:this.selectedID,type:'Update'}
     })
     dialogRef.afterClosed().subscribe(result => {
-      this.onLoadAllBusinessUnit();
-      this.OnLoadActiveBusinessUnit();
     })
   }
+}
+onAllSelectAuditTrailRow(){
+  if(this.selectedAllId.length==0){
+    this.dialog.open(MessageDialogComponent, {
+      data: { 'message': 'Please select any row', 'heading': "Error Information" }
+   })
+    }else{
+  const dialogRef=this.dialog.open(AllBusinessUnitAuditTrailComponent,{
+    minWidth:"80%",
+    data:{tableData:this.selectedAllId,type:'Update'}
+  })
+  dialogRef.afterClosed().subscribe(result => {
+  }) 
+}
+}
+onActiveSelectAuditTrailRow(){
+  if(this.selectedID.length==0){
+    this.dialog.open(MessageDialogComponent, {
+      data: { 'message': 'Please select any row', 'heading': "Error Information" }
+   })
+    }else{
+  console.log(this.selectedID)
+  const dialogRef=this.dialog.open(ActiveBusinessUnitAuditTrailComponent,{
+    minWidth:"80%",
+    data:{tableData:this.selectedID,type:'auditTrail'}
+  })
+  dialogRef.afterClosed().subscribe(result => {
+  }) 
+}
 }
 }

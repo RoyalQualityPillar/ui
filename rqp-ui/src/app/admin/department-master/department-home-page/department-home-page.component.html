@@ -31,11 +31,11 @@
                         <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 1px;">
                         <mat-table [dataSource]="tableData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
                             style="background-color: ghostwhite;">
-                            <!-- <ng-container matColumnDef="action">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                                 <mat-cell *matCellDef="let row">
-                                <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell>
-                            </ng-container> -->
+                                <mat-radio-button name="selectrow" (change)="setAllSelectedID(row)"></mat-radio-button></mat-cell>
+                            </ng-container>
                             <ng-container matColumnDef="id">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
@@ -73,6 +73,8 @@
                         </mat-table>
                         <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="pageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
                         </mat-paginator>
+                        <button mat-raised-button color="primary" 
+                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onAllAuditTrailRow()">Audit Trail</button>
                         </div><!--Table Box Closed-->
                     </div><!--OverFlow Closed-->  
 
@@ -196,9 +198,18 @@
                     style="font-size: smaller;background-color: #22773e;;height: 25px;margin-left: 86%;width: max-content;"
                     (click)="onOpenRolePOPUP()">Add New Record</button>
             </div>
-            <div class="tableOverFlowY">
-                <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 1px;">
-                <mat-table [dataSource]="activeUsertableData"id="datTable" id="activeUserDataTable"  matSort
+            <div class="tableOverFlowY" >
+                <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 1px;" >
+                  <!-- <bk-angular-table 
+[displayedColumns]="displayedColumn" 
+[dataSource]="this.activeUserDataSource"
+(selectedRow$)="onSelectedChange($event)"  
+(pagination$)="onPagination($event)"
+class="bk-table"
+columnClass="bk-customer-notes-result"
+>
+</bk-angular-table> -->
+                 <mat-table [dataSource]="activeUsertableData"id="datTable" id="activeUserDataTable"  matSort
                     style="background-color: ghostwhite;">
                     <ng-container matColumnDef="action">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
@@ -239,13 +250,15 @@
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="activeRoleMasterdisplayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns:activeRoleMasterdisplayedColumns"></mat-row>
-                </mat-table>
-                <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="activeUSerPageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
+                </mat-table> 
+                 <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"(page)="activeUSerPageChanged($event)"  showFirstLastButtons aria-label="Select page of periodic rows">
                 </mat-paginator>
                 <button mat-raised-button color="primary" 
-                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveSelectRow()">View Details</button>
-                </div><!--Table Box Closed-->
-            </div><!--OverFlow Closed-->  
+                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveSelectRow()">Update</button>
+                <button mat-raised-button color="primary" 
+                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveAuditTrailRow()">Audit Trail</button>
+                </div>
+            </div>
 
 
             </div>

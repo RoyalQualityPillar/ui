@@ -18,6 +18,11 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { RoleMasterService } from '../role-master.service';
 import { RoleMasterCreateUpdateComponent } from '../role-master-create-update/role-master-create-update.component';
+//import { exportData } from 'src/app/common/exportData';
+import{exportData} from 'bk-export';
+import{exportPDF} from 'bk-export';
+import { AllRoleAuditTrailComponent } from '../all-role-audit-trail/all-role-audit-trail.component';
+import { ActiveRoleAuditTrailComponent } from '../active-role-audit-trail/active-role-audit-trail.component';
 
 
 @Component({
@@ -32,7 +37,7 @@ export class RoleMasterHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = ['action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
@@ -371,32 +376,41 @@ export class RoleMasterHomePageComponent implements OnInit, AfterViewInit {
     return result.toString() + "\n";
   }
   activeUserDownloadTxt(){
-    let exportDataForTxt:any
-     exportDataForTxt=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-     for(let i=0;i<exportDataForTxt.length;i++){
-       delete exportDataForTxt[i].action;
-  
-     }
-   const fileName = "active-role-list.txt";
-   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-   XLSX.utils.book_append_sheet(wb, ws, fileName);
-   XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let type='txt';
+    let screenName='role';
+    let fileName='role'
+    let arrExcel=[];
+    let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Plant Code":excelData[i].ff0001,
+      "Role Name":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Role Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+    exportData(arrExcel,screenName,fileName,type) 
    }
    activeUserDownloadCsvFile(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-role-list.csv");
+    let arrExcel=[];
+    let  excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+       arrExcel.push({
+         "Id":excelData[i].id,
+         "Plant Code":excelData[i].ff0001,
+         "Role Name":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Role Code":excelData[i].uc0001,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
+       })
+     }
+     exportData(arrExcel,'role','role','csv') 
   }
   activeUserDownloadPdf(){
     let header: string[] = ['Id', 'Plant Code', 'Role Name', 'Status','Version','Role Code','Created Date','CreatedBy'];
@@ -455,19 +469,23 @@ export class RoleMasterHomePageComponent implements OnInit, AfterViewInit {
    doc.save(fileName + '.pdf');
   }
   activeUserDownloadExcel(){
-    let exportDataForCsv:any
-   exportDataForCsv=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
-   for(let i=0;i<exportDataForCsv.length;i++){
-     delete exportDataForCsv[i].action;
-   }
-   const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-   const header = Object.keys(exportDataForCsv[0]);
-   let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-   csv.unshift(header.join(','));
-   let csvArray = csv.join('\r\n');
-
-   var blob = new Blob([csvArray], {type: 'text/csv' })
-   saveAs(blob, "active-role-list.csv");
+    let excelData:any;
+    let arrExcel=[];
+    excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
+   for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Plant Code":excelData[i].ff0001,
+      "Role Name":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Role Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+  console.log(arrExcel)
+    exportData(arrExcel,'role','role','excel')
   }
   copyData() {
     var dataArray = "";
@@ -491,34 +509,45 @@ export class RoleMasterHomePageComponent implements OnInit, AfterViewInit {
       return result.toString() + "\n";
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-   
-      }
-    const fileName = "role-master-list.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+      let type='txt';
+      let screenName='role';
+      let fileName='role'
+      let arrExcel=[];
+      let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+     for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "Id":excelData[i].id,
+        "Plant Code":excelData[i].ff0001,
+        "Role Name":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Role Code":excelData[i].uc0001,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
+      })
+    }
+      exportData(arrExcel,screenName,fileName,type) 
     }
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.tableData.filteredData))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
+    //  let exportDataForCsv:any
+      let arrExcel=[];
+     let  excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+      for(var i=0, len=excelData.length; i<len; i++){
+        arrExcel.push({
+          "Id":excelData[i].id,
+          "Plant Code":excelData[i].ff0001,
+          "Role Name":excelData[i].ff0002,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Role Code":excelData[i].uc0001,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
+        })
       }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-   
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "role-master-list.csv");
+      exportData(arrExcel,'role','role','csv') 
+    
    }
-
+  
    totalRow:any;
    downloadPdf() {
     let header: string[] = ['Id', 'Plant Code', 'Role Name', 'Status','Version','Role Code','Created Date','CreatedBy'];
@@ -578,16 +607,26 @@ export class RoleMasterHomePageComponent implements OnInit, AfterViewInit {
   }
 
   downloadExcel(){
-    let exportData:any
-    exportData=JSON.parse(JSON.stringify(this.tableData.filteredData))
-    for(let i=0;i<exportData.length;i++){
-      delete exportData[i].action;
-    }
-  const fileName = "role-master-list.xlsx";
-  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, fileName);
-  XLSX.writeFile(wb, fileName);
+    let type='excel';
+    let screenName='role';
+    let fileName='role'
+    //let exportData:any
+    let excelData:any;
+    let arrExcel=[];
+    excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
+   for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "Id":excelData[i].id,
+      "Plant Code":excelData[i].ff0001,
+      "Role Name":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
+      "Role Code":excelData[i].uc0001,
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
+    })
+  }
+    exportData(arrExcel,screenName,fileName,type)
   }
   newList:any;
 previousTableList:any;
@@ -642,5 +681,27 @@ onOpenRolePOPUP(){
     this.OnLoadActiveRoleMaster();
     this.onLoadAllRoleMaster();
   })
+}
+selectedAllRow=[];
+setSelectedAllID(row:any){
+ this.selectedAllRow=row;
+}
+onAllAuditTrailRow(){
+console.log(this.selectedAllRow)
+const dialogRef=this.dialog.open(AllRoleAuditTrailComponent,{
+  minWidth:"80%",
+  data:{tableData:this.selectedAllRow,type:'AuditTrail'}
+})
+dialogRef.afterClosed().subscribe(result => {
+})
+}
+onActiveAuditTrailRow(){
+  console.log(this.selectedAllRow)
+  const dialogRef=this.dialog.open(ActiveRoleAuditTrailComponent,{
+    minWidth:"80%",
+    data:{tableData:this.selectedRow,type:'AuditTrail'}
+  })
+  dialogRef.afterClosed().subscribe(result => {
+  }) 
 }
 }

@@ -85,6 +85,44 @@ style="background-color: ghostwhite;">
 </mat-paginator>
 </mat-card>
 </div>
+<div *ngIf="this.lovName=='uploadCategoryList'" class="tabOverFlowY">
+  <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
+style="background-color: ghostwhite;">
+<ng-container matColumnDef="subCatCode">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+<mat-cell *matCellDef="let row"> {{row.subCatCode}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="subCatName">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+  <mat-cell *matCellDef="let row"> {{row.subCatName}} </mat-cell>
+  </ng-container>
+<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
+</mat-table>
+<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
+</mat-paginator>
+</mat-card>
+</div>
+<div *ngIf="this.lovName=='uploadSubCategoryList'" class="tabOverFlowY">
+  <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
+style="background-color: ghostwhite;">
+<ng-container matColumnDef="catCode">
+<mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+<mat-cell *matCellDef="let row"> {{row.catCode}} </mat-cell>
+</ng-container>
+<ng-container matColumnDef="catName">
+  <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+  <mat-cell *matCellDef="let row"> {{row.catName}} </mat-cell>
+  </ng-container>
+<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
+</mat-table>
+<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
+</mat-paginator>
+</mat-card>
+</div>
 <!-- <div class="tabOverFlowY">
   <lib-rqp-table
 [displayedColumns]="dialogColumns"
