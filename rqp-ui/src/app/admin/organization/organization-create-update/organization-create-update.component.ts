@@ -58,6 +58,7 @@ export class OrganizationCreateUpdateComponent implements OnInit  {
     this.onLoadStatusDropDown();
     this.onloadDropDown();
     if (this.userData.type == 'Update') {
+      console.log('update')
       this.isReadOnly = true;
       this.isUpdate = true;
       this.onLoadFormValue();

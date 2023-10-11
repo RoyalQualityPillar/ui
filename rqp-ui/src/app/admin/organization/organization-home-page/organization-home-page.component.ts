@@ -21,6 +21,7 @@ import { OrganizationCreateUpdateComponent } from '../organization-create-update
 
 import { exportData } from 'bk-export'
 import { ActiveOrgMasterAuditTrailComponent } from '../active-org-master-audit-trail/active-org-master-audit-trail.component';
+import { AllOrgMasterAuditTrailComponent } from '../all-org-master-audit-trail/all-org-master-audit-trail.component';
 @Component({
   selector: 'app-organization-home-page',
   templateUrl: './organization-home-page.component.html',
@@ -376,13 +377,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
    let arrExcel=[];
    for(var i=0, len=excelData.length; i<len; i++){
      arrExcel.push({
-       "Id":excelData[i].id,
-       "Organization Name":excelData[i].ff0001,
-       "Status":excelData[i].status,
-       "Vesrion":excelData[i].version,
-       "Organization Code":excelData[i].uc0001,
-       "Creation Date":excelData[i].createdon,
-       "CreatedBy":excelData[i].createdby
+      "Organization Code":excelData[i].uc0001,
+      "Organization Name":excelData[i].ff0001,
+      "CreatedBy":excelData[i].createdby,
+      "Creation Date":excelData[i].createdon,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
      })
    }
    exportData(arrExcel,'org','org','txt')
@@ -393,19 +393,18 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
    let arrExcel=[];
    for(var i=0, len=excelData.length; i<len; i++){
      arrExcel.push({
-       "Id":excelData[i].id,
-       "Organization Name":excelData[i].ff0001,
-       "Status":excelData[i].status,
-       "Vesrion":excelData[i].version,
-       "Organization Code":excelData[i].uc0001,
-       "Creation Date":excelData[i].createdon,
-       "CreatedBy":excelData[i].createdby
+      "Organization Code":excelData[i].uc0001,
+      "Organization Name":excelData[i].ff0001,
+      "CreatedBy":excelData[i].createdby,
+      "Creation Date":excelData[i].createdon,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
      })
    }
    exportData(arrExcel,'org','org','csv')
   }
   activeUserDownloadPdf(){
-    let header: string[] = ['Id', 'Oraganization Name', 'Status','Version','Oraganiztion Code','Created Date','CreatedBy'];
+    let header: string[] = ['Oraganiztion Code', 'Oraganization Name','CreatedBy','Created Date','Status','Version'];
    this.totalRow=0;
    var img = new Image();
    img.src = 'assets/logo1.png'
@@ -415,24 +414,25 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
    let rows: any = [];
    this.activeUserDataSource=this.activeUsertableData.filteredData
    this.activeUserDataSource.forEach((element: {
-    'id': any;
+      'uc0001':any;
       'ff0001':any;
+      'createdby':any;
+      'createdon':any;
       'status':any;
       'version':any;
-      'uc0001':any;
-      'createdon':any;
-      'createdby':any;
+      
+      
+      
 
 
   }) => {
     var temp = [
-      element['id'],
-      element['ff0001'],
-      element['status'],
-      element['version'],
       element['uc0001'],
+      element['ff0001'],
+      element['createdby'],
       element['createdon'],
-      element['createdby']
+      element['status'],
+      element['version']
 
      ];
      rows.push(temp);
@@ -463,13 +463,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
    let arrExcel=[];
    for(var i=0, len=excelData.length; i<len; i++){
      arrExcel.push({
-       "Id":excelData[i].id,
-       "Organization Name":excelData[i].ff0001,
-       "Status":excelData[i].status,
-       "Vesrion":excelData[i].version,
-       "Organization Code":excelData[i].uc0001,
-       "Creation Date":excelData[i].createdon,
-       "CreatedBy":excelData[i].createdby
+      "Organization Code":excelData[i].uc0001,
+      "Organization Name":excelData[i].ff0001,
+      "CreatedBy":excelData[i].createdby,
+      "Creation Date":excelData[i].createdon,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,
      })
    }
    exportData(arrExcel,'org','org','csv')
@@ -500,13 +499,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     let arrExcel=[];
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
-        "Id":excelData[i].id,
+        "Organization Code":excelData[i].uc0001,
         "Organization Name":excelData[i].ff0001,
+        "CreatedBy":excelData[i].createdby,
+        "Creation Date":excelData[i].createdon,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
-        "Organization Code":excelData[i].uc0001,
-        "Creation Date":excelData[i].createdon,
-        "CreatedBy":excelData[i].createdby
       })
     }
     exportData(arrExcel,'org','org','txt')
@@ -517,13 +515,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
       let arrExcel=[];
       for(var i=0, len=excelData.length; i<len; i++){
         arrExcel.push({
-          "Id":excelData[i].id,
+          "Organization Code":excelData[i].uc0001,
           "Organization Name":excelData[i].ff0001,
+          "CreatedBy":excelData[i].createdby,
+          "Creation Date":excelData[i].createdon,
           "Status":excelData[i].status,
           "Vesrion":excelData[i].version,
-          "Organization Code":excelData[i].uc0001,
-          "Creation Date":excelData[i].createdon,
-          "CreatedBy":excelData[i].createdby
         })
       }
       exportData(arrExcel,'org','org','csv')
@@ -531,7 +528,7 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
 
    totalRow:any;
    downloadPdf() {
-    let header: string[] = ['Id', 'Oraganization Name', 'Status','Version','Oraganiztion Code','Created Date','CreatedBy'];
+    let header: string[] = ['Oraganiztion Code', 'Oraganization Name','CreatedBy','Created Date','Status','Version'];
     this.totalRow=0;
     var img = new Image();
     img.src = 'assets/logo1.png'
@@ -540,27 +537,24 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     col = [header];
     let rows: any = [];
     this.dataSource=this.tableData.filteredData
+    console.log(this.dataSource)
     this.dataSource.forEach((element: {
-      'id': any;
+      'uc0001':any;
       'ff0001':any;
-      'ff0002':any;
+      'createdby':any;
+      'createdon':any;
       'status':any;
       'version':any;
-      'uc0001':any;
-      'createdon':any;
-      'createdby':any;
  
  
     }) => {
       var temp = [
-        element['id'],
-        element['ff0001'],
-        element['ff0002'],
-        element['status'],
-        element['version'],
         element['uc0001'],
+        element['ff0001'],
+        element['createdby'],
         element['createdon'],
-        element['createdby']
+        element['status'],
+        element['version']
  
       ];
       rows.push(temp);
@@ -592,13 +586,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
   let arrExcel=[];
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
-      "Id":excelData[i].id,
-      "Organization Name":excelData[i].ff0001,
-      "Status":excelData[i].status,
-      "Vesrion":excelData[i].version,
       "Organization Code":excelData[i].uc0001,
-      "Creation Date":excelData[i].createdon,
-      "CreatedBy":excelData[i].createdby
+        "Organization Name":excelData[i].ff0001,
+        "CreatedBy":excelData[i].createdby,
+        "Creation Date":excelData[i].createdon,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
     })
   }
   exportData(arrExcel,'org','org','excel')
@@ -671,7 +664,7 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
         data: { 'message': 'Please select any row', 'heading': "Error Information" }
      })
       }else{
-      const dialogRef=this.dialog.open(ActiveOrgMasterAuditTrailComponent,{
+      const dialogRef=this.dialog.open(AllOrgMasterAuditTrailComponent,{
           minWidth:"80%",
           data:{tableData:this.selectedAllRow,type:'AuditTrail'}
         })
@@ -695,13 +688,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     let arrExcel=[];
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
-        "Id":excelData[i].id,
+        "Organization Code":excelData[i].uc0001,
         "Organization Name":excelData[i].ff0001,
+        "CreatedBy":excelData[i].createdby,
+        "Creation Date":excelData[i].createdon,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
-        "Organization Code":excelData[i].uc0001,
-        "Creation Date":excelData[i].createdon,
-        "CreatedBy":excelData[i].createdby
       })
     }
     exportData(arrExcel,'org','org','excel')
@@ -710,15 +702,16 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
   activeUserDownloadExcel(){ 
     let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
     let arrExcel=[];
+
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
-        "Id":excelData[i].id,
+        "Organization Code":excelData[i].uc0001,
         "Organization Name":excelData[i].ff0001,
+        "CreatedBy":excelData[i].createdby,
+        "Creation Date":excelData[i].createdon,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
-        "Organization Code":excelData[i].uc0001,
-        "Creation Date":excelData[i].createdon,
-        "CreatedBy":excelData[i].createdby
+
       })
     }
     exportData(arrExcel,'org','org','excel')
