@@ -5,6 +5,7 @@ import { AdminService } from 'src/app/admin/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { MaterialTypeService } from '../material-type.service';
 import { downloadCanvasArea } from 'bk-export';
+import { changeStatusByCode } from 'src/app/common/removeEmptyStrings';
 export interface userData {
   userData: any;
   type:any;
@@ -47,19 +48,8 @@ export class ActiveMaterialTypeAuditTrailComponent implements OnInit{
     downloadCanvasArea(DATA,'material')
   }
   onChangeStatus(data:any){
-    if(data==1002){
-      return 'Enabled'
-     }else if(data==1003){
-      return 'Disabled'
-     }else if(data==1004){
-      return "Locked"
-     }else if(data==1001){
-      return "Active"
+    return changeStatusByCode(data);
      }
-     else{
-      return ''
-     }
-    }
 }
 
 

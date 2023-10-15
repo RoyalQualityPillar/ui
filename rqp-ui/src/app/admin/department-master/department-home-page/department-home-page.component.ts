@@ -35,8 +35,8 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
-  activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = [ 'action','id','uc0001',  'ff0001', 'ff0002','status','version','createdon', 'createdby'];
+  activeRoleMasterdisplayedColumns: string[] = ['action', 'id','uc0001', 'ff0001','ff0002', 'status','version', 'createdon', 'createdby'];
   // displayedColumn = [
   //   { field: 'id', title: 'Name' },
   //   { field: 'ff0001', title: 'Department Code' },
@@ -113,6 +113,12 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.departmentService.getAllDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.dataSource = data.data.content;
       this.currentApiResLength = data.data.content.length;
       this.allRoleDataLength = this.dataSource.length;
@@ -122,6 +128,7 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
       this.tableData.sort = this.sort.toArray()[0];
       this.isLoading = false;
       this.tableDataLoaded = true;
+      }
     })
   }
 
@@ -218,6 +225,12 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.departmentService.getActiveDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.activeUserDataSource=data.data.content;
     this.currentActiveUserApiResLength=data.data.content.length;
       this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
@@ -227,6 +240,7 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
       this.isLoading=false;
  
       this.activeUserTableLoded=true;
+      }
     })
   }
 
@@ -395,11 +409,11 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
         "Id":excelData[i].id,
+        "Department Code":excelData[i].uc0001,
         "Department Name":excelData[i].ff0001,
         "Business Unit Code":excelData[i].ff0002,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
-        "Department Code":excelData[i].uc0001,
         "Creation Date":excelData[i].createdon,
         "CreatedBy":excelData[i].createdby
       })
@@ -411,12 +425,12 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
      for(var i=0, len=excelData.length; i<len; i++){
        arrExcel.push({
-         "Id":excelData[i].id,
+        "Id":excelData[i].id,
+         "Department Code":excelData[i].uc0001,
          "Department Name":excelData[i].ff0001,
          "Business Unit Code":excelData[i].ff0002,
          "Status":excelData[i].status,
          "Vesrion":excelData[i].version,
-         "Department Code":excelData[i].uc0001,
          "Creation Date":excelData[i].createdon,
          "CreatedBy":excelData[i].createdby
        })
@@ -425,7 +439,7 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
   
   }
   activeUserDownloadPdf(){
-    let header: string[] = ['Id', 'Plant Code', 'Role Name', 'Status','Version','Role Code','Created Date','CreatedBy'];
+    let header: string[] = ['Id', 'Department Code', 'Department Name','Business Unit Code', 'Status','Version','Created Date','CreatedBy'];
    this.totalRow=0;
    var img = new Image();
    img.src = 'assets/logo1.png'
@@ -435,12 +449,12 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
    let rows: any = [];
    this.activeUserDataSource=this.activeUsertableData.filteredData
    this.activeUserDataSource.forEach((element: {
-    'id': any;
+       'id': any;
+      'uc0001':any;
       'ff0001':any;
       'ff0002':any;
       'status':any;
       'version':any;
-      'uc0001':any;
       'createdon':any;
       'createdby':any;
 
@@ -448,11 +462,11 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
   }) => {
     var temp = [
       element['id'],
+      element['uc0001'],
       element['ff0001'],
       element['ff0002'],
       element['status'],
       element['version'],
-      element['uc0001'],
       element['createdon'],
       element['createdby']
 
@@ -485,12 +499,12 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
      for(var i=0, len=excelData.length; i<len; i++){
        arrExcel.push({
-         "Id":excelData[i].id,
+        "Id":excelData[i].id,
+         "Department Code":excelData[i].uc0001,
          "Department Name":excelData[i].ff0001,
          "Business Unit Code":excelData[i].ff0002,
          "Status":excelData[i].status,
          "Vesrion":excelData[i].version,
-         "Department Code":excelData[i].uc0001,
          "Creation Date":excelData[i].createdon,
          "CreatedBy":excelData[i].createdby
        })
@@ -523,14 +537,14 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
       let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
        for(var i=0, len=excelData.length; i<len; i++){
          arrExcel.push({
-           "Id":excelData[i].id,
-           "Department Name":excelData[i].ff0001,
-           "Business Unit Code":excelData[i].ff0002,
-           "Status":excelData[i].status,
-           "Vesrion":excelData[i].version,
-           "Department Code":excelData[i].uc0001,
-           "Creation Date":excelData[i].createdon,
-           "CreatedBy":excelData[i].createdby
+          "Id":excelData[i].id,
+         "Department Code":excelData[i].uc0001,
+         "Department Name":excelData[i].ff0001,
+         "Business Unit Code":excelData[i].ff0002,
+         "Status":excelData[i].status,
+         "Vesrion":excelData[i].version,
+         "Creation Date":excelData[i].createdon,
+         "CreatedBy":excelData[i].createdby
          })
        }
        exportData(arrExcel,'department','department','txt')
@@ -540,14 +554,14 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
       let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
        for(var i=0, len=excelData.length; i<len; i++){
          arrExcel.push({
-           "Id":excelData[i].id,
-           "Department Name":excelData[i].ff0001,
-           "Business Unit Code":excelData[i].ff0002,
-           "Status":excelData[i].status,
-           "Vesrion":excelData[i].version,
-           "Department Code":excelData[i].uc0001,
-           "Creation Date":excelData[i].createdon,
-           "CreatedBy":excelData[i].createdby
+          "Id":excelData[i].id,
+          "Department Code":excelData[i].uc0001,
+          "Department Name":excelData[i].ff0001,
+          "Business Unit Code":excelData[i].ff0002,
+          "Status":excelData[i].status,
+          "Vesrion":excelData[i].version,
+          "Creation Date":excelData[i].createdon,
+          "CreatedBy":excelData[i].createdby
          })
        }
        exportData(arrExcel,'department','department','csv')
@@ -555,7 +569,7 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
 
    totalRow:any;
    downloadPdf() {
-    let header: string[] = ['Id', 'Plant Code', 'Role Name', 'Status','Version','Role Code','Created Date','CreatedBy'];
+    let header: string[] = ['Id', 'Department Code', 'Department Name','Business Unit Code', 'Status','Version','Created Date','CreatedBy'];
     this.totalRow=0;
     var img = new Image();
     img.src = 'assets/logo1.png'
@@ -566,11 +580,11 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource=this.tableData.filteredData
     this.dataSource.forEach((element: {
       'id': any;
+      'uc0001':any;
       'ff0001':any;
       'ff0002':any;
       'status':any;
-      'version':any;
-      'uc0001':any;
+      'version':any;  
       'createdon':any;
       'createdby':any;
  
@@ -578,11 +592,11 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     }) => {
       var temp = [
         element['id'],
+        element['uc0001'],
         element['ff0001'],
         element['ff0002'],
         element['status'],
-        element['version'],
-        element['uc0001'],
+        element['version'],  
         element['createdon'],
         element['createdby']
  
@@ -616,14 +630,14 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
      for(var i=0, len=excelData.length; i<len; i++){
        arrExcel.push({
-         "Id":excelData[i].id,
-         "Department Name":excelData[i].ff0001,
-         "Business Unit Code":excelData[i].ff0002,
-         "Status":excelData[i].status,
-         "Vesrion":excelData[i].version,
-         "Department Code":excelData[i].uc0001,
-         "Creation Date":excelData[i].createdon,
-         "CreatedBy":excelData[i].createdby
+        "Id":excelData[i].id,
+        "Department Code":excelData[i].uc0001,
+        "Department Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
        })
      }
      exportData(arrExcel,'department','department','excel')
@@ -718,14 +732,14 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
     let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
      for(var i=0, len=excelData.length; i<len; i++){
        arrExcel.push({
-         "Id":excelData[i].id,
-         "Department Name":excelData[i].ff0001,
-         "Business Unit Code":excelData[i].ff0002,
-         "Status":excelData[i].status,
-         "Vesrion":excelData[i].version,
-         "Department Code":excelData[i].uc0001,
-         "Creation Date":excelData[i].createdon,
-         "CreatedBy":excelData[i].createdby
+        "Id":excelData[i].id,
+        "Department Code":excelData[i].uc0001,
+        "Department Name":excelData[i].ff0001,
+        "Business Unit Code":excelData[i].ff0002,
+        "Status":excelData[i].status,
+        "Vesrion":excelData[i].version,
+        "Creation Date":excelData[i].createdon,
+        "CreatedBy":excelData[i].createdby
        })
      }
      exportData(arrExcel,'department','department','excel')
@@ -738,11 +752,11 @@ export class DepartmentHomePageComponent implements OnInit, AfterViewInit {
      for(var i=0, len=excelData.length; i<len; i++){
        arrExcel.push({
          "Id":excelData[i].id,
+         "Department Code":excelData[i].uc0001,
          "Department Name":excelData[i].ff0001,
          "Business Unit Code":excelData[i].ff0002,
          "Status":excelData[i].status,
          "Vesrion":excelData[i].version,
-         "Department Code":excelData[i].uc0001,
          "Creation Date":excelData[i].createdon,
          "CreatedBy":excelData[i].createdby
        })

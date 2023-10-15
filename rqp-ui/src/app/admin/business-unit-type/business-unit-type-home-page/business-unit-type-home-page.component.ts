@@ -97,6 +97,12 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
     this.dataSource = null;
     this.pageIndex = 0;
     this.businessUnitTypeService.getAllDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.dataSource = data.data.content;
       this.currentApiResLength = data.data.content.length;
       this.allRoleDataLength = this.dataSource.length;
@@ -106,6 +112,7 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
       this.tableData.sort = this.sort.toArray()[0];
       this.isLoading = false;
       this.tableDataLoaded = true;
+      }
     })
   }
 
@@ -202,6 +209,12 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
     this.dataSource = null;
     this.pageIndex = 0;
     this.businessUnitTypeService.getActiveDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.activeUserDataSource=data.data.content;
     this.currentActiveUserApiResLength=data.data.content.length;
       this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
@@ -211,6 +224,7 @@ export class BusinessUnitTypeHomePageComponent implements OnInit, AfterViewInit 
       this.isLoading=false;
  
       this.activeUserTableLoded=true;
+      }
     })
   }
 

@@ -7,6 +7,7 @@ import { RoleMasterService } from '../role-master.service';
 import {MessageService} from '../../../service/message.service';
 import { downloadCanvasArea } from 'bk-export';
 import {openPDFByFive,openPDFByTwo, openPDFByFour, openPDFByThree} from 'rqp-audit-trail';
+import { changeStatusByCode } from 'src/app/common/removeEmptyStrings';
 export interface userData {
   userData: any;
   type:any;
@@ -103,15 +104,7 @@ export class AllRoleAuditTrailComponent implements OnInit{
   DATA:any;
   DOWNLOADLINK:any
   onChangeStatus(data:any){
-    if(data==1002){
-      return 'Enabled'
-     }else if(data==1003){
-      return 'Disabled'
-     }else if(data==1004){
-      return "Locked"
-     }else{
-      return ''
-     }
+    return changeStatusByCode(data);
      }
   
 }

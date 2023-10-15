@@ -34,8 +34,8 @@ export class BusinessUnitHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allBusinessUnitdisplayedColumns: string[] = ['action','uc0001', 'uc0002','ff0001', 'status','version', 'createdon', 'createdby'];
-  ActiveBusinessUnitdisplayedColumns: string[] = ['action', 'uc0001', 'uc0002','ff0001', 'status','version', 'createdon', 'createdby'];
+  allBusinessUnitdisplayedColumns: string[] = ['action','uc0001', 'uc0002','ff0001','ff0002','ff0003', 'status','version', 'createdon', 'createdby'];
+  ActiveBusinessUnitdisplayedColumns: string[] = ['action', 'uc0001', 'uc0002','ff0001','ff0002','ff0003', 'status','version', 'createdon', 'createdby'];
 
   constructor(private _liveAnnouncer: LiveAnnouncer,
     public toolbarService: ToolbarService,
@@ -98,6 +98,12 @@ export class BusinessUnitHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.businessUnitService.getAllBusinessUnit(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.dataSource = data.data.content;
       this.currentApiResLength = data.data.content.length;
       this.allBuisnessUnitDataLength = this.dataSource.length;
@@ -107,7 +113,9 @@ export class BusinessUnitHomePageComponent implements OnInit, AfterViewInit {
       this.tableData.sort = this.sort.toArray()[0];
       this.isLoading = false;
       this.tableDataLoaded = true;
+      }
     })
+
   }
   pageChanged(event){
     console.log(event)
@@ -345,11 +353,18 @@ previousTableList:any;
   activeUsertableData: MatTableDataSource<any>;
   activeUserTableLoded=false;
   OnLoadActiveBusinessUnit() {
+    
     this.isLoading = true;
     this.size = GlobalConstants.size;
     this.dataSource = null;
     this.pageIndex = 0;
     this.businessUnitService.getActiveBusinessUnit(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.activeUserDataSource=data.data.content;
     this.currentActiveUserApiResLength=data.data.content.length;
       this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
@@ -359,6 +374,7 @@ previousTableList:any;
       this.isLoading=false;
  
       this.activeUserTableLoded=true;
+      }
     })
   }
 
@@ -417,7 +433,9 @@ activeUserSelectedRowData:any;
         arrExcel.push({
           "Business Unit Code":excelData[i].uc0001,
           "Category":excelData[i].uc0002,
-          "Name":excelData[i].ff0001,
+          "Business Organisation Name":excelData[i].ff0001,
+          "Business Organisation Code":excelData[i].ff0002,
+          "Business Unit Name":excelData[i].ff0003,
           "Status":excelData[i].status,
           "Vesrion":excelData[i].version,
           "Creation Date":excelData[i].createdon,
@@ -436,7 +454,9 @@ activeUserSelectedRowData:any;
         arrExcel.push({
           "Business Unit Code":excelData[i].uc0001,
           "Category":excelData[i].uc0002,
-          "Name":excelData[i].ff0001,
+          "Business Organisation Name":excelData[i].ff0001,
+          "Business Organisation Code":excelData[i].ff0002,
+          "Business Unit Name":excelData[i].ff0003,
           "Status":excelData[i].status,
           "Vesrion":excelData[i].version,
           "Creation Date":excelData[i].createdon,
@@ -447,7 +467,7 @@ activeUserSelectedRowData:any;
    }
    totalRow:any;
    downloadPdf() {
-    let header: string[] = ['Business Unit Code', 'Category', 'Name', 'Status','Version','Created Date','CreatedBy'];
+    let header: string[] = ['Business Unit Code', 'Category', 'Business Organisation Name','Business Organisation Code','Business Unit Name', 'Status','Version','Created Date','CreatedBy'];
     this.totalRow=0;
     var img = new Image();
     img.src = 'assets/logo1.png'
@@ -460,6 +480,8 @@ activeUserSelectedRowData:any;
       'uc0001': any;
       'uc0002':any;
       'ff0001':any;
+      'ff0002':any;
+      'ff0003':any;
       'status':any;
       'version':any;
       'createdon':any;
@@ -471,6 +493,8 @@ activeUserSelectedRowData:any;
         element['uc0001'],
         element['uc0002'],
         element['ff0001'],
+        element['ff0002'],
+        element['ff0003'],
         element['status'],
         element['version'],
         element['createdon'],
@@ -510,7 +534,9 @@ activeUserSelectedRowData:any;
       arrExcel.push({
         "Business Unit Code":excelData[i].uc0001,
         "Category":excelData[i].uc0002,
-        "Name":excelData[i].ff0001,
+        "Business Organisation Name":excelData[i].ff0001,
+        "Business Organisation Code":excelData[i].ff0002,
+        "Business Unit Name":excelData[i].ff0003,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
         "Creation Date":excelData[i].createdon,
@@ -552,7 +578,9 @@ activeUserSelectedRowData:any;
       arrExcel.push({
         "Business Unit Code":excelData[i].uc0001,
         "Category":excelData[i].uc0002,
-        "Name":excelData[i].ff0001,
+        "Business Organisation Name":excelData[i].ff0001,
+        "Business Organisation Code":excelData[i].ff0002,
+        "Business Unit Name":excelData[i].ff0003,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
         "Creation Date":excelData[i].createdon,
@@ -571,7 +599,9 @@ activeUserSelectedRowData:any;
       arrExcel.push({
         "Business Unit Code":excelData[i].uc0001,
         "Category":excelData[i].uc0002,
-        "Name":excelData[i].ff0001,
+        "Business Organisation Name":excelData[i].ff0001,
+        "Business Organisation Code":excelData[i].ff0002,
+        "Business Unit Name":excelData[i].ff0003,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
         "Creation Date":excelData[i].createdon,
@@ -581,7 +611,7 @@ activeUserSelectedRowData:any;
     exportData(arrExcel,screenName,fileName,type)
   }
   activeUserDownloadPdf(){
-    let header: string[] = ['Business Unit Code', 'Category', 'Name', 'Status','Version','Created Date','CreatedBy'];
+    let header: string[] = ['Business Unit Code', 'Category', 'Business Organisation Name','Business Organisation Code','Business Unit Name', 'Status','Version','Created Date','CreatedBy'];
    this.totalRow=0;
    var img = new Image();
    img.src = 'assets/logo1.png'
@@ -594,6 +624,8 @@ activeUserSelectedRowData:any;
     'uc0001': any;
     'uc0002':any;
     'ff0001':any;
+    'ff0002':any;
+    'ff0003':any;
     'status':any;
     'version':any;
     'createdon':any;
@@ -605,6 +637,8 @@ activeUserSelectedRowData:any;
       element['uc0001'],
       element['uc0002'],
       element['ff0001'],
+      element['ff0002'],
+      element['ff0003'],
       element['status'],
       element['version'],
       element['createdon'],
@@ -644,7 +678,9 @@ activeUserSelectedRowData:any;
       arrExcel.push({
         "Business Unit Code":excelData[i].uc0001,
         "Category":excelData[i].uc0002,
-        "Name":excelData[i].ff0001,
+        "Business Organisation Name":excelData[i].ff0001,
+        "Business Organisation Code":excelData[i].ff0002,
+        "Business Unit Name":excelData[i].ff0003,
         "Status":excelData[i].status,
         "Vesrion":excelData[i].version,
         "Creation Date":excelData[i].createdon,

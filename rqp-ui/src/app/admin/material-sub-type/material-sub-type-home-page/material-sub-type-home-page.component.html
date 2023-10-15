@@ -32,7 +32,7 @@
                         <mat-table [dataSource]="tableData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
                             style="background-color: ghostwhite;">
                             <ng-container matColumnDef="action">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                                 <mat-cell *matCellDef="let row">
                                 <mat-radio-button name="selectrow" (change)="setSelectedAllID(row)"></mat-radio-button></mat-cell>
                             </ng-container>
@@ -40,6 +40,10 @@
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                             </ng-container>
+                            <ng-container matColumnDef="uc0001">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>Material Sub Type Code</mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                          </ng-container>
                             <ng-container matColumnDef="ff0001">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Material Sub Type Name</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
@@ -56,10 +60,7 @@
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                             </ng-container>
-                            <ng-container matColumnDef="uc0001">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Material sub Type Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                            </ng-container>
+                          
                             <ng-container matColumnDef="createdon">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
@@ -92,11 +93,11 @@
                         <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
                           <option value="SELECT">Please select field</option>
                           <option value="id">Id</option>
+                          <option value="uc0001">Material Sub Type Code</option>
                           <option value="ff0001">Material Sub Type Name</option>
                           <option value="ff0002">Business Unit Code</option>
                           <option value="status">Status</option>
-                          <option value="version">version</option>
-                          <option value="uc0001">Material sub Type Code</option>
+                          <option value="version">version</option> 
                           <option value="createdon"> Created Date</option>
                           <option value="createdby"> Created By</option>
                         </select>
@@ -203,7 +204,7 @@
                 <mat-table [dataSource]="activeUsertableData"id="datTable" id="activeUserDataTable"  matSort
                     style="background-color: ghostwhite;">
                     <ng-container matColumnDef="action">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                         <mat-cell *matCellDef="let row">
                         <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell> 
                     </ng-container> 
@@ -211,6 +212,10 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="uc0001">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Material Sub Type Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                  </ng-container>
                     <ng-container matColumnDef="ff0001">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Material Sub Type Name</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
@@ -227,10 +232,7 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="uc0001">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Material sub Type Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                    </ng-container>
+                  
                     <ng-container matColumnDef="createdon">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
@@ -263,11 +265,11 @@
                     <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field" (change)="onChangeActiveSelctedField()">
                       <option value="SELECT">Please select field</option>
                       <option value="id">Id</option>
+                      <option value="uc0001">Material Sub Type Code</option>
                       <option value="ff0001">Material Sub Type Name</option>
                       <option value="ff0002">Business Unit Code</option>
                       <option value="status">Status</option>
-                      <option value="version">version</option>
-                      <option value="uc0001">Material sub Type Code</option>
+                      <option value="version">version</option> 
                       <option value="createdon"> Created Date</option>
                       <option value="createdby"> Created By</option>
                     </select>

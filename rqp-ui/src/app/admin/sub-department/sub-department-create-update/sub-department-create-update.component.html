@@ -30,7 +30,7 @@
                             <div class="row no-gutters ms-1 me-1 dense-4">
                                 <mat-form-field appearance="outline" class="col-12 px-1">
                                     <mat-label>Sub Department Code</mat-label>
-                                    <input type="text" matInput formControlName="uc0001"maxlength="5"
+                                    <input type="text" matInput formControlName="uc0001"maxlength="5"[readonly]="isUpdate" [class.isReadonlyField]="isUpdate"
                                         placeholder="Sub Department Code" >
                                 </mat-form-field>
                                

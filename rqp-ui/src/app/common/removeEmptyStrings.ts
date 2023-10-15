@@ -18,3 +18,17 @@ export function removeEmptyStringsToEmptyJSON(body){
     })
     return JSON.parse(bodyTemp)
 }
+export function changeStatusByCode(statusCode){
+    if(statusCode==1001){
+        return 'ACTIVE'
+       }else if(statusCode==1004){
+        return 'LOCKED'
+       }else if(statusCode==1005){
+        return "UNLOCKED"
+       }else if(statusCode==1003){
+        return "DISABLE"
+       }else
+       {
+        return ''
+       }
+}

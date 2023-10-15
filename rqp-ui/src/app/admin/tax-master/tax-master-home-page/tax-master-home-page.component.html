@@ -40,6 +40,10 @@
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                             </ng-container>
+                            <ng-container matColumnDef="uc0001">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>Tax Code</mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                          </ng-container>
                             <ng-container matColumnDef="ff0001">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Tax Name</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
@@ -56,10 +60,7 @@
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                             </ng-container>
-                            <ng-container matColumnDef="uc0001">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Tax Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                            </ng-container>
+                         
                             <ng-container matColumnDef="createdon">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
@@ -92,11 +93,11 @@
                         <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
                           <option value="SELECT">Please select field</option>
                           <option value="id">Id</option>
+                          <option value="uc0001">Tax Code</option>
                           <option value="ff0001">Tax Name</option>
                           <option value="ff0002">Business Unit Code</option>
                           <option value="status">Status</option>
-                          <option value="version">version</option>
-                          <option value="uc0001">Tax Code</option>
+                          <option value="version">version</option>  
                           <option value="createdon"> Created Date</option>
                           <option value="createdby"> Created By</option>
                         </select>
@@ -211,6 +212,10 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="uc0001">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Tax Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                  </ng-container>
                     <ng-container matColumnDef="ff0001">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Tax Name</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
@@ -227,10 +232,7 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="uc0001">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Tax Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                    </ng-container>
+                  
                     <ng-container matColumnDef="createdon">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
@@ -263,11 +265,11 @@
                     <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field" (change)="onChangeActiveSelctedField()">
                       <option value="SELECT">Please select field</option>
                       <option value="id">Id</option>
+                      <option value="uc0001">Tax Code</option>
                       <option value="ff0001">Tax Name</option>
                       <option value="ff0002">Business Unit Code</option>
                       <option value="status">Status</option>
-                      <option value="version">version</option>
-                      <option value="uc0001">Tax Code</option>
+                      <option value="version">version</option>     
                       <option value="createdon"> Created Date</option>
                       <option value="createdby"> Created By</option>
                     </select>

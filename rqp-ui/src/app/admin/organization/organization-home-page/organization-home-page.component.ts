@@ -34,8 +34,8 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = [ 'action','id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
-  activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = [ 'action','id', 'uc0001', 'ff0001', 'status','version','createdon', 'createdby'];
+  activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'uc0001', 'ff0001', 'status','version','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
   activeUserFilterObject:any;
@@ -96,6 +96,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.organizationService.getAllDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.dataSource = data.data.content;
       this.currentApiResLength = data.data.content.length;
       this.allRoleDataLength = this.dataSource.length;
@@ -105,6 +111,7 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
       this.tableData.sort = this.sort.toArray()[0];
       this.isLoading = false;
       this.tableDataLoaded = true;
+      }
     })
   }
 
@@ -201,6 +208,12 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.organizationService.getActiveDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.activeUserDataSource=data.data.content;
     this.currentActiveUserApiResLength=data.data.content.length;
       this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
@@ -210,6 +223,7 @@ export class OrganizationHomePageComponent implements OnInit, AfterViewInit {
       this.isLoading=false;
  
       this.activeUserTableLoded=true;
+      }
     })
   }
 

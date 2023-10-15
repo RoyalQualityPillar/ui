@@ -30,10 +30,8 @@
                             <div class="row no-gutters ms-1 me-1 dense-4">
                                 <mat-form-field appearance="outline" class="col-12 px-1">
                                     <mat-label>Oraganiztion Code</mat-label>
-                                    <input type="text" matInput formControlName="uc0001"[readonly]="isReadOnly"
+                                    <input type="text" matInput formControlName="uc0001"[readonly]="isUpdate" [class.isReadonlyField]="isUpdate"
                                         placeholder="Oraganiztion Code" >
-                                        <!-- <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
-                                        class="icon-size lovSearchButton" color="primary"(click)="openBusinessUnitCodeLOV()"> -->
                                 </mat-form-field>
                                
                                 </div>
@@ -43,13 +41,6 @@
                                         <input type="text" matInput formControlName="ff0001"
                                             placeholder="Oraganization Name" >
                                     </mat-form-field>  
-                                    <!-- <mat-form-field appearance="outline" class="col-9 px-1">
-                                        <mat-label>Business Unit Code</mat-label>
-                                        <input type="text" matInput formControlName="ff0002"(change)="onChangePlantCode()"
-                                            placeholder="Business Unit Code" >
-                                             <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
-                                        class="icon-size lovSearchButton" color="primary"(click)="openBusinessUnitCodeLOV()"> 
-                                    </mat-form-field> -->
                                 </div>
                                 <div class="row no-gutters ms-1 me-1 dense-4" *ngIf="isUpdate">
                                     <mat-form-field appearance="outline" class="col-12 px-1" >
