@@ -47,9 +47,17 @@
                         <mat-cell *matCellDef="let row"> {{row.uc0002}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="ff0001">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
-                    </ng-container>
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Business Organisation Name</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="ff0002">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Business Organisation Code</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="ff0003">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Name</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+              </ng-container>
                     <ng-container matColumnDef="status">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
@@ -88,7 +96,9 @@
                           <option value="SELECT">Please select field</option>
                           <option value="uc0001">Business Unit Code</option>
                           <option value="uc0002">Category</option>
-                          <option value="ff0001">Name</option>
+                          <option value="ff0001">Business Organisation Name</option>
+                          <option value="ff0002">Business Organisation Code</option>
+                          <option value="ff0003">Business Unit Name</option>
                           <option value="status">Status</option>
                           <option value="version">version</option>
                           <option value="createdon"> Created Date</option>
@@ -214,9 +224,17 @@
                         <mat-cell *matCellDef="let row"> {{row.uc0002}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="ff0001">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Business Organisation Name</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="ff0002">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Business Organisation Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="ff0003">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+                </ng-container>
                     <ng-container matColumnDef="status">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
@@ -239,7 +257,7 @@
                 <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="activeUSerPageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
                 </mat-paginator>
                 <button mat-raised-button color="primary" 
-                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveSelectRow()">View Details</button>
+                style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveSelectRow()">Update</button>
                 <button mat-raised-button color="primary" 
                 style="background-color: #295ea3;font-size: smaller;height: 25px;"(click)="onActiveSelectAuditTrailRow()">Audit Trail</button>
                 <!-- <button mat-raised-button color="primary" 
@@ -259,7 +277,9 @@
                           <option value="SELECT">Please select field</option>
                           <option value="uc0001">Business Unit Code</option>
                           <option value="uc0002">Category</option>
-                          <option value="ff0001">Name</option>
+                          <option value="ff0001">Business Organisation Name</option>
+                          <option value="ff0002">Business Organisation Code</option>
+                          <option value="ff0003">Business Unit Name</option>
                           <option value="status">Status</option>
                           <option value="version">version</option>
                           <option value="createdon"> Created Date</option>

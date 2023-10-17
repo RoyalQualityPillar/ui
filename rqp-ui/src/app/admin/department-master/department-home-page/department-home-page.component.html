@@ -40,14 +40,18 @@
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                             </ng-container>
+                            <ng-container matColumnDef="uc0001">
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                          </ng-container>
                             <ng-container matColumnDef="ff0001">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Department Name</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="ff0002">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
-                            </ng-container>
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
+                              <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                          </ng-container>
                             <ng-container matColumnDef="status">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
@@ -56,10 +60,7 @@
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                             </ng-container>
-                            <ng-container matColumnDef="uc0001">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                            </ng-container>
+                         
                             <ng-container matColumnDef="createdon">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
@@ -92,11 +93,11 @@
                         <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
                           <option value="SELECT">Please select field</option>
                           <option value="id">Id</option>
-                          <option value="ff0001">Department Name</option>
-                          <option value="ff0002">Department Code</option>
+                          <option value="uc0001">Department Code</option>
+                          <option value="ff0001">Department Name</option>     
+                          <option value="ff0002">Business Unit Code</option>
                           <option value="status">Status</option>
-                          <option value="version">version</option>
-                          <option value="uc0001">Business Unit Code</option>
+                          <option value="version">version</option>              
                           <option value="createdon"> Created Date</option>
                           <option value="createdby"> Created By</option>
                         </select>
@@ -212,7 +213,7 @@ columnClass="bk-customer-notes-result"
                  <mat-table [dataSource]="activeUsertableData"id="datTable" id="activeUserDataTable"  matSort
                     style="background-color: ghostwhite;">
                     <ng-container matColumnDef="action">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Selection</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                         <mat-cell *matCellDef="let row">
                         <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell> 
                     </ng-container> 
@@ -220,14 +221,18 @@ columnClass="bk-customer-notes-result"
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="uc0001">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+                  </ng-container>
                     <ng-container matColumnDef="ff0001">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Department Name</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="ff0002">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
-                    </ng-container>
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                  </ng-container>
                     <ng-container matColumnDef="status">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
@@ -236,10 +241,7 @@ columnClass="bk-customer-notes-result"
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="uc0001">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Department Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                    </ng-container>
+                
                     <ng-container matColumnDef="createdon">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.createdon}} </mat-cell>
@@ -272,11 +274,11 @@ columnClass="bk-customer-notes-result"
                     <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field" (change)="onChangeActiveSelctedField()">
                       <option value="SELECT">Please select field</option>
                       <option value="id">Id</option>
-                      <option value="ff0001">Department Name</option>
-                      <option value="ff0002">Department Code</option>
+                      <option value="uc0001">Department Code</option>
+                      <option value="ff0001">Department Name</option>     
+                      <option value="ff0002">Business Unit Code</option>
                       <option value="status">Status</option>
-                      <option value="version">version</option>
-                      <option value="uc0001">Business Unit Code</option>
+                      <option value="version">version</option>              
                       <option value="createdon"> Created Date</option>
                       <option value="createdby"> Created By</option>
                     </select>

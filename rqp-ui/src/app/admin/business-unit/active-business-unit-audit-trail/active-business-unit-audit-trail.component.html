@@ -45,43 +45,82 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
 <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
 mode="indeterminate"></mat-spinner>
 <div class="supplier-content">
- <div class="sup-head">
+  <div class="sup-head">
+    <div class="sup-fields">Business Organisation Name</div>
+    <div class="sup-values">{{data.ff0001}}</div>
+  </div>
+  <div class="sup-head">
+    <!-- <div class="sup-fields">Status</div>
+    <div class="sup-values">{{onChangeStatus(data.status)}}</div> -->
+    <div class="sup-fields">Business Organisation Name</div>
+    <div class="sup-values">{{data.ff0001}}</div>
+  </div>
+  <div class="sup-head"style="background-color: #bcceea;">
    <div class="sup-fields">Business Unit Code</div>
-   <div class="sup-values">{{data.uc0001}}</div>
+    <div class="sup-values">{{this.data.uc0001}}</div>
+ </div>
+ <div class="sup-head" style="background-color: #bcceea;">
+   <div class="sup-fields">Business Unit Name</div>
+   <div class="sup-values">{{data.ff0003}}</div>
+  </div> 
+ 
+  <div class="sup-head">
+     <div class="sup-fields">Street -1</div>
+     <div class="sup-values">{{data.ff0004}}</div>
  </div>
  <div class="sup-head">
-   <div class="sup-fields">Status</div>
-   <div class="sup-values">{{onChangeStatus(data.status)}}</div>
+     <div class="sup-fields">Street-2</div>
+     <div class="sup-values">{{data.ff0005}}</div>
  </div>
- <div class="sup-head"style="background-color: #bcceea;">
-  <div class="sup-fields">Category</div>
-   <div class="sup-values">{{this.data.uc0002}}</div>
-  <!-- <div class="sup-fields">First Name</div>
-  <div class="sup-values">{{this.data.firstName}}</div> -->
-</div>
-<div class="sup-head" style="background-color: #bcceea;">
-  <div class="sup-fields">Name</div>
-  <div class="sup-values">{{data.ff0001}}</div>
+ <div class="sup-head"style="background-color: #bcceea">
+     <div class="sup-fields">City</div>
+     <div class="sup-values">{{data.ff0006}}</div>
+ </div>
+ <div class="sup-head" style="background-color: #bcceea;">
+  <div class="sup-fields">State</div>
+  <div class="sup-values">{{data.ff0007}}</div>
  </div> 
-
  <div class="sup-head">
-    <div class="sup-fields">Version</div>
-    <div class="sup-values">{{data.version}}</div>
+  <div class="sup-fields">Pincode</div>
+  <div class="sup-values">{{data.ff0008}}</div>
 </div>
 <div class="sup-head">
-    <div class="sup-fields">Created Date</div>
-    <div class="sup-values">{{data.createdon}}</div>
+  <div class="sup-fields">Mobile</div>
+  <div class="sup-values">{{data.ff0009}}</div>
 </div>
 <div class="sup-head"style="background-color: #bcceea">
-    <div class="sup-fields">Created By</div>
-    <div class="sup-values">{{data.createdby}}</div>
+<div class="sup-fields">Email Id</div>
+<div class="sup-values">{{data.ff0010}}</div>
 </div>
-<!-- <div class="sup-head" style="background-color: #bcceea">
-
-</div>  -->
-
-
+<div class="sup-head" style="background-color: #bcceea;">
+<div class="sup-fields">PAN No.</div>
+<div class="sup-values">{{data.ff0011}}</div>
+</div> 
+<div class="sup-head">
+<div class="sup-fields">GST No.</div>
+<div class="sup-values">{{data.ff0012}}</div>
 </div>
+<div class="sup-head">
+<div class="sup-fields">State Code</div>
+<div class="sup-values">{{data.ff0013}}</div>
+</div> 
+<div class="sup-head"style="background-color: #bcceea">
+<div class="sup-fields">Account No.</div>
+<div class="sup-values">{{data.ff0014}}</div>
+</div>
+<div class="sup-head" style="background-color: #bcceea;">
+<div class="sup-fields">IFSC code</div>
+<div class="sup-values">{{data.ff0015}}</div>
+</div> 
+<div class="sup-head">
+<div class="sup-fields">DL No.</div>
+<div class="sup-values">{{data.ff0016}}</div>
+</div>
+<div class="sup-head">
+ <div class="sup-fields">Status</div>
+    <div class="sup-values">{{onChangeStatus(data.status)}}</div> 
+</div> 
+ </div>
 
 <div class="supplier-content-comments">
 <div class="sup-head-comments" style="background-color: #bcceea">

@@ -103,7 +103,7 @@ export class ReviewCommentsHistoryComponent implements OnInit{
   }
   onChangeStatus(data:any){
     if(data==1002){
-      return 'Enabled'
+      return 'Active'
      }else if(data==1003){
       return 'Disabled'
      }else if(data==1004){

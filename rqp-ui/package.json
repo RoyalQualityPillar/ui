@@ -36,6 +36,7 @@
     "moment": "^2.29.4",
     "ng2-pdf-viewer": "8.0.0",
     "ngx-cookie-service": "^15.0.0",
+    "rqp-audit-trail": "^0.0.7",
     "rqp-table": "^0.0.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

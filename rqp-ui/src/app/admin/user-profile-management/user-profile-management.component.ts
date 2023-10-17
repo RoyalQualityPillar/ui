@@ -110,7 +110,7 @@ export class UserProfileManagementComponent implements OnInit ,AfterViewInit {
   }
   checkStatus(status){
     if(status=='1001'){
-      return 'Enabled'
+      return 'Active'
     }else if(status=='1003'){
       return 'Disabled'
     }else if(status='1004'){

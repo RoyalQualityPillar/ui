@@ -34,8 +34,8 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-  allRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
-  activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'ff0001','ff0002', 'status','version', 'uc0001','createdon', 'createdby'];
+  allRoleMasterdisplayedColumns: string[] = ['action', 'id', 'uc0001', 'ff0001','ff0002', 'status','version','createdon', 'createdby'];
+  activeRoleMasterdisplayedColumns: string[] = ['action', 'id', 'uc0001', 'ff0001','ff0002', 'status','version','createdon', 'createdby'];
   isLoading=false;
   filterObject:any;
   activeUserFilterObject:any;
@@ -96,6 +96,12 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.materialTypeService.getAllDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.dataSource = data.data.content;
       this.currentApiResLength = data.data.content.length;
       this.allRoleDataLength = this.dataSource.length;
@@ -105,6 +111,7 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
       this.tableData.sort = this.sort.toArray()[0];
       this.isLoading = false;
       this.tableDataLoaded = true;
+      }
     })
   }
 
@@ -201,6 +208,12 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource = null;
     this.pageIndex = 0;
     this.materialTypeService.getActiveDepartment(this.size, this.pageIndex).subscribe((data: any) => {
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+        this.isLoading = false;
+      }else{
       this.activeUserDataSource=data.data.content;
     this.currentActiveUserApiResLength=data.data.content.length;
       this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
@@ -210,6 +223,7 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
       this.isLoading=false;
  
       this.activeUserTableLoded=true;
+      }
     })
   }
 
@@ -377,14 +391,14 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
    let arrExcel=[];
    for(var i=0, len=excelData.length; i<len; i++){
      arrExcel.push({
-       "Id":excelData[i].id,
-       "Material Type Name":excelData[i].ff0001,
-       "Business Unit Code":excelData[i].ff0002,
-       "Status":excelData[i].status,
-       "Vesrion":excelData[i].version,
-       "Material Type Code":excelData[i].uc0001,
-       "Creation Date":excelData[i].createdon,
-       "CreatedBy":excelData[i].createdby
+      "Id":excelData[i].id,
+      "Material Type Code":excelData[i].uc0001,
+      "Material Type Name":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,      
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
      })
    }
   exportData(arrExcel,'material','material','txt')
@@ -394,20 +408,20 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
    let arrExcel=[];
    for(var i=0, len=excelData.length; i<len; i++){
      arrExcel.push({
-       "Id":excelData[i].id,
-       "Material Type Name":excelData[i].ff0001,
-       "Business Unit Code":excelData[i].ff0002,
-       "Status":excelData[i].status,
-       "Vesrion":excelData[i].version,
-       "Material Type Code":excelData[i].uc0001,
-       "Creation Date":excelData[i].createdon,
-       "CreatedBy":excelData[i].createdby
+      "Id":excelData[i].id,
+      "Material Type Code":excelData[i].uc0001,
+      "Material Type Name":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,      
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
      })
    }
   exportData(arrExcel,'material','material','csv')
   }
   activeUserDownloadPdf(){
-    let header: string[] = ['Id', 'Material Type Name', 'Business Unit Code', 'Status','Version','Material Type Code','Created Date','CreatedBy'];
+    let header: string[] = ['Id','Material Type Code', 'Material Type Name', 'Business Unit Code', 'Status','Version','Created Date','CreatedBy'];
    this.totalRow=0;
    var img = new Image();
    img.src = 'assets/logo1.png'
@@ -418,11 +432,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
    this.activeUserDataSource=this.activeUsertableData.filteredData
    this.activeUserDataSource.forEach((element: {
     'id': any;
+    'uc0001':any;
       'ff0001':any;
       'ff0002':any;
       'status':any;
-      'version':any;
-      'uc0001':any;
+      'version':any; 
       'createdon':any;
       'createdby':any;
 
@@ -430,11 +444,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
   }) => {
     var temp = [
       element['id'],
+      element['uc0001'],
       element['ff0001'],
       element['ff0002'],
       element['status'],
-      element['version'],
-      element['uc0001'],
+      element['version'], 
       element['createdon'],
       element['createdby']
 
@@ -467,14 +481,14 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
    let arrExcel=[];
    for(var i=0, len=excelData.length; i<len; i++){
      arrExcel.push({
-       "Id":excelData[i].id,
-       "Material Type Name":excelData[i].ff0001,
-       "Business Unit Code":excelData[i].ff0002,
-       "Status":excelData[i].status,
-       "Vesrion":excelData[i].version,
-       "Material Type Code":excelData[i].uc0001,
-       "Creation Date":excelData[i].createdon,
-       "CreatedBy":excelData[i].createdby
+      "Id":excelData[i].id,
+      "Material Type Code":excelData[i].uc0001,
+      "Material Type Name":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":excelData[i].status,
+      "Vesrion":excelData[i].version,      
+      "Creation Date":excelData[i].createdon,
+      "CreatedBy":excelData[i].createdby
      })
    }
   exportData(arrExcel,'material','material','excel')
@@ -506,11 +520,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
         "Id":excelData[i].id,
+        "Material Type Code":excelData[i].uc0001,
         "Material Type Name":excelData[i].ff0001,
         "Business Unit Code":excelData[i].ff0002,
         "Status":excelData[i].status,
-        "Vesrion":excelData[i].version,
-        "Material Type Code":excelData[i].uc0001,
+        "Vesrion":excelData[i].version,      
         "Creation Date":excelData[i].createdon,
         "CreatedBy":excelData[i].createdby
       })
@@ -523,11 +537,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
       for(var i=0, len=excelData.length; i<len; i++){
         arrExcel.push({
           "Id":excelData[i].id,
+          "Material Type Code":excelData[i].uc0001,
           "Material Type Name":excelData[i].ff0001,
           "Business Unit Code":excelData[i].ff0002,
           "Status":excelData[i].status,
-          "Vesrion":excelData[i].version,
-          "Material Type Code":excelData[i].uc0001,
+          "Vesrion":excelData[i].version,      
           "Creation Date":excelData[i].createdon,
           "CreatedBy":excelData[i].createdby
         })
@@ -537,7 +551,7 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
 
    totalRow:any;
    downloadPdf() {
-    let header: string[] = ['Id', 'Material Type Name', 'Business Unit Code', 'Status','Version','Material Type Code','Created Date','CreatedBy'];
+    let header: string[] = ['Id','Material Type Code', 'Material Type Name', 'Business Unit Code', 'Status','Version','Created Date','CreatedBy'];
     this.totalRow=0;
     var img = new Image();
     img.src = 'assets/logo1.png'
@@ -548,11 +562,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     this.dataSource=this.tableData.filteredData
     this.dataSource.forEach((element: {
       'id': any;
+      'uc0001':any;
       'ff0001':any;
       'ff0002':any;
       'status':any;
       'version':any;
-      'uc0001':any;
       'createdon':any;
       'createdby':any;
  
@@ -560,11 +574,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     }) => {
       var temp = [
         element['id'],
+        element['uc0001'],
         element['ff0001'],
         element['ff0002'],
         element['status'],
-        element['version'],
-        element['uc0001'],
+        element['version'],  
         element['createdon'],
         element['createdby']
  
@@ -599,11 +613,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
       "Id":excelData[i].id,
+      "Material Type Code":excelData[i].uc0001,
       "Material Type Name":excelData[i].ff0001,
       "Business Unit Code":excelData[i].ff0002,
       "Status":excelData[i].status,
-      "Vesrion":excelData[i].version,
-      "Material Type Code":excelData[i].uc0001,
+      "Vesrion":excelData[i].version,      
       "Creation Date":excelData[i].createdon,
       "CreatedBy":excelData[i].createdby
     })
@@ -704,11 +718,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
         "Id":excelData[i].id,
+        "Material Type Code":excelData[i].uc0001,
         "Material Type Name":excelData[i].ff0001,
         "Business Unit Code":excelData[i].ff0002,
         "Status":excelData[i].status,
-        "Vesrion":excelData[i].version,
-        "Material Type Code":excelData[i].uc0001,
+        "Vesrion":excelData[i].version,      
         "Creation Date":excelData[i].createdon,
         "CreatedBy":excelData[i].createdby
       })
@@ -721,11 +735,11 @@ export class MaterialTypeHomePageComponent implements OnInit, AfterViewInit {
     for(var i=0, len=excelData.length; i<len; i++){
       arrExcel.push({
         "Id":excelData[i].id,
+        "Material Type Code":excelData[i].uc0001,
         "Material Type Name":excelData[i].ff0001,
         "Business Unit Code":excelData[i].ff0002,
         "Status":excelData[i].status,
-        "Vesrion":excelData[i].version,
-        "Material Type Code":excelData[i].uc0001,
+        "Vesrion":excelData[i].version,      
         "Creation Date":excelData[i].createdon,
         "CreatedBy":excelData[i].createdby
       })

@@ -31,7 +31,7 @@
                             <div class="row no-gutters ms-1 me-1 dense-4">
                                 <mat-form-field appearance="outline" class="col-4 px-1">
                                     <mat-label>Security Profile Code</mat-label>
-                                    <input type="text" matInput formControlName="uc0001" maxlength="9"
+                                    <input type="text" matInput formControlName="uc0001" maxlength="9"[readonly]="isUpdate" [class.isReadonlyField]="isUpdate"
                                         placeholder="Security Profile Code" >
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-4 px-1">

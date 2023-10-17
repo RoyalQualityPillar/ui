@@ -7,6 +7,7 @@ import { downloadCanvasArea } from 'bk-export';
 import {MessageService} from '../../../service/message.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { changeStatusByCode } from 'src/app/common/removeEmptyStrings';
 export interface userData {
   userData: any;
   type:any;
@@ -57,18 +58,7 @@ export class ActiveBusinessUnitAuditTrailComponent implements OnInit{
     downloadCanvasArea(DATA,'roleAuditTrail')
   }
   onChangeStatus(data:any){
-    if(data==1002){
-      return 'Enabled'
-     }else if(data==1003){
-      return 'Disabled'
-     }else if(data==1004){
-      return "Locked"
-     }else if(data==1001){
-      return "Active"
-     }
-     else{
-      return ''
-     }
+    return changeStatusByCode(data);
      }
   
 }
