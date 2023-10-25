@@ -55,8 +55,8 @@ export class LoginComponent implements OnInit{
        }
       else {
         this.isLoading=false;
-        this.tokenData=data.token;
-        this.tokenId=data.tokenId;
+        this.tokenData=data.data.token;
+        this.tokenId=data.data.tokenId;
        const expireInDuration =3600;
        this.authService.setAuthTimer(expireInDuration)
        const now =new Date();
