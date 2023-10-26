@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {ActivatedRoute,Router} from '@angular/router';
-
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private API_URL=environment.apiBaseURL;
   tokenTimer:any;
   private isAuthenticated =false;
   constructor(
@@ -94,7 +95,7 @@ export class AuthService {
 
   getAuth(userid:any,password:any){
     console.log(userid);
-    let loginURL='http://103.10.234.106:8082/authenticate'
+    let loginURL=this.API_URL+'authenticate'
     let authData=userid+':'+password;
     let encodedAuthData=btoa(authData);
     //console.log(encodedAuthData1)
