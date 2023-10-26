@@ -39,7 +39,7 @@ export class ActiveBusinessUnitAuditTrailComponent implements OnInit{
   }
   onSearch(){
     this.isLoading=true;
-    this.businessUnitService.onLoadUpdatePage(this.userData.tableData.uc0001,this.userData.tableData.uc0001).subscribe((data: any) => {
+    this.businessUnitService.onLoadUpdatePage(this.userData.tableData.uc0001,this.userData.tableData.uc0002).subscribe((data: any) => {
       console.log(data);
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
