@@ -95,7 +95,7 @@ export class AuthService {
 
   getAuth(userid:any,password:any){
     console.log(userid);
-    let loginURL='http://103.10.234.106:8081/authenticate'
+    let loginURL=this.API_URL+'authenticate';
     let authData=userid+':'+password;
     let encodedAuthData=btoa(authData);
     //console.log(encodedAuthData1)
