@@ -119,4 +119,15 @@ export class AuthService {
 //this.http.get('url',httpOptions);
 return this.http.post(loginURL,'',httpOptions)
 }
+changePAssword(requestBody:any){
+    let token = this.cookieService.get('token');
+    let changePassword=this.API_URL+"admin/changepassword";
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'application/json',
+       'Authorization': 'Bearer ' + token,
+      })
+    };
+    return this.http.post(changePassword,requestBody,httpOptions)
+}
 }

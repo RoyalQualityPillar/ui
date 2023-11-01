@@ -11,6 +11,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { SelectedUserListComponent } from '../selected-user-list/selected-user-list.component';
 import { ActiveUserListComponent } from '../active-user-list/active-user-list.component';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 
 
 @Component({
@@ -227,5 +228,174 @@ onDisplayList(row:any){
   }
   onRole(role){
     return this.LifeCycleForm.controls['module'].value+" - "+role
+  }
+
+  /*******************LOV IMPLEMENTATION ***********************************/
+  displayedColumns:any;
+  selectedDialogData:any;
+  openBusinessUnitCodeLOV() {
+    this.displayedColumns = [
+      { field: 'unitCode', title: 'Code' },
+      { field: 'unitName', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Business Unit",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.plantList,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.LifeCycleForm.controls['businessUnit'].setValue(this.selectedDialogData.unitCode)
+      }
+    })
+  }
+  isPlantCodeSuccess:any;
+  onChangePlantCode() {
+    if (this.LifeCycleForm.controls['businessUnit'].value == '') {
+      this.LifeCycleForm.controls['businessUnit'].setValue('')
+    } else {
+      let currentPlantCodeValue = this.LifeCycleForm.controls['businessUnit'].value;
+      this.isPlantCodeSuccess = false;
+      this.plantList.forEach(elements => {
+        if (elements.unitCode == currentPlantCodeValue) {
+          this.isPlantCodeSuccess = true;
+        }
+      })
+      if (this.isPlantCodeSuccess == false) {
+        this.LifeCycleForm.controls['businessUnit'].setErrors({ 'incorrect': true })
+        this.openBusinessUnitCodeLOV();
+      }
+    }
+  }
+  openDepartmentCodeLOV(){
+    this.displayedColumns = [
+      { field: 'unitCode', title: 'Code' },
+      { field: 'unitName', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Department",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.deptCodeList,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.LifeCycleForm.controls['department'].setValue(this.selectedDialogData.unitCode)
+      }
+    })
+  }
+  isDepCodeSuccess:any;
+  onChangeDepartmentCode(){
+    if (this.LifeCycleForm.controls['department'].value == '') {
+      this.LifeCycleForm.controls['department'].setValue('')
+    } else {
+      let currentPlantCodeValue = this.LifeCycleForm.controls['department'].value;
+      this.isDepCodeSuccess = false;
+      this.deptCodeList.forEach(elements => {
+        if (elements.unitCode == currentPlantCodeValue) {
+          this.isDepCodeSuccess = true;
+        }
+      })
+      if (this.isDepCodeSuccess == false) {
+        this.LifeCycleForm.controls['department'].setErrors({ 'incorrect': true })
+        this.openDepartmentCodeLOV();
+      }
+    }
+  }
+
+  openModuleCodeLOV(){
+    this.displayedColumns = [
+      { field: 'unitCode', title: 'Code' },
+      { field: 'unitName', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Module",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.moduleList,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.LifeCycleForm.controls['module'].setValue(this.selectedDialogData.unitCode)
+      }
+    })
+  }
+  onChangeModuleCode(){
+    if (this.LifeCycleForm.controls['module'].value == '') {
+      this.LifeCycleForm.controls['module'].setValue('')
+    } else {
+      let currentPlantCodeValue = this.LifeCycleForm.controls['module'].value;
+      this.isDepCodeSuccess = false;
+      this.moduleList.forEach(elements => {
+        if (elements.unitCode == currentPlantCodeValue) {
+          this.isDepCodeSuccess = true;
+        }
+      })
+      if (this.isDepCodeSuccess == false) {
+        this.LifeCycleForm.controls['module'].setErrors({ 'incorrect': true })
+        this.openModuleCodeLOV();
+      }
+    }
+  }
+  
+  openStatusLOV() {
+    this.displayedColumns = [
+      {field:'code',title:"Code"},
+      {field:'description',title:"Descritption"}
+    ]
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Status",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.statusInfo,
+        lovName: 'statusList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.LifeCycleForm.controls['status'].setValue(this.selectedDialogData.code)
+      }
+    })
+  }
+  isStatusSuccess:any;
+  onChangeStatus() {
+    if (this.LifeCycleForm.controls['status'].value == '') {
+      this.LifeCycleForm.controls['status'].setValue('')
+    } else {
+      this.isStatusSuccess = false;
+      let statusCurrentValue = this.LifeCycleForm.controls['status'].value;
+      this.statusInfo.forEach(elements => {
+        if (elements.code == statusCurrentValue) {
+          this.isStatusSuccess = true;
+        }
+      })
+      if (this.isStatusSuccess == false) {
+        this.LifeCycleForm.controls['status'].setErrors({ 'incorrect': true })
+        this.openStatusLOV();
+      }
+    }
   }
 }

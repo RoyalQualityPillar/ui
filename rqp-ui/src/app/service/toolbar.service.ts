@@ -18,4 +18,5 @@ export class ToolbarService {
    setTableData(data:any){
      this.tableData=data
    }
+  
 }

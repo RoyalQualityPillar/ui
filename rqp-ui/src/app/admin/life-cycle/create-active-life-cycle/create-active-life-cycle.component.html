@@ -28,24 +28,24 @@
     
                     <mat-form-field appearance="outline" class="col-4 px-1">
                         <mat-label>Business Unit</mat-label>
-                        <mat-select formControlName="businessUnit">
-                            <mat-option>Select</mat-option>
-                            <mat-option *ngFor="let plant of plantList" [value]="plant">{{plant}}</mat-option>
-                        </mat-select>
+                        <input type="text" matInput formControlName="businessUnit"
+                            placeholder="Business Unit" (change)="onChangePlantCode()">
+                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                            class="icon-size lovSearchButton" color="primary"(click)="openBusinessUnitCodeLOV()">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-4 px-1">
                         <mat-label>Department</mat-label>
-                        <mat-select formControlName="department">
-                            <mat-option>Select</mat-option>
-                            <mat-option *ngFor="let deptCode of deptCodeList" [value]="deptCode">{{deptCode}}</mat-option>
-                        </mat-select>
+                        <input type="text" matInput formControlName="department"
+                        placeholder="department" (change)="onChangeDepartmentCode()">
+                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                        class="icon-size lovSearchButton" color="primary"(click)="openDepartmentCodeLOV()">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-4 px-1">
                         <mat-label>Module</mat-label>
-                        <mat-select formControlName="module">
-                            <mat-option>Select</mat-option>
-                            <mat-option *ngFor="let module of moduleList" [value]="module">{{module}}</mat-option>
-                        </mat-select>
+                        <input type="text" matInput formControlName="module"
+                        placeholder="module" (change)="onChangeModuleCode()">
+                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                        class="icon-size lovSearchButton" color="primary"(click)="openModuleCodeLOV()">
                     </mat-form-field>
                 </div>
                 <div class="row no-gutters ms-1 me-1 dense-4">
@@ -54,17 +54,13 @@
                        <input type="text" matInput formControlName="lifeCycleCode" value="LC" [readonly]="isReadOnly"
                            placeholder="Life Cycle Code" maxlength="6">
                    </mat-form-field>
-                   <mat-form-field appearance="outline" class="col-4 px-1">
-                    <mat-label>Status</mat-label>
-                    <mat-select formControlName="status">
-                        <mat-option>Select</mat-option>
-                        <mat-option value="1001">ACTIVE</mat-option>
-                        <mat-option value="1004">LOCKED</mat-option>
-                        <mat-option value="1005">UNLOCKED</mat-option>
-                        <mat-option value="1003">DISABLE</mat-option>
-                        <!-- <mat-option *ngFor="let status of statusInfo" [value]="status.code">{{status.description}}</mat-option> -->
-                  
-                    </mat-select>
+                 
+                    <mat-form-field appearance="outline" class="col-4 px-1" >
+                        <mat-label>Status</mat-label>
+                        <input type="text" matInput formControlName="status" 
+                        placeholder="Status" (change)="onChangeStatus()" >
+                        <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                        class="icon-size lovSearchButton" color="primary"(click)="openStatusLOV()">
                 </mat-form-field>
                 </div>
             </div>
@@ -82,7 +78,7 @@
                                     <mat-label>Role</mat-label>
                                     <mat-select [(ngModel)]="selectedDataList.role"[ngModelOptions]="{standalone: true}">
                                         <mat-option>Select</mat-option>
-                                        <mat-option *ngFor="let roles of rolesList" [value]="roles">{{roles}}</mat-option>
+                                        <mat-option *ngFor="let roles of rolesList" [value]="roles.unitCode">{{roles.unitCode}} - {{roles.unitName}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                                 </div>

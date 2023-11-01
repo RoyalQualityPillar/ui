@@ -132,7 +132,10 @@ export class BusinessUnitTypeCreateUpdateComponent  implements OnInit  {
   this.DepartmentMaster.reset();
   }
   openBusinessUnitCodeLOV() {
-    this.displayedColumns = ['unitCode', 'unitName']
+    this.displayedColumns = [
+      { field: 'unitCode', title: 'Code' },
+      { field: 'unitName', title: 'Description' },
+    ];
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
       width: "600px",
@@ -169,8 +172,12 @@ export class BusinessUnitTypeCreateUpdateComponent  implements OnInit  {
       }
     }
   }
+  
   openStatusLOV() {
-    this.displayedColumns = ['code', 'description']
+    this.displayedColumns = [
+      {field:'code',title:"Code"},
+      {field:'description',title:"Descritption"}
+    ]
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
       width: "600px",

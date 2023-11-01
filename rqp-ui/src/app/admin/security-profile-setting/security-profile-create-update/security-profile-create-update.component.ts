@@ -186,11 +186,11 @@ export class SecurityProfileCreateUpdateComponent implements OnInit  {
   this.DepartmentMaster.reset();
   }
   openUnitListCodeLOV() {
-    // this.displayedColumns = [
-    //   { field: 'unitCode', title: 'Code' },
-    //   { field: 'unitName', title: 'Description' },
-    // ];
-    this.displayedColumns = ['unitCode', 'unitName']
+    this.displayedColumns = [
+      { field: 'unitCode', title: 'Code' },
+      { field: 'unitName', title: 'Description' },
+    ];
+   // this.displayedColumns = ['unitCode', 'unitName']
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
       width: "600px",
@@ -198,7 +198,7 @@ export class SecurityProfileCreateUpdateComponent implements OnInit  {
         dialogTitle: "Business Unit",
         dialogColumns: this.displayedColumns,
         dialogData: this.unitList,
-        lovName: 'businessUnitListdsdsd'
+        lovName: 'businessUnitList'
       },
       disableClose: true
     });
@@ -228,7 +228,10 @@ export class SecurityProfileCreateUpdateComponent implements OnInit  {
     }
   }
   openStatusLOV() {
-    this.displayedColumns = ['code', 'description']
+    this.displayedColumns = [
+      {field:'code',title:"Code"},
+      {field:'description',title:"Descritption"}
+    ]
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
       width: "600px",
