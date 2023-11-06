@@ -30,7 +30,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['sNo','action', 'userId','fullName', 'lifecyclecode','moduleName','module'];
+  displayedColumns: string[] = ['sNo','action', 'userid','lcnum', 'lcrole','stage','uc0001','ff0001'];
  // dataSource = ELEMENT_DATA;
  dataSource:any;
  filterObject:any;
@@ -193,7 +193,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
     totalRow:any;
 
     downloadPdf() {
-      let header: string[] = ['S No.', 'User Id', 'Role', 'Life Cycle','Module Name','Module'];
+      let header: string[] = ['S No.', 'User Id', 'Life Cycle Code', 'LC Role','Stage','Module Code','Module Name'];
       this.totalRow=this.lifeCycleInfoDataLength;
       var img = new Image();
       img.src = 'assets/logo1.png'
@@ -204,21 +204,23 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   
       this.dataSource.forEach((element: {
         'sNo':any
-        'userId': any;
-        'fullName':any;
-        'lifecyclecode':any;
-        'moduleName':any;
-        'module':any;
+        'userid': any;
+        'lcnum':any;
+        'lcrole':any;
+        'stage':any;
+        'uc0001':any;
+        'ff0001':any;
 
 
       }) => {
         var temp = [
           element['sNo'],
-          element['userId'],
-          element['fullName'],
-          element['lifecyclecode'],
-          element['moduleName'],
-          element['module'],
+          element['userid'],
+          element['lcnum'],
+          element['lcrole'],
+          element['stage'],
+          element['uc0001'],
+          element['ff0001']
   
         ];
         rows.push(temp);
@@ -307,19 +309,19 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
       console.log(this.selection.selected)
       this.cureentSelectedRow=this.selection.selected;
       if(this.cureentSelectedRow.length==1){
-        console.log(this.cureentSelectedRow[0].userId)
+        console.log(this.cureentSelectedRow[0].userid)
           console.log(' one')
-          this.selectedUserId=this.cureentSelectedRow[0].userId;
+          this.selectedUserId=this.cureentSelectedRow[0].userid;
           console.log(this.selectedUserId)
-          this.selectedLifecycleCode=this.cureentSelectedRow[0].lifecyclecode;
-          this.selectedModuleName=this.cureentSelectedRow[0].moduleName;
+          this.selectedLifecycleCode=this.cureentSelectedRow[0].lcrole;
+          this.selectedModuleName=this.cureentSelectedRow[0].stage;
       }else if(this.cureentSelectedRow.length>1){
         console.log('more than one')
         let arrayLength=this.cureentSelectedRow.length-1;
         console.log(arrayLength)
-        this.selectedUserId=this.cureentSelectedRow[arrayLength].userId;
-          this.selectedLifecycleCode=this.cureentSelectedRow[arrayLength].lifecyclecode;
-          this.selectedModuleName=this.cureentSelectedRow[arrayLength].moduleName;
+        this.selectedUserId=this.cureentSelectedRow[arrayLength].userid;
+          this.selectedLifecycleCode=this.cureentSelectedRow[arrayLength].lcrole;
+          this.selectedModuleName=this.cureentSelectedRow[arrayLength].stage;
       }else{
         this.dialog.open(MessageDialogComponent, {
           width:"400px",
@@ -328,24 +330,71 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
         return;
       }
       let body={
-        userId:'',
-        lifecycleCode:'',
-        moduleName:''
+        userid:'',
+        lcrole:'',
+        stage:''
       }
       console.log(this.selectedUserId)
-      body.userId=this.selectedUserId;
-      body.lifecycleCode=this.selectedLifecycleCode;
-      body.moduleName=this.selectedModuleName;
+      body.userid=this.selectedUserId;
+      body.lcrole=this.selectedLifecycleCode;
+      body.stage=this.selectedModuleName;
       console.log(body);
       this.selection.clear();
       this.lifeCycleDataService.getModuleName(body).subscribe((data: any) => {
         console.log(data);
         this.cookieService.set('subMenuFlag','true');
-        this.cookieService.set('menuHeader',data[0].moduleName);
+        this.cookieService.set('menuHeader',data[0].stage);
         this.cookieService.set('subMenu1',data[0].links)
         this.route.navigate(['./module-home-page'])
       })
     }
+
+    selectedRow:any;
+    setSelectedID(row:any){
+      this.selectedRow=row;
+     }
+ onSubmit(val:any){
+  if(this.selectedRow.length==0){
+    this.dialog.open(MessageDialogComponent, {
+      data: { 'message': 'Please select any row', 'heading': "Error Information" }
+   })
+    }else{
+      let body={
+        userId:'',
+        lcnum:'',
+        lcrole:'',
+        ff0001:''
+      }
+      console.log(this.selectedRow)
+      body.userId=this.selectedRow.userid;
+      body.lcnum=this.selectedRow.lcnum;
+      body.lcrole=this.selectedRow.lcrole;
+      body.ff0001=this.selectedRow.ff0001;
+      this.lifeCycleDataService.getModuleName(body).subscribe((data: any) => {
+        console.log(data);
+        this.redirect(data)
+     
+      })
+    }
+ }
+ redirect(data:any){
+  this.cookieService.set('subMenuFlag','true');
+  this.cookieService.set('menuHeader',data[0].ff0001);
+  this.cookieService.set('subMenu1',data[0].lcrole)
+  // Module Value
+  console.log(data[0].ff0001)
+  if(data[0].ff0001=='Non Conformance Investigation'){
+    this.route.navigate(['./module-home-page'])
+  }else if(data[0].ff0001=='Change Control '){
+    this.route.navigate(['./rqp-sd-module'])
+  }
+  else{
+    this.dialog.open(MessageDialogComponent, {
+      data: { 'message': 'You dont have access for this module', 'heading': "Error Information" }
+   }) 
+  }
+  
+ }
 
 onSelect(row:any){
   console.log(row);

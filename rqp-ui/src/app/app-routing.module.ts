@@ -27,6 +27,8 @@ import { OrganizationHomePageComponent } from './admin/organization/organization
 import { BusinessUnitTypeHomePageComponent } from './admin/business-unit-type/business-unit-type-home-page/business-unit-type-home-page.component';
 import { SecurityProfileHomePageComponent } from './admin/security-profile-setting/security-profile-home-page/security-profile-home-page.component';
 import { GuidelinesHomePageComponent } from './admin/guidelines/guidelines-home-page/guidelines-home-page.component';
+import { QuotationHomePageComponent } from './rqp-sd/quotation-home-page/quotation-home-page.component';
+import { RqpSdHomePageComponent } from './rqp-sd/rqp-sd-home-page/rqp-sd-home-page.component';
 
 const routes: Routes = [
  // {path:'',redirectTo:'login'},
@@ -56,7 +58,10 @@ const routes: Routes = [
   {path:"security-profile-type-home-page",component:SecurityProfileHomePageComponent,canActivate:[AuthGuard]}, 
   {path:"guidelines-home-page",component:GuidelinesHomePageComponent,canActivate:[AuthGuard]}, 
   {path: "guidelines", component:GuidelinesComponent},
+
   
+  {path:"rqp-sd-module",component:RqpSdHomePageComponent,canActivate:[AuthGuard]}, 
+  {path:"quotation-home-page",component:QuotationHomePageComponent,canActivate:[AuthGuard]}, 
 ];
 
 @NgModule({

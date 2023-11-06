@@ -1,0 +1,263 @@
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers"
+        style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Headers</p>
+        </div>
+    </div>
+</mat-card>
+<form [formGroup]="QuotationForm">
+    <div class="row">
+        <div class="col-12">
+            <div class="p-2">
+                <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                    <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
+                        denoted by an asterisk(<span style="color: red">*</span>).</span>
+                </div>
+                
+                     <div class="row no-gutters ms-1 me-1 dense-4">
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Oarganization Unit Code</mat-label>
+                        <input type="text" matInput formControlName="oucode" 
+                            placeholder="Oarganization Unit Code" >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Life Cycle No</mat-label>
+                        <input type="text" matInput formControlName="lc0001" 
+                            placeholder="Life Cycle No" >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Request No</mat-label>
+                        <input type="text" matInput formControlName="lc0002" 
+                            placeholder="Request No" >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Stage</mat-label>
+                        <input type="text" matInput formControlName="lc0003" 
+                            placeholder="Stage" >
+                    </mat-form-field>
+                    </div>   
+            </div>
+        </div>
+    </div>
+
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+<div class="btn-group" class="headers"
+style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+<div style="float: left;">
+    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Details</p>
+</div>
+</div>
+</mat-card>
+<div class="row">
+    <div class="col-12">
+        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Tracking No</mat-label>
+                <input type="text" matInput formControlName="uc0001" 
+                    placeholder="Tracking No" >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Oarganization Unit Code</mat-label>
+                <input type="text" matInput formControlName="ff0001" 
+                    placeholder="Oarganization Unit Code" >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Sale Unit Code</mat-label>
+                <input type="text" matInput formControlName="ff0002" 
+                    placeholder="Sale Unit Code" >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Quotetion Valid  To Date</mat-label>
+                <input type="text" matInput formControlName="ff0003" 
+                    placeholder="Quotetion Valid  To Date" >
+            </mat-form-field>
+      
+            </div> 
+            <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Delivery Date </mat-label>
+                    <input type="text" matInput formControlName="ff0004" 
+                        placeholder="Delivery Date " >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Payment Terms Code</mat-label>
+                    <input type="text" matInput formControlName="ff0005" 
+                        placeholder="Payment Terms Code" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Sub Total Amount</mat-label>
+                    <input type="text" matInput formControlName="ff0006" 
+                        placeholder="Sub Total Amount" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Disount Amount</mat-label>
+                    <input type="text" matInput formControlName="ff0007" 
+                        placeholder="Disount Amount" >
+                </mat-form-field>
+            </div>
+            <div class="row no-gutters ms-1 me-1 dense-4">   
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>After Discount Sub Total Amount</mat-label>
+                    <input type="text" matInput formControlName="ff0008" 
+                        placeholder="After Discount Sub Total Amount" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>SGST</mat-label>
+                    <input type="number" matInput formControlName="ff0009" (change)="onChangeSGST()"
+                        placeholder="SGST" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>CGST</mat-label>
+                    <input type="number" matInput formControlName="ff0010" (change)="onChangeCGST()"
+                        placeholder="CGST" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>IGST</mat-label>
+                    <input  matInput formControlName="ff0011"
+                        placeholder="IGST" >
+                </mat-form-field>
+            </div>  
+            <div class="row no-gutters ms-1 me-1 dense-4">   
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Total GST</mat-label>
+                    <input  matInput formControlName="ff0012"  
+                        placeholder="Total GST" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Total Amount </mat-label>
+                    <input  matInput formControlName="ff0013"
+                        placeholder="Total Amount" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Order Status</mat-label>
+                    <input type="text" matInput formControlName="ff0014" 
+                        placeholder="Order Status" >
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Stage</mat-label>
+                    <input type="text" matInput formControlName="ff0015" 
+                        placeholder="Stage" >
+                </mat-form-field>
+            </div>  
+        </div>
+        </div>
+        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers"
+            style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+            <div style="float: left;">
+                <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Product Information</p>
+            </div>
+            <div style="float: right;">
+                <!-- <button (click)="addNewRow()">add</button> -->
+                <button mat-raised-button color="primary" 
+                style="background-color: #22773e;font-size: smaller;height: 25px;"(click)="addNewRow()">Add</button>
+            </div>
+            </div>
+            </mat-card>
+            <div class="row">
+                <div class="col-12">
+                 <div class="tabOverFlowX" *ngIf="this.stockList.length>0"> 
+                <table class="display-table">
+                    <thead style="background:#369 !important;">
+                        <tr>
+                            <th style="color: white;">Product Code</th>
+                            <th style="color: white;">Product Name</th>
+                            <th style="color: white;">Product No</th>
+                            <th style="color: white;">Quantity</th>
+                            <th style="color: white;">PO Date</th>
+                            <th style="color: white;">HSN Code</th>
+                            <th style="color: white;">Rate</th>
+                            <th style="color: white;">% Discount</th>
+                            <th style="color: white;">Discount Amount</th>
+                            <th style="color: white;">After Discount Rate </th>
+                            <th style="color: white;">GST Type </th>
+                            <th style="color: white;">%GST</th>
+                            <th style="color: white;">GST Amount</th>
+                            <th style="color: white;">Amount</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of stockList; let idx=index">
+                    
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0005" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0006" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0018" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0007" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0008" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0009" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0010" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0011" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0012" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0013" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0014" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0015" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0016" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0017" [ngModelOptions]="{standalone: true}" required>
+                            </td>
+                        
+
+                        </tr>
+                    </tbody>
+                </table>
+               </div>  
+                    </div>
+                    </div>
+        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers"
+            style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+            <div style="float: left;">
+                <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+            </div>
+            </div>
+            </mat-card>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;" >
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Comments</mat-label>
+                            <textarea type="text" matInput formControlName="comments"
+                                placeholder="Comments">
+                            </textarea>
+                        </mat-form-field>
+                    </div>
+                    </div>
+                    </div>        
+</form>
+<div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
+    <div  class="d-flex justify-content-center">
+    <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;">Save</button>
+     <button mat-raised-button color="primary"
+      style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
+  </div>
+</div>
+<div style="height: 15px;"></div>

@@ -64,6 +64,9 @@ import { ActiveSpsAuditTrailComponent } from './admin/security-profile-setting/a
 import { AllSpsAuditTrailComponent } from './admin/security-profile-setting/all-sps-audit-trail/all-sps-audit-trail.component';
 import { GuidelinesHomePageComponent } from './admin/guidelines/guidelines-home-page/guidelines-home-page.component';
 import { GuidelinesCreateUpdateComponent } from './admin/guidelines/guidelines-create-update/guidelines-create-update.component';
+import { SdModule } from './rqp-sd/sd/sd.module';
+import { RqpSdHomePageComponent } from './rqp-sd/rqp-sd-home-page/rqp-sd-home-page.component';
+import { StockListComponent } from './rqp-sd/stock-list/stock-list.component';
 //import { RqpTableModule} from 'rqp-table'
 
 
@@ -85,38 +88,12 @@ import { GuidelinesCreateUpdateComponent } from './admin/guidelines/guidelines-c
     CreateGuidelineComponent,
     CreateBusinessUnitComponent,
     LovDialogComponent,
-    AllRoleAuditTrailComponent,
-    ActiveRoleAuditTrailComponent,
-    AllBusinessUnitAuditTrailComponent,
-    ActiveBusinessUnitAuditTrailComponent,
-    AllDepartmentAuditTrailComponent,
-    ActiveDepartmentAuditTrailComponent,
-    AllModuleAuditTrailComponent,
-    ActiveModuleAuditTrailComponent,
-    AllDesigantionAuditTrailComponent,
-    ActiveDesigantionAuditTrailComponent,
-    AllSrrAuditTrailComponent,
-    ActiveSrrAuditTrailComponent,
-    ActiveSubdepartmentAuditTrailComponent,
-    AllSubdepartmentAuditTrailComponent,
-    ActiveMaterialTypeAuditTrailComponent,
-    AllMaterialTypeAuditTrailComponent,
-    ActiveSubMaterialAuditTrailComponent,
-    AllSubMaterialAuditTrailComponent,
-    AllUnitMasterAuditTrailComponent,
-    ActiveUnitMasterAuditTrailComponent,
-    AllPackMasterAuditTrailComponent,
-    ActivePackMasterAuditTrailComponent,
-    AllTaxMasterAuditTrailComponent,
-    ActiveTaxMasterAuditTrailComponent,
-    AllOrgMasterAuditTrailComponent,
-    ActiveOrgMasterAuditTrailComponent,
-    ActiveButAuditTrailComponent,
-    AllButAuditTrailComponent,
-    ActiveSpsAuditTrailComponent,
-    AllSpsAuditTrailComponent,
+
     GuidelinesHomePageComponent,
     GuidelinesCreateUpdateComponent,
+    RqpSdHomePageComponent,
+    StockListComponent,
+ 
     
     
     
@@ -132,7 +109,8 @@ import { GuidelinesCreateUpdateComponent } from './admin/guidelines/guidelines-c
     AdminModule,
     PdfViewerModule,
    // RqpTableModule,
-   BkTableModule
+   BkTableModule,
+   SdModule
     
   ],
   schemas: [
