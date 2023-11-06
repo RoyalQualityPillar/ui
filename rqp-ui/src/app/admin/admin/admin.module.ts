@@ -51,6 +51,36 @@ import { TaxMasterCreateUpdateComponent } from '../tax-master/tax-master-create-
 import { TaxMasterHomePageComponent } from '../tax-master/tax-master-home-page/tax-master-home-page.component';
 import { UtMasterCreateUpdateComponent } from '../ut-master/ut-master-create-update/ut-master-create-update.component';
 import { UtMasterHomePageComponent } from '../ut-master/ut-master-home-page/ut-master-home-page.component';
+import { AllRoleAuditTrailComponent } from '../role-master/all-role-audit-trail/all-role-audit-trail.component';
+import { ActiveRoleAuditTrailComponent } from '../role-master/active-role-audit-trail/active-role-audit-trail.component';
+import { AllBusinessUnitAuditTrailComponent } from '../business-unit/all-business-unit-audit-trail/all-business-unit-audit-trail.component';
+import { ActiveBusinessUnitAuditTrailComponent } from '../business-unit/active-business-unit-audit-trail/active-business-unit-audit-trail.component';
+import { AllDepartmentAuditTrailComponent } from '../department-master/all-department-audit-trail/all-department-audit-trail.component';
+import { ActiveDepartmentAuditTrailComponent } from '../department-master/active-department-audit-trail/active-department-audit-trail.component';
+import { AllModuleAuditTrailComponent } from '../module-master/all-module-audit-trail/all-module-audit-trail.component';
+import { ActiveModuleAuditTrailComponent } from '../module-master/active-module-audit-trail/active-module-audit-trail.component';
+import { AllDesigantionAuditTrailComponent } from '../desigantion-master/all-desigantion-audit-trail/all-desigantion-audit-trail.component';
+import { ActiveDesigantionAuditTrailComponent } from '../desigantion-master/active-desigantion-audit-trail/active-desigantion-audit-trail.component';
+import { AllSrrAuditTrailComponent } from '../standard-reason-registarion/all-srr-audit-trail/all-srr-audit-trail.component';
+import { ActiveButAuditTrailComponent } from '../business-unit-type/active-but-audit-trail/active-but-audit-trail.component';
+import { AllButAuditTrailComponent } from '../business-unit-type/all-but-audit-trail/all-but-audit-trail.component';
+import { ActiveSubMaterialAuditTrailComponent } from '../material-sub-type/active-sub-material-audit-trail/active-sub-material-audit-trail.component';
+import { AllSubMaterialAuditTrailComponent } from '../material-sub-type/all-sub-material-audit-trail/all-sub-material-audit-trail.component';
+import { ActiveMaterialTypeAuditTrailComponent } from '../material-type/active-material-type-audit-trail/active-material-type-audit-trail.component';
+import { AllMaterialTypeAuditTrailComponent } from '../material-type/all-material-type-audit-trail/all-material-type-audit-trail.component';
+import { ActiveOrgMasterAuditTrailComponent } from '../organization/active-org-master-audit-trail/active-org-master-audit-trail.component';
+import { AllOrgMasterAuditTrailComponent } from '../organization/all-org-master-audit-trail/all-org-master-audit-trail.component';
+import { ActivePackMasterAuditTrailComponent } from '../pack-master/active-pack-master-audit-trail/active-pack-master-audit-trail.component';
+import { AllPackMasterAuditTrailComponent } from '../pack-master/all-pack-master-audit-trail/all-pack-master-audit-trail.component';
+import { ActiveSpsAuditTrailComponent } from '../security-profile-setting/active-sps-audit-trail/active-sps-audit-trail.component';
+import { AllSpsAuditTrailComponent } from '../security-profile-setting/all-sps-audit-trail/all-sps-audit-trail.component';
+import { ActiveSrrAuditTrailComponent } from '../standard-reason-registarion/active-srr-audit-trail/active-srr-audit-trail.component';
+import { ActiveSubdepartmentAuditTrailComponent } from '../sub-department/active-subdepartment-audit-trail/active-subdepartment-audit-trail.component';
+import { AllSubdepartmentAuditTrailComponent } from '../sub-department/all-subdepartment-audit-trail/all-subdepartment-audit-trail.component';
+import { ActiveTaxMasterAuditTrailComponent } from '../tax-master/active-tax-master-audit-trail/active-tax-master-audit-trail.component';
+import { AllTaxMasterAuditTrailComponent } from '../tax-master/all-tax-master-audit-trail/all-tax-master-audit-trail.component';
+import { ActiveUnitMasterAuditTrailComponent } from '../ut-master/active-unit-master-audit-trail/active-unit-master-audit-trail.component';
+import { AllUnitMasterAuditTrailComponent } from '../ut-master/all-unit-master-audit-trail/all-unit-master-audit-trail.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +128,38 @@ import { UtMasterHomePageComponent } from '../ut-master/ut-master-home-page/ut-m
     BusinessUnitTypeHomePageComponent,
     BusinessUnitTypeCreateUpdateComponent,
     SecurityProfileHomePageComponent,
-    SecurityProfileCreateUpdateComponent
+    SecurityProfileCreateUpdateComponent,
+
+    AllRoleAuditTrailComponent,
+    ActiveRoleAuditTrailComponent,
+    AllBusinessUnitAuditTrailComponent,
+    ActiveBusinessUnitAuditTrailComponent,
+    AllDepartmentAuditTrailComponent,
+    ActiveDepartmentAuditTrailComponent,
+    AllModuleAuditTrailComponent,
+    ActiveModuleAuditTrailComponent,
+    AllDesigantionAuditTrailComponent,
+    ActiveDesigantionAuditTrailComponent,
+    AllSrrAuditTrailComponent,
+    ActiveSrrAuditTrailComponent,
+    ActiveSubdepartmentAuditTrailComponent,
+    AllSubdepartmentAuditTrailComponent,
+    ActiveMaterialTypeAuditTrailComponent,
+    AllMaterialTypeAuditTrailComponent,
+    ActiveSubMaterialAuditTrailComponent,
+    AllSubMaterialAuditTrailComponent,
+    AllUnitMasterAuditTrailComponent,
+    ActiveUnitMasterAuditTrailComponent,
+    AllPackMasterAuditTrailComponent,
+    ActivePackMasterAuditTrailComponent,
+    AllTaxMasterAuditTrailComponent,
+    ActiveTaxMasterAuditTrailComponent,
+    AllOrgMasterAuditTrailComponent,
+    ActiveOrgMasterAuditTrailComponent,
+    ActiveButAuditTrailComponent,
+    AllButAuditTrailComponent,
+    ActiveSpsAuditTrailComponent,
+    AllSpsAuditTrailComponent,
   ],
   imports: [
     CommonModule,

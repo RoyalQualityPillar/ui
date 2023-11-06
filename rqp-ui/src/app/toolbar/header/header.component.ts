@@ -58,9 +58,11 @@ export class HeaderComponent implements OnInit{
   }
   submenu1(subMenuName1:any){
     console.log(subMenuName1)
-    let subMenuName123='AD-MasterDataRegistration'
-    if(subMenuName123=='AD-MasterDataRegistration'){
+   // let subMenuName123='AD-MasterDataRegistration'
+    if(subMenuName1=='CC-QA Approver'){
       this.route.navigate(['./master-data-management'])
+    }else if(subMenuName1=='NCI-QA Approver'){
+      this.route.navigate(['./quotation-home-page']) 
     }
   }
   //without login

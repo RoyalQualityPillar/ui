@@ -264,7 +264,17 @@ mat-row:nth-child(odd) {
 .sectionHeaderColor{
   background-color: #474668;
 }
-
+.icon-size {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.lovSearchButton {
+  position: absolute;
+  right: 0%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
 
 
 

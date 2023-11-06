@@ -35,7 +35,7 @@
             <mat-cell *matCellDef="let row"> {{row.sNo}} </mat-cell>
           </ng-container>
           <!-- Action Column -->
-          <ng-container matColumnDef="action">
+          <!-- <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
             <mat-cell *matCellDef="let row">
               <mat-radio-button
@@ -45,34 +45,43 @@
               (keyup.enter)="handleKeyPress('view')"
                class="smallRadio"></mat-radio-button>
             </mat-cell>
-          </ng-container>
-
+          </ng-container> -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+            <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell> 
+        </ng-container> 
           <!-- Name Column -->
-          <ng-container matColumnDef="userId">
+          <ng-container matColumnDef="userid">
             <mat-header-cell *matHeaderCellDef mat-sort-header> User Id </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.userId}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.userid}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="fullName">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Role </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.fullName}} </mat-cell>
-          </ng-container>
-
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="lifecyclecode">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Life Cycle </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.lifecyclecode}} </mat-cell>
+          <ng-container matColumnDef="lcnum">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Life Cycle Code </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.lcnum}} </mat-cell>
           </ng-container>
 
           <!-- Symbol Column -->
-          <ng-container matColumnDef="moduleName">
+          <ng-container matColumnDef="lcrole">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> LC Role </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.lcrole}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="stage">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Stage </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.stage}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="uc0001">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Module Code </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="ff0001">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Module Name </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.moduleName}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="module">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Module </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.module}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -82,7 +91,7 @@
         <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
         </mat-paginator>
         <button mat-raised-button color="primary" 
-          style="background-color: #295ea3;"(click)="onSelectRow('view')">Submit</button>
+          style="background-color: #295ea3;"(click)="onSubmit('view')">Submit</button>
       </div>
     </div>
     <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
@@ -94,11 +103,12 @@
           <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
           <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" required>
             <option value="SELECT">Please select field</option>
-            <option value="userId">User ID</option>
-            <option value="fullName">Role</option>
-            <option value="lifecyclecode">Life Cycle</option>
-            <option value="moduleName">Module Name</option>
-            <option value="module">Module</option>
+            <option value="userid">User ID</option>
+            <option value="lcnum">Life Cycle Code</option>
+            <option value="lcrole">LC Role</option>
+            <option value="stage">Stage</option>
+            <option value="uc0001">Module Code</option>
+            <option value="ff0001">Module Name</option>
           </select>
           <!-- <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
             <option value="SELECT">Please select condition</option>

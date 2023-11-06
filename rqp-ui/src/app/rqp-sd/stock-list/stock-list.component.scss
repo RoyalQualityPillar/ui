@@ -6,6 +6,20 @@
     padding-left: 5px;
     padding-top: 4px;
     }
+    .customeHeading{
+        margin-top: 19px;
+        margin-bottom: 1px;
+        font-size: 15px;
+        font-weight: 700;
+        color:  white;
+      }
+      .tabOverFlowY{
+        max-height: 400px;
+        min-height: 400px;
+        overflow-y: auto;
+        margin-top: 5px;
+        overflow-x: hidden;
+    } 
     mat-row:nth-child(odd) {
         background-color :rgb(204 217 255);
          
@@ -91,31 +105,34 @@
            height: 10px !important;
            
        }
-       .customeHeading{
-        margin-top: 19px;
-        margin-bottom: 1px;
-        font-size: 15px;
-        font-weight: 700;
-        color:  white;
+       .example-table-container{
+        min-width: 79%;
+        /* overflow-x: scroll; */
       }
-      .tabOverFlowY{
-        max-height: 400px;
-        min-height: 400px;
-        overflow-y: auto;
-        margin-top: 5px;
-        overflow-x: hidden;
-    } 
-    .mat-column-index{
-        flex: 0 0 7%;
+      .filter{
+        min-width:19%;
       }
-      .icon-size {
-        width: 1.5rem;
-        height: 1.5rem;
+      .adjust{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+        /* max-width: 180%; */
       }
-      .lovSearchButton {
-        position: absolute;
-        right: 0%;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
+      .filter{
+        min-width:19%;
       }
+      .filter-box{
+        box-shadow: 0px 0px 2px 2px #b6b5c0;
+        padding: 4px;
+        margin-top: 6px;
+      }
+      .headers{
+        background:#474668;
+        color: white;
+        font-size: 12px;
+        font-weight: 550;
+        padding-left: 5px;
+        padding-top: 4px;
+        }
+   

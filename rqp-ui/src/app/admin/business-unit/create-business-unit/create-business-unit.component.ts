@@ -187,7 +187,10 @@ export class CreateBusinessUnitComponent implements OnInit  {
         displayedColumns:any;
         selectedDialogData:any;
         openBusinessOrgCodeLOV(){
-          this.displayedColumns = ['orgCode','orgName']
+          this.displayedColumns = [
+            {field:'orgCode',title:"Code"},
+            {field:'orgName',title:"Name"}
+          ]
           const dialogRef = this.dialog.open(LovDialogComponent, {
             height: "500px",
             width: "600px",
@@ -230,7 +233,10 @@ export class CreateBusinessUnitComponent implements OnInit  {
           }
         }
 openBusinessUnitCodeLOV(){
-  this.displayedColumns = ['unitCode','unitName']
+  this.displayedColumns = [
+    { field: 'unitCode', title: 'Code' },
+    { field: 'unitName', title: 'Description' },
+  ];
   const dialogRef = this.dialog.open(LovDialogComponent, {
     height: "500px",
     width: "600px",
@@ -259,7 +265,10 @@ onChangeUnitCode(){
   }
 }   
 openCategoryLOV(){
-  this.displayedColumns = ['buTypeCode','buTypeName']
+  this.displayedColumns = [
+    { field: 'buTypeCode', title: 'Code' },
+    { field: 'buTypeName', title: 'Name' },
+  ];
   const dialogRef = this.dialog.open(LovDialogComponent, {
     height: "500px",
     width: "600px",
@@ -299,7 +308,10 @@ onChangeCategory(){
   }
 }
 openStatusLOV(){
-  this.displayedColumns = ['code','description']
+  this.displayedColumns = [
+    {field:'code',title:"Code"},
+    {field:'description',title:"Descritption"}
+  ]
   const dialogRef = this.dialog.open(LovDialogComponent, {
     height: "500px",
     width: "600px",

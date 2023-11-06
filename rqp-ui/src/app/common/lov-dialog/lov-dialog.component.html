@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row no-gutters" style="background-color: #18155b;">
         <div class="col-10 d-flex justify-content-start">
-            <h1 class="customeHeading">{{data.dialogTitle}}</h1>
+            <h1 class="customeHeading">{{this.dialogTitle}}</h1>
         </div>
         <div class="col-2 d-flex justify-content-end">
             <button mat-icon-button class="close-button" (click)="closePopUp()">
@@ -9,127 +9,12 @@
             </button>
         </div>
     </div>
-    <div *ngIf="this.lovName=='organizationList'" class="tabOverFlowY">
-        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-  <mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-  style="background-color: ghostwhite;">
-  <ng-container matColumnDef="orgCode">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Organization Code</mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.orgCode}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="orgName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Organization Name</mat-header-cell>
-  <mat-cell *matCellDef="let row"> {{row.orgName}} </mat-cell>
-</ng-container>
-  <mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
-</mat-paginator>
-</mat-card>
-</div>
-<div *ngIf="this.lovName=='businessUnitList'" class="tabOverFlowY">
-    <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-style="background-color: ghostwhite;">
-<ng-container matColumnDef="unitCode">
-  <mat-header-cell *matHeaderCellDef mat-sort-header>Unit Code</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.unitCode}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="unitName">
-<mat-header-cell *matHeaderCellDef mat-sort-header>Unit Name</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.unitName}} </mat-cell>
-</ng-container>
-<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
-</mat-table>
-<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
-</mat-paginator>
-</mat-card>
-</div>
-<div *ngIf="this.lovName=='statusList'" class="tabOverFlowY">
-  <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-style="background-color: ghostwhite;">
-<ng-container matColumnDef="code">
-<mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.code}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="description">
-<mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
-</ng-container>
-<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
-</mat-table>
-<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
-</mat-paginator>
-</mat-card>
-</div>
-<div *ngIf="this.lovName=='categoryList'" class="tabOverFlowY">
-  <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-style="background-color: ghostwhite;">
-<ng-container matColumnDef="buTypeCode">
-<mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.buTypeCode}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="buTypeName">
-  <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-  <mat-cell *matCellDef="let row"> {{row.buTypeName}} </mat-cell>
-  </ng-container>
-<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
-</mat-table>
-<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
-</mat-paginator>
-</mat-card>
-</div>
-<div *ngIf="this.lovName=='uploadCategoryList'" class="tabOverFlowY">
-  <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-style="background-color: ghostwhite;">
-<ng-container matColumnDef="subCatCode">
-<mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.subCatCode}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="subCatName">
-  <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-  <mat-cell *matCellDef="let row"> {{row.subCatName}} </mat-cell>
-  </ng-container>
-<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
-</mat-table>
-<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
-</mat-paginator>
-</mat-card>
-</div>
-<div *ngIf="this.lovName=='uploadSubCategoryList'" class="tabOverFlowY">
-  <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-<mat-table [dataSource]="dialogData" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-style="background-color: ghostwhite;">
-<ng-container matColumnDef="catCode">
-<mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
-<mat-cell *matCellDef="let row"> {{row.catCode}} </mat-cell>
-</ng-container>
-<ng-container matColumnDef="catName">
-  <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-  <mat-cell *matCellDef="let row"> {{row.catName}} </mat-cell>
-  </ng-container>
-<mat-header-row *matHeaderRowDef="dialogColumns"></mat-header-row>
-<mat-row *matRowDef="let row; columns:dialogColumns" (click)="onSelectedChange(row)" style="cursor: pointer;"></mat-row>
-</mat-table>
-<mat-paginator [pageSizeOptions]="[10, 15, 20,25]" showFirstLastButtons aria-label="Select page of periodic rows">
-</mat-paginator>
-</mat-card>
-</div>
-<!-- <div class="tabOverFlowY">
-  <lib-rqp-table
+ <div class="tabOverFlowY">
+<bk-angular-table
 [displayedColumns]="dialogColumns"
 [dataSource]="this.dialogData"
-[multiSelect]="false"
 (selectedRow$)="onSelectedChange($event)"
+(pagination)="onPagination($event)"
 class="rqp-table-name-class"
-[tableTitle]="this.lovName"
-></lib-rqp-table>
-</div> -->
+></bk-angular-table>
+</div> 

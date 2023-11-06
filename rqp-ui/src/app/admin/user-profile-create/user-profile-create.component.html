@@ -33,12 +33,12 @@
                                  <!-- <div formGroupName="id" class="col-6 px-1"> -->
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Employee ID</mat-label>
-                                    <input type="text" matInput formControlName="employeeId"[readonly]="isReadOnly"
+                                    <input type="text" matInput formControlName="employeeId"[readonly]="isReadOnly"[class.isReadonlyField]="isUpdate"
                                         placeholder="Employee ID" maxlength="6">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>User ID</mat-label>
-                                    <input type="text" matInput formControlName="userId"
+                                    <input type="text" matInput formControlName="userId"[readonly]="isReadOnly"[class.isReadonlyField]="isUpdate"
                                         placeholder="User ID" maxlength="8">
                                 </mat-form-field>
                             <!-- </div> -->
@@ -57,27 +57,40 @@
     
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Branch Code</mat-label>
-                                    <mat-select formControlName="branchName">
-                                        <mat-option *ngFor="let plant of plantList" [value]="plant">{{plant}}</mat-option>
-                                    </mat-select>
+                                    <input type="text" matInput formControlName="branchId"
+                                    placeholder="Branch Name" (change)="onChangeBranchCode()">
+                                    <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                    class="icon-size lovSearchButton" color="primary"(click)="openBranchCodeLOV()">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Department</mat-label>
-                                    <mat-select formControlName="department">
+                                    <!-- <mat-select formControlName="department">
                                         <mat-option *ngFor="let deptCode of deptCodeList" [value]="deptCode">{{deptCode}}</mat-option>
-                                    </mat-select>
+                                    </mat-select> -->
+                                    <input type="text" matInput formControlName="department"
+                                    placeholder="Department" (change)="onChangeDepCode()">
+                                    <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                    class="icon-size lovSearchButton" color="primary"(click)="openDepCodeLOV()">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Section</mat-label>
-                                    <mat-select formControlName="branchId">
+                                    <!-- <mat-select formControlName="branchName">
                                         <mat-option *ngFor="let subdeptCode of subDeptList" [value]="subdeptCode">{{subdeptCode}}</mat-option>
-                                    </mat-select>
+                                    </mat-select> -->
+                                    <input type="text" matInput formControlName="branchName"
+                                    placeholder="Section" (change)="onChangeSectionCode()">
+                                    <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                    class="icon-size lovSearchButton" color="primary"(click)="openSectionCodeLOV()">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Designation</mat-label>
-                                    <mat-select formControlName="designation">
+                                    <!-- <mat-select formControlName="designation">
                                         <mat-option *ngFor="let designation of designationList" [value]="designation">{{designation}}</mat-option>
-                                    </mat-select>
+                                    </mat-select> -->
+                                    <input type="text" matInput formControlName="designation"
+                                    placeholder="Designation" (change)="onChangeDesignationCode()">
+                                    <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                    class="icon-size lovSearchButton" color="primary"(click)="openDesignationCodeLOV()">
                                 </mat-form-field>
                             </div>
     
@@ -120,15 +133,20 @@
                                         <mat-option value="Other">Other</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                <mat-form-field appearance="outline" class="col-3 px-1" *ngIf="isUpdate">
                                     <mat-label>Status</mat-label>
-                                    <mat-select formControlName="status">
+                                    <!-- <mat-select formControlName="status">
                                         <mat-option>Select</mat-option>
                                         <mat-option value="1004">Locked</mat-option>
                                         <mat-option value="1001">Active</mat-option>
                                         <mat-option value="1003">Disabled</mat-option>
                                         <mat-option value="1002">Superseeded</mat-option>
-                                    </mat-select>
+                                        <mat-option value="1005">Unlocked</mat-option>
+                                    </mat-select> -->
+                                    <input type="text" matInput formControlName="status" 
+                                    placeholder="Status" (change)="onChangeStatus()" >
+                                    <img alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                    class="icon-size lovSearchButton" color="primary"(click)="openStatusLOV()">
                                 </mat-form-field>
                             </div>
     
