@@ -370,10 +370,11 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
       body.lcnum=this.selectedRow.lcnum;
       body.lcrole=this.selectedRow.lcrole;
       body.ff0001=this.selectedRow.ff0001;
+      this.isLoading=true;
       this.lifeCycleDataService.getModuleName(body).subscribe((data: any) => {
         console.log(data);
         this.redirect(data)
-     
+        this.isLoading=false;
       })
     }
  }
@@ -383,9 +384,9 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   this.cookieService.set('subMenu1',data[0].lcrole)
   // Module Value
   console.log(data[0].ff0001)
-  if(data[0].ff0001=='Non Conformance Investigation'){
+  if(data[0].lcnum=='RQP1CCQALC0001'){
     this.route.navigate(['./module-home-page'])
-  }else if(data[0].ff0001=='Change Control '){
+  }else if(data[0].lcnum=='RQP1NCIQALC0002'){
     this.route.navigate(['./rqp-sd-module'])
   }
   else{

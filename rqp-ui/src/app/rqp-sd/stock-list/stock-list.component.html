@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row no-gutters"style="background-color: #18155b;;">
         <div class="col-10 d-flex justify-content-start">
-            <h1 class="customeHeading">Life Cycle</h1>
+            <h1 class="customeHeading">Stock List</h1>
         </div>
         <div class="col-2 d-flex justify-content-end">
        
@@ -20,89 +20,82 @@
             <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef>Selection </mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                  <!-- <mat-radio-button
-                  (click)="$event.stopPropagation()"
-                  (change)="$event ? selection.toggle(row):null"
-                  [checked]="selection.isSelected(row)"
-                  (keyup.enter)="handleKeyPress('view')"
-                   class="smallRadio"></mat-radio-button> -->
-                   <!-- <input type="radio" name="selectuop" (change)="setSelectedId($event.target,row)"> -->
                    <mat-radio-button name="selectuop" (change)="setSelectedId(row)">
                   </mat-radio-button>
                 </mat-cell>
               </ng-container>
            
-            <ng-container matColumnDef="lcnum">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>LC no.</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.lcnum}} </mat-cell>
+            <ng-container matColumnDef="uc0001">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Item No</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
               </ng-container>
          
-            <ng-container matColumnDef="userid">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>User Id </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.userid}} </mat-cell>
+            <ng-container matColumnDef="ff0001">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Quatetion No </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
               </ng-container>
    
            
-            <ng-container matColumnDef="stage">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Stage </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.stage}}</mat-cell>
+            <ng-container matColumnDef="ff0002">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>PO No </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.ff0002}}</mat-cell>
             </ng-container>
         
-              <ng-container matColumnDef="alluser">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>All User </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.alluser}}</mat-cell>
+              <ng-container matColumnDef="ff0003">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>PO Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0003}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="comments">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Comments </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.comments}}</mat-cell>
+              <ng-container matColumnDef="ff0004">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Date </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0004}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="download">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Download </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.download}}</mat-cell>
+              <ng-container matColumnDef="ff0005">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Product Code </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0005}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="esign">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>E-Sign </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.esign}}</mat-cell>
+              <ng-container matColumnDef="ff0006">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Product Name </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0006}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="lcrole">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>LC Role </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.lcrole}}</mat-cell>
+              <ng-container matColumnDef="ff0007">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0007}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="print">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Print </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.print}}</mat-cell>
+              <ng-container matColumnDef="ff0008">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Pack </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0008}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="view">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>View </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.view}}</mat-cell>
+              <ng-container matColumnDef="ff0009">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>HSN Code </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0009}}</mat-cell>
               </ng-container>
-              <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.status}}</mat-cell>
+              <ng-container matColumnDef="ff0010">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Rate </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0010}}</mat-cell>
               </ng-container>
-              <ng-container matColumnDef="version">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Version </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.version}}</mat-cell>
+              <ng-container matColumnDef="ff0011">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>% Discount </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0011}}</mat-cell>
               </ng-container>
-              <ng-container matColumnDef="createdon">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Created </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.createdon}}</mat-cell>
+              <ng-container matColumnDef="ff0012">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Discount Amount </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0012}}</mat-cell>
               </ng-container>
             
             <mat-header-row *matHeaderRowDef="activeLifeCycleisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: activeLifeCycleisplayedColumns;"></mat-row>
+            <mat-row *matRowDef="let row; columns: activeLifeCycleisplayedColumns;" (click)="onSelectedChange(row)"></mat-row>
           </mat-table> 
    
           <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
           </mat-paginator>
 
-          <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onReviewUserData()" >Update</button>
+          <!-- <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onReviewUserData()" >Update</button> -->
         </mat-card>
 </div>
     </div>
