@@ -24,7 +24,7 @@ export interface userData {
 export class StockListComponent implements OnInit{
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
-  activeLifeCycleisplayedColumns:string[] = ['action','userid','lcnum','stage','alluser','comments','download','esign','lcrole','print','view','status','version','createdon'];
+  activeLifeCycleisplayedColumns:string[] = ['uc0001','ff0001','ff0002','ff0003','ff0004','ff0005','ff0006','ff0007','ff0008','ff0009','ff0010','ff0011','ff0012'];
   constructor(public fb: FormBuilder,
     private sdService:SdService,
     public messageService:MessageService,
@@ -51,14 +51,18 @@ export class StockListComponent implements OnInit{
       this.sdService.getStockList(this.size, this.pageIndex).subscribe((data: any) => {
         console.log(data);
         this.isLoading=false;
-        this.dataSource=data.data;
+        this.dataSource=data.data.content;
         this.tableData = new MatTableDataSource(this.dataSource);
         this.tableData.paginator = this.paginator;
         this.tableData.sort = this.sort;
 
       })
     }
-
+    selectedData:any;
+    onSelectedChange(val) {
+      this.selectedData = val;
+      this.dialogRef.close({ data: this.selectedData });
+    }
     handleKeyPress(val:any){
       console.log('bharat')
       console.log(val);

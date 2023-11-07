@@ -13,11 +13,12 @@ export class SdService {
   // private API_URL='http://103.10.234.106:8081/';
   constructor(private http:HttpClient,private cookieService:CookieService) { }
 
-  getStockList(pageIndex:any,size:any){
+  getStockList(size:any,pageIndex:any){
     const queryParams = `?pageIndex=${pageIndex}&size=${size}`;
     let token = this.cookieService.get('token');
     let userId=this.cookieService.get('userId');
-    console.log(token)
+    console.log(queryParams)
+
     let stockListURL=this.API_URL+"sd/sl-master/get-max-all"+queryParams;
     const httpOptions = {
       headers: new HttpHeaders({      
@@ -25,6 +26,7 @@ export class SdService {
        'Authorization': 'Bearer ' + token
       })
     };
-    return this.http.post(stockListURL,httpOptions)
+    return this.http.post(stockListURL,'',httpOptions)
   }
+
 }

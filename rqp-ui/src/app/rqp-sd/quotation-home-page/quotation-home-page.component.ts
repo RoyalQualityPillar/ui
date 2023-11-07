@@ -47,19 +47,19 @@ export class QuotationHomePageComponent implements OnInit{
     this.QuotationForm.controls['ff0012'].disable();
     this.QuotationForm.controls['ff0013'].disable();
   }
-  onSelectFromDialog(){
+  addNewRow(){
     const dialogRef=this.dialog.open(StockListComponent,{
       minWidth:"80%",
       data:{type:'List'}
     })
     dialogRef.afterClosed().subscribe(result => {
       this.selectedRow=result;
-      this.addNewRow();
+      //this.addNewRow();
     }) 
   }
   selectedRow:any;
   stockList=[];
-  addNewRow(){
+  addNewRow1(){
    console.log("selected Row"+this.selectedRow);
    if(this.stockList.length == 0){
     this.stockList=[];
