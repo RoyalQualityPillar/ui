@@ -135,4 +135,31 @@
         padding-left: 5px;
         padding-top: 4px;
         }
-   
+   .action-toolbar-right{
+    justify-content: flex-end;
+    align-self: flex-end;
+    text-align: end;
+    margin-right: 10px;
+    flex-grow: 1;
+   }
+   .action-toolbar{
+    display: flex;
+    padding-top: 5px;
+    width: 100%;
+   }
+   input[type=text]{
+    min-width: 25%;
+    box-sizing: border-box;
+    border: 2px solid #0568ae;
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: white;
+    background-image: url('/assets/search.png');
+    background-size: 22px 22px;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 10px 40px;
+   }
+   .mat-column-action{
+    flex: 0 0 5%;
+   }

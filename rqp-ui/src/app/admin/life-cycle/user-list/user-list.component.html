@@ -34,10 +34,9 @@
 
     <div class="table-box" style="margin-left: 10px; margin-right: 10px;">
     <div style="background-color: #167448;padding: 5px;">
-    
+ 
          <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
-          style="background-color: ghostwhite;" matSort id="dataTable">
-   
+          style="background-color: ghostwhite;" matSort id="dataTable">   
           <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
             <mat-cell *matCellDef="let row">

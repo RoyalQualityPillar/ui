@@ -78,7 +78,7 @@
                                     <mat-label>Role</mat-label>
                                     <mat-select [(ngModel)]="selectedDataList.role"[ngModelOptions]="{standalone: true}">
                                         <mat-option>Select</mat-option>
-                                        <mat-option *ngFor="let roles of rolesList" [value]="roles.unitCode">{{roles.unitCode}} - {{roles.unitName}}</mat-option>
+                                        <mat-option *ngFor="let roles of rolesList" [value]="roles.unitName">{{roles.unitName}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                                 </div>

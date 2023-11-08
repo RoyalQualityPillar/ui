@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SdService } from '../sd.service';
 import { StockListComponent } from '../stock-list/stock-list.component';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { elements } from 'chart.js';
 
 @Component({
   selector: 'app-quotation-home-page',
@@ -53,18 +54,26 @@ export class QuotationHomePageComponent implements OnInit{
       data:{type:'List'}
     })
     dialogRef.afterClosed().subscribe(result => {
-      this.selectedRow=result;
-      //this.addNewRow();
+      if(result!=true){
+      if(result.data.length>0){
+      this.addSelectedRows(result);
+      }
+    }
     }) 
   }
-  selectedRow:any;
   stockList=[];
-  addNewRow1(){
-   console.log("selected Row"+this.selectedRow);
-   if(this.stockList.length == 0){
-    this.stockList=[];
-   }
-   this.stockList.push({});
+  addSelectedRows(selectedRow:any){
+  selectedRow.data.forEach(elements =>{
+    this.stockList.push(
+      {
+        'ff0005':elements.ff0005,
+        'ff0006':elements.ff0006,
+        'ff0007':elements.ff0007,
+        'ff0008':elements.ff0008,
+        'ff0009':elements.ff0009,
+        'ff0010':elements.ff0010
+      });
+  })
   }
 
   /**************** VALIDATION ********************************************/

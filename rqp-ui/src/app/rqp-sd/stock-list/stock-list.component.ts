@@ -22,9 +22,10 @@ export interface userData {
   styleUrls: ['./stock-list.component.scss']
 })
 export class StockListComponent implements OnInit{
+  selection =new SelectionModel<any>(true,[])
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
-  activeLifeCycleisplayedColumns:string[] = ['uc0001','ff0001','ff0002','ff0003','ff0004','ff0005','ff0006','ff0007','ff0008','ff0009','ff0010','ff0011','ff0012'];
+  activeLifeCycleisplayedColumns:string[] = ['action','uc0001','ff0001','ff0002','ff0003','ff0004','ff0005','ff0006','ff0007','ff0008','ff0009','ff0010','ff0011','ff0012'];
   constructor(public fb: FormBuilder,
     private sdService:SdService,
     public messageService:MessageService,
@@ -42,7 +43,6 @@ export class StockListComponent implements OnInit{
     isLoading=false;
     size:any;
     pageIndex:any;
-    selection = new SelectionModel<any>(true,[])
     onLoadTableData(){
       this.isLoading = true;
       this.size = GlobalConstants.size;
@@ -123,5 +123,35 @@ console.log(this.selectedRowData)
     //     data:{userData:this.selectedId,type:'update_active_life_Cycle'}
     //   })
     // }
+    }
+
+    isAllSelected(){
+      const numSelected =this.selection.selected.length;
+      const nomRows =this.tableData.length;
+      return numSelected === nomRows;
+    }
+    masterToggle(){
+      this.isAllSelected()?
+      this.selection.clear():
+      this.tableData.data.forEach(row =>this.selection.select(row));
+    }
+
+    onSelectedRow(){
+      //console.log(this.selection.selected);
+      if(this.selection.selected.length<1){
+      this.dialog.open(MessageDialogComponent, {
+        width:"400px",
+        data: { 'message': "Please select any row", 'heading': "Error Information" }
+      });
+      return;
+    }else{
+      this.dialogRef.close({ data: this.selection.selected});
+    }
+    }
+    applyFilter(filterValue:any){
+      filterValue =filterValue.trim();
+      filterValue=filterValue.toLowerCase();
+      console.log(filterValue)
+      this.tableData.filter=filterValue;
     }
 }
