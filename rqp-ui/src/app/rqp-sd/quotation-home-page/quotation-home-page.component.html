@@ -161,17 +161,16 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                 <table class="display-table">
                     <thead style="background:#369 !important;">
                         <tr>
-                            <th style="color: white;">Product Code</th>
+                            <th  style="color: white;">Product Code</th>
                             <th style="color: white;">Product Name</th>
                             <th style="color: white;">Product No</th>
-                            <th style="color: white;">Quantity</th>
+                            <th col="7" style="color: white;">Quantity</th>
                             <th style="color: white;">PO Date</th>
                             <th style="color: white;">HSN Code</th>
-                            <th style="color: white;">Rate</th>
-                            <th style="color: white;">% Discount</th>
-                            <th style="color: white;">Discount Amount</th>
-                            <th style="color: white;">After Discount Rate </th>
-                            <th style="color: white;">GST Type </th>
+                            <th col="10" style="color: white;">Rate</th>
+                            <th  col="11"style="color: white;">% Discount</th>
+                            <th col="12" style="color: white;">Discount Amount</th>
+                            <th col="13" style="color: white;">After Discount Rate </th>
                             <th style="color: white;">%GST</th>
                             <th style="color: white;">GST Amount</th>
                             <th style="color: white;">Amount</th>
@@ -192,7 +191,7 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                                 <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0018" [ngModelOptions]="{standalone: true}" required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0007" [ngModelOptions]="{standalone: true}" required>
+                                <input type="number" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0007" [ngModelOptions]="{standalone: true}" (change)="onChangeQTY(idx)" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0008" [ngModelOptions]="{standalone: true}" required>
@@ -201,28 +200,28 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                                 <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0009" [ngModelOptions]="{standalone: true}" required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0010" [ngModelOptions]="{standalone: true}" required>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0010" [ngModelOptions]="{standalone: true}"[readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly"  required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0011" [ngModelOptions]="{standalone: true}" required>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0011" [ngModelOptions]="{standalone: true}" (change)="onChangeDiscountAmount(idx)" required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0012" [ngModelOptions]="{standalone: true}" required>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0012" [ngModelOptions]="{standalone: true}"[readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly"   required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0013" [ngModelOptions]="{standalone: true}" required>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0013" [ngModelOptions]="{standalone: true}" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly"  required>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0014" [ngModelOptions]="{standalone: true}" required>
+                            </td> -->
+                            <td>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0015" [ngModelOptions]="{standalone: true}" (change)="onChangeGST(idx)" required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0015" [ngModelOptions]="{standalone: true}" required>
+                                <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0016" [ngModelOptions]="{standalone: true}" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0016" [ngModelOptions]="{standalone: true}" required>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0017" [ngModelOptions]="{standalone: true}" required>
+                                <input type="text" class="form-control form-control-sm txt-box"   [(ngModel)]="item.ff0017" [ngModelOptions]="{standalone: true}" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
                         
 
