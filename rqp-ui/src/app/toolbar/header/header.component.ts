@@ -4,6 +4,7 @@ import {ToolbarService} from '../../service/toolbar.service';
 import {CookieService} from 'ngx-cookie-service';
 import { LogoutConfirmModel, LogoutConfirmComponent } from '../logout-confirm/logout-confirm.component';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit{
   result: string = '';
   color = "accent";
   constructor(private route: Router, private router: ActivatedRoute,public toolbarService:ToolbarService,
-    public cookieService:CookieService,public dialog: MatDialog){
+    public cookieService:CookieService,public dialog: MatDialog,public lifeCycleDataService:LifeCycleDataService){
 
   }
   userId:any
@@ -64,6 +65,23 @@ export class HeaderComponent implements OnInit{
     }else if(subMenuName1=='NCI-QA Approver'){
       this.route.navigate(['./quotation-home-page']) 
     }
+  }
+  onSelectSubMenu(subMenu:any){
+    console.log(subMenu)
+    if(subMenu =='CC-Cross Functional Reviewer'){
+      this.route.navigate(['./master-data-management'])
+    }else if(subMenu == 'CC-QA Approver'){
+      this.route.navigate(['./quotation-home-page']) 
+    }else if(subMenu == 'AD-Admin'){
+     // this.route.navigate(['./ad-admin']) 
+      this.route.navigate(['./ad-admin']) 
+    }else if(subMenu == 'AD-Master'){
+      // this.route.navigate(['./ad-admin']) 
+       this.route.navigate(['./ad-master']) 
+     }else if(subMenu == 'QT-Initator'){
+      this.route.navigate(['./quotation-home-page']) 
+     }
+    //Module routing required based on submenu
   }
   //without login
   onHome(){

@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class LifeCycleDataService {
+  subMenuList:any;
   private API_URL=environment.apiBaseURL;
   // private API_URL='http://103.10.234.106:8081/';
   constructor(private http:HttpClient,private cookieService:CookieService) { }
