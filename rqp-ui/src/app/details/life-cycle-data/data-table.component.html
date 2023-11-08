@@ -35,17 +35,6 @@
             <mat-cell *matCellDef="let row"> {{row.sNo}} </mat-cell>
           </ng-container>
           <!-- Action Column -->
-          <!-- <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <mat-radio-button
-              (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row):null"
-              [checked]="selection.isSelected(row)"
-              (keyup.enter)="handleKeyPress('view')"
-               class="smallRadio"></mat-radio-button>
-            </mat-cell>
-          </ng-container> -->
           <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
             <mat-cell *matCellDef="let row">

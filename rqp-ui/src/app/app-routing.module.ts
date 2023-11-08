@@ -29,6 +29,9 @@ import { SecurityProfileHomePageComponent } from './admin/security-profile-setti
 import { GuidelinesHomePageComponent } from './admin/guidelines/guidelines-home-page/guidelines-home-page.component';
 import { QuotationHomePageComponent } from './rqp-sd/quotation-home-page/quotation-home-page.component';
 import { RqpSdHomePageComponent } from './rqp-sd/rqp-sd-home-page/rqp-sd-home-page.component';
+import { AdAdminHomePageComponent } from './admin/ad-admin-home-page/ad-admin-home-page.component';
+import { SdAdminHomePageComponent } from './admin/sd-admin-home-page/sd-admin-home-page.component';
+import { AdMasterHomePageComponent } from './admin/ad-master-home-page/ad-master-home-page.component';
 
 const routes: Routes = [
  // {path:'',redirectTo:'login'},
@@ -62,6 +65,9 @@ const routes: Routes = [
   
   {path:"rqp-sd-module",component:RqpSdHomePageComponent,canActivate:[AuthGuard]}, 
   {path:"quotation-home-page",component:QuotationHomePageComponent,canActivate:[AuthGuard]}, 
+
+  {path:"ad-admin",component:AdAdminHomePageComponent,canActivate:[AuthGuard]},
+  {path:"ad-master",component:AdMasterHomePageComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

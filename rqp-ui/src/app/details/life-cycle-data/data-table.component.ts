@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import {GlobalConstants} from '../../common/global-constants';
+import { exportData } from 'bk-export';
 
 @Component({
   selector: 'app-data-table',
@@ -247,47 +248,53 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
       doc.save(fileName + '.pdf');
     }
     downloadExcel(){
-      let exportData:any
-      exportData=JSON.parse(JSON.stringify(this.dataSource))
-      for(let i=0;i<exportData.length;i++){
-        delete exportData[i].action;
-        delete exportData[i].sNo
-      }
-    const fileName = "lifeCycle.xlsx";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName);
+    let excelData:any;
+    let arrExcel=[];
+    excelData=JSON.parse(JSON.stringify(this.dataSource))
+   for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "User Id":excelData[i].userid,  
+      "Life Cycle Code":excelData[i].lcnum,
+      "LC Role":excelData[i].lcrole,
+      "Stage":excelData[i].stage,
+      "Module Code":excelData[i].uc0001,
+      "Module Name":excelData[i].ff0001,
+    })
+  }
+    exportData(arrExcel,'role','lifeCycle','excel')
     }
     downloadTxt(){
-      let exportDataForTxt:any
-      exportDataForTxt=JSON.parse(JSON.stringify(this.dataSource))
-      for(let i=0;i<exportDataForTxt.length;i++){
-        delete exportDataForTxt[i].action;
-        delete exportDataForTxt[i].sNo
-      }
-    const fileName = "lifeCycle.txt";
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataForTxt);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, fileName);
-    XLSX.writeFile(wb, fileName,{bookType:'txt'});
+    let excelData:any;
+    let arrExcel=[];
+    excelData=JSON.parse(JSON.stringify(this.dataSource))
+   for(var i=0, len=excelData.length; i<len; i++){
+    arrExcel.push({
+      "User Id":excelData[i].userid,  
+      "Life Cycle Code":excelData[i].lcnum,
+      "LC Role":excelData[i].lcrole,
+      "Stage":excelData[i].stage,
+      "Module Code":excelData[i].uc0001,
+      "Module Name":excelData[i].ff0001,
+    })
+  }
+    exportData(arrExcel,'role','lifeCycle','txt')
     }
 
     downloadCsvFile() {
-      let exportDataForCsv:any
-      exportDataForCsv=JSON.parse(JSON.stringify(this.dataSource))
-      for(let i=0;i<exportDataForCsv.length;i++){
-        delete exportDataForCsv[i].action;
-        delete exportDataForCsv[i].sNo
-      }
-      const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
-      const header = Object.keys(exportDataForCsv[0]);
-      let csv = exportDataForCsv.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
-      csv.unshift(header.join(','));
-      let csvArray = csv.join('\r\n');
-  
-      var blob = new Blob([csvArray], {type: 'text/csv' })
-      saveAs(blob, "lifeCycle.csv");
+      let excelData:any;
+      let arrExcel=[];
+      excelData=JSON.parse(JSON.stringify(this.dataSource))
+     for(var i=0, len=excelData.length; i<len; i++){
+      arrExcel.push({
+        "User Id":excelData[i].userid,  
+        "Life Cycle Code":excelData[i].lcnum,
+        "LC Role":excelData[i].lcrole,
+        "Stage":excelData[i].stage,
+        "Module Code":excelData[i].uc0001,
+        "Module Name":excelData[i].ff0001,
+      })
+    }
+      exportData(arrExcel,'role','lifeCycle','csv')
   }
 
 
@@ -381,12 +388,19 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
  redirect(data:any){
   this.cookieService.set('subMenuFlag','true');
   this.cookieService.set('menuHeader',data[0].ff0001);
-  this.cookieService.set('subMenu1',data[0].lcrole)
+ // this.cookieService.set('subMenu1',data[0].lcrole)
+ //let subMenuList=JSON.stringify(data)
+ // this.cookieService.set('subMenu1',subMenuList)//
+  this.lifeCycleDataService.subMenuList=data
   // Module Value
   console.log(data[0].ff0001)
-  if(data[0].lcnum=='RQP1CCQALC0001'){
-    this.route.navigate(['./module-home-page'])
+  console.log(data[0].uc0001)
+  if(data[0].lcnum=='RQP1ADQALC0001'){
+   // this.route.navigate(['./module-home-page'])
+   this.route.navigate(['./master-data-management'])
   }else if(data[0].lcnum=='RQP1NCIQALC0002'){
+    this.route.navigate(['./rqp-sd-module'])
+  }else if(data[0].lcnum=='RQP1QTSDLC0001'){
     this.route.navigate(['./rqp-sd-module'])
   }
   else{

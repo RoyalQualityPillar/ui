@@ -49,8 +49,13 @@
         <button mat-button class="menu" class="basic" (click)="navigatehome()">Home</button>
     
     <button *ngIf="this.cookieService.get('subMenuFlag')=='true'" mat-button [matMenuTriggerFor]="belowMenu">{{this.cookieService.get('menuHeader')}}</button> 
-     <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1">
+     <!-- <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1" >
       <button class="mat-menu-item" style=" color: #fff;text-align: start;" (click)="submenu1(this.cookieService.get('subMenu1'))">{{this.cookieService.get('subMenu1')}}</button>
+    </mat-menu> -->
+    <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1" >
+      <div *ngFor="let submenu of  this.lifeCycleDataService.subMenuList">
+      <button class="mat-menu-item" style=" color: #fff;text-align: start;"(click)="onSelectSubMenu(submenu.lcrole)" >{{submenu.lcrole}}</button>
+    </div>
     </mat-menu>
        
       </div>
