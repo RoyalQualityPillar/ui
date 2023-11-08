@@ -48,6 +48,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   }
   tableData:MatTableDataSource<any>;
   ngOnInit(): void {
+    window.scrollTo(0,0);
     this.filterObject = {
       "field": "SELECT",
       "value": "",
@@ -74,6 +75,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
         this.tableDataLoaded=true;
         this.toolbarService.setTableData(this.dataSource)
     }
+    window.scrollTo(0,0);
     this.isLoading=false;
     })
     // this.dataSource=this.toolbarService.getData();
@@ -139,7 +141,8 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   }
  
   ngAfterViewInit() {
-    this.onSearch()
+    this.onSearch();
+    window.scrollTo(0,0);
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
     

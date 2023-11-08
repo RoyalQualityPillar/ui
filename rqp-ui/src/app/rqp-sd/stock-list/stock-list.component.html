@@ -10,21 +10,29 @@
               </button>
         </div>
         </div>
+   <div class="action-toolbar">
+    <div class="table-filter action-toolbar-right">
+        <input type="text" (keyup)="applyFilter(searchField.value)" #searchField placeholder="Table Keyword search">
+    </div>
+   </div>    
 <div class="tabOverFlowY">
-    <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">
-  
-               
+    <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">        
         <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
             <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
             style="background-color: ghostwhite;" matSort id="activeUserDataTable">
             <ng-container matColumnDef="action">
-                <mat-header-cell *matHeaderCellDef>Selection </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event?masterToggle():null" [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                   <mat-radio-button name="selectuop" (change)="setSelectedId(row)">
-                  </mat-radio-button>
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event?selection.toggle(row):null"
+                        [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
                 </mat-cell>
-              </ng-container>
-           
+            </ng-container>
+
             <ng-container matColumnDef="uc0001">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Item No</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
@@ -34,8 +42,7 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Quatetion No </mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
               </ng-container>
-   
-           
+              
             <ng-container matColumnDef="ff0002">
               <mat-header-cell *matHeaderCellDef mat-sort-header>PO No </mat-header-cell>
               <mat-cell *matCellDef="let row"> {{row.ff0002}}</mat-cell>
@@ -89,13 +96,13 @@
               </ng-container>
             
             <mat-header-row *matHeaderRowDef="activeLifeCycleisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: activeLifeCycleisplayedColumns;" (click)="onSelectedChange(row)"></mat-row>
+            <mat-row *matRowDef="let row; columns: activeLifeCycleisplayedColumns;" ></mat-row>
           </mat-table> 
    
           <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
           </mat-paginator>
 
-          <!-- <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onReviewUserData()" >Update</button> -->
+           <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onSelectedRow()" >Submit</button>
         </mat-card>
 </div>
     </div>
