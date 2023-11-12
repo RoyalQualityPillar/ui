@@ -10,14 +10,14 @@
               </button>
         </div>
         </div>
-   <div class="action-toolbar">
+   <div class="action-toolbar" *ngIf="this.datalength>0">
     <div class="table-filter action-toolbar-right">
         <input type="text" (keyup)="applyFilter(searchField.value)" #searchField placeholder="Table Keyword search">
     </div>
    </div>    
 <div class="tabOverFlowY">
     <div class="table-box" style="margin-left: 10px; margin-right: 10px;margin-top: 1px;">        
-        <mat-card style="margin-top: 2px;background-color: #fdfdfd;">
+        <mat-card style="margin-top: 2px;background-color: #fdfdfd;" [hidden]="this.datalength==0">
             <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
             style="background-color: ghostwhite;" matSort id="activeUserDataTable">
             <ng-container matColumnDef="action">
@@ -33,77 +33,85 @@
                 </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="uc0001">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Item No</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+            <ng-container matColumnDef="aUC0001">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price Code</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.aUC0001}} </mat-cell>
               </ng-container>
          
-            <ng-container matColumnDef="ff0001">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Quatetion No </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+            <ng-container matColumnDef="aFF0001">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Product No </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.aFF0001}} </mat-cell>
               </ng-container>
-              
-            <ng-container matColumnDef="ff0002">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>PO No </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row.ff0002}}</mat-cell>
+
+            <ng-container matColumnDef="aFF0002">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Product Code </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.aFF0002}}</mat-cell>
             </ng-container>
         
-              <ng-container matColumnDef="ff0003">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>PO Date </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0003}}</mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="ff0004">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Delivery Date </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0004}}</mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="ff0005">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Product Code </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0005}}</mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="ff0006">
+              <ng-container matColumnDef="aFF0003">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Product Name </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0006}}</mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0003}}</mat-cell>
               </ng-container>
 
-              <ng-container matColumnDef="ff0007">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0007}}</mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="ff0008">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Pack </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0008}}</mat-cell>
-              </ng-container>
-
-              <ng-container matColumnDef="ff0009">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>HSN Code </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0009}}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="ff0010">
+              <ng-container matColumnDef="aFF0008">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Rate </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0010}}</mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0008}}</mat-cell>
               </ng-container>
-              <ng-container matColumnDef="ff0011">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>% Discount </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0011}}</mat-cell>
+
+              <ng-container matColumnDef="aFF0009">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>GST % </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0009}}</mat-cell>
               </ng-container>
-              <ng-container matColumnDef="ff0012">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Discount Amount </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ff0012}}</mat-cell>
+
+              <ng-container matColumnDef="aFF0010">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>HSN Code</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0010}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="aFF0011">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Product Discout % </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0011}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="aFF0012">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price Type </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0012}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="aFF0013">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Pack </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.aFF0013}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="bFF0010">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Avialble Quantity </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.bFF0010}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="bFF0011">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Lot No/ Batch No</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.bFF0011}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="bFF0012">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Mfg Date (mm/yy)</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.bFF0012}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="bFF0013">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Exp Date  (mm/yy)</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.bFF0013}}</mat-cell>
               </ng-container>
             
             <mat-header-row *matHeaderRowDef="activeLifeCycleisplayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: activeLifeCycleisplayedColumns;" ></mat-row>
           </mat-table> 
    
-          <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
+          <mat-paginator [pageSizeOptions]="[5,10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
           </mat-paginator>
 
            <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onSelectedRow()" >Submit</button>
         </mat-card>
+        <div *ngIf="datalength==0">
+            <span style="color: red;font-weight: 700;">No Record Found</span>
+        </div>
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
 </div>
     </div>
     </div>
