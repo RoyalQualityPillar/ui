@@ -25,7 +25,7 @@ export class StockListComponent implements OnInit{
   selection =new SelectionModel<any>(true,[])
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator,{static: false})paginator!: MatPaginator;
-  activeLifeCycleisplayedColumns:string[] = ['action','uc0001','ff0001','ff0002','ff0003','ff0004','ff0005','ff0006','ff0007','ff0008','ff0009','ff0010','ff0011','ff0012'];
+  activeLifeCycleisplayedColumns:string[] = ['action','aUC0001','aFF0001','aFF0002','aFF0003','aFF0008','aFF0009','aFF0010','aFF0011','aFF0012','aFF0013','bFF0010','bFF0011','bFF0012','bFF0013'];
   constructor(public fb: FormBuilder,
     private sdService:SdService,
     public messageService:MessageService,
@@ -34,24 +34,31 @@ export class StockListComponent implements OnInit{
               @Inject(MAT_DIALOG_DATA) public userData: userData){
 
     }
+    dialogData:any;
     ngOnInit(): void {
-      console.log(this.userData.userData)
-      this.onLoadTableData()
+      this.dialogData=this.userData
+      this.selectedUnitCode=this.dialogData.data;
+      
     }
+   ngAfterViewInit(){
+    this.onLoadTableData()
+   }
     tableData:any;
     dataSource:any;
     isLoading=false;
     size:any;
     pageIndex:any;
+    selectedUnitCode:any;
+    datalength=0;
     onLoadTableData(){
       this.isLoading = true;
       this.size = GlobalConstants.size;
       this.dataSource = null;
       this.pageIndex = 0;
-      this.sdService.getStockList(this.size, this.pageIndex).subscribe((data: any) => {
-        console.log(data);
+      this.sdService.getStockList(this.selectedUnitCode,this.pageIndex,this.size).subscribe((data: any) => {
         this.isLoading=false;
-        this.dataSource=data.data.content;
+        this.dataSource=data.data;
+        this.datalength=this.dataSource.length;
         this.tableData = new MatTableDataSource(this.dataSource);
         this.tableData.paginator = this.paginator;
         this.tableData.sort = this.sort;
@@ -64,8 +71,6 @@ export class StockListComponent implements OnInit{
       this.dialogRef.close({ data: this.selectedData });
     }
     handleKeyPress(val:any){
-      console.log('bharat')
-      console.log(val);
       console.log(this.selection.selected)
      
     }
@@ -74,19 +79,12 @@ export class StockListComponent implements OnInit{
     onSubmit(){
       this.cureentSelectedRow=this.selection.selected;
       if(this.cureentSelectedRow.length==1){
-        console.log(this.cureentSelectedRow[0])
         this.selectedRowData=this.cureentSelectedRow[0];
-          console.log(' one')
       }else if(this.cureentSelectedRow.length>1){
-        console.log('more than one')
         let arrayLength=this.cureentSelectedRow.length-1;
-        console.log(arrayLength)
-        console.log(this.cureentSelectedRow[arrayLength]);
         this.selectedRowData=this.cureentSelectedRow[arrayLength]
       }else{
         //do nothing
-        console.log('else block')
-            //do nothing
             this.dialog.open(MessageDialogComponent, {
               width:"400px",
               data: { 'message': "Please select any row", 'heading': "Error Information" }
@@ -94,19 +92,15 @@ export class StockListComponent implements OnInit{
             return
           
       }
-     console.log(this.selectedRowData)
      this.redirectToList()
     
     }
     redirectToList(){
-console.log(this.selectedRowData)
     }
     selectedId:any;
     setSelectedId(id:any){
       // if(target.checked){
         this.selectedId=id;
-        
-        console.log(this.selectedId)
    //   }
     }
     onReviewUserData(){
@@ -151,7 +145,6 @@ console.log(this.selectedRowData)
     applyFilter(filterValue:any){
       filterValue =filterValue.trim();
       filterValue=filterValue.toLowerCase();
-      console.log(filterValue)
       this.tableData.filter=filterValue;
     }
 }

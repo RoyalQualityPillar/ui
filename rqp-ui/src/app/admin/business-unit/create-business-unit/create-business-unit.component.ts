@@ -11,7 +11,6 @@ import {MessageService} from '../../../service/message.service';
 import { BusinessUnitService } from '../business-unit.service';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import {CookieService} from 'ngx-cookie-service';
-import { elements } from 'chart.js';
 export interface userData {
   userData: any;
   type:any;
