@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 })
 export class LifeCycleDataService {
   subMenuList:any;
+  selectedRow:any;
   private API_URL=environment.apiBaseURL;
   // private API_URL='http://103.10.234.106:8081/';
   constructor(private http:HttpClient,private cookieService:CookieService) { }
@@ -40,5 +41,12 @@ export class LifeCycleDataService {
       })
     };
     return this.http.post(lifeCycleURL,body,httpOptions)
+  }
+  setSelectedRowData(selectedRow){
+    this.selectedRow=selectedRow
+  }
+  getSelectedRowData(){
+    return this.selectedRow
+    
   }
 }

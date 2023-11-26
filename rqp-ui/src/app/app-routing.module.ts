@@ -66,7 +66,7 @@ const routes: Routes = [
   {path:"rqp-sd-module",component:RqpSdHomePageComponent,canActivate:[AuthGuard]}, 
   {path:"quotation-home-page",component:QuotationHomePageComponent,canActivate:[AuthGuard]}, 
 
-  {path:"ad-admin",component:AdAdminHomePageComponent,canActivate:[AuthGuard]},
+  {path:"ad-administrator",component:AdAdminHomePageComponent,canActivate:[AuthGuard]},
   {path:"ad-master",component:AdMasterHomePageComponent,canActivate:[AuthGuard]}
 ];
 

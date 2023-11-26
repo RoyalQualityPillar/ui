@@ -5,9 +5,10 @@ import { QuotationMasterPageComponent } from '../quotation-master-page/quotation
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { RqpHeaderComponent } from '../rqp-header/rqp-header.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RqpInterceptor } from '../rqp.interceptor';
 
 
 
@@ -17,6 +18,7 @@ import { BrowserModule } from '@angular/platform-browser';
   declarations: [
     QuotationHomePageComponent,
     QuotationMasterPageComponent,
+    RqpHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserAnimationsModule,
     HttpClientModule,
     BrowserModule
-  ]
+  ],
+  providers:[{provide:HTTP_INTERCEPTORS,useClass:RqpInterceptor,multi:true}]
 })
 export class SdModule { }
