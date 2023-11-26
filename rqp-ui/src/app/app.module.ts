@@ -70,6 +70,7 @@ import { StockListComponent } from './rqp-sd/stock-list/stock-list.component';
 import { AdAdminHomePageComponent } from './admin/ad-admin-home-page/ad-admin-home-page.component';
 import { SdAdminHomePageComponent } from './admin/sd-admin-home-page/sd-admin-home-page.component';
 import { AdMasterHomePageComponent } from './admin/ad-master-home-page/ad-master-home-page.component';
+//import { RqpHeaderComponent } from './rqp-sd/rqp-header/rqp-header.component';
 //import { RqpTableModule} from 'rqp-table'
 
 
@@ -99,6 +100,7 @@ import { AdMasterHomePageComponent } from './admin/ad-master-home-page/ad-master
     AdAdminHomePageComponent,
     SdAdminHomePageComponent,
     AdMasterHomePageComponent,
+    
  
     
     

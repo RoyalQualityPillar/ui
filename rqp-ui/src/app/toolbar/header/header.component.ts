@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit{
   }
   
   navigatehome() {
-    console.log("clicked")
     this.route.navigate(['./data-table']);
   }
   confirmDialog(): void {
@@ -53,12 +52,10 @@ export class HeaderComponent implements OnInit{
     this.cookieService.delete('isAuth');
   }
   onChangePassword(){
-    console.log('working')
     //this.route.navigate(['./data-table'])
     this.route.navigate(['./change-password'])
   }
   submenu1(subMenuName1:any){
-    console.log(subMenuName1)
    // let subMenuName123='AD-MasterDataRegistration'
     if(subMenuName1=='CC-QA Approver'){
       this.route.navigate(['./master-data-management'])
@@ -67,16 +64,13 @@ export class HeaderComponent implements OnInit{
     }
   }
   onSelectSubMenu(subMenu:any){
-    console.log(subMenu)
     if(subMenu =='CC-Cross Functional Reviewer'){
       this.route.navigate(['./master-data-management'])
     }else if(subMenu == 'CC-QA Approver'){
       this.route.navigate(['./quotation-home-page']) 
-    }else if(subMenu == 'AD-Admin'){
-     // this.route.navigate(['./ad-admin']) 
-      this.route.navigate(['./ad-admin']) 
-    }else if(subMenu == 'AD-Master'){
-      // this.route.navigate(['./ad-admin']) 
+    }else if(subMenu == 'AD-Administrator'){
+      this.route.navigate(['./ad-administrator']) 
+    }else if(subMenu == 'AD-Master Data'){ 
        this.route.navigate(['./ad-master']) 
      }else if(subMenu == 'QT-Initator'){
       this.route.navigate(['./quotation-home-page']) 

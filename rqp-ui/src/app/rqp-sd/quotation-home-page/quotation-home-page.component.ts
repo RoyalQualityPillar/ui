@@ -7,6 +7,10 @@ import { elements } from 'chart.js';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
+import * as moment from 'moment';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import {MessageService} from '../../service/message.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -35,7 +39,9 @@ export class QuotationHomePageComponent implements OnInit{
   isReadonly=true;
   constructor(public fb:FormBuilder,
               private sdService:SdService,
-              public dialog: MatDialog,){
+              private lifeCycleDataService:LifeCycleDataService,
+              public dialog: MatDialog,
+              public messageService:MessageService){
                 this.HeaderForm=this.fb.group({
                   oucode:['',Validators.required],
                   lc0001:['',Validators.required],
@@ -47,25 +53,25 @@ export class QuotationHomePageComponent implements OnInit{
                   salesUnitCode:['',Validators.required]
                 })
                 this.QuotationForm=this.fb.group({
-       
                   uc0001:[''],
                   ff0001:[''],
                   ff0002:[''],
-                  ff0003:[''],
-                  ff0004:[''],
-                  ff0005:[''],
-                  ff0006:[''],
-                  ff0007:[''],
+                  quotationValidDate:[''],
+                  deliveryDate:[''],
+                  paymentTermsCode:[''],
+                  productCode:[''],
+                  productName:[''],
+                  quantity:[''],
                   ff0008:[''],
-                  ff0009:[''],
-                  ff0010:[''],
-                  ff0011:[''],
-                  ff0012:[''],
+                  gethSNCode:[''],
+                  rate:[''],
+                  discountPercentage:[''],
+                  discount:[''],
                   ff0013:[''],
                   ff0014:[''],
-                  ff0015:[''],
-                  comments:['']
-                
+                  gst:[''],
+                  comments:[''],
+                  nextStage:['']
                 })
               }
 
@@ -74,16 +80,39 @@ export class QuotationHomePageComponent implements OnInit{
   salesUnitCode:any;
   isLoading=false;
   isValueSelected=false;
+  nextStageListData:any;
+  headerRequestBody:any;
   ngOnInit(): void {
+  
+   this.headerRequestBody=this.lifeCycleDataService.getSelectedRowData();
     this.companyInfoBody={
       orgUnitCode:'',
       salesUnitCode:''
-
     }
-    // this.QuotationForm.controls['ff0011'].disable();
-    // this.QuotationForm.controls['ff0012'].disable();
+    // this.sdService.getHeaderData(headerRequestBody).subscribe((data)=>{
+    //   console.log(data)
+   // })
+    // this.QuotationForm.controls['discountPercentage'].disable();
+    // this.QuotationForm.controls['discount'].disable();
     // this.QuotationForm.controls['ff0013'].disable();
     this.onLoadInputFieldValue();
+    this.onLoadNextStageData()
+  }
+  onLoadNextStageData(){
+    let body:any;
+    body={
+      lcNumber:this.headerRequestBody.lifeCycleCode,
+      lcStage:this.headerRequestBody.stage
+    }
+    this.sdService.getNextStageList(body).subscribe((data:any)=>{
+      this.nextStageListData=data.data.nstage;
+    })
+  }
+  headerData:any;
+  getHeaderData(event:any){
+    console.log(event)
+    this.headerData=event;
+    this.ViewDetailForm.controls['orgUnitCode'].setValue(event.unitcode)
   }
   onLoadInputFieldValue(){
     this.isLoading =true;
@@ -111,43 +140,57 @@ export class QuotationHomePageComponent implements OnInit{
   addSelectedRows(selectedRow:any){
   selectedRow.data.forEach(elements =>{
     this.stockList.push(
-      { 'ff0005':elements.aFF0002,
-        'ff0006':elements.aFF0003,
-        'ff0007':elements.bFF0010,
-        'ff0018':elements.aFF0001,
-        'ff0009':elements.aFF0010,
-        'ff0010':elements.aFF0008,
+      { 'productCode':elements.aFF0002,
+        'productName':elements.aFF0003,
+        'quantity':elements.bFF0010,
+        'productNumber':elements.aFF0001,
+        'gethSNCode':elements.aFF0010,
+        'rate':elements.aFF0008,
         //'sumOfTotalDisc':num,
       });
   })
   }
+  deleteTodo(id: number) {
+    this.stockList.splice(id, 1);
+    this.stockList = [...this.stockList];
+    console.log(id +"silindi");
+    this.onCalTotalValue()
+}
   discoutAmount:number;
   totalDisAmt=0;
   afterDisAmt=0;
   totalAmt=0;
+  totalGst=0;
   onCalTotalValue(){
     let totalDiscountAmount=0;
     let afterDiscountAmount=0;
     let totalAmountWithGST=0;
+    let totalGstAmount=0;
     console.log(this.stockList)
     this.stockList.forEach(ele =>{
-      if(ele.totalDiscount>0){
-        totalDiscountAmount=totalDiscountAmount+ele.totalDiscount
+      if(ele.discountedRate>0){
+        totalDiscountAmount=totalDiscountAmount+ele.discountedRate
       }
       if(ele.ff0013>0){
         afterDiscountAmount=afterDiscountAmount+ele.ff0013
       }
-      if(ele.ff0017>0){
-        totalAmountWithGST=totalAmountWithGST+ele.ff0017
+      if(ele.finalPrice>0){
+        totalAmountWithGST=totalAmountWithGST+ele.finalPrice
+      }
+      if(ele.gstAmount){
+        totalGstAmount=totalGstAmount+ele.gstAmount
       }
     })
+    this.totalGst=totalGstAmount;
+    console.log(this.totalGst)
     console.log(totalDiscountAmount)
-    this.QuotationForm.controls['ff0007'].setValue(totalDiscountAmount);
+    this.QuotationForm.controls['quantity'].setValue(totalDiscountAmount);
     this.totalDisAmt=totalDiscountAmount;
     this.QuotationForm.controls['ff0008'].setValue(afterDiscountAmount);
     this.afterDisAmt=afterDiscountAmount
     this.QuotationForm.controls['ff0013'].setValue(totalAmountWithGST);
-    this.totalAmt=totalAmountWithGST
+    this.totalAmt=totalAmountWithGST;
+    this.setGSTData(this.unitCodeData)
   }
   isProductInfoSuccess=false;
   onViewDetails(){//todo
@@ -159,120 +202,127 @@ export class QuotationHomePageComponent implements OnInit{
   }
 
   }
+  unitCodeData:any;
   checkUnitCode(){
-    this.sdService.getUnitCodeDetail(this.ViewDetailForm.controls['orgUnitCode'].value,this.ViewDetailForm.controls['salesUnitCode'].value).subscribe((data=>{
+    this.sdService.getUnitCodeDetail(this.ViewDetailForm.controls['orgUnitCode'].value,this.ViewDetailForm.controls['salesUnitCode'].value).subscribe((data:any)=>{
       console.log(data);
-    }))
+      this.unitCodeData=data.data.content;
+      this.setGSTData(this.unitCodeData)
+    })
+  }
+  SGST:any;
+  CGST:any;
+  IGST:any;
+  setGSTData(data){
+   if(data[0].ff0013 == data[1].ff0013){
+    this.CGST=this.totalGst/2
+    this.SGST=this.totalGst/2
+    this.IGST=0;
+   }else{
+    this.IGST=this.totalGst;
+    this.SGST=0;
+    this.CGST=0;
+   }
   }
   /**************** VALIDATION ********************************************/
   onChangeSGST(){
-   let sgst:number= this.QuotationForm.controls['ff0009'].value;
-   let cgst:number= this.QuotationForm.controls['ff0010'].value;
-   console.log(sgst)
-   console.log(cgst)
+   let sgst:number= this.QuotationForm.controls['gethSNCode'].value;
+   let cgst:number= this.QuotationForm.controls['rate'].value;
    let totalGst:number=sgst+cgst;
-   console.log(totalGst)
-   this.QuotationForm.controls['ff0011'].setValue(totalGst)
-   this.QuotationForm.controls['ff0012'].setValue(totalGst)
+   this.QuotationForm.controls['discountPercentage'].setValue(totalGst)
+   this.QuotationForm.controls['discount'].setValue(totalGst)
   }
 
   onChangeCGST(){
-    let sgst= this.QuotationForm.controls['ff0009'].value;
-    let cgst= this.QuotationForm.controls['ff0010'].value;
+    let sgst= this.QuotationForm.controls['gethSNCode'].value;
+    let cgst= this.QuotationForm.controls['rate'].value;
     let totalGst=sgst+cgst;
-    this.QuotationForm.controls['ff0011'].setValue(totalGst)
-    this.QuotationForm.controls['ff0012'].setValue(totalGst)
+    this.QuotationForm.controls['discountPercentage'].setValue(totalGst)
+    this.QuotationForm.controls['discount'].setValue(totalGst)
   }
 
   /****************************************** VALIDATION *******************************/
   onCalAllFieldAmount(idx){
-    if(this.stockList[idx].ff0007!=null){
-      if(Number.isNaN(this.stockList[idx].ff0012) || this.stockList[idx].ff0012==undefined){
-        this.stockList[idx].ff0012=0;
+    if(this.stockList[idx].quantity!=null){
+      if(Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount==undefined){
+        this.stockList[idx].discount=0;
       }
-      if(Number.isNaN(this.stockList[idx].ff0011) || this.stockList[idx].ff0011==undefined){
-        this.stockList[idx].ff0011=0;
+      if(Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage==undefined){
+        this.stockList[idx].discountPercentage=0;
       }
-      if(Number.isNaN(this.stockList[idx].ff0010) ||  this.stockList[idx].ff0010 == undefined){
-        this.stockList[idx].ff0010=0;
+      if(Number.isNaN(this.stockList[idx].rate) ||  this.stockList[idx].rate == undefined){
+        this.stockList[idx].rate=0;
       }
       if(Number.isNaN(this.stockList[idx].ff0013) ||  this.stockList[idx].ff0013 == undefined){
         this.stockList[idx].ff0013=0;
       }
-      if(Number.isNaN(this.stockList[idx].ff0016) ||  this.stockList[idx].ff0016 == undefined){
-        this.stockList[idx].ff0016=0;
+      if(Number.isNaN(this.stockList[idx].gstAmount) ||  this.stockList[idx].gstAmount == undefined){
+        this.stockList[idx].gstAmount=0;
       }
-      if(Number.isNaN(this.stockList[idx].ff0015) ||  this.stockList[idx].ff0015 == undefined){
-        this.stockList[idx].ff0015=0;
+      if(Number.isNaN(this.stockList[idx].gst) ||  this.stockList[idx].gst == undefined){
+        this.stockList[idx].gst=0;
       }
-      this.stockList[idx].ff0012=((this.stockList[idx].ff0010)*(this.stockList[idx].ff0011)/100);
-      this.stockList[idx].totalDiscount=(this.stockList[idx].ff0012 *  this.stockList[idx].ff0007)
-      this.stockList[idx].ff0013=(((this.stockList[idx].ff0010)*(this.stockList[idx].ff0007))-((this.stockList[idx].ff0012)*(this.stockList[idx].ff0007)));
-      this.stockList[idx].ff0016=(((this.stockList[idx].ff0013)*(this.stockList[idx].ff0015))/100);
-      this.stockList[idx].ff0017=(this.stockList[idx].ff0013 + this.stockList[idx].ff0016);
+      this.stockList[idx].discount=((this.stockList[idx].rate)*(this.stockList[idx].discountPercentage)/100);
+      this.stockList[idx].discountedRate=(this.stockList[idx].discount *  this.stockList[idx].quantity)
+      this.stockList[idx].ff0013=(((this.stockList[idx].rate)*(this.stockList[idx].quantity))-((this.stockList[idx].discount)*(this.stockList[idx].quantity)));
+      this.stockList[idx].gstAmount=(((this.stockList[idx].ff0013)*(this.stockList[idx].gst))/100);
+      this.stockList[idx].finalPrice=(this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
      }
   }
   onChangeDiscountAmount(idx){ 
-    if(this.stockList[idx].ff0011!=null){
-      this.stockList[idx].ff0012=((this.stockList[idx].ff0010)*(this.stockList[idx].ff0011)/100);
-      this.stockList[idx].totalDiscount=(this.stockList[idx].ff0012 *  this.stockList[idx].ff0007)
+    if(this.stockList[idx].discountPercentage!=null){
+      this.stockList[idx].discount=((this.stockList[idx].rate)*(this.stockList[idx].discountPercentage)/100);
+      this.stockList[idx].discountedRate=(this.stockList[idx].discount *  this.stockList[idx].quantity)
       this.onChangeAfterDiscount(idx)
     }
   }
   onChangeAfterDiscount(idx){
-    console.log(typeof (this.stockList[idx].ff0007))
-    if(Number.isNaN(this.stockList[idx].ff0007)){
-      this.stockList[idx].ff0007=1;
+    if(Number.isNaN(this.stockList[idx].quantity)){
+      this.stockList[idx].quantity=1;
     }
-    if(Number.isNaN(this.stockList[idx].ff0012)){
-      this.stockList[idx].ff0012=0;
+    if(Number.isNaN(this.stockList[idx].discount)){
+      this.stockList[idx].discount=0;
     }
-    if(Number.isNaN(this.stockList[idx].ff0016) ||  this.stockList[idx].ff0016 == undefined){
-      this.stockList[idx].ff0016=0;
+    if(Number.isNaN(this.stockList[idx].gstAmount) ||  this.stockList[idx].gstAmount == undefined){
+      this.stockList[idx].gstAmount=0;
     }
-    this.stockList[idx].ff0013=(((this.stockList[idx].ff0010)*(this.stockList[idx].ff0007))-((this.stockList[idx].ff0012)*(this.stockList[idx].ff0007)))
-    this.stockList[idx].ff0017=(this.stockList[idx].ff0013 + this.stockList[idx].ff0016);
+    this.stockList[idx].ff0013=(((this.stockList[idx].rate)*(this.stockList[idx].quantity))-((this.stockList[idx].discount)*(this.stockList[idx].quantity)))
+    this.stockList[idx].finalPrice=(this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
     this.onCalTotalValue();
   }
 
   onChangeQTY(idx){
-   // console.log(typeof this.stockList[idx].ff0012)
-    if(this.stockList[idx].ff0007!=null){
-      if(Number.isNaN(this.stockList[idx].ff0012) || this.stockList[idx].ff0012==undefined){
-        console.log(this.stockList[idx].ff0012)
-        this.stockList[idx].ff0012=0;
+    if(this.stockList[idx].quantity!=null){
+      if(Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount==undefined){
+        this.stockList[idx].discount=0;
       }
-      if(Number.isNaN(this.stockList[idx].ff0011) || this.stockList[idx].ff0011==undefined){
-        this.stockList[idx].ff0011=0;
+      if(Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage==undefined){
+        this.stockList[idx].discountPercentage=0;
       }
-      if(Number.isNaN(this.stockList[idx].ff0010)){
-        this.stockList[idx].ff0010=0;
+      if(Number.isNaN(this.stockList[idx].rate)){
+        this.stockList[idx].rate=0;
       }
       if(Number.isNaN(this.stockList[idx].ff0013)){
         this.stockList[idx].ff0013=0;
       }
-      console.log(this.stockList[idx].ff0016)
-      if(Number.isNaN(this.stockList[idx].ff0016) ||  this.stockList[idx].ff0016 == undefined){
-        this.stockList[idx].ff0016=0;
-        console.log(this.stockList[idx].ff0016)
+      if(Number.isNaN(this.stockList[idx].gstAmount) ||  this.stockList[idx].gstAmount == undefined){
+        this.stockList[idx].gstAmount=0;
       }
-      console.log(this.stockList[idx].ff0007)
-      console.log(this.stockList[idx].ff0010)
-      this.stockList[idx].ff0012=((this.stockList[idx].ff0010)*(this.stockList[idx].ff0011)/100);
-      this.stockList[idx].totalDiscount=(this.stockList[idx].ff0012 *  this.stockList[idx].ff0007)
-      this.stockList[idx].ff0013=(((this.stockList[idx].ff0010)*(this.stockList[idx].ff0007))-((this.stockList[idx].ff0012)*(this.stockList[idx].ff0007)))
-      this.stockList[idx].ff0017=(this.stockList[idx].ff0013 + this.stockList[idx].ff0016);
+      this.stockList[idx].discount=((this.stockList[idx].rate)*(this.stockList[idx].discountPercentage)/100);
+      this.stockList[idx].discountedRate=(this.stockList[idx].discount *  this.stockList[idx].quantity)
+      this.stockList[idx].ff0013=(((this.stockList[idx].rate)*(this.stockList[idx].quantity))-((this.stockList[idx].discount)*(this.stockList[idx].quantity)))
+      this.stockList[idx].finalPrice=(this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
      }
   }
   onChangeGST(idx){
-    if(this.stockList[idx].ff0015!=null){
+    if(this.stockList[idx].gst!=null){
       if(Number.isNaN(this.stockList[idx].ff0013) || this.stockList[idx].ff0013==undefined){
         this.stockList[idx].ff0013=0;
       }
-      this.stockList[idx].ff0016=(((this.stockList[idx].ff0013)*(this.stockList[idx].ff0015))/100);
-      this.stockList[idx].ff0017=(this.stockList[idx].ff0013 + this.stockList[idx].ff0016);
+      this.stockList[idx].gstAmount=(((this.stockList[idx].ff0013)*(this.stockList[idx].gst))/100);
+      this.stockList[idx].finalPrice=(this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
       this.onCalTotalValue()
     }
   }
@@ -299,7 +349,6 @@ export class QuotationHomePageComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.selectedDialogData = result.data;
-        console.log(result.data)
         this.isValueSelected=true;
         this.ViewDetailForm.controls['orgUnitCode'].setValue(result.data.buunitcode);
         this.onViewDetails();
@@ -344,7 +393,6 @@ export class QuotationHomePageComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.selectedDialogData = result.data;
-        console.log(result.data)
        // this.isValueSelected=true;
         this.ViewDetailForm.controls['salesUnitCode'].setValue(result.data.suunitcode);
         this.onViewDetails();
@@ -368,5 +416,89 @@ export class QuotationHomePageComponent implements OnInit{
         this.openSalesUnitLov();
       }
     }
+  }
+  openNextStageLov(){
+    this.displayedColumns = [
+      { field: 'stage', title: 'Code' },
+      { field: 'lcRole', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Stage",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.nextStageListData,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.QuotationForm.controls['nextStage'].setValue(result.data.stage)
+      }
+    })
+  }
+  onChangeNextStage(){}
+  buRequestBody={
+    auc0001:'',
+    buc0001:''
+  }
+  onGetBuInfo(){
+    this.sdService.getBuInfo(this.buRequestBody).subscribe((data)=>{
+    })
+
+  }
+  getBuInfo
+  /***********************************SAVE UPDATE API *************************************/
+  onSaveUpdate(){
+    if( this.QuotationForm.controls['nextStage'].value=='' ||this.QuotationForm.controls['nextStage'].value==undefined ){
+      this.QuotationForm.controls['nextStage'].setValue(0)
+    }
+    let quotationDate=this.QuotationForm.controls['quotationValidDate'].value
+    let requestBody:any;
+    requestBody={
+      quationItemList:this.stockList,
+      lcRequest: {
+        unitCode: this.headerData.unitcode,
+        moduleCode: this.headerData.modulecode,
+        departmentCode: this.headerData.departmentcode,
+        lcrqNumber: '',
+        lcNumber: this.headerData.lcnum,
+        lcStage: this.headerData.stage,
+        lcRole: this.headerData.role,
+        stage2: 0,
+        createdBy: this.headerData.createdby,
+        comments: this.QuotationForm.controls['comments'].value
+      },
+      saleUnitCode: this.ViewDetailForm.controls['salesUnitCode'].value,
+      quotationValidDate:moment(this.QuotationForm.controls['quotationValidDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
+      deliveryDate: moment(this.QuotationForm.controls['deliveryDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
+      paymentTermsCode: this.QuotationForm.controls['paymentTermsCode'].value,
+      //subTotalAmount: 1000000,
+      discountAmount: this.totalDisAmt,
+      discountedSubTotalAmount: this.afterDisAmt,
+      sgst: this.SGST,
+      cgst: this.CGST,
+      igst: this.IGST,
+      totalGST: this.totalGst,
+      finalTotalAmount: this.totalAmt,
+      orderStatus: this.headerData.modulecode,
+      quotationStage: this.headerData.modulecode,
+    }
+    console.log(requestBody)
+    this.isLoading=true;
+    this.sdService.onSaveUpdate(requestBody).subscribe((data:any)=>{
+     // console.log(data)
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+      }else{
+        this.messageService.sendSnackbar('success','"Quatation info Record inserted successfully');
+      }
+      this.isLoading=false;
+    })
   }
 }

@@ -1,14 +1,15 @@
 <div class="adjust">
 <div class="example-table-container">
-<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <app-rqp-header (headerData)="getHeaderData($event)"></app-rqp-header>
+<!-- <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
     <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
         <div style="float: left;">
             <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Headers</p>
         </div>
     </div>
-</mat-card>
+</mat-card> -->
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-12">
             <div class="p-2">
                 <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
@@ -37,7 +38,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
     <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
         <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
             <div style="float: left;">
@@ -107,15 +108,17 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
              <div class="p-2">
             <div class="tabOverFlowX" *ngIf="this.stockList.length>0" style="background: cadetblue;">
                
-                <table class="display-table">
+                <table class="display-table" id="dataTable">
                     <thead style="background:#369 !important;">
                         <tr>
+                            <th></th>
                             <th style="color: white;">Product Code</th>
                             <th style="color: white;">Product Name</th>
                             <th style="color: white;">Product No</th>
                             <th col="7" style="color: white;">Quantity</th>
-                            <th style="color: white;">PO Date</th>
+                            <!-- <th style="color: white;">PO Date</th> -->
                             <th style="color: white;">HSN Code</th>
+
                             <th col="10" style="color: white;">Rate</th>
                             <th col="11" style="color: white;">% Discount</th>
                             <th col="12" style="color: white;">Discount Amount</th>
@@ -124,56 +127,60 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                             <th style="color: white;">%GST</th>
                             <th style="color: white;">GST Amount</th>
                             <th style="color: white;">Amount</th>
+                            <!-- <th>Action</th> -->
 
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of stockList; let idx=index">
-
+                           <td><img src="/assets/delete.png" (click)="deleteTodo(idx)"></td>
                             <td>
                                 <input type="text" class="form-control form-control-sm txt-box"style="width: 110px;"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                    [(ngModel)]="item.ff0005" [ngModelOptions]="{standalone: true}" required>
+                                    [(ngModel)]="item.productCode" [ngModelOptions]="{standalone: true}" required>
                             </td>
 
                             <td>
                                 <input type="text" class="form-control form-control-sm txt-box"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                    [(ngModel)]="item.ff0006" [ngModelOptions]="{standalone: true}" required>
+                                    [(ngModel)]="item.productName" [ngModelOptions]="{standalone: true}" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control form-control-sm txt-box"style="width: 100px;"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                    [(ngModel)]="item.ff0018" [ngModelOptions]="{standalone: true}" required>
+                                    [(ngModel)]="item.productNumber" [ngModelOptions]="{standalone: true}" required>
                             </td>
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box" style="width: 70px;"
-                                    [(ngModel)]="item.ff0007" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}"
                                     (change)="onCalAllFieldAmount(idx)" required>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <input type="date" class="form-control form-control-sm txt-box"style="width: 120px;"
                                     [(ngModel)]="item.ff0008" [ngModelOptions]="{standalone: true}" required>
-                            </td>
+                            </td> -->
                             <td>
                                 <input type="text" class="form-control form-control-sm txt-box"style="width: 140px;"
-                                    [(ngModel)]="item.ff0009" [ngModelOptions]="{standalone: true}" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                    [(ngModel)]="item.gethSNCode" [ngModelOptions]="{standalone: true}" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
+
+
+
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.ff0010" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.rate" [ngModelOptions]="{standalone: true}"
                                     [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.ff0011" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.discountPercentage" [ngModelOptions]="{standalone: true}"
                                     (change)="onCalAllFieldAmount(idx)" required>
                             </td>
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.ff0012" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.discount" [ngModelOptions]="{standalone: true}"
                                     [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
                             <td>
                                 <input type="text" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.totalDiscount" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.discountedRate" [ngModelOptions]="{standalone: true}"
                                     [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
                             <td>
@@ -186,21 +193,21 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                             </td> -->
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.ff0015" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.gst" [ngModelOptions]="{standalone: true}"
                                     (change)="onCalAllFieldAmount(idx)" required>
                             </td>
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.ff0016" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.gstAmount" [ngModelOptions]="{standalone: true}"
                                     [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
                             <td>
                                 <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
-                                    [(ngModel)]="item.ff0017" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="item.finalPrice" [ngModelOptions]="{standalone: true}"
                                     [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                             </td>
 
-
+                          <!-- <td><button (click)="deleteTodo(idx)">delete</button></td> -->
                         </tr>
                     </tbody>
                     <tfoot>
@@ -213,6 +220,7 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                         <td></td>
                         <td></td>
                         <td></td>
+                       
                         <td style="text-align: left;
                         color: black;
                         font-weight: 700;
@@ -246,28 +254,32 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                     <div class="supplier-content">
                      <div class="sup-head" style="background-color: #bcceea;">
                       <div class="sup-fields">Total Discount : </div>
-                      <div class="sup-values">{{totalDisAmt}}</div>
+                      <div class="sup-values">{{totalDisAmt | number:'1.2-2'}}</div>
                      </div>
                      <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">After Discount Sub Total Amount : </div>
-                        <div class="sup-values">{{afterDisAmt}}</div>
+                        <div class="sup-values">{{afterDisAmt | number:'1.2-2'}}</div>
                        </div>
                       
                        <div class="sup-head" >
                         <div class="sup-fields">SGST : </div>
-                        <div class="sup-values"></div>
+                        <div class="sup-values">{{SGST | number:'1.2-2'}}</div>
                        </div>
                        <div class="sup-head" >
                         <div class="sup-fields">CGST </div>
-                        <div class="sup-values">{{totalDisAmt}}</div>
+                        <div class="sup-values">{{CGST | number:'1.2-2'}}</div>
+                       </div>
+                       <div class="sup-head"  style="background-color: #bcceea;">
+                        <div class="sup-fields">IGST</div>
+                        <div class="sup-values">{{IGST | number:'1.2-2'}}</div>
                        </div>
                        <div class="sup-head" style="background-color: #bcceea;">
                           <div class="sup-fields">Total GST Amount </div>
-                          <div class="sup-values">{{totalDisAmt}}</div>
+                          <div class="sup-values">{{totalGst | number:'1.2-2'}}</div>
                          </div>
-                         <div class="sup-head" style="background-color: #bcceea;">
+                         <div class="sup-head">
                             <div class="sup-fields">Total Amount : </div>
-                            <div class="sup-values">{{totalAmt}}</div>
+                            <div class="sup-values">{{totalAmt | number:'1.2-2'}}</div>
                            </div>
                     </div>
 </mat-card>
@@ -276,19 +288,19 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                 <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
                     <mat-form-field appearance="outline" class="col-4 px-1">
                         <mat-label>Quotetion Valid To Date</mat-label>
-                        <input type="text" matInput formControlName="ff0003" placeholder="Quotetion Valid  To Date" [matDatepicker]="picker1">
+                        <input type="text" matInput formControlName="quotationValidDate" placeholder="Quotetion Valid  To Date" [matDatepicker]="picker1">
                         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-4 px-1">
                         <mat-label>Delivery Date </mat-label>
-                        <input type="text" matInput formControlName="ff0004" placeholder="Delivery Date" [matDatepicker]="picker2">
+                        <input type="text" matInput formControlName="deliveryDate" placeholder="Delivery Date" [matDatepicker]="picker2">
                         <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-4 px-1">
                         <mat-label>Payment Terms Code</mat-label>
-                        <input type="text" matInput formControlName="ff0005" placeholder="Payment Terms Code">
+                        <input type="text" matInput formControlName="paymentTermsCode" placeholder="Payment Terms Code">
                     </mat-form-field>
                     <!-- <mat-form-field appearance="outline" class="col-3 px-1">
                         <mat-label>Disount Amount</mat-label>
@@ -352,25 +364,39 @@ style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
     </mat-card>
     <div class="row">
         <div class="col-12">
+            <form [formGroup]="QuotationForm">
             <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;">
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Comments</mat-label>
-                    <textarea type="text" matInput  placeholder="Comments">
+                    <textarea type="text" matInput  placeholder="Comments"formControlName="comments">
                             </textarea>
                 </mat-form-field>
             </div>
+
+            <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-4 px-1">
+                    <mat-label>Next stage</mat-label>
+                    <input type="text" matInput formControlName="nextStage" placeholder="Next Stage"
+                    (change)="onChangeNextStage()">
+                    <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                    class="icon-size lovSearchButton" color="primary"(click)="openNextStageLov()"> 
+                </mat-form-field>
+            </div>
+            </form>
         </div>
     </div>
 
 <div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
     <div class="d-flex justify-content-center">
         <button mat-raised-button color="primary"
-            style="font-size: smaller;background-color: #295ea3;height: 25px;">Save</button>
+            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveUpdate()">Save</button>
         <button mat-raised-button color="primary"
             style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
     </div>
 </div>
 <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
 </div>
-<div style="height: 15px;"></div>
+
 </div>
+
+<div style="height: 35px;"></div>
