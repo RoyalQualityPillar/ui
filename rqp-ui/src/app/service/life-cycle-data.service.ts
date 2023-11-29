@@ -19,7 +19,7 @@ export class LifeCycleDataService {
     let token = this.cookieService.get('token');
     let userId=this.cookieService.get('userId');
     const queryParams = `?userId=${userId}&pageIndex=${pageIndex}&size=${size}`;
-    console.log(token)
+    //console.log(token)
     let lifeCycleURL=this.API_URL+"login/lifecycleinfo"+queryParams;
     const httpOptions = {
       headers: new HttpHeaders({      
@@ -30,9 +30,9 @@ export class LifeCycleDataService {
     return this.http.get(lifeCycleURL,httpOptions)
   }
   getModuleName(body:any){
-    console.log(body)
+   // console.log(body)
     let token = this.cookieService.get('token');
-    console.log(token)
+   // console.log(token)
     let lifeCycleURL=this.API_URL+"login/get-modules";
     const httpOptions = {
       headers: new HttpHeaders({      

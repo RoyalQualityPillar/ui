@@ -1,6 +1,6 @@
 <div class="adjust">
 <div class="example-table-container">
-    <app-rqp-header (headerData)="getHeaderData($event)"></app-rqp-header>
+    <app-rqp-header [pageData]="this.pageData"  (headerData)="getHeaderData($event)"></app-rqp-header>
 <!-- <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
     <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
         <div style="float: left;">

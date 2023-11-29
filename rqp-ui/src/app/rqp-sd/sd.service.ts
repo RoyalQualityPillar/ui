@@ -35,7 +35,7 @@ export class SdService {
     let getHederURL = this.API_URL + 'admin/input/lcinfo';
     return this.http.post(getHederURL, body);
   }
-  onSaveUpdate(requestBody:any) {
+  onSaveUpdate(requestBody: any) {
     const saveUpdateURL = this.API_URL + 'sd/qt-item/save-update';
     return this.http.post(saveUpdateURL, requestBody);
   }
@@ -44,9 +44,34 @@ export class SdService {
     return this.http.post(nextStageURL, requestBody);
   }
 
-  getBuInfo(requestBody:any){
+  getBuInfo(requestBody: any) {
     const queryParams = `?auc0001=${requestBody.auc0001}&buc0001=${requestBody.buc0001}`;
-    const buInfoURL=this.API_URL+'gm/bu-master/get-bu-info'+queryParams;
-    return this.http.post(buInfoURL,'')
+    const buInfoURL = this.API_URL + 'gm/bu-master/get-bu-info' + queryParams;
+    return this.http.post(buInfoURL, '');
+  }
+  getReviewerData(f0001: any, f0009: any,createdby :any, pageIndex: any, size: any) {
+    const queryParams = `?FF0001=${f0001}&FF0009=${f0009}&createdby=${createdby }&pageIndex=${pageIndex}&size=${size}`;
+    const reviwerURL = this.API_URL + 'gm/gmur-record/todo-all' + queryParams;
+    return this.http.get(reviwerURL);
+  }
+  onReviewData(ff0001:any){
+    const queryParams =`?FF0001=${ff0001}`;
+    const reviewURL=this.API_URL+'gm/gmap-record/review-comments'+queryParams;
+    return this.http.get(reviewURL);
+  }
+  onQTList(ff0001:any){  //1st response data
+    const queryParams =`?ff0001=${ff0001}`;
+    const reviewURL=this.API_URL+'sd/get-qt-item-list'+queryParams;
+    return this.http.get(reviewURL);
+  }
+  getResquestNoID(lc0002:any){ ///1st
+    const queryParams =`?lc0002=${lc0002}`;
+    const reviewURL=this.API_URL+'sd/module-request-no'+queryParams;
+    return this.http.get(reviewURL);
+  }
+  getQTIndexList(uc0001:any){
+    const queryParams =`?uc0001=${uc0001}`;
+    const reviewURL=this.API_URL+'sd/get-qt-index-list'+queryParams;
+    return this.http.get(reviewURL);
   }
 }
