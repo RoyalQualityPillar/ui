@@ -32,6 +32,8 @@ import { RqpSdHomePageComponent } from './rqp-sd/rqp-sd-home-page/rqp-sd-home-pa
 import { AdAdminHomePageComponent } from './admin/ad-admin-home-page/ad-admin-home-page.component';
 import { SdAdminHomePageComponent } from './admin/sd-admin-home-page/sd-admin-home-page.component';
 import { AdMasterHomePageComponent } from './admin/ad-master-home-page/ad-master-home-page.component';
+import { QtReviewerHomePageComponent } from './rqp-sd/qt-reviewer-home-page/qt-reviewer-home-page.component';
+import { QtReviewComponent } from './rqp-sd/qt-review/qt-review.component';
 
 const routes: Routes = [
  // {path:'',redirectTo:'login'},
@@ -67,7 +69,9 @@ const routes: Routes = [
   {path:"quotation-home-page",component:QuotationHomePageComponent,canActivate:[AuthGuard]}, 
 
   {path:"ad-administrator",component:AdAdminHomePageComponent,canActivate:[AuthGuard]},
-  {path:"ad-master",component:AdMasterHomePageComponent,canActivate:[AuthGuard]}
+  {path:"ad-master",component:AdMasterHomePageComponent,canActivate:[AuthGuard]},
+  {path:"rqp-pending-assignment",component:QtReviewerHomePageComponent,canActivate:[AuthGuard]},
+  {path:"qt-review",component:QtReviewComponent,canActivate:[AuthGuard]}
 ];
 
 @NgModule({

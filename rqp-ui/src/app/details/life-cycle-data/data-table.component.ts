@@ -369,7 +369,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
         moduelCode:this.selectedRow.ff0001,
       }
       this.lifeCycleDataService.setSelectedRowData(selectedRowInterfaceData)
-      console.log(selectedRowInterfaceData)
+     // console.log(selectedRowInterfaceData)
       this.isLoading=true;
       this.lifeCycleDataService.getModuleName(body).subscribe((data: any) => {
         this.redirect(data)

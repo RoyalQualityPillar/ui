@@ -37,6 +37,7 @@ export class QuotationHomePageComponent implements OnInit{
   HeaderForm:FormGroup;
   ViewDetailForm:FormGroup;
   isReadonly=true;
+  pageData:any;
   constructor(public fb:FormBuilder,
               private sdService:SdService,
               private lifeCycleDataService:LifeCycleDataService,
@@ -83,7 +84,9 @@ export class QuotationHomePageComponent implements OnInit{
   nextStageListData:any;
   headerRequestBody:any;
   ngOnInit(): void {
-  
+   this.pageData={
+    pageName:'homePage',
+   }
    this.headerRequestBody=this.lifeCycleDataService.getSelectedRowData();
     this.companyInfoBody={
       orgUnitCode:'',

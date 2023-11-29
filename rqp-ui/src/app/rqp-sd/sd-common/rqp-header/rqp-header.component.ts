@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SdService } from '../sd.service';
+import { SdService } from '../../sd.service';
 import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 })
 export class RqpHeaderComponent implements OnInit{
   @Output() headerData = new EventEmitter<any>();
+  @Input() pageData:any;
   HeaderForm:FormGroup;
   isReadonly=true;
   constructor(public fb:FormBuilder,
@@ -24,12 +25,19 @@ export class RqpHeaderComponent implements OnInit{
         departmentcode:[''],
         role:[''],
         createdby:[''],
+        requestNo:[''],
+        version:['']
+
       })
   }
   headerRequestBody:any
   headerDetail:any;
   ngOnInit(): void {
     this.headerRequestBody=this.lifeCycleDataService.getSelectedRowData();
+    if(this.pageData.pageName=='qt-review'){
+      this.HeaderForm.controls['requestNo'].setValue(this.pageData.requestNo);
+    this.HeaderForm.controls['version'].setValue(this.pageData.version);
+    }
   
   let body:any;
    body={
@@ -48,6 +56,7 @@ export class RqpHeaderComponent implements OnInit{
     this.HeaderForm.controls['stage'].setValue(this.headerDetail.stage);
     this.HeaderForm.controls['createdby'].setValue(this.headerDetail.createdby);
     this.headerData.emit(this.headerDetail)
+    
 
   })
 }
