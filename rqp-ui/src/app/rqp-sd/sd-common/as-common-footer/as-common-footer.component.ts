@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { SdService } from '../../sd.service';
 
 @Component({
   selector: 'app-as-common-footer',
@@ -8,9 +9,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AsCommonFooterComponent implements OnInit{
   @Input() pageData:any;
+  @Output() comments = new EventEmitter<any>();
   isReadonly:boolean;
+  commentsCurrentValue:any;
   QuotationForm:FormGroup;
-   constructor(public fb:FormBuilder,){
+   constructor(public fb:FormBuilder,private sdService:SdService){
     this.QuotationForm=this.fb.group({
       comments:['']
     })
@@ -18,5 +21,10 @@ export class AsCommonFooterComponent implements OnInit{
    ngOnInit(): void {
      this.isReadonly=true;
      this.QuotationForm.controls['comments'].setValue(this.pageData.comments)
+    
+   }
+   onChangeCommentsValue(){
+    this.comments.emit(this.QuotationForm.controls['comments'].value)
+   // this.sdService.commentsCurrentValue=
    }
 }

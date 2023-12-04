@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { SdService } from '../sd.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
+import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ESignatureComponent } from '../sd-common/e-signature/e-signature.component';
 
 @Component({
   selector: 'app-qt-review',
@@ -13,12 +18,20 @@ export class QtReviewComponent implements OnInit{
 
   @ViewChild(MatSort) sort:MatSort;
   pageName='qt-review';
+  FooterForm:FormGroup
   pageData:any;
   ff0001:any;
   requestNoID:any;
+  headerRequestBody:any;
   resviewCommentsDisplayColumn:string[]=['createdby','ff0003','ff0005','comments'];
   qtListDisplayColumn:string[]=['ff0005','ff0006','ff0018','ff0007','ff0009','ff0010','ff0011','ff0012','ff0019','ff0013','ff0015','ff0016','ff0017']
-  constructor(public router:ActivatedRoute,public sdService:SdService){}
+  constructor(public router:ActivatedRoute,public sdService:SdService,public lifeCycleDataService:LifeCycleDataService,
+    public dialog: MatDialog,private fb:FormBuilder){
+      this.FooterForm=this.fb.group({
+         nextStage:[''],
+         previousStage:['']
+      })
+    }
   ngOnInit(): void {
     this.router.queryParams.subscribe((params:any)=>{
       console.log(params)
@@ -37,6 +50,23 @@ export class QtReviewComponent implements OnInit{
       this.onGetRequestNo();
      // this.onQTIndexList();
     }
+    this.headerRequestBody=this.lifeCycleDataService.getSelectedRowData();
+  
+    this.onLoadNextStageData();
+  
+  }
+  nextStageListData:any;
+  previousStageListData:any;
+  onLoadNextStageData(){
+    let body:any;
+    body={
+      lcNumber:this.headerRequestBody.lifeCycleCode,
+      lcStage:this.headerRequestBody.stage
+    }
+    this.sdService.getNextStageList(body).subscribe((data:any)=>{
+      this.nextStageListData=data.data.nstage;
+      this.previousStageListData=data.data.pstage;
+    })
   }
   headerData:any;
   getHeaderData(event:any){
@@ -82,6 +112,122 @@ export class QtReviewComponent implements OnInit{
       if( this.indexList){
 
       }
+    })
+  }
+  displayedColumns:any;
+  selectedDialogData:any;
+  openNextStageLov(){
+    this.displayedColumns = [
+      { field: 'stage', title: 'Code' },
+      { field: 'lcRole', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Next Stage",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.nextStageListData,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.FooterForm.controls['nextStage'].setValue(result.data.stage)
+      }
+    })
+  }
+  openPreviousStageLov(){
+    this.displayedColumns = [
+      { field: 'stage', title: 'Code' },
+      { field: 'lcRole', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Previous Stage",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.previousStageListData,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.FooterForm.controls['previousStage'].setValue(result.data.stage)
+      }
+    })
+  }
+
+
+  onSubmit(){
+const dialogRef = this.dialog.open(ESignatureComponent, {
+  height: "300px",
+  width: "600px",
+  data: {},
+  disableClose: true
+});
+dialogRef.afterClosed().subscribe(result => {
+  if (result) {
+    this.selectedDialogData = result.data;
+    if(this.selectedDialogData){
+      this.onCallSubmitApi()
+    }
+  }
+})
+  }
+  currentComments:any;
+  getCommentsData(event:any){
+    console.log(event)
+    this.currentComments=event
+  }
+  onCallSubmitApi(){
+    let body={
+      lcNumber:this.headerData.lcnum,
+      lcrqNumber:this.pageData.requestNo,
+      lcStage:this.headerData.stage,
+      lcRole: this.headerData.role,
+      stage2: this.FooterForm.controls['nextStage'].value,
+      createdBy: this.headerData.createdby,
+      comments: this.currentComments
+    }
+    console.log(body)
+    this.sdService.onLcApproval(body).subscribe((data)=>{
+      console.log(data)
+    })
+  }
+  onReject(){
+    const dialogRef = this.dialog.open(ESignatureComponent, {
+      height: "300px",
+      width: "600px",
+      data: {},
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        if(this.selectedDialogData){
+          this.onCallRejectApi()
+        }
+      }
+    })
+  }
+  onCallRejectApi(){
+      let body={
+        lcNumber:this.headerData.lcnum,
+        lcrqNumber:this.pageData.requestNo,
+        lcStage:this.headerData.stage,
+        lcRole: this.headerData.role,
+        stage2: this.FooterForm.controls['previousStage'].value,
+        createdBy: this.headerData.createdby,
+        comments: this.currentComments
+      }
+    this.sdService.onLcReject(body).subscribe((data)=>{
+      console.log(data)
     })
   }
 }

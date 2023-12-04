@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class SdService {
+  public commentsCurrentValue:any;
   private API_URL = environment.apiBaseURL;
   // private API_URL='http://103.10.234.106:8081/';
   constructor(private http: HttpClient, private cookieService: CookieService) {}
@@ -73,5 +74,13 @@ export class SdService {
     const queryParams =`?uc0001=${uc0001}`;
     const reviewURL=this.API_URL+'sd/get-qt-index-list'+queryParams;
     return this.http.get(reviewURL);
+  }
+  onLcApproval(body:any){
+    const lcApprovalURL=this.API_URL+'gm/lc-approval/save-update';
+    return this.http.post(lcApprovalURL,body)
+  }
+  onLcReject(body:any){
+    const lcRejectURL=this.API_URL+'gm/lc-reject/save-update';
+    return this.http.post(lcRejectURL,body)
   }
 }
