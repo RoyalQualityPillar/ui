@@ -10,6 +10,7 @@ import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 })
 export class RqpHeaderComponent implements OnInit{
   @Output() headerData = new EventEmitter<any>();
+ // @Output() requestNo = new EventEmitter<any>();
   @Input() pageData:any;
   HeaderForm:FormGroup;
   isReadonly=true;
@@ -37,6 +38,7 @@ export class RqpHeaderComponent implements OnInit{
     if(this.pageData.pageName=='qt-review'){
       this.HeaderForm.controls['requestNo'].setValue(this.pageData.requestNo);
     this.HeaderForm.controls['version'].setValue(this.pageData.version);
+
     }
   
   let body:any;

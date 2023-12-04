@@ -46,9 +46,66 @@
             </div>
         </div>
     </mat-card>
-    <div class="row">
+    <!--address -->
+    <div class="adjust">
+        <div class="unit-code-container">
+            <div class="unit-code-box">
+                <form [formGroup]="ViewDetailForm">
+                    <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+        
+                        <mat-form-field appearance="outline" class="col-12 px-1">
+                            <mat-label>Oarganization Unit Code</mat-label>
+                            <input type="text" matInput placeholder="Oarganization Unit Code"formControlName="orgUnitCode"
+                            (change)="onChangeOrgUnitCode()">
+                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                            class="icon-size lovSearchButton" color="primary"(click)="openOrgUnitCodeLov()"> 
+                        </mat-form-field>
+                        </div>
+                        </form>
+                <div class="supplier-content-code"*ngIf="this.unitCodeData">
+                    <div class="sup-head-code" style="background-color: #bcceea;">
+                     <div class="sup-fields-code"style="padding: 4px;">Address of organization unit</div>
+                     <div class="sup-values-code"style="padding: 4px;">{{unitCodeData[0].ff0003}}, {{unitCodeData[0].ff0004}}, {{unitCodeData[0].ff0005}},{{unitCodeData[0].ff0007}},{{unitCodeData[0].ff0007}},<br>
+                       <span style="font-weight: 700;">Pincode:</span> {{unitCodeData[0].ff0008}},<span style="font-weight: 700;">  Mobile: </span>{{unitCodeData[0].ff0009}}<br><span style="font-weight: 700;">Email: </span>{{unitCodeData[0].ff0010}},
+                       <br><span style="font-weight: 700;">PAN: </span>{{unitCodeData[0].ff0011}},
+                       <span style="font-weight: 700;">GST: </span>{{unitCodeData[0].ff0012}}</div>
+                    </div>
+             
+            </div>
+        </div>
+        </div>
+        <div class="sales-code-container">
+            <div class="unit-code-box">
+                <form [formGroup]="ViewDetailForm">
+                    <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+        
+                        <mat-form-field appearance="outline" class="col-12 px-1">
+                            <mat-label>Sale Unit Code</mat-label>
+                            <input type="text" matInput placeholder="Sale Unit Code"formControlName="salesUnitCode"
+                            (change)="onChangeSalesUnitCode()">
+                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                            class="icon-size lovSearchButton" color="primary"(click)="openSalesUnitLov()"> 
+                        </mat-form-field>
+                        </div>
+                        </form>
+                <div class="supplier-content-code" *ngIf="this.unitCodeData">
+                    <div class="sup-head-code" style="background-color: #bcceea;">
+                        <div class="sup-fields-code" style="padding: 4px;">Address of sales unit</div>
+                        <div class="sup-values-code"style="padding: 4px;">{{unitCodeData[1].ff0003}}, {{unitCodeData[1].ff0004}}, {{unitCodeData[1].ff0005}},{{unitCodeData[1].ff0007}},{{unitCodeData[1].ff0007}},<br>
+                            <span style="font-weight: 700;">Pincode:</span> {{unitCodeData[1].ff0008}},<span style="font-weight: 700;">  Mobile: </span>{{unitCodeData[1].ff0009}}<br><span style="font-weight: 700;">Email: </span>{{unitCodeData[1].ff0010}},
+                            <br><span style="font-weight: 700;">PAN: </span>{{unitCodeData[1].ff0011}},
+                            <span style="font-weight: 700;">GST: </span>{{unitCodeData[1].ff0012}}</div>
+                       </div>
+                
+            </div>
+        </div>
+        </div>
+    </div>
+    <!--address-->
+    <!-- <div class="row">
         <div class="col-12">
             <div class="p-2">
+
             <form [formGroup]="ViewDetailForm">
             <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
 
@@ -66,16 +123,12 @@
                     <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
                     class="icon-size lovSearchButton" color="primary"(click)="openSalesUnitLov()"> 
                 </mat-form-field>
-                <!-- <div class="col-1 px-1" style="padding-top: 1px;">
-                    <button mat-raised-button color="primary"
-                        style="font-size: 11px;background-color: #295ea3;height: 38px;" (click)="onViewDetails()">View
-                        Details</button>
-                </div> -->
+            
             </div>
         </form>
     </div>
         </div>
-    </div>
+    </div> -->
     <!-- <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
 <div class="btn-group" class="headers"
 style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">

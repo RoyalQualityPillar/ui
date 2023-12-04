@@ -4,31 +4,7 @@
         <app-rqp-header [pageData]="this.pageData" (headerData)="getHeaderData($event)"></app-rqp-header>
          <!--review comments table-->
         <div>
-            <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 1px;">
-                <mat-table [dataSource]="dataSource" id="datTable" matTableExporter #exporter="matTableExporter" matSort
-                    style="background-color: ghostwhite;">
-                    <ng-container matColumnDef="createdby">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0003">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Role Name</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0005">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header>Comments Version</mat-header-cell>
-                      <mat-cell *matCellDef="let row"> {{onRequestVersion(row)}}  </mat-cell>
-                  </ng-container>
-               
-                    <ng-container matColumnDef="comments">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Comments</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.comments}} </mat-cell>
-                    </ng-container>
-
-                    <mat-header-row *matHeaderRowDef="resviewCommentsDisplayColumn"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns:resviewCommentsDisplayColumn"></mat-row>
-                </mat-table>
-        </div>
+           
         <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
             <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                 <div style="float: left;">
@@ -136,7 +112,58 @@
 </mat-card>
 </div>
     
-        <app-as-common-footer [pageData]="this.pageData"></app-as-common-footer>
+        <app-as-common-footer [pageData]="this.pageData" (comments)="getCommentsData($event)">
+            <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 4px;">
+                <mat-table [dataSource]="dataSource" id="datTable" matTableExporter #exporter="matTableExporter" matSort
+                    style="background-color: ghostwhite;">
+                    <ng-container matColumnDef="createdby">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ff0003">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Role Name</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ff0005">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Comments Version</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{onRequestVersion(row)}}  </mat-cell>
+                  </ng-container>
+               
+                    <ng-container matColumnDef="comments">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Comments</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.comments}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="resviewCommentsDisplayColumn"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns:resviewCommentsDisplayColumn"></mat-row>
+                </mat-table>
+        </div>
+    </app-as-common-footer>
+    <form [formGroup]="FooterForm">
+    <div class="row no-gutters ms-1 me-1 dense-4">
+        <mat-form-field appearance="outline" class="col-4 px-1">
+            <mat-label>Next stage</mat-label>
+            <input type="text" matInput formControlName="nextStage"  placeholder="Next Stage">
+            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+            class="icon-size lovSearchButton" color="primary"(click)="openNextStageLov()"> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-4 px-1">
+            <mat-label>Previous stage</mat-label>
+            <input type="text" matInput formControlName="previousStage"  placeholder="Previous Stage">
+            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+            class="icon-size lovSearchButton" color="primary"(click)="openPreviousStageLov()"> 
+        </mat-form-field>
+    </div>
+    </form>
         </div>
         </div>
+        <div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
+            <div class="d-flex justify-content-center">
+                <button mat-raised-button color="primary"
+                    style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSubmit()">Submit</button>
+                <button mat-raised-button color="primary"
+                    style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;" (click)="onReject()">Reject</button>
+            </div>
+        </div>
+        <div style="min-height: 50px;"></div>
 
