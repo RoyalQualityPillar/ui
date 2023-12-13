@@ -45,14 +45,15 @@ export class QtReviewerHomePageComponent
   copiedData: string;
   tableData: any;
   tableDataLoaded: boolean;
-  toolbarService: any;
+  //toolbarService: any;
   filterFieldError=false;
   filterValueError=false;
   filterObject:any;
   constructor(
     public sdService: SdService,
     public lifeCycleDataService: LifeCycleDataService,
-    public router:Router
+    public router:Router,
+    private toolbarService:ToolbarService
   ) {}
   ngOnInit(): void {
     window.scrollTo(0,0);
@@ -69,7 +70,8 @@ export class QtReviewerHomePageComponent
     body = {
       createdBy: this.headerRequestBody.userId,
       lcNumber: this.headerRequestBody.lifeCycleCode,
-      lcStage: this.headerRequestBody.stage,
+     // lcStage: this.headerRequestBody.stage,
+     lcStage:this.toolbarService.currentStage
     };
     this.headerDataSubscription = this.sdService
       .getHeaderData(body)
@@ -174,6 +176,7 @@ onClearFilter(){
 
 }
 onSubmit(){
+  console.log(this.selectedRow)
    this.router.navigate(['./qt-review'],{queryParams:this.selectedRow})
 }
 copyData() {

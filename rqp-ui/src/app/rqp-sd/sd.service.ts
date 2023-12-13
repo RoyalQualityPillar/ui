@@ -37,7 +37,7 @@ export class SdService {
     return this.http.post(getHederURL, body);
   }
   onSaveUpdate(requestBody: any) {
-    const saveUpdateURL = this.API_URL + 'sd/qt-item/save-update';
+    const saveUpdateURL = this.API_URL + 'sdqt/qt-item/save-update';
     return this.http.post(saveUpdateURL, requestBody);
   }
   getNextStageList(requestBody: any) {
@@ -62,17 +62,17 @@ export class SdService {
   }
   onQTList(ff0001:any){  //1st response data
     const queryParams =`?ff0001=${ff0001}`;
-    const reviewURL=this.API_URL+'sd/get-qt-item-list'+queryParams;
+    const reviewURL=this.API_URL+'sdqt/get-qt-item-list'+queryParams;
     return this.http.get(reviewURL);
   }
   getResquestNoID(lc0002:any){ ///1st
     const queryParams =`?lc0002=${lc0002}`;
-    const reviewURL=this.API_URL+'sd/module-request-no'+queryParams;
+    const reviewURL=this.API_URL+'sdqt/module-request-no'+queryParams;
     return this.http.get(reviewURL);
   }
   getQTIndexList(uc0001:any){
     const queryParams =`?uc0001=${uc0001}`;
-    const reviewURL=this.API_URL+'sd/get-qt-index-list'+queryParams;
+    const reviewURL=this.API_URL+'sdqt/get-qt-index-list'+queryParams;
     return this.http.get(reviewURL);
   }
   onLcApproval(body:any){

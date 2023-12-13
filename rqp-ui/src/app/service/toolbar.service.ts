@@ -7,6 +7,7 @@ import {tableData} from '../../assets/data';
 export class ToolbarService {
   data:any;
   tableData:any;
+  currentStage:any;
   public isLogin='loginFaild'
   constructor() { 
     this.data=tableData.tableData;

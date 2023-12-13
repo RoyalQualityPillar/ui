@@ -353,13 +353,13 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
       let body={
         userId:'',
         lcnum:'',
-        lcrole:'',
-        ff0001:''
+       // lcrole:'',
+       // ff0001:''
       }
       body.userId=this.selectedRow.userid;
       body.lcnum=this.selectedRow.lcnum;
-      body.lcrole=this.selectedRow.lcrole;
-      body.ff0001=this.selectedRow.ff0001;
+     // body.lcrole=this.selectedRow.lcrole;
+     // body.ff0001=this.selectedRow.ff0001;
       const selectedRowInterfaceData:selectedRowInterface={
         userId:this.selectedRow.userid,
         lifeCycleCode:this.selectedRow.lcnum,
@@ -383,6 +383,18 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
  // this.cookieService.set('subMenu1',data[0].lcrole)
  //let subMenuList=JSON.stringify(data)
  // this.cookieService.set('subMenu1',subMenuList)//
+ console.log(data);
+ let isfindSuccess=0;
+ let obj={ff0001: "Quatetion",lcnum: "RQP1QTSDLCBBB1",lcrole: "QT-Update",userId: this.selectedRow.userid}
+ data.forEach((ele,index)=>{
+  if(ele.lcrole=='QT-Initator' || ele.lcrole=='QT-Reviewer'){
+    ++isfindSuccess;
+  }
+ })
+ if(isfindSuccess>0){
+   data.push(obj)
+ }
+ console.log(data)
   this.lifeCycleDataService.subMenuList=data
   // Module Value
   if (data[0].lcnum == 'RQP1ADQALC0006') {
@@ -392,6 +404,8 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   } else if (data[0].lcnum == 'RQP1NCIQALC0002') {
     this.route.navigate(['./rqp-sd-module']);
   } else if (data[0].lcnum == 'RQP1QTSDLC0001') {
+    this.route.navigate(['./rqp-sd-module']);
+  }else if (data[0].lcnum == 'RQP1QTPDLC0002') {
     this.route.navigate(['./rqp-sd-module']);
   } else {
     this.dialog.open(MessageDialogComponent, {

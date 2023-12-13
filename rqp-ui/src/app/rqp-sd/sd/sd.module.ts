@@ -12,6 +12,7 @@ import { RqpInterceptor } from '../rqp.interceptor';
 import { QtReviewerHomePageComponent } from '../qt-reviewer-home-page/qt-reviewer-home-page.component';
 import { QtReviewComponent } from '../qt-review/qt-review.component';
 import { AsCommonFooterComponent } from '../sd-common/as-common-footer/as-common-footer.component';
+import { QtUpdateDetailsComponent } from '../qt-update-section/qt-update-details/qt-update-details.component';
 
 
 
@@ -25,6 +26,7 @@ import { AsCommonFooterComponent } from '../sd-common/as-common-footer/as-common
     QtReviewerHomePageComponent,
     QtReviewComponent,
     AsCommonFooterComponent,
+    QtUpdateDetailsComponent
   ],
   imports: [
     CommonModule,

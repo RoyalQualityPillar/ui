@@ -11,6 +11,7 @@ import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import * as moment from 'moment';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import {MessageService} from '../../service/message.service';
+import { ESignatureComponent } from '../sd-common/e-signature/e-signature.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -455,7 +456,8 @@ export class QuotationHomePageComponent implements OnInit{
   }
   getBuInfo
   /***********************************SAVE UPDATE API *************************************/
-  onSaveUpdate(){
+  onSaveUpdate(btnStatus:any){
+    console.log(btnStatus)
     if( this.QuotationForm.controls['nextStage'].value=='' ||this.QuotationForm.controls['nextStage'].value==undefined ){
       this.QuotationForm.controls['nextStage'].setValue(0)
     }
@@ -490,6 +492,11 @@ export class QuotationHomePageComponent implements OnInit{
       orderStatus: this.headerData.modulecode,
       quotationStage: this.headerData.modulecode,
     }
+    if(btnStatus==1){
+      requestBody.isItDraft=1;
+    }else{
+      requestBody.isItDraft=0;
+    }
     console.log(requestBody)
     this.isLoading=true;
     this.sdService.onSaveUpdate(requestBody).subscribe((data:any)=>{
@@ -503,5 +510,27 @@ export class QuotationHomePageComponent implements OnInit{
       }
       this.isLoading=false;
     })
+  }
+
+  /*************************************ONSUBMIT ******************************************/
+  onSubmit(btnStatus:any){
+    console.log(btnStatus)
+    const dialogRef = this.dialog.open(ESignatureComponent, {
+      height: "300px",
+      width: "600px",
+      data: {},
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        if(this.selectedDialogData){
+          this.onSaveUpdate('1')
+        }
+      }
+    })
+  }
+  onSubmitConfirmApi(){
+    //todo
   }
 }

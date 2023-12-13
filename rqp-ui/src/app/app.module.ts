@@ -71,6 +71,18 @@ import { AdAdminHomePageComponent } from './admin/ad-admin-home-page/ad-admin-ho
 import { SdAdminHomePageComponent } from './admin/sd-admin-home-page/sd-admin-home-page.component';
 import { AdMasterHomePageComponent } from './admin/ad-master-home-page/ad-master-home-page.component';
 import { ESignatureComponent } from './rqp-sd/sd-common/e-signature/e-signature.component';
+import { QtUpdateComponent } from './rqp-sd/qt-update-section/qt-update/qt-update.component';
+import { QtMasterDataHomePageComponent } from './rqp-sd/sd-master-data/qt-master-data-home-page/qt-master-data-home-page.component';
+import { StockLedgerHomePageComponent } from './rqp-sd/sd-master-data/stock-ledger/stock-ledger-home-page/stock-ledger-home-page.component';
+import { CreateUpdateStockLedgerComponent } from './rqp-sd/sd-master-data/stock-ledger/create-update-stock-ledger/create-update-stock-ledger.component';
+import { AllStockLedgerAuditTrailComponent } from './rqp-sd/sd-master-data/stock-ledger/all-stock-ledger-audit-trail/all-stock-ledger-audit-trail.component';
+import { ActiveStockLedgerAuditTrailComponent } from './rqp-sd/sd-master-data/stock-ledger/active-stock-ledger-audit-trail/active-stock-ledger-audit-trail.component';
+import { SaleProductMasterHomePageComponent } from './rqp-sd/sd-master-data/sale-product-master/sale-product-master-home-page/sale-product-master-home-page.component';
+import { AllSaleProductMasterAtComponent } from './rqp-sd/sd-master-data/sale-product-master/all-sale-product-master-at/all-sale-product-master-at.component';
+import { ActiveSaleProductMasterAtComponent } from './rqp-sd/sd-master-data/sale-product-master/active-sale-product-master-at/active-sale-product-master-at.component';
+import { CreateUpdateSaleProductMasterComponent } from './rqp-sd/sd-master-data/sale-product-master/create-update-sale-product-master/create-update-sale-product-master.component';
+import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
+
 
 
 
@@ -101,6 +113,17 @@ import { ESignatureComponent } from './rqp-sd/sd-common/e-signature/e-signature.
     SdAdminHomePageComponent,
     AdMasterHomePageComponent,
     ESignatureComponent,
+    QtUpdateComponent,
+    QtMasterDataHomePageComponent,
+    StockLedgerHomePageComponent,
+    CreateUpdateStockLedgerComponent,
+    AllStockLedgerAuditTrailComponent,
+    ActiveStockLedgerAuditTrailComponent,
+    SaleProductMasterHomePageComponent,
+    AllSaleProductMasterAtComponent,
+    ActiveSaleProductMasterAtComponent,
+    CreateUpdateSaleProductMasterComponent,
+    PageNotFoundComponent,
   
   
     

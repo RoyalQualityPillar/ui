@@ -34,9 +34,17 @@ import { SdAdminHomePageComponent } from './admin/sd-admin-home-page/sd-admin-ho
 import { AdMasterHomePageComponent } from './admin/ad-master-home-page/ad-master-home-page.component';
 import { QtReviewerHomePageComponent } from './rqp-sd/qt-reviewer-home-page/qt-reviewer-home-page.component';
 import { QtReviewComponent } from './rqp-sd/qt-review/qt-review.component';
+import { QtUpdateComponent } from './rqp-sd/qt-update-section/qt-update/qt-update.component';
+import { QtMasterDataHomePageComponent } from './rqp-sd/sd-master-data/qt-master-data-home-page/qt-master-data-home-page.component';
+import { StockLedgerHomePageComponent } from './rqp-sd/sd-master-data/stock-ledger/stock-ledger-home-page/stock-ledger-home-page.component';
+import { SaleProductMasterHomePageComponent } from './rqp-sd/sd-master-data/sale-product-master/sale-product-master-home-page/sale-product-master-home-page.component';
+import { enableDebugTools } from '@angular/platform-browser';
+import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
+import { QtUpdateDetailsComponent } from './rqp-sd/qt-update-section/qt-update-details/qt-update-details.component';
 
 const routes: Routes = [
- // {path:'',redirectTo:'login'},
+  {path:"",redirectTo:"/login",pathMatch:'full'},
+//  {path:"",component:LoginComponent},
   { path: "login", component: LoginComponent },
   { path: "data-table", component: DataTableComponent,canActivate:[AuthGuard] },
   { path: "forget-password", component: ForgetPasswordComponent },
@@ -71,11 +79,20 @@ const routes: Routes = [
   {path:"ad-administrator",component:AdAdminHomePageComponent,canActivate:[AuthGuard]},
   {path:"ad-master",component:AdMasterHomePageComponent,canActivate:[AuthGuard]},
   {path:"rqp-pending-assignment",component:QtReviewerHomePageComponent,canActivate:[AuthGuard]},
-  {path:"qt-review",component:QtReviewComponent,canActivate:[AuthGuard]}
+  {path:"qt-review",component:QtReviewComponent,canActivate:[AuthGuard]},
+ // {path:"qt-update",component:QtUpdateComponent,canActivate:[AuthGuard]},
+  {path:"qt-master-data-home-page",component:QtMasterDataHomePageComponent,canActivate:[AuthGuard]},
+  {path:"stock-ledger-home-page",component:StockLedgerHomePageComponent,canActivate:[AuthGuard]},
+  {path:"sale-product-master-home-page",component:SaleProductMasterHomePageComponent,canActivate:[AuthGuard]},
+  {path:"qt-update-page",component:QtUpdateComponent,canActivate:[AuthGuard]},
+  {path:"qt-update-details",component:QtUpdateDetailsComponent,canActivate:[AuthGuard]},
+
+
+  {path:"**",component:PageNotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation:'reload'})],
   exports: [RouterModule],
   providers:[AuthGuard]
 })

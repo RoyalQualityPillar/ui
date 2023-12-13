@@ -1,0 +1,337 @@
+<div class="adjust">
+    <div class="example-table-container">
+        
+        <app-rqp-header [pageData]="this.pageData"  (headerData)="getHeaderData($event)">
+        </app-rqp-header>
+        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">
+                    Quotation Information</p>
+                </div>
+            </div>
+        </mat-card> 
+        <div class="adjust">
+            <div class="unit-code-container">
+                <div class="unit-code-box">
+                    <form [formGroup]="ViewDetailForm">
+                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+            
+                            <mat-form-field appearance="outline" class="col-12 px-1">
+                                <mat-label>Oarganization Unit Code</mat-label>
+                                <input type="text" matInput placeholder="Oarganization Unit Code"formControlName="orgUnitCode"
+                                [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                            </mat-form-field>
+                            </div>
+                            </form>
+                    <div class="supplier-content-code"*ngIf="this.unitCodeData">
+                        <div class="sup-head-code" style="background-color: #bcceea;">
+                         <div class="sup-fields-code"style="padding: 4px;font-weight: 700;">Address of organization unit</div>
+                         <div class="sup-values-code"style="padding: 4px;">{{unitCodeData[0].ff0003}}, {{unitCodeData[0].ff0004}}, {{unitCodeData[0].ff0005}},{{unitCodeData[0].ff0007}},{{unitCodeData[0].ff0007}},<br>
+                           <span style="font-weight: 700;">Pincode:</span> {{unitCodeData[0].ff0008}},<span style="font-weight: 700;">  Mobile: </span>{{unitCodeData[0].ff0009}}<br><span style="font-weight: 700;">Email: </span>{{unitCodeData[0].ff0010}},
+                           <br><span style="font-weight: 700;">PAN: </span>{{unitCodeData[0].ff0011}},
+                           <span style="font-weight: 700;">GST: </span>{{unitCodeData[0].ff0012}}</div>
+                        </div>
+                 
+                </div>
+            </div>
+            </div>
+            <div class="sales-code-container">
+                <div class="unit-code-box">
+                    <form [formGroup]="ViewDetailForm">
+                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+            
+                            <mat-form-field appearance="outline" class="col-12 px-1">
+                                <mat-label>Sale Unit Code</mat-label>
+                                <input type="text" matInput placeholder="Sale Unit Code"formControlName="salesUnitCode"
+                                [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                            </mat-form-field>
+                            </div>
+                            </form>
+                    <div class="supplier-content-code" *ngIf="this.unitCodeData">
+                        <div class="sup-head-code" style="background-color: #bcceea;">
+                            <div class="sup-fields-code" style="padding: 4px;font-weight: 700;">Address of sales unit</div>
+                            <div class="sup-values-code"style="padding: 4px;">{{unitCodeData[1].ff0003}}, {{unitCodeData[1].ff0004}}, {{unitCodeData[1].ff0005}},{{unitCodeData[1].ff0007}},{{unitCodeData[1].ff0007}},<br>
+                                <span style="font-weight: 700;">Pincode:</span> {{unitCodeData[1].ff0008}},<span style="font-weight: 700;">  Mobile: </span>{{unitCodeData[1].ff0009}}<br><span style="font-weight: 700;">Email: </span>{{unitCodeData[1].ff0010}},
+                                <br><span style="font-weight: 700;">PAN: </span>{{unitCodeData[1].ff0011}},
+                                <span style="font-weight: 700;">GST: </span>{{unitCodeData[1].ff0012}}</div>
+                           </div>
+                    
+                </div>
+            </div>
+            </div>
+        </div>  
+        <!--Product Information start-->  
+        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Product Information</p>
+                </div>
+                <div style="float: right;" >
+                    <!-- <button (click)="addNewRow()">add</button> -->
+                    <button mat-raised-button color="primary" 
+                        style="background-color: #099622;font-size: smaller;height: 25px;font-weight: 700;"
+                        (click)="addNewRow()">Add</button>
+                </div>
+            </div>
+        </mat-card>
+        <div class="row">
+            <div class="col-12" >
+                 <div class="p-2">
+                <div class="tabOverFlowX" *ngIf="this.stockList.length>0" style="background: cadetblue;">
+                   
+                    <table class="display-table" id="dataTable">
+                        <thead style="background:#369 !important;">
+                            <tr>
+                                <th></th>
+                                <th style="color: white;">Product Code</th>
+                                <th style="color: white;">Product Name</th>
+                                <th style="color: white;">Product No</th>
+                                <th col="7" style="color: white;">Quantity</th>
+                                <!-- <th style="color: white;">PO Date</th> -->
+                                <th style="color: white;">HSN Code</th>
+    
+                                <th col="10" style="color: white;">Rate</th>
+                                <th col="11" style="color: white;">% Discount</th>
+                                <th col="12" style="color: white;">Discount Amount</th>
+                                <th col="12" style="color: white;">Total Discount</th>
+                                <th col="13" style="color: white;">After Discount Rate </th>
+                                <th style="color: white;">%GST</th>
+                                <th style="color: white;">GST Amount</th>
+                                <th style="color: white;">Amount</th>
+                                <!-- <th>Action</th> -->
+    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of stockList; let idx=index">
+                               <td><img src="/assets/delete.png" (click)="deleteTodo(idx)"></td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm txt-box"style="width: 110px;"[class.isReadonlyFieldForQuotation]="isReadonly"
+                                        [(ngModel)]="item.productCode" [ngModelOptions]="{standalone: true}" required>
+                                </td>
+    
+                                <td>
+                                    <input type="text" class="form-control form-control-sm txt-box"[class.isReadonlyFieldForQuotation]="isReadonly"
+                                        [(ngModel)]="item.productName" [ngModelOptions]="{standalone: true}" required>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm txt-box"style="width: 100px;"[class.isReadonlyFieldForQuotation]="isReadonly"
+                                        [(ngModel)]="item.productNumber" [ngModelOptions]="{standalone: true}" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box" style="width: 70px;"
+                                        [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}"
+                                        (change)="onCalAllFieldAmount(idx)" required>
+                                </td>
+                                <!-- <td>
+                                    <input type="date" class="form-control form-control-sm txt-box"style="width: 120px;"
+                                        [(ngModel)]="item.ff0008" [ngModelOptions]="{standalone: true}" required>
+                                </td> -->
+                                <td>
+                                    <input type="text" class="form-control form-control-sm txt-box"style="width: 140px;"
+                                        [(ngModel)]="item.gethSNCode" [ngModelOptions]="{standalone: true}" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+    
+    
+    
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.rate" [ngModelOptions]="{standalone: true}"
+                                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.discountPercentage" [ngModelOptions]="{standalone: true}"
+                                        (change)="onCalAllFieldAmount(idx)" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.discount" [ngModelOptions]="{standalone: true}"
+                                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.discountedRate" [ngModelOptions]="{standalone: true}"
+                                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.ff0013" [ngModelOptions]="{standalone: true}"
+                                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+                                <!-- <td>
+                                    <input type="text" class="form-control form-control-sm txt-box"  [(ngModel)]="item.ff0014" [ngModelOptions]="{standalone: true}" required>
+                                </td> -->
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.gst" [ngModelOptions]="{standalone: true}"
+                                        (change)="onCalAllFieldAmount(idx)" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.gstAmount" [ngModelOptions]="{standalone: true}"
+                                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm txt-box"style="width: 100px;"
+                                        [(ngModel)]="item.finalPrice" [ngModelOptions]="{standalone: true}"
+                                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                </td>
+    
+                              <!-- <td><button (click)="deleteTodo(idx)">delete</button></td> -->
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                           
+                            <td style="text-align: left;
+                            color: black;
+                            font-weight: 700;
+                            border-radius: 25px;
+                            border: 1px solid #ebe2e2;
+                            background-color: #dfecec;
+                            box-shadow: 1px 1px 1px 1px #0f3064;">{{totalDisAmt | number:'1.2-2'}}</td>
+                            <td style="text-align: left;
+                            color: black;
+                            font-weight: 700;
+                            border-radius: 25px;
+                            border: 1px solid #ebe2e2;
+                            background-color: #dfecec;
+                            box-shadow: 1px 1px 1px 1px #0f3064;">{{afterDisAmt | number:'1.2-2'}}</td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: left;
+                            color: black;
+                            font-weight: 700;
+                            border: 1px solid #ebe2e2;
+                            background-color: #dfecec;
+                            border-radius: 25px;
+                            box-shadow: 1px 1px 1px 1px #0f3064;">{{totalAmt | number:'1.2-2'}}</td>
+                        </tfoot>
+                    </table>
+                </div>
+                    </div>
+                 
+    
+            </div>
+        </div>
+        <!--Product Information end-->      
+        <div style="padding-right: 15px;padding-left: 15px;" *ngIf="this.indexList">
+
+            <mat-card style="margin-top: 2px;background-color:#dfece0;">
+            <div class="supplier-content">
+             <div class="sup-head" style="background-color: #bcceea;">
+              <div class="sup-fields">Total Discount : </div>
+              <div class="sup-values">{{indexList.ff0007 }}</div>
+             </div>
+             <div class="sup-head" style="background-color: #bcceea;">
+                <div class="sup-fields">After Discount Sub Total Amount : </div>
+                <div class="sup-values">{{indexList.ff0006 | number:'1.2-2'}}</div>
+               </div>
+              
+               <div class="sup-head" >
+                <div class="sup-fields">SGST : </div>
+                <div class="sup-values">{{indexList.ff0009 | number:'1.2-2'}}</div>
+               </div>
+               <div class="sup-head" >
+                <div class="sup-fields">CGST </div>
+                <div class="sup-values">{{indexList.ff0010 | number:'1.2-2'}}</div>
+               </div>
+               <div class="sup-head"  style="background-color: #bcceea;">
+                <div class="sup-fields">IGST</div>
+                <div class="sup-values">{{indexList.ff0011 | number:'1.2-2'}}</div>
+               </div>
+               <div class="sup-head" style="background-color: #bcceea;">
+                  <div class="sup-fields">Total GST Amount </div>
+                  <div class="sup-values">{{indexList.ff0011 | number:'1.2-2'}}</div>
+                 </div>
+                 <div class="sup-head">
+                    <div class="sup-fields">Total Amount : </div>
+                    <div class="sup-values">{{indexList.ff0013 | number:'1.2-2'}}</div>
+                   </div>
+            </div>
+</mat-card>
+</div>
+<form [formGroup]="QuotationForm">
+    <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+        <mat-form-field appearance="outline" class="col-4 px-1">
+            <mat-label>Quotetion Valid To Date</mat-label>
+            <input type="text" matInput formControlName="quotationValidDate" placeholder="Quotetion Valid  To Date" [matDatepicker]="picker1">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-4 px-1">
+            <mat-label>Delivery Date </mat-label>
+            <input type="text" matInput formControlName="deliveryDate" placeholder="Delivery Date" [matDatepicker]="picker2">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-4 px-1">
+            <mat-label>Payment Terms Code</mat-label>
+            <input type="text" matInput formControlName="paymentTermsCode" placeholder="Payment Terms Code">
+        </mat-form-field>
+    </div>
+   
+    </form>
+<app-as-common-footer [pageData]="this.pageData" (comments)="getCommentsData($event)">
+    <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 4px;">
+        <mat-table [dataSource]="dataSource" id="datTable" matTableExporter #exporter="matTableExporter" matSort
+            style="background-color: ghostwhite;">
+            <ng-container matColumnDef="createdby">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ff0003">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Role Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="ff0005">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Comments Version</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{onRequestVersion(row)}}  </mat-cell>
+          </ng-container>
+       
+            <ng-container matColumnDef="comments">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Comments</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.comments}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="resviewCommentsDisplayColumn"></mat-header-row>
+            <mat-row *matRowDef="let row; columns:resviewCommentsDisplayColumn"></mat-row>
+        </mat-table>
+</div>
+
+</app-as-common-footer>
+<form [formGroup]="FooterForm">
+    <div class="row no-gutters ms-1 me-1 dense-4">
+        <mat-form-field appearance="outline" class="col-4 px-1">
+            <mat-label>Next stage</mat-label>
+            <input type="text" matInput formControlName="nextStage"  placeholder="Next Stage">
+            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+            class="icon-size lovSearchButton" color="primary"(click)="openNextStageLov()"> 
+        </mat-form-field>
+        </div>
+        </form>
+<div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
+    <div class="d-flex justify-content-center">
+        <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveUpdate('0')">Save</button>
+            <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;" (click)="onSubmit('1')">Submit</button>
+        <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
+    </div>
+</div> 
+<mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner> 
+</div>
+</div>
+
+<div style="height: 35px;"></div>    

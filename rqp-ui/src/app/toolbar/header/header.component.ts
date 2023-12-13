@@ -63,7 +63,8 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./quotation-home-page']) 
     }
   }
-  onSelectSubMenu(subMenu:any){
+  onSelectSubMenu(subMenu:any,stage:any){
+     this.toolbarService.currentStage=stage;
     if(subMenu =='CC-Cross Functional Reviewer'){
       this.route.navigate(['./master-data-management'])
     }else if(subMenu == 'CC-QA Approver'){
@@ -76,6 +77,11 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./quotation-home-page']) 
      }else if(subMenu == 'QT-Reviewer'){
       this.route.navigate(['./rqp-pending-assignment']) 
+     }else if(subMenu == 'QT-Update'){
+      this.toolbarService.currentStage=1;
+      this.route.navigate(['./qt-update-page']) 
+     }else if(subMenu == 'QT-Master Data'){
+      this.route.navigate(['./qt-master-data-home-page']) 
      }
     //Module routing required based on submenu
   }
