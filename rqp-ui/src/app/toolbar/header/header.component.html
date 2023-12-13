@@ -54,7 +54,7 @@
     </mat-menu> -->
     <mat-menu #belowMenu="matMenu" yPosition="below" class="dropdown1" >
       <div *ngFor="let submenu of  this.lifeCycleDataService.subMenuList">
-      <button class="mat-menu-item" style=" color: #fff;text-align: start;"(click)="onSelectSubMenu(submenu.lcrole)" >{{submenu.lcrole}}</button>
+      <button class="mat-menu-item" style=" color: #fff;text-align: start;"(click)="onSelectSubMenu(submenu.lcrole,submenu.stage)" >{{submenu.lcrole}}</button>
     </div>
     </mat-menu>
        

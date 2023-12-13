@@ -30,7 +30,7 @@ export class LifeCycleDataService {
     return this.http.get(lifeCycleURL,httpOptions)
   }
   getModuleName(body:any){
-   // console.log(body)
+    console.log(body)
     let token = this.cookieService.get('token');
    // console.log(token)
     let lifeCycleURL=this.API_URL+"login/get-modules";

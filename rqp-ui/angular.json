@@ -31,6 +31,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/styles/sd-styles.scss",
               "src/styles-material-form.scss",
               "src/styles/styles-material-table.scss",
               "src/styles/styles-material-tabs.scss",

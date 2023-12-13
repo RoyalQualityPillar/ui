@@ -32,3 +32,16 @@ export function changeStatusByCode(statusCode){
         return ''
        }
 }
+export function changeStatusByDescription(statusDesc){
+    if(statusDesc=='ACTIVE'){
+        return 10001
+    }else if(statusDesc=='LOCKED'){
+        return 10004
+    }else if(statusDesc=='UNLOCKED'){
+        return 10005
+    }else if(statusDesc=='DISABLE'){
+        return 10006
+    }else{
+        return ''
+    }
+}

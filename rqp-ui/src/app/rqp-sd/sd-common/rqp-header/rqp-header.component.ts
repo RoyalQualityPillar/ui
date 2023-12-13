@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SdService } from '../../sd.service';
 import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
+import { ToolbarService } from 'src/app/service/toolbar.service';
 
 @Component({
   selector: 'app-rqp-header',
@@ -16,6 +17,7 @@ export class RqpHeaderComponent implements OnInit{
   isReadonly=true;
   constructor(public fb:FormBuilder,
               private sdService:SdService,
+              private toolbarService:ToolbarService,
               private lifeCycleDataService:LifeCycleDataService,
               ){
       this.HeaderForm=this.fb.group({
@@ -34,6 +36,8 @@ export class RqpHeaderComponent implements OnInit{
   headerRequestBody:any
   headerDetail:any;
   ngOnInit(): void {
+    console.log('working')
+    console.log(this.pageData.pageName)
     this.headerRequestBody=this.lifeCycleDataService.getSelectedRowData();
     if(this.pageData.pageName=='qt-review'){
       this.HeaderForm.controls['requestNo'].setValue(this.pageData.requestNo);
@@ -45,7 +49,8 @@ export class RqpHeaderComponent implements OnInit{
    body={
     createdBy:this.headerRequestBody.userId,
     lcNumber:this.headerRequestBody.lifeCycleCode,
-    lcStage:this.headerRequestBody.stage
+    //lcStage:this.headerRequestBody.stage
+    lcStage:this.toolbarService.currentStage
   }
   this.sdService.getHeaderData(body).subscribe((data:any)=>{
     this.headerDetail=data.data[0];

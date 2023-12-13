@@ -34,6 +34,7 @@ export class PackMasterHomePageComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
+  
   allRoleMasterdisplayedColumns: string[] = ['action', 'id', 'uc0001', 'ff0001','ff0002', 'status','version','createdon', 'createdby'];
   activeRoleMasterdisplayedColumns: string[] = ['action','id', 'uc0001', 'ff0001','ff0002', 'status','version','createdon', 'createdby'];
   isLoading=false;
