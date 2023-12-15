@@ -13,6 +13,7 @@ import { MessageDialogComponent } from 'src/app/common/message-dialog/message-di
 import { MessageService } from 'src/app/service/message.service';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as moment from 'moment';
+import { ToolbarService } from 'src/app/service/toolbar.service';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'L',
@@ -40,10 +41,12 @@ export class QtUpdateDetailsComponent implements OnInit{
   resviewCommentsDisplayColumn:string[]=['createdby','ff0003','ff0005','comments'];
 
   constructor(public router:ActivatedRoute,private sdService:SdService,public fb:FormBuilder,public dialog: MatDialog,
-    private lifeCycleDataService:LifeCycleDataService,private messageService:MessageService){
+    private lifeCycleDataService:LifeCycleDataService,private messageService:MessageService,
+    private toolbarService:ToolbarService){
     this.ViewDetailForm=this.fb.group({
       orgUnitCode:['',Validators.required],
-      salesUnitCode:['',Validators.required]
+      salesUnitCode:['',Validators.required],
+      quotationNo:['']
     });
     this.FooterForm=this.fb.group({
       nextStage:['']
@@ -73,21 +76,25 @@ export class QtUpdateDetailsComponent implements OnInit{
   }
   ff0003:any;
   headerRequestBody:any;
+  //pageData:any;
+  isHeaderLoad=false;
   ngOnInit(): void {
     this.isReadonly=true;
-    this.pageData={
-      pageName:'homePage',
-     }
+    // this.pageData={
+    //   pageName:'qtUpdateDetail',
+    //  }
     this.router.queryParams.subscribe((params:any)=>{
       console.log(params)
       this.ff0003=params.ff0003;
-      // this.pageData ={
-      //   pageName:'qt-review',
-      //   requestNo:params.uc0001,
-      //   version:params.ff0007 +"."+params.ff0008+"."+params.ff0009+"."+params.ff0010,
+      this.pageData ={
+           pageName:'qtUpdateDetail',
+           requestNo:params.uc0001,
+           version:params.ff0007 +"."+params.ff0008+"."+params.ff0009+"."+params.ff0010,
       //   comments:params.comments
-      // }
+       }
+      this.isHeaderLoad=true;
       this.ff0001=params.uc0001;
+      console.log(this.pageData)
        
     })
     if(this.ff0001){
@@ -128,6 +135,7 @@ export class QtUpdateDetailsComponent implements OnInit{
       if( this.indexList){
         this.ViewDetailForm.controls['orgUnitCode'].setValue(this.indexList.ff0001);
         this.ViewDetailForm.controls['salesUnitCode'].setValue(this.indexList.ff0002);
+        this.ViewDetailForm.controls['quotationNo'].setValue(this.indexList.uc0001);
         let validDate=moment(this.indexList.ff0003).format();
         console.log(validDate)
         this.QuotationForm.controls['quotationValidDate'].setValue(validDate)
@@ -181,7 +189,8 @@ export class QtUpdateDetailsComponent implements OnInit{
   addSelectedRows(selectedRow:any){
   selectedRow.data.forEach(elements =>{
     this.stockList.push(
-      { 'productCode':elements.aFF0002,
+      { 'ff0020':elements.aUC0001,
+        'productCode':elements.aFF0002,
         'productName':elements.aFF0003,
         'quantity':elements.bFF0010,
         'productNumber':elements.aFF0001,
@@ -201,6 +210,8 @@ export class QtUpdateDetailsComponent implements OnInit{
       this.previousList=data.data
       this.previousList.forEach((elements)=>{
         this.stockList.push({
+          'uc0001':elements.uc0001,
+          'ff0020':elements.ff0020,
           'productCode':elements.ff0005,
           'productName':elements.ff0006,
           'productNumber':elements.ff0018,
@@ -327,7 +338,7 @@ export class QtUpdateDetailsComponent implements OnInit{
       let body:any;
       body={
         lcNumber:this.headerRequestBody.lifeCycleCode,
-        lcStage:this.headerRequestBody.stage
+        lcStage:this.toolbarService.currentStage
       }
       this.sdService.getNextStageList(body).subscribe((data:any)=>{
         this.nextStageListData=data.data.nstage;
@@ -374,7 +385,7 @@ export class QtUpdateDetailsComponent implements OnInit{
         unitCode: this.headerData.unitcode,
         moduleCode: this.headerData.modulecode,
         departmentCode: this.headerData.departmentcode,
-        lcrqNumber: '',
+        lcrqNumber: this.headerData.requestNo,//added later
         lcNumber: this.headerData.lcnum,
         lcStage: this.headerData.stage,
         lcRole: this.headerData.role,
@@ -387,6 +398,7 @@ export class QtUpdateDetailsComponent implements OnInit{
       deliveryDate: moment(this.QuotationForm.controls['deliveryDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
       paymentTermsCode: this.QuotationForm.controls['paymentTermsCode'].value,
       //subTotalAmount: 1000000,
+      indexNo: this.ViewDetailForm.controls['quotationNo'].value,
       discountAmount: this.totalDisAmt,
       discountedSubTotalAmount: this.afterDisAmt,
       sgst: this.SGST,
@@ -398,9 +410,9 @@ export class QtUpdateDetailsComponent implements OnInit{
       quotationStage: this.headerData.modulecode,
     }
     if(btnStatus==1){
-      requestBody.isItDraft=1;
+      requestBody.isItDraft=false;
     }else{
-      requestBody.isItDraft=0;
+      requestBody.isItDraft=true;
     }
     console.log(requestBody)
     this.isLoading=true;
@@ -431,6 +443,23 @@ export class QtUpdateDetailsComponent implements OnInit{
         this.selectedDialogData = result.data;
         if(this.selectedDialogData){
           this.onSaveUpdate('1')
+        }
+      }
+    })
+  }
+  onSaveConfirmation(btnStatus:any){
+    console.log(btnStatus)
+    const dialogRef = this.dialog.open(ESignatureComponent, {
+      height: "300px",
+      width: "600px",
+      data: {},
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        if(this.selectedDialogData){
+          this.onSaveUpdate('0')
         }
       }
     })

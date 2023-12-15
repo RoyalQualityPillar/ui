@@ -6,8 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ESignatureComponent } from '../sd-common/e-signature/e-signature.component';
+import { ToolbarService } from 'src/app/service/toolbar.service';
 
 @Component({
   selector: 'app-qt-review',
@@ -18,23 +19,33 @@ export class QtReviewComponent implements OnInit{
 
   @ViewChild(MatSort) sort:MatSort;
   pageName='qt-review';
-  FooterForm:FormGroup
+  FooterForm:FormGroup;
+  ViewDetailForm:FormGroup;
   pageData:any;
   ff0001:any;
   requestNoID:any;
   headerRequestBody:any;
+  isReadonly:boolean;
   resviewCommentsDisplayColumn:string[]=['createdby','ff0003','ff0005','comments'];
   qtListDisplayColumn:string[]=['ff0005','ff0006','ff0018','ff0007','ff0009','ff0010','ff0011','ff0012','ff0019','ff0013','ff0015','ff0016','ff0017']
   constructor(public router:ActivatedRoute,public sdService:SdService,public lifeCycleDataService:LifeCycleDataService,
-    public dialog: MatDialog,private fb:FormBuilder){
+    public dialog: MatDialog,private fb:FormBuilder,private toolbarService:ToolbarService){
       this.FooterForm=this.fb.group({
          nextStage:[''],
          previousStage:['']
-      })
+      });
+      this.ViewDetailForm=this.fb.group({
+        orgUnitCode:['',Validators.required],
+        salesUnitCode:['',Validators.required],
+        quotationNo:['']
+      });
     }
+    ff0003:any;
   ngOnInit(): void {
+    this.isReadonly=true;
     this.router.queryParams.subscribe((params:any)=>{
-      console.log(params)
+      console.log(params);
+      this.ff0003=params.ff0003;
       this.pageData ={
         pageName:'qt-review',
         requestNo:params.uc0001,
@@ -61,8 +72,9 @@ export class QtReviewComponent implements OnInit{
     let body:any;
     body={
       lcNumber:this.headerRequestBody.lifeCycleCode,
-      lcStage:this.headerRequestBody.stage
+      lcStage:this.toolbarService.currentStage
     }
+     console.log(body)
     this.sdService.getNextStageList(body).subscribe((data:any)=>{
       this.nextStageListData=data.data.nstage;
       this.previousStageListData=data.data.pstage;
@@ -110,9 +122,36 @@ export class QtReviewComponent implements OnInit{
       console.log(data)
       this.indexList=data.data[0];
       if( this.indexList){
-
+        this.ViewDetailForm.controls['orgUnitCode'].setValue(this.indexList.ff0001);
+        this.ViewDetailForm.controls['salesUnitCode'].setValue(this.indexList.ff0002);
+        this.ViewDetailForm.controls['quotationNo'].setValue(this.indexList.uc0001);
+        this.checkUnitCode();
       }
     })
+  }
+  unitCodeData:any;
+  checkUnitCode(){
+    this.sdService.getUnitCodeDetail(this.ff0003,this.ViewDetailForm.controls['salesUnitCode'].value).subscribe((data:any)=>{
+      console.log(data);
+      this.unitCodeData=data.data.content;
+      this.setGSTData(this.unitCodeData)
+    })
+  }
+  SGST:any;
+  CGST:any;
+  IGST:any;
+  totalGst:any;
+  setGSTData(data){
+    console.log(data)
+   if(data[0].ff0013 == data[1].ff0013){
+    this.CGST=this.totalGst/2
+    this.SGST=this.totalGst/2
+    this.IGST=0;
+   }else{
+    this.IGST=this.totalGst;
+    this.SGST=0;
+    this.CGST=0;
+   }
   }
   displayedColumns:any;
   selectedDialogData:any;

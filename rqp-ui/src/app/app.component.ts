@@ -25,8 +25,8 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
    // this.applicationshow=sessionStorage.getItem('isLogin');
    //this.applicationshow=this.toolbarService.isLogin;
-    console.log(this.applicationshow);
-    console.log(window.location.href);
+   // console.log(this.applicationshow);
+    //console.log(window.location.href);
     localStorage.setItem('currentURL',window.location.href)
     this.token = this.cookieService.get('token');
     this.cookieService.set('subMenuFlag','false');
@@ -34,15 +34,15 @@ export class AppComponent implements OnInit{
   }
   getLoginDetail(){
 
-    console.log(this.cookieService.get('token'))
+    //console.log(this.cookieService.get('token'))
     if(this.token == undefined || this.token == ""){
-      console.log('without login')
+     // console.log('without login')
       this.route.navigate(['./login'])
     }else{
-      console.log('with login')
+     // console.log('with login')
       this.authService.autoAuthUser();
       const url=localStorage.getItem('currentURL')
-      console.log(url);
+      //console.log(url);
      // window.location.href=url;
       this.route.navigate(['./data-table'])      
        // this.location.back()

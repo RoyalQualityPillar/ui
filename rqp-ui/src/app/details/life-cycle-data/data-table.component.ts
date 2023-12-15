@@ -401,12 +401,14 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
     this.route.navigate(['./master-data-management']);
   } else if (data[0].lcnum == 'RQP1ADQALC0007') {
     this.route.navigate(['./master-data-management']);
-  } else if (data[0].lcnum == 'RQP1NCIQALC0002') {
-    this.route.navigate(['./rqp-sd-module']);
-  } else if (data[0].lcnum == 'RQP1QTSDLC0001') {
-    this.route.navigate(['./rqp-sd-module']);
-  }else if (data[0].lcnum == 'RQP1QTPDLC0002') {
-    this.route.navigate(['./rqp-sd-module']);
+  }else if (data[0].ff0001 == 'Quatetion') {
+       this.route.navigate(['./rqp-sd-module']);
+  // } else if (data[0].lcnum == 'RQP1NCIQALC0002') {
+  //   this.route.navigate(['./rqp-sd-module']);
+  // } else if (data[0].lcnum == 'RQP1QTSDLC0001') {
+  //   this.route.navigate(['./rqp-sd-module']);
+  // }else if (data[0].lcnum == 'RQP1QTPDLC0002' || data[0].lcnum == 'RQP1QTPDLC0003') {
+  //   this.route.navigate(['./rqp-sd-module']);
   } else {
     this.dialog.open(MessageDialogComponent, {
       data: {

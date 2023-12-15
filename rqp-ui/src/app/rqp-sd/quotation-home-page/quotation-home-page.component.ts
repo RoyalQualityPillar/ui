@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import {MessageService} from '../../service/message.service';
 import { ESignatureComponent } from '../sd-common/e-signature/e-signature.component';
+import { ToolbarService } from 'src/app/service/toolbar.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -43,6 +44,7 @@ export class QuotationHomePageComponent implements OnInit{
               private sdService:SdService,
               private lifeCycleDataService:LifeCycleDataService,
               public dialog: MatDialog,
+              private toolbarService:ToolbarService,
               public messageService:MessageService){
                 this.HeaderForm=this.fb.group({
                   oucode:['',Validators.required],
@@ -106,7 +108,8 @@ export class QuotationHomePageComponent implements OnInit{
     let body:any;
     body={
       lcNumber:this.headerRequestBody.lifeCycleCode,
-      lcStage:this.headerRequestBody.stage
+      //lcStage:this.headerRequestBody.stage
+        lcStage:this.toolbarService.currentStage
     }
     this.sdService.getNextStageList(body).subscribe((data:any)=>{
       this.nextStageListData=data.data.nstage;
@@ -144,7 +147,8 @@ export class QuotationHomePageComponent implements OnInit{
   addSelectedRows(selectedRow:any){
   selectedRow.data.forEach(elements =>{
     this.stockList.push(
-      { 'productCode':elements.aFF0002,
+      { 'ff0020':elements.aUC0001,
+        'productCode':elements.aFF0002,
         'productName':elements.aFF0003,
         'quantity':elements.bFF0010,
         'productNumber':elements.aFF0001,
@@ -493,9 +497,9 @@ export class QuotationHomePageComponent implements OnInit{
       quotationStage: this.headerData.modulecode,
     }
     if(btnStatus==1){
-      requestBody.isItDraft=1;
+      requestBody.isItDraft=false;
     }else{
-      requestBody.isItDraft=0;
+      requestBody.isItDraft=true;
     }
     console.log(requestBody)
     this.isLoading=true;
@@ -526,6 +530,23 @@ export class QuotationHomePageComponent implements OnInit{
         this.selectedDialogData = result.data;
         if(this.selectedDialogData){
           this.onSaveUpdate('1')
+        }
+      }
+    })
+  }
+  onSaveConfirmation(btnStatus:any){
+    console.log(btnStatus)
+    const dialogRef = this.dialog.open(ESignatureComponent, {
+      height: "300px",
+      width: "600px",
+      data: {},
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        if(this.selectedDialogData){
+          this.onSaveUpdate('0')
         }
       }
     })

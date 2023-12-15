@@ -22,7 +22,7 @@ export class AuthService {
     return this.isAuthenticated;
   }
   setIsAuth(isAuth:any){
-    console.log(this.cookieService.get('isAuth'))
+   // console.log(this.cookieService.get('isAuth'))
     if(this.cookieService.get('isAuth')=='true'){
       this.isAuthenticated = true;
     }
@@ -31,7 +31,7 @@ export class AuthService {
   token:any;
   userId:any;
   autoAuthUser(){
-    console.log('test1')
+   // console.log('test1')
     const authInformartion = this.getAuthData();
     if(!authInformartion){
       return
@@ -73,7 +73,7 @@ export class AuthService {
     }
   }
   setAuthTimer(duration:number){
-    console.log("Setting Timer"+duration);
+   // console.log("Setting Timer"+duration);
     this.tokenTimer =setTimeout(()=>{
       this.logout();
     },duration*1000)
@@ -94,7 +94,7 @@ export class AuthService {
   }
 
   getAuth(userid:any,password:any){
-    console.log(userid);
+   // console.log(userid);
     let loginURL=this.API_URL+'authenticate';
     let authData=userid+':'+password;
     let encodedAuthData=btoa(authData);
@@ -107,7 +107,7 @@ export class AuthService {
    // console.log(encodedAuthData);
    // console.log(btoa(+username1+':'+password1))
    // console.log(btoa('rd200100:welcome'))
-    console.log(encodedAuthData)
+   ///// console.log(encodedAuthData)
     const httpOptions = {
       headers: new HttpHeaders({      
        // 'Authorization': encodedAuthData 
