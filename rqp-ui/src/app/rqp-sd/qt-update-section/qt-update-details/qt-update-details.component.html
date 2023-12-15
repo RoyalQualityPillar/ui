@@ -1,7 +1,7 @@
 <div class="adjust">
     <div class="example-table-container">
         
-        <app-rqp-header [pageData]="this.pageData"  (headerData)="getHeaderData($event)">
+        <app-rqp-header  [pageData]="this.pageData"  (headerData)="getHeaderData($event)">
         </app-rqp-header>
         <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
             <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
@@ -11,20 +11,29 @@
                 </div>
             </div>
         </mat-card> 
+        <form [formGroup]="ViewDetailForm">
+            <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+            <mat-form-field appearance="outline" class="col-12 px-1">
+                <mat-label>Quotation No.</mat-label>
+                <input type="text" matInput placeholder="Quotation No."formControlName="quotationNo"
+                [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+            </mat-form-field>
+            </div>
+            </form>
         <div class="adjust">
-            <div class="unit-code-container">
+            <div class="unit-code-container" >
                 <div class="unit-code-box">
                     <form [formGroup]="ViewDetailForm">
-                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
             
                             <mat-form-field appearance="outline" class="col-12 px-1">
-                                <mat-label>Oarganization Unit Code</mat-label>
+                                <mat-label>Organization Unit Code</mat-label>
                                 <input type="text" matInput placeholder="Oarganization Unit Code"formControlName="orgUnitCode"
                                 [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
                             </mat-form-field>
                             </div>
                             </form>
-                    <div class="supplier-content-code"*ngIf="this.unitCodeData">
+                    <div class="supplier-content-code" *ngIf="this.unitCodeData">
                         <div class="sup-head-code" style="background-color: #bcceea;">
                          <div class="sup-fields-code"style="padding: 4px;font-weight: 700;">Address of organization unit</div>
                          <div class="sup-values-code"style="padding: 4px;">{{unitCodeData[0].ff0003}}, {{unitCodeData[0].ff0004}}, {{unitCodeData[0].ff0005}},{{unitCodeData[0].ff0007}},{{unitCodeData[0].ff0007}},<br>
@@ -37,7 +46,7 @@
             </div>
             </div>
             <div class="sales-code-container">
-                <div class="unit-code-box">
+                <div class="unit-code-box" >
                     <form [formGroup]="ViewDetailForm">
                         <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
             
@@ -48,7 +57,7 @@
                             </mat-form-field>
                             </div>
                             </form>
-                    <div class="supplier-content-code" *ngIf="this.unitCodeData">
+                    <div class="supplier-content-code" *ngIf="unitCodeData">
                         <div class="sup-head-code" style="background-color: #bcceea;">
                             <div class="sup-fields-code" style="padding: 4px;font-weight: 700;">Address of sales unit</div>
                             <div class="sup-values-code"style="padding: 4px;">{{unitCodeData[1].ff0003}}, {{unitCodeData[1].ff0004}}, {{unitCodeData[1].ff0005}},{{unitCodeData[1].ff0007}},{{unitCodeData[1].ff0007}},<br>
@@ -84,6 +93,8 @@
                         <thead style="background:#369 !important;">
                             <tr>
                                 <th></th>
+                                <th style="color: white;">Item Number</th>
+                                <th style="color: white;">Price Code</th>
                                 <th style="color: white;">Product Code</th>
                                 <th style="color: white;">Product Name</th>
                                 <th style="color: white;">Product No</th>
@@ -106,18 +117,26 @@
                         <tbody>
                             <tr *ngFor="let item of stockList; let idx=index">
                                <td><img src="/assets/delete.png" (click)="deleteTodo(idx)"></td>
+                               <td>
+                                <input type="text" class="form-control form-control-sm txt-box"style="width: 140px;"[class.isReadonlyFieldForQuotation]="isReadonly"
+                                    [(ngModel)]="item.uc0001" [ngModelOptions]="{standalone: true}" required [readonly]="isReadonly">
+                            </td>
+                               <td>
+                                <input type="text" class="form-control form-control-sm txt-box"style="width: 140px;"[class.isReadonlyFieldForQuotation]="isReadonly"
+                                    [(ngModel)]="item.ff0020" [ngModelOptions]="{standalone: true}" required [readonly]="isReadonly">
+                            </td>
                                 <td>
                                     <input type="text" class="form-control form-control-sm txt-box"style="width: 110px;"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                        [(ngModel)]="item.productCode" [ngModelOptions]="{standalone: true}" required>
+                                        [(ngModel)]="item.productCode" [ngModelOptions]="{standalone: true}" required [readonly]="isReadonly">
                                 </td>
     
                                 <td>
                                     <input type="text" class="form-control form-control-sm txt-box"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                        [(ngModel)]="item.productName" [ngModelOptions]="{standalone: true}" required>
+                                        [(ngModel)]="item.productName" [ngModelOptions]="{standalone: true}" required [readonly]="isReadonly">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control form-control-sm txt-box"style="width: 100px;"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                        [(ngModel)]="item.productNumber" [ngModelOptions]="{standalone: true}" required>
+                                        [(ngModel)]="item.productNumber" [ngModelOptions]="{standalone: true}" required [readonly]="isReadonly">
                                 </td>
                                 <td>
                                     <input type="number" class="form-control form-control-sm txt-box" style="width: 70px;"
@@ -129,7 +148,7 @@
                                         [(ngModel)]="item.ff0008" [ngModelOptions]="{standalone: true}" required>
                                 </td> -->
                                 <td>
-                                    <input type="text" class="form-control form-control-sm txt-box"style="width: 140px;"
+                                    <input type="text" class="form-control form-control-sm txt-box"style="width: 140px;"[readonly]="isReadonly"
                                         [(ngModel)]="item.gethSNCode" [ngModelOptions]="{standalone: true}" [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                 </td>
     
@@ -323,7 +342,7 @@
 <div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
     <div class="d-flex justify-content-center">
         <button mat-raised-button color="primary"
-            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveUpdate('0')">Save</button>
+            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveConfirmation('0')">Save</button>
             <button mat-raised-button color="primary"
             style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;" (click)="onSubmit('1')">Submit</button>
         <button mat-raised-button color="primary"

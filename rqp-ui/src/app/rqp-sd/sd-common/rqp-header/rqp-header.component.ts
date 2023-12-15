@@ -36,10 +36,11 @@ export class RqpHeaderComponent implements OnInit{
   headerRequestBody:any
   headerDetail:any;
   ngOnInit(): void {
-    console.log('working')
+    console.log('working');
+    console.log(this.pageData)
     console.log(this.pageData.pageName)
     this.headerRequestBody=this.lifeCycleDataService.getSelectedRowData();
-    if(this.pageData.pageName=='qt-review'){
+    if(this.pageData.pageName=='qt-review' || 'qtUpdateDetail' ){
       this.HeaderForm.controls['requestNo'].setValue(this.pageData.requestNo);
     this.HeaderForm.controls['version'].setValue(this.pageData.version);
 

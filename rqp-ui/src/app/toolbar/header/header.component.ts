@@ -64,6 +64,7 @@ export class HeaderComponent implements OnInit{
     }
   }
   onSelectSubMenu(subMenu:any,stage:any){
+    console.log(stage)
      this.toolbarService.currentStage=stage;
     if(subMenu =='CC-Cross Functional Reviewer'){
       this.route.navigate(['./master-data-management'])
