@@ -18,18 +18,18 @@ import { MessageDialogComponent } from 'src/app/common/message-dialog/message-di
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { exportData } from 'bk-export';
-import {StockLedgerService} from '../stock-ledger.service'
-import { CreateUpdateStockLedgerComponent } from '../create-update-stock-ledger/create-update-stock-ledger.component';
-import { AllStockLedgerAuditTrailComponent } from '../all-stock-ledger-audit-trail/all-stock-ledger-audit-trail.component';
-import { ActiveStockLedgerAuditTrailComponent } from '../active-stock-ledger-audit-trail/active-stock-ledger-audit-trail.component';
+import { PaymentTermService } from '../payment-term.service';
+import { CreateUpdatePaymentTermComponent } from '../create-update-payment-term/create-update-payment-term.component';
+import { AllPaymentTermATComponent } from '../all-payment-term-at/all-payment-term-at.component';
+import { ActivePaymentTermATComponent } from '../active-payment-term-at/active-payment-term-at.component';
 
 
 @Component({
-  selector: 'app-stock-ledger-home-page',
-  templateUrl: './stock-ledger-home-page.component.html',
-  styleUrls: ['./stock-ledger-home-page.component.scss']
+  selector: 'app-payment-term-home-page',
+  templateUrl: './payment-term-home-page.component.html',
+  styleUrls: ['./payment-term-home-page.component.scss']
 })
-export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
+export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
 
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
@@ -46,7 +46,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
   activeUserFilterValueError=false;
   tableData: MatTableDataSource<any>;
    constructor(private router:Router,
-    private stockLedgerService:StockLedgerService,
+    private paymentTermService:PaymentTermService,
     public dialog: MatDialog,
     ){}
     filterObject:any;
@@ -88,7 +88,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
   }
   selectedRow=[];
   onOpenRolePOPUP(){
-    const dialogRef=this.dialog.open(CreateUpdateStockLedgerComponent,{
+    const dialogRef=this.dialog.open(CreateUpdatePaymentTermComponent,{
       minWidth:"80%",
       data:{tableData:this.selectedRow,type:'Create'}
     })
@@ -116,7 +116,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
         data: { 'message': 'Please select any row', 'heading': "Error Information" }
      })
       }else{
-      const dialogRef=this.dialog.open(AllStockLedgerAuditTrailComponent,{
+      const dialogRef=this.dialog.open(AllPaymentTermATComponent,{
           minWidth:"80%",
           data:{tableData:this.selectedAllRow,type:'Update'}
         })
@@ -131,7 +131,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
     //todo
     this.pageIndex=0;
     this.size=GlobalConstants.size;
-    this.stockLedgerService.getAllSaleProduct(this.size,this.pageIndex).subscribe((data:any)=>{
+    this.paymentTermService.getAllSaleProduct(this.size,this.pageIndex).subscribe((data:any)=>{
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
           data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
@@ -156,7 +156,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
     this.size = GlobalConstants.size;
     this.dataSource = null;
     this.pageIndex = 0;
-    this.stockLedgerService.getActiveSaleProduct(this.size, this.pageIndex).subscribe((data: any) => {
+    this.paymentTermService.getActiveSaleProduct(this.size, this.pageIndex).subscribe((data: any) => {
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
           data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
@@ -223,7 +223,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
       filetrDataBody.condition='between';
     }
     this.isLoading=true;
-    this.stockLedgerService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
+    this.paymentTermService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
       console.log(data)
       if(data.data){
       this.dataSource=data.data;
@@ -303,7 +303,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
           data: { 'message': 'Please select any row', 'heading': "Error Information" }
        })
         }else{
-        const dialogRef=this.dialog.open(CreateUpdateStockLedgerComponent,{
+        const dialogRef=this.dialog.open(CreateUpdatePaymentTermComponent,{
             minWidth:"80%",
             data:{tableData:this.selectedRow,type:'Update'}
           })
@@ -319,7 +319,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
           data: { 'message': 'Please select any row', 'heading': "Error Information" }
        })
         }else{
-        const dialogRef=this.dialog.open(ActiveStockLedgerAuditTrailComponent,{
+        const dialogRef=this.dialog.open(ActivePaymentTermATComponent,{
             minWidth:"80%",
             data:{tableData:this.selectedRow,type:'Update'}
           })
@@ -391,7 +391,7 @@ export class StockLedgerHomePageComponent implements OnInit,AfterViewInit{
         filetrDataBody.condition='between';
       }
       this.isLoading=true;
-      this.stockLedgerService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
+      this.paymentTermService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
         console.log(data)
         if(data.data){
         this.activeUserDataSource=data.data;

@@ -41,6 +41,7 @@ import { SaleProductMasterHomePageComponent } from './rqp-sd/sd-master-data/sale
 import { enableDebugTools } from '@angular/platform-browser';
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
 import { QtUpdateDetailsComponent } from './rqp-sd/qt-update-section/qt-update-details/qt-update-details.component';
+import { PaymentTermHomePageComponent } from './rqp-sd/sd-master-data/payment-term/payment-term-home-page/payment-term-home-page.component';
 
 const routes: Routes = [
   {path:"",redirectTo:"/login",pathMatch:'full'},
@@ -86,6 +87,7 @@ const routes: Routes = [
   {path:"sale-product-master-home-page",component:SaleProductMasterHomePageComponent,canActivate:[AuthGuard]},
   {path:"qt-update-page",component:QtUpdateComponent,canActivate:[AuthGuard]},
   {path:"qt-update-details",component:QtUpdateDetailsComponent,canActivate:[AuthGuard]},
+  {path:"payment-term-home-page",component:PaymentTermHomePageComponent,canActivate:[AuthGuard]},
 
 
   {path:"**",component:PageNotFoundComponent}

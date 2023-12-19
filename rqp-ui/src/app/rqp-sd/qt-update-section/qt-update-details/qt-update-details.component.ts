@@ -410,9 +410,9 @@ export class QtUpdateDetailsComponent implements OnInit{
       quotationStage: this.headerData.modulecode,
     }
     if(btnStatus==1){
-      requestBody.isItDraft=false;
+      requestBody.draft=false;
     }else{
-      requestBody.isItDraft=true;
+      requestBody.draft=true;
     }
     console.log(requestBody)
     this.isLoading=true;

@@ -1,1 +1,155 @@
-<p>create-update-stock-ledger works!</p>
+<div class="container-fluid">
+    <div class="row no-gutters dialogHeaderColor" >
+        <div class="col-10 d-flex justify-content-start">
+            <h1 class="customeHeading">{{this.userData.type}} Stock Ledger</h1>
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="tabOverFlowY">
+        <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
+
+        <form [formGroup]="DepartmentMaster" style="margin-top: 7px;">
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                    <div style="float: left;">
+                        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Stock Ledger</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="p-2">
+                            <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                                <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
+                                    denoted by an asterisk(<span style="color: red">*</span>).</span>
+                            </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4" >
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Stock Item No</mat-label>
+                                    <input type="text" matInput formControlName="uc0001"[readonly]="isUpdate" [class.isReadonlyField]="isUpdate"
+                                        placeholder="Stock Item No" >
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Product Code</mat-label>
+                                    <input type="text" matInput formControlName="ff0001"
+                                        placeholder="Product Code" >
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Sale Order No</mat-label>
+                                    <input type="text" matInput formControlName="ff0002"
+                                        placeholder="Sale Order No" >
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Purches Order No</mat-label>
+                                    <input type="text" matInput formControlName="ff0003"
+                                        placeholder="Purches Order No" >
+                                </mat-form-field>
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4">
+                                     
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Order Date </mat-label>
+                                        <input type="text" matInput formControlName="ff0004"placeholder="Order Date"
+                                         >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Oarganization Unit Code</mat-label>
+                                        <input type="text" matInput formControlName="ff0005"placeholder="Organization Unit Code"
+                                         >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Sell Unit Code</mat-label>
+                                        <input type="text" matInput formControlName="ff0006"placeholder="Sell Unit Code">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Purches Unit Code</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Purches Unit Code" >
+                                    </mat-form-field>
+                                    </div>
+                                    <div class="row no-gutters ms-1 me-1 dense-4" >
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Quantity Recived</mat-label>
+                                        <input type="text" matInput formControlName="status"  placeholder="Quantity Recived" >
+                                    </mat-form-field> 
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Quantity Consumed</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Quantity Consumed" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Avialble Quantity</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Avialble Quantity" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Lot No/ Batch No</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Lot No/ Batch No" >
+                                    </mat-form-field>
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4">
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Mfg Date</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Mfg Date" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Exp Date</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Exp Date" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Stage</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Stage" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Lot No/ Batch No</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Lot No/ Batch No" >
+                                    </mat-form-field>
+                                    </div>
+                                    <div class="row no-gutters ms-1 me-1 dense-4">
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Product No</mat-label>
+                                        <input type="text" matInput formControlName="ff0007"placeholder="Product No" >
+                                    </mat-form-field>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="col-12">
+                    <div class="p-2">
+                        <div class="row no-gutters ms-1 me-1" >
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Comments</mat-label>
+                                <textarea type="text" matInput formControlName="comments"
+                                    placeholder="Comments">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </mat-card>
+        </form>
+       
+</div>
+    </div>
+    <div class="containerBTN" style="margin-top: 26px; margin-bottom: 1px;">
+        <div  class="d-flex justify-content-center">
+
+        <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+          (click)="isUpdate ? onUpdate() : onCreate()" [class.isDisabledBtn]="DepartmentMaster.invalid">{{isUpdate ? "Update" : "Create"}}</button>
+         <button mat-raised-button color="primary"*ngIf="!isUpdate"
+          style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;"(click)="onClear()">Clear</button>
+      </div>
+</div>

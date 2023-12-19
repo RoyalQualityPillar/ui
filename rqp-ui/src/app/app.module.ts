@@ -82,6 +82,10 @@ import { AllSaleProductMasterAtComponent } from './rqp-sd/sd-master-data/sale-pr
 import { ActiveSaleProductMasterAtComponent } from './rqp-sd/sd-master-data/sale-product-master/active-sale-product-master-at/active-sale-product-master-at.component';
 import { CreateUpdateSaleProductMasterComponent } from './rqp-sd/sd-master-data/sale-product-master/create-update-sale-product-master/create-update-sale-product-master.component';
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
+import { PaymentTermHomePageComponent } from './rqp-sd/sd-master-data/payment-term/payment-term-home-page/payment-term-home-page.component';
+import { CreateUpdatePaymentTermComponent } from './rqp-sd/sd-master-data/payment-term/create-update-payment-term/create-update-payment-term.component';
+import { ActivePaymentTermATComponent } from './rqp-sd/sd-master-data/payment-term/active-payment-term-at/active-payment-term-at.component';
+import { AllPaymentTermATComponent } from './rqp-sd/sd-master-data/payment-term/all-payment-term-at/all-payment-term-at.component';
 
 
 
@@ -124,6 +128,10 @@ import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.c
     ActiveSaleProductMasterAtComponent,
     CreateUpdateSaleProductMasterComponent,
     PageNotFoundComponent,
+    PaymentTermHomePageComponent,
+    CreateUpdatePaymentTermComponent,
+    ActivePaymentTermATComponent,
+    AllPaymentTermATComponent,
   
   
     
