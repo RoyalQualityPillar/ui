@@ -5,32 +5,32 @@ import { environment } from 'src/app/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class StockLedgerService {
-  private API_URL=environment.apiBaseURL
-  constructor(private http:HttpClient ) { }
+export class PaymentTermService {
 
-
+    private API_URL=environment.apiBaseURL
+    constructor(private http:HttpClient ) { }
+  
   getAllSaleProduct(size:any,index:any){
     let queryParams=`?pageIndex=${index}&size=${size}`
-    const ALLSALEPRODUCTURL=this.API_URL+"sd/sl-master/get-all"+queryParams
+    const ALLSALEPRODUCTURL=this.API_URL+"gm/payment-terms-Master/get-all"+queryParams
    return this.http.post(ALLSALEPRODUCTURL,'')
   }
   getActiveSaleProduct(size:any,index:any){
     let queryParams=`?pageIndex=${index}&size=${size}`
-    let fetchProfileListUrlAll=this.API_URL+"sd/sl-master/get-max-all"+queryParams;
+    let fetchProfileListUrlAll=this.API_URL+"gm/payment-terms-Master/get-max-all"+queryParams;
     return this.http.post(fetchProfileListUrlAll,'')
   }
   getUserProfileFilterData(body){
-    let fetchProfileListUrlAll=this.API_URL+"sd/sl-master/search";
+    let fetchProfileListUrlAll=this.API_URL+"gm/payment-terms-Master/search";
     return this.http.post(fetchProfileListUrlAll,body,)
   }
   onLoadUpdatePage(UC0001:any){
     let queryParams=`?UC0001=${UC0001}`;
-    let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"sd/sp-master/get-by-max-code"+queryParams;
+    let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"gm/payment-terms-Master/get-by-max-code"+queryParams;
      return this.http.post(fetchAllBusinessUnitInfoApiUrl,'')
   }
   onCreate(body:any){
-    let createUserURL=this.API_URL+"sd/sp-master/save-update";
+    let createUserURL=this.API_URL+"gm/payment-terms-Master/save-update";
     return this.http.post(createUserURL,body)
 }
 }

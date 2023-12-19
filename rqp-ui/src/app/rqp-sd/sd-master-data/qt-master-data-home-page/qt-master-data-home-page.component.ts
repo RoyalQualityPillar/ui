@@ -15,4 +15,7 @@ export class QtMasterDataHomePageComponent {
   onSaleProductMaster(){
     this.router.navigate(['/sale-product-master-home-page'])
   }
+  onPaymentTerm(){
+    this.router.navigate(['/payment-term-home-page'])
+  }
 }
