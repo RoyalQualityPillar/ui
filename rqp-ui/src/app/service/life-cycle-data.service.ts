@@ -10,37 +10,19 @@ export class LifeCycleDataService {
   subMenuList:any;
   selectedRow:any;
   private API_URL=environment.apiBaseURL;
-  // private API_URL='http://103.10.234.106:8081/';
   constructor(private http:HttpClient,private cookieService:CookieService) { }
 
 
   getLifeCycleInfo(pageIndex:any,size:any){
-  
-    let token = this.cookieService.get('token');
     let userId=this.cookieService.get('userId');
     const queryParams = `?userId=${userId}&pageIndex=${pageIndex}&size=${size}`;
-    //console.log(token)
     let lifeCycleURL=this.API_URL+"login/lifecycleinfo"+queryParams;
-    const httpOptions = {
-      headers: new HttpHeaders({      
-       'Content-Type':  'application/json',
-       'Authorization': 'Bearer ' + token
-      })
-    };
-    return this.http.get(lifeCycleURL,httpOptions)
+    return this.http.get(lifeCycleURL)
   }
   getModuleName(body:any){
-    console.log(body)
-    let token = this.cookieService.get('token');
-   // console.log(token)
-    let lifeCycleURL=this.API_URL+"login/get-modules";
-    const httpOptions = {
-      headers: new HttpHeaders({      
-       'Content-Type':  'application/json',
-       'Authorization': 'Bearer ' + token
-      })
-    };
-    return this.http.post(lifeCycleURL,body,httpOptions)
+    const queryParams = `?userId=${body.userId}&lcnum=${body.lcnum}`;
+    let lifeCycleURL=this.API_URL+"login/get-modules"+queryParams;
+    return this.http.post(lifeCycleURL,'')
   }
   setSelectedRowData(selectedRow){
     this.selectedRow=selectedRow
