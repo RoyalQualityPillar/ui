@@ -467,6 +467,12 @@ export class QuotationHomePageComponent implements OnInit{
     }
     let quotationDate=this.QuotationForm.controls['quotationValidDate'].value
     let requestBody:any;
+    let draftValue:boolean;
+    if(btnStatus==1){
+      draftValue=false;
+    }else{
+      draftValue=true;
+    }
     requestBody={
       quationItemList:this.stockList,
       lcRequest: {
@@ -479,7 +485,8 @@ export class QuotationHomePageComponent implements OnInit{
         lcRole: this.headerData.role,
         stage2: 0,
         createdBy: this.headerData.createdby,
-        comments: this.QuotationForm.controls['comments'].value
+        comments: this.QuotationForm.controls['comments'].value,
+        draft:draftValue
       },
       saleUnitCode: this.ViewDetailForm.controls['salesUnitCode'].value,
       quotationValidDate:moment(this.QuotationForm.controls['quotationValidDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
@@ -496,11 +503,7 @@ export class QuotationHomePageComponent implements OnInit{
       orderStatus: this.headerData.modulecode,
       quotationStage: this.headerData.modulecode,
     }
-    if(btnStatus==1){
-      requestBody.draft=false;
-    }else{
-      requestBody.draft=true;
-    }
+   
     console.log(requestBody)
     this.isLoading=true;
     this.sdService.onSaveUpdate(requestBody).subscribe((data:any)=>{

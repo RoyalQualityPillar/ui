@@ -401,7 +401,8 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
     this.route.navigate(['./master-data-management']);
   } else if (data[0].lcnum == 'RQP1ADQALC0007') {
     this.route.navigate(['./master-data-management']);
-  }else if (data[0].ff0001 == 'Quatetion') {
+  //}else if (data[0].ff0001 == 'Quatetion') {
+  }else if (data[0].uc0001 == 'QT') {
        this.route.navigate(['./rqp-sd-module']);
   // } else if (data[0].lcnum == 'RQP1NCIQALC0002') {
   //   this.route.navigate(['./rqp-sd-module']);
