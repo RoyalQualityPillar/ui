@@ -76,13 +76,15 @@ export class HeaderComponent implements OnInit{
        this.route.navigate(['./ad-master']) 
      }else if(subMenu == 'QT-Initator'){
       this.route.navigate(['./quotation-home-page']) 
-     }else if(subMenu == 'QT-Reviewer'){
-      this.route.navigate(['./rqp-pending-assignment']) 
+    // }else if(subMenu == 'QT-Reviewer'){
+     // this.route.navigate(['./rqp-pending-assignment']) 
      }else if(subMenu == 'QT-Update'){
       this.toolbarService.currentStage=1;
       this.route.navigate(['./qt-update-page']) 
      }else if(subMenu == 'QT-Master Data'){
       this.route.navigate(['./qt-master-data-home-page']) 
+     }else if(this.toolbarService.currentStage>=2){
+      this.route.navigate(['./rqp-pending-assignment'])  
      }
     //Module routing required based on submenu
   }
