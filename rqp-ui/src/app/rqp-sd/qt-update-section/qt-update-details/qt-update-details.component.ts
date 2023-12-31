@@ -110,7 +110,7 @@ export class QtUpdateDetailsComponent implements OnInit{
   }
   headerData:any;
   getHeaderData(pageData:any){
-   // console.log(pageData);
+    console.log(pageData);
     this.headerData=pageData;
   }
   requestNoID:any;
@@ -210,7 +210,7 @@ export class QtUpdateDetailsComponent implements OnInit{
       this.previousList=data.data
       this.previousList.forEach((elements)=>{
         this.stockList.push({
-          'uc0001':elements.uc0001,
+          'itemNo':elements.uc0001,
           'ff0020':elements.ff0020,
           'productCode':elements.ff0005,
           'productName':elements.ff0006,

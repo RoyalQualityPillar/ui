@@ -43,7 +43,7 @@ export class RqpHeaderComponent implements OnInit{
     if(this.pageData.pageName=='qt-review' || 'qtUpdateDetail' ){
       this.HeaderForm.controls['requestNo'].setValue(this.pageData.requestNo);
     this.HeaderForm.controls['version'].setValue(this.pageData.version);
-
+  
     }
   
   let body:any;
@@ -63,6 +63,9 @@ export class RqpHeaderComponent implements OnInit{
     this.HeaderForm.controls['role'].setValue(this.headerDetail.role);
     this.HeaderForm.controls['stage'].setValue(this.headerDetail.stage);
     this.HeaderForm.controls['createdby'].setValue(this.headerDetail.createdby);
+    if(this.pageData.pageName=='qt-review' || 'qtUpdateDetail' ){
+    this.headerDetail.requestNo=this.pageData.requestNo
+    }
     this.headerData.emit(this.headerDetail)
     
 
