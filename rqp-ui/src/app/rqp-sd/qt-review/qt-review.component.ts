@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ESignatureComponent } from '../sd-common/e-signature/e-signature.component';
 import { ToolbarService } from 'src/app/service/toolbar.service';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { MessageService } from 'src/app/service/message.service';
 
 @Component({
   selector: 'app-qt-review',
@@ -18,6 +20,7 @@ import { ToolbarService } from 'src/app/service/toolbar.service';
 export class QtReviewComponent implements OnInit{
 
   @ViewChild(MatSort) sort:MatSort;
+  isLoading=false;
   pageName='qt-review';
   FooterForm:FormGroup;
   ViewDetailForm:FormGroup;
@@ -29,7 +32,8 @@ export class QtReviewComponent implements OnInit{
   resviewCommentsDisplayColumn:string[]=['createdby','ff0003','ff0005','comments'];
   qtListDisplayColumn:string[]=['ff0005','ff0006','ff0018','ff0007','ff0009','ff0010','ff0011','ff0012','ff0019','ff0013','ff0015','ff0016','ff0017']
   constructor(public router:ActivatedRoute,public sdService:SdService,public lifeCycleDataService:LifeCycleDataService,
-    public dialog: MatDialog,private fb:FormBuilder,private toolbarService:ToolbarService){
+    public dialog: MatDialog,private fb:FormBuilder,private toolbarService:ToolbarService,
+    public messageService:MessageService){
       this.FooterForm=this.fb.group({
          nextStage:[''],
          previousStage:['']
@@ -235,8 +239,15 @@ dialogRef.afterClosed().subscribe(result => {
       comments: this.currentComments
     }
     console.log(body)
-    this.sdService.onLcApproval(body).subscribe((data)=>{
-      console.log(data)
+    this.sdService.onLcApproval(body).subscribe((data:any)=>{
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+      }else{
+        this.messageService.sendSnackbar('success','Record updated successfully');
+      }
+      this.isLoading=false;
     })
   }
   onReject(){
@@ -265,8 +276,15 @@ dialogRef.afterClosed().subscribe(result => {
         createdBy: this.headerData.createdby,
         comments: this.currentComments
       }
-    this.sdService.onLcReject(body).subscribe((data)=>{
-      console.log(data)
+    this.sdService.onLcReject(body).subscribe((data:any)=>{
+      if(data.errorInfo !=null){
+        this.dialog.open(MessageDialogComponent, {
+          data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+        });
+      }else{
+        this.messageService.sendSnackbar('success','Record updated successfully');
+      }
+      this.isLoading=false;
     })
   }
 }
