@@ -301,6 +301,7 @@ dialogRef.afterClosed().subscribe(result => {
       if(body.stage2=='' || body.stage2==undefined || body.stage2==null){
         body.stage2=0;
       }
+      
     this.sdService.onLcReject(body).subscribe((data:any)=>{
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
