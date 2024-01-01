@@ -208,6 +208,12 @@ export class QtReviewComponent implements OnInit{
 
 
   onSubmit(){
+    if(this.currentComments=='' || this.currentComments==null || this.currentComments==undefined){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'please add comments', 'heading': "Error Information" }
+      });
+      return;
+    }
 const dialogRef = this.dialog.open(ESignatureComponent, {
   height: "300px",
   width: "600px",
@@ -229,6 +235,7 @@ dialogRef.afterClosed().subscribe(result => {
     this.currentComments=event
   }
   onCallSubmitApi(){
+   
     let body={
       lcNumber:this.headerData.lcnum,
       lcrqNumber:this.pageData.requestNo,
@@ -238,19 +245,34 @@ dialogRef.afterClosed().subscribe(result => {
       createdBy: this.headerData.createdby,
       comments: this.currentComments
     }
+    if(body.stage2=='' || body.stage2==undefined){
+      body.stage2=0;
+    }
     console.log(body)
     this.sdService.onLcApproval(body).subscribe((data:any)=>{
+      console.log(data)
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
           data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
         });
       }else{
-        this.messageService.sendSnackbar('success','Record updated successfully');
+        this.messageService.sendSnackbar('success','Record inserted successfully');
       }
       this.isLoading=false;
+    },
+    (error:any)=>{
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': error, 'heading': "Error Information" }
+      });
     })
   }
   onReject(){
+    if(this.currentComments=='' || this.currentComments==null || this.currentComments==undefined){
+      this.dialog.open(MessageDialogComponent, {
+        data: { 'message': 'please add comments', 'heading': "Error Information" }
+      });
+      return;
+    }
     const dialogRef = this.dialog.open(ESignatureComponent, {
       height: "300px",
       width: "600px",
@@ -276,6 +298,7 @@ dialogRef.afterClosed().subscribe(result => {
         createdBy: this.headerData.createdby,
         comments: this.currentComments
       }
+     
     this.sdService.onLcReject(body).subscribe((data:any)=>{
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
