@@ -86,6 +86,22 @@ import { PaymentTermHomePageComponent } from './rqp-sd/sd-master-data/payment-te
 import { CreateUpdatePaymentTermComponent } from './rqp-sd/sd-master-data/payment-term/create-update-payment-term/create-update-payment-term.component';
 import { ActivePaymentTermATComponent } from './rqp-sd/sd-master-data/payment-term/active-payment-term-at/active-payment-term-at.component';
 import { AllPaymentTermATComponent } from './rqp-sd/sd-master-data/payment-term/all-payment-term-at/all-payment-term-at.component';
+import { PriceTypeHomePageComponent } from './rqp-sd/sd-master-data/price-type/price-type-home-page/price-type-home-page.component';
+import { CreateUpdatePriceTypeComponent } from './rqp-sd/sd-master-data/price-type/create-update-price-type/create-update-price-type.component';
+import { AllPriceTypeAtComponent } from './rqp-sd/sd-master-data/price-type/all-price-type-at/all-price-type-at.component';
+import { ActivePriceTypeAtComponent } from './rqp-sd/sd-master-data/price-type/active-price-type-at/active-price-type-at.component';
+import { PriceMasterHomePageComponent } from './rqp-sd/sd-master-data/price-master/price-master-home-page/price-master-home-page.component';
+import { CreateUpdatePriceMasterComponent } from './rqp-sd/sd-master-data/price-master/create-update-price-master/create-update-price-master.component';
+import { AllPriceMasterAtComponent } from './rqp-sd/sd-master-data/price-master/all-price-master-at/all-price-master-at.component';
+import { ActivePriceMasterAtComponent } from './rqp-sd/sd-master-data/price-master/active-price-master-at/active-price-master-at.component';
+import { DosageFormHomePageComponent } from './rqp-sd/sd-master-data/dosage-form/dosage-form-home-page/dosage-form-home-page.component';
+import { CreateUpdateDosageFormComponent } from './rqp-sd/sd-master-data/dosage-form/create-update-dosage-form/create-update-dosage-form.component';
+import { AllDosageFormAtComponent } from './rqp-sd/sd-master-data/dosage-form/all-dosage-form-at/all-dosage-form-at.component';
+import { ActiveDosageFormAtComponent } from './rqp-sd/sd-master-data/dosage-form/active-dosage-form-at/active-dosage-form-at.component';
+import { NumberingSystemHomePageComponent } from './rqp-sd/sd-master-data/numbering-system/numbering-system-home-page/numbering-system-home-page.component';
+import { CreateUpdateNumberingSystemComponent } from './rqp-sd/sd-master-data/numbering-system/create-update-numbering-system/create-update-numbering-system.component';
+import { AllNumberingSystemAtComponent } from './rqp-sd/sd-master-data/numbering-system/all-numbering-system-at/all-numbering-system-at.component';
+import { ActiveNumberingSystemAtComponent } from './rqp-sd/sd-master-data/numbering-system/active-numbering-system-at/active-numbering-system-at.component';
 
 
 
@@ -132,6 +148,22 @@ import { AllPaymentTermATComponent } from './rqp-sd/sd-master-data/payment-term/
     CreateUpdatePaymentTermComponent,
     ActivePaymentTermATComponent,
     AllPaymentTermATComponent,
+    PriceTypeHomePageComponent,
+    CreateUpdatePriceTypeComponent,
+    AllPriceTypeAtComponent,
+    ActivePriceTypeAtComponent,
+    PriceMasterHomePageComponent,
+    CreateUpdatePriceMasterComponent,
+    AllPriceMasterAtComponent,
+    ActivePriceMasterAtComponent,
+    DosageFormHomePageComponent,
+    CreateUpdateDosageFormComponent,
+    AllDosageFormAtComponent,
+    ActiveDosageFormAtComponent,
+    NumberingSystemHomePageComponent,
+    CreateUpdateNumberingSystemComponent,
+    AllNumberingSystemAtComponent,
+    ActiveNumberingSystemAtComponent,
   
   
     

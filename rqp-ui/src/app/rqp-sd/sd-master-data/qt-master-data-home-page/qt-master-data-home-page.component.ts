@@ -18,4 +18,16 @@ export class QtMasterDataHomePageComponent {
   onPaymentTerm(){
     this.router.navigate(['/payment-term-home-page'])
   }
+  onPriceType(){
+    this.router.navigate(['/price-type-home-page'])
+  }
+  onPriceMaster(){
+    this.router.navigate(['/price-master-home-page'])
+  }
+  onDosageForm(){
+    this.router.navigate(['./dosage-from-home-page'])
+  }
+  onNumberingSystem(){
+    this.router.navigate(['./numbering-system-home-page'])
+  }
 }

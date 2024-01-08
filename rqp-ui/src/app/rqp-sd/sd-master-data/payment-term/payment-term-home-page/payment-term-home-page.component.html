@@ -37,49 +37,24 @@
                                 <mat-radio-button name="selectrow" (change)="setSelectedAllID(row)"></mat-radio-button></mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="uc0001">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Stock Item No</mat-header-cell>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Payment Terms Code</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="ff0001">
-                              <mat-header-cell *matHeaderCellDef mat-sort-header>Product Code</mat-header-cell>
+                              <mat-header-cell *matHeaderCellDef mat-sort-header>Payment Terms Description</mat-header-cell>
                               <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
                           </ng-container>
                             <ng-container matColumnDef="ff0002">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Sale Order No</mat-header-cell>
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
                                 <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
                             </ng-container>
-                            <ng-container matColumnDef="ff0003">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Purches Order No</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{onChangeStatus(row.status)}} </mat-cell>
                             </ng-container>
-                            <ng-container matColumnDef="ff0004">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Order Date </mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0004}} </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ff0005">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Organization Unit Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0005}} </mat-cell>
-                            </ng-container>
-                          
-                            <ng-container matColumnDef="ff0006">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Sell Unit Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0006}} </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ff0007">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Purches Unit Code</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0007}} </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ff0008">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Recived</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0008}} </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ff0009">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Consumed</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0009}} </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ff0010">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header>Avialble Quantity</mat-header-cell>
-                                <mat-cell *matCellDef="let row"> {{row.ff0010}} </mat-cell>
+                            <ng-container matColumnDef="version">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
                             </ng-container>
                             <mat-header-row *matHeaderRowDef="alldisplayedColumns"></mat-header-row>
                             <mat-row *matRowDef="let row; columns:alldisplayedColumns"></mat-row>
@@ -104,17 +79,11 @@
                         <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
                         <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" (change)="onChangeSelctedField()">
                           <option value="SELECT">Please select field</option>
-                          <option value="uc0001">Stock Item No</option>
-                          <option value="ff0001">Product Code</option>
-                      <option value="ff0002">Sale Order No</option>
-                      <option value="ff0003">Purches Order No</option>
-                      <option value="ff0004">Order Date</option>
-                      <option value="ff0005">Organization Unit Code</option>
-                      <option value="ff0006"> Sell Unit Code</option>
-                      <option value="ff0007"> Purches Unit Code</option>
-                      <option value="ff0008"> Quantity Recived</option>
-                      <option value="ff0009"> Quantity Consumed</option>
-                      <option value="ff0010"> Avialble Quantity</option>
+                          <option value="uc0001">Payment Terms Code</option>
+                          <option value="ff0001">Payment Terms Description</option>
+                      <option value="ff0002">Business Unit Code</option>
+                      <option value="status">Status</option>
+                      <option value="version"> Version</option>
                         </select>
                         <div *ngIf="(this.filterObject.field != 'ff0004')">
                         <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
@@ -224,50 +193,25 @@
                         <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell> 
                     </ng-container> 
                     <ng-container matColumnDef="uc0001">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Stock Item No</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0001">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header>Product Code</mat-header-cell>
-                      <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Payment Terms Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
                   </ng-container>
-                    <ng-container matColumnDef="ff0002">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Sale Order No</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0003">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Purches Order No</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0004">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Order Date </mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0004}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0005">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Organization Unit Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0005}} </mat-cell>
-                    </ng-container>
-                  
-                    <ng-container matColumnDef="ff0006">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Sell Unit Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0006}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0007">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Purches Unit Code</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0007}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0008">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Recived</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0008}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0009">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Consumed</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0009}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ff0010">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Avialble Quantity</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.ff0010}} </mat-cell>
-                    </ng-container>
+                  <ng-container matColumnDef="ff0001">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Payment Terms Description</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+                </ng-container>
+                  <ng-container matColumnDef="ff0002">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Business Unit Code</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{onChangeStatus(row.status)}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="version">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
+                      <mat-cell *matCellDef="let row"> {{row.version}} </mat-cell>
+                  </ng-container>
                     <mat-header-row *matHeaderRowDef="activedisplayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns:activedisplayedColumns"></mat-row>
                 </mat-table>
@@ -291,18 +235,11 @@
                     <span *ngIf= "this.activeUserFilterValueError" class="errorMsg">Please enter filter field value</span>
                     <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.field" (change)="onChangeActiveSelctedField()">
                       <option value="SELECT">Please select field</option>
-                      <option value="SELECT">Please select field</option>
-                      <option value="uc0001">Stock Item No</option>
-                      <option value="ff0001">Product Code</option>
-                      <option value="ff0002">Sale Order No</option>
-                      <option value="ff0003">Purches Order No</option>
-                      <option value="ff0004">Order Date</option>
-                      <option value="ff0005">Organization Unit Code</option>
-                      <option value="ff0006"> Sell Unit Code</option>
-                      <option value="ff0007"> Purches Unit Code</option>
-                      <option value="ff0008"> Quantity Recived</option>
-                      <option value="ff0009"> Quantity Consumed</option>
-                      <option value="ff0010"> Avialble Quantity</option>
+                      <option value="uc0001">Payment Terms Code</option>
+                      <option value="ff0001">Payment Terms Description</option>
+                      <option value="ff0002">Business Unit Code</option>
+                      <option value="status">Status</option>
+                      <option value="version"> Version</option>
                     </select>
                     <div *ngIf="(this.activeUserFilterObject.field != 'ff0004')">
                     <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="activeUserFilterObject.condition">

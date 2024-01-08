@@ -22,6 +22,7 @@ import { PaymentTermService } from '../payment-term.service';
 import { CreateUpdatePaymentTermComponent } from '../create-update-payment-term/create-update-payment-term.component';
 import { AllPaymentTermATComponent } from '../all-payment-term-at/all-payment-term-at.component';
 import { ActivePaymentTermATComponent } from '../active-payment-term-at/active-payment-term-at.component';
+import { changeStatusByCode, changeStatusByDescription } from 'src/app/common/removeEmptyStrings';
 
 
 @Component({
@@ -35,8 +36,8 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
   @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
-  alldisplayedColumns: string[] = ['action', 'uc0001', 'ff0001','ff0002','ff0003','ff0004','ff0005','ff0006','ff0007','ff0008','ff0009','ff0010'];
-  activedisplayedColumns: string[] = ['action', 'uc0001', 'ff0001','ff0002','ff0003','ff0004','ff0005','ff0006','ff0007','ff0008','ff0009','ff0010'];
+  alldisplayedColumns: string[] = ['action', 'uc0001', 'ff0001','ff0002','status','version'];
+  activedisplayedColumns: string[] = ['action', 'uc0001', 'ff0001','ff0002','status','version'];
   isLoading=false;
   pageIndex:number;
   size:number;
@@ -52,7 +53,6 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
     filterObject:any;
     activeUserFilterObject:any;
     ngOnInit(): void {
-      console.log("Bharat")
       this.filterObject = {
         "field": "SELECT",
         "value": "",
@@ -103,7 +103,6 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
   }
   currentApiResLength:any;
   pageChanged(event){
-    console.log(event)
     if(this.currentApiResLength==GlobalConstants.size){
       if(event.length-((event.pageIndex+1)*(event.pageSize))==0||(event.length<event.pageSize)){
         this.onPaginationCall();
@@ -183,28 +182,23 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
     this.filterFieldError=false
     this.filterValueError=false;
     if(this.filterObject.field==''|| this.filterObject.field==null || this.filterObject.field==undefined ||this.filterObject.field=='SELECT'){
-      console.log('test1')
       this.filterFieldError=true;
       return;
     }
     if(this.filterObject.value==''|| this.filterObject.value==null || this.filterObject.value==undefined){
-      console.log('test2')
       if(this.filterObject.field !='createdon'){
       this.filterValueError=true;
       return;
     }else if(this.filterObject.DateFieldvalue1==''){
-      console.log('test4')
         this.filterValueError=true;
         return;
     }else{
-      console.log('test6')
     }
     }
   
     let field=this.filterObject.field;
     let value=this.filterObject.value;  
     let condition=this.filterObject.condition;
-    console.log('field = '+field+' value = '+value);
     let filetrDataBody={
       field:'',
       value1: '',
@@ -224,7 +218,6 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
     }
     this.isLoading=true;
     this.paymentTermService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
-      console.log(data)
       if(data.data){
       this.dataSource=data.data;
       this.currentApiResLength=data.data.length;
@@ -278,7 +271,6 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
     }
     activeUsertableData:any;
     activeUserApplyFilter(filterValue: string) {
-      console.log(filterValue)
       filterValue = filterValue.trim();
       filterValue = filterValue.toLowerCase(); 
       this.activeUsertableData.filter = filterValue;
@@ -328,7 +320,6 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
         } 
     }
     onChangeSelctedField(){
-      console.log('testing')
       if(this.filterObject.field!='createdon'){
         this.filterObject.condition='equals'
       }else{
@@ -336,7 +327,6 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
       }
     }
     onChangeActiveSelctedField(){
-      console.log('testing')
       if(this.activeUserFilterObject.field!='createdDate'){
         this.activeUserFilterObject.condition='equals'
       }else{
@@ -349,33 +339,25 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
     applyActiveUserFilterByColumn(){
       this.activeUserFilterFieldError=false
       this.activeUserFilterValueError=false;
-      console.log(this.activeUserFilterObject.field)
       if(this.activeUserFilterObject.field==''|| this.activeUserFilterObject.field==null || this.activeUserFilterObject.field==undefined ||this.activeUserFilterObject.field=='SELECT'){
-        console.log('test1')
         this.activeUserFilterFieldError=true;
         return;
       }
       
       if(this.activeUserFilterObject.value==''|| this.activeUserFilterObject.value==null || this.activeUserFilterObject.value==undefined){
-        console.log('test2')
         if(this.activeUserFilterObject.field !='createdon'){
-          console.log('test3')
         this.activeUserFilterValueError=true;
         return;
         }else if(this.activeUserFilterObject.DateFieldvalue1==''){
-          console.log('test4')
             this.activeUserFilterValueError=true;
             return;
         }else{
-          console.log('test6')
         }
       }
     
       let field=this.activeUserFilterObject.field;
       let value=this.activeUserFilterObject.value;  
       let condition=this.activeUserFilterObject.condition;
-      
-      console.log('field = '+field+' value = '+value);
       let filetrDataBody={
         field:'',
         value1: '',
@@ -392,11 +374,9 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
       }
       this.isLoading=true;
       this.paymentTermService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
-        console.log(data)
         if(data.data){
         this.activeUserDataSource=data.data;
         this.currentActiveUserApiResLength=data.data.length;
-        console.log(this.currentActiveUserApiResLength)
           this.activeUserCopiedData = JSON.stringify(this.activeUserDataSource);
           this.activeUsertableData = new MatTableDataSource(this.activeUserDataSource);
           this.activeUsertableData.paginator = this.paginator.toArray()[1];
@@ -429,38 +409,36 @@ export class PaymentTermHomePageComponent implements OnInit,AfterViewInit{
       let arrExcel=[];
       for(var i=0, len=excelData.length; i<len; i++){
         arrExcel.push({
-          "Product No":excelData[i].uc0001,
-          "Product Code":excelData[i].ff0001,
-          "Product Name":excelData[i].ff0002,
-          "Brand Name":excelData[i].ff0003,
-          "Plant Code":excelData[i].ff0004,
-          "Product Categoty":excelData[i].ff0005,  
-          " Dosage Form":excelData[i].ff0006,
+          "Payment Terms Code":excelData[i].uc0001,
+          "Payment Terms Description":excelData[i].ff0001,
+          "Business Unit Code":excelData[i].ff0002,
+          "Status":this.onChangeStatus(excelData[i].status),
+          "Version":excelData[i].version,
+          "Comments":excelData[i].comments, 
         })
       }
-      exportData(arrExcel,'sale','sale','txt')
+      exportData(arrExcel,'payment','payment','txt')
 }
 downloadCsvFile() {
   let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
   let arrExcel=[];
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
-      "Product No":excelData[i].uc0001,
-      "Product Code":excelData[i].ff0001,
-      "Product Name":excelData[i].ff0002,
-      "Brand Name":excelData[i].ff0003,
-      "Plant Code":excelData[i].ff0004,
-      "Product Categoty":excelData[i].ff0005,  
-      "Dosage Form":excelData[i].ff0006,
+      "Payment Terms Code":excelData[i].uc0001,
+      "Payment Terms Description":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":this.onChangeStatus(excelData[i].status),
+      "Version":excelData[i].version,
+      "Comments":excelData[i].comments, 
     })
   }
-  exportData(arrExcel,'sale','sale','csv')
+  exportData(arrExcel,'payment','payment','csv')
 }
 
 
 totalRow:any;
 downloadPdf() {
- let header: string[] = ['Product No', 'Product Code', 'Product Name', 'Brand Name','Plant Code','Product Categoty','Dosage Form'];
+ let header: string[] = ['Payment Terms Code', 'Payment Terms Description', 'Business Unit Code', 'Status','Version'];
  this.totalRow=0;
  var img = new Image();
  img.src = 'assets/logo1.png'
@@ -473,10 +451,8 @@ downloadPdf() {
    'uc0001':any;
    'ff0001':any;
    'ff0002':any;
-   'ff0003':any;
-   'ff0004':any;     
-   'ff0005':any;
-   'ff0006':any;
+   'status':any;
+   'version':any;   
 
 
  }) => {
@@ -484,10 +460,8 @@ downloadPdf() {
      element['uc0001'],
      element['ff0001'],
      element['ff0002'],
-     element['ff0003'],
-     element['ff0004'],
-     element['ff0005'],    
-     element['ff0006'],
+     element['status'],
+     element['version'],
 
    ];
    rows.push(temp);
@@ -495,7 +469,7 @@ downloadPdf() {
  doc.setFillColor(255, 128,0);
  doc.rect(5, 24, 200, 8, "F");
  doc.setFontSize(14); 
- doc.text("Sale", 88, 30);
+ doc.text("Payment", 88, 30);
  doc.addImage(img, 'gif', 170, 5, 30, 15);
  autoTable(doc, {
    head: col,
@@ -510,7 +484,7 @@ downloadPdf() {
 
    }
  });
- let fileName='sale-list';
+ let fileName='payment';
  doc.save(fileName + '.pdf');
 }
 
@@ -519,16 +493,15 @@ let excelData=JSON.parse(JSON.stringify(this.tableData.filteredData))
 let arrExcel=[];
 for(var i=0, len=excelData.length; i<len; i++){
  arrExcel.push({
-  "Product No":excelData[i].uc0001,
-  "Product Code":excelData[i].ff0001,
-  "Product Name":excelData[i].ff0002,
-  "Brand Name":excelData[i].ff0003,
-  "Plant Code":excelData[i].ff0004,
-  "Product Categoty":excelData[i].ff0005,  
-  " Dosage Form":excelData[i].ff0006,
+  "Payment Terms Code":excelData[i].uc0001,
+  "Payment Terms Description":excelData[i].ff0001,
+  "Business Unit Code":excelData[i].ff0002,
+  "Status":this.onChangeStatus(excelData[i].status),
+  "Version":excelData[i].version,
+  "Comments":excelData[i].comments, 
  })
 }
-exportData(arrExcel,'sale','sale','excel')
+exportData(arrExcel,'payment','payment','excel')
 }
 
 activeUserCopyData(){
@@ -559,16 +532,15 @@ activeUserDownloadTxt(){
   let arrExcel=[];
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
-      "Product No":excelData[i].uc0001,
-      "Product Code":excelData[i].ff0001,
-      "Product Name":excelData[i].ff0002,
-      "Brand Name":excelData[i].ff0003,
-      "Plant Code":excelData[i].ff0004,
-      "Product Categoty":excelData[i].ff0005,  
-      "Dosage Form":excelData[i].ff0006,
+      "Payment Terms Code":excelData[i].uc0001,
+      "Payment Terms Description":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":this.onChangeStatus(excelData[i].status),
+      "Version":excelData[i].version,
+      "Comments":excelData[i].comments, 
     })
   }
-  exportData(arrExcel,'sale','sale','txt')
+  exportData(arrExcel,'payement','payement','txt')
 }
 activeUserDownloadCsvFile(){
 
@@ -576,20 +548,19 @@ activeUserDownloadCsvFile(){
   let arrExcel=[];
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
-      "Product No":excelData[i].uc0001,
-      "Product Code":excelData[i].ff0001,
-      "Product Name":excelData[i].ff0002,
-      "Brand Name":excelData[i].ff0003,
-      "Plant Code":excelData[i].ff0004,
-      "Product Categoty":excelData[i].ff0005,  
-      "Dosage Form":excelData[i].ff0006,
+      "Payment Terms Code":excelData[i].uc0001,
+      "Payment Terms Description":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":this.onChangeStatus(excelData[i].status),
+      "Version":excelData[i].version,
+      "Comments":excelData[i].comments, 
     })
   }
-  exportData(arrExcel,'pack','pack','csv')
+  exportData(arrExcel,'payement','payment','csv')
  }
  
  activeUserDownloadPdf(){
-  let header: string[] =  ['Product No', 'Product Code', 'Product Name', 'Brand Name','Plant Code','Product Categoty','Dosage Form'];
+  let header: string[] = ['Payment Terms Code', 'Payment Terms Description', 'Business Unit Code', 'Status','Version'];
  this.totalRow=0;
  var img = new Image();
  img.src = 'assets/logo1.png'
@@ -602,19 +573,15 @@ activeUserDownloadCsvFile(){
   'uc0001':any;
   'ff0001':any;
   'ff0002':any;
-  'ff0003':any;
-  'ff0004':any;     
-  'ff0005':any;
-  'ff0006':any;
+  'status':any;
+  'version':any;  
 }) => {
   var temp = [
     element['uc0001'],
      element['ff0001'],
      element['ff0002'],
-     element['ff0003'],
-     element['ff0004'],
-     element['ff0005'],    
-     element['ff0006'],
+     element['status'],
+     element['version'],
 
    ];
    rows.push(temp);
@@ -622,7 +589,7 @@ activeUserDownloadCsvFile(){
  doc.setFillColor(255, 128,0);
  doc.rect(5, 24, 200, 8, "F");
  doc.setFontSize(14); 
- doc.text("Sale", 86, 30);
+ doc.text("Payment", 86, 30);
  doc.addImage(img, 'gif', 170, 5, 30, 15);
  autoTable(doc, {
    head: col,
@@ -637,7 +604,7 @@ activeUserDownloadCsvFile(){
 
    }
  });
- let fileName='sale-list';
+ let fileName='payment';
  doc.save(fileName + '.pdf');
 }
 activeUserDownloadExcel1(){
@@ -645,31 +612,33 @@ activeUserDownloadExcel1(){
   let arrExcel=[];
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
-      "Product No":excelData[i].uc0001,
-      "Product Code":excelData[i].ff0001,
-      "Product Name":excelData[i].ff0002,
-      "Brand Name":excelData[i].ff0003,
-      "Plant Code":excelData[i].ff0004,
-      "Product Categoty":excelData[i].ff0005,  
-      "Dosage Form":excelData[i].ff0006,
+      "Payment Terms Code":excelData[i].uc0001,
+      "Payment Terms Description":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":this.onChangeStatus(excelData[i].status),
+      "Version":excelData[i].version,
+      "Comments":excelData[i].comments, 
     })
   }
-  exportData(arrExcel,'sale','sale','csv')
+  exportData(arrExcel,'payment','payement','csv')
  }
  activeUserDownloadExcel(){ 
   let excelData=JSON.parse(JSON.stringify(this.activeUsertableData.filteredData))
   let arrExcel=[];
   for(var i=0, len=excelData.length; i<len; i++){
     arrExcel.push({
-      "Product No":excelData[i].uc0001,
-      "Product Code":excelData[i].ff0001,
-      "Product Name":excelData[i].ff0002,
-      "Brand Name":excelData[i].ff0003,
-      "Plant Code":excelData[i].ff0004,
-      "Product Categoty":excelData[i].ff0005,  
-      "Dosage Form":excelData[i].ff0006,
+      "Payment Terms Code":excelData[i].uc0001,
+      "Payment Terms Description":excelData[i].ff0001,
+      "Business Unit Code":excelData[i].ff0002,
+      "Status":this.onChangeStatus(excelData[i].status),
+      "Version":excelData[i].version,
+      "Comments":excelData[i].comments, 
     })
   }
-  exportData(arrExcel,'sale','sale','excel')
+  exportData(arrExcel,'payement','payement','excel')
+}
+
+onChangeStatus(statusCode:any){
+  return changeStatusByCode(statusCode)
 }
 }

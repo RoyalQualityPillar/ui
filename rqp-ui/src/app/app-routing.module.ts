@@ -42,6 +42,10 @@ import { enableDebugTools } from '@angular/platform-browser';
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
 import { QtUpdateDetailsComponent } from './rqp-sd/qt-update-section/qt-update-details/qt-update-details.component';
 import { PaymentTermHomePageComponent } from './rqp-sd/sd-master-data/payment-term/payment-term-home-page/payment-term-home-page.component';
+import { PriceTypeHomePageComponent } from './rqp-sd/sd-master-data/price-type/price-type-home-page/price-type-home-page.component';
+import { PriceMasterHomePageComponent } from './rqp-sd/sd-master-data/price-master/price-master-home-page/price-master-home-page.component';
+import { DosageFormHomePageComponent } from './rqp-sd/sd-master-data/dosage-form/dosage-form-home-page/dosage-form-home-page.component';
+import { NumberingSystemHomePageComponent } from './rqp-sd/sd-master-data/numbering-system/numbering-system-home-page/numbering-system-home-page.component';
 
 const routes: Routes = [
   {path:"",redirectTo:"/login",pathMatch:'full'},
@@ -88,7 +92,10 @@ const routes: Routes = [
   {path:"qt-update-page",component:QtUpdateComponent,canActivate:[AuthGuard]},
   {path:"qt-update-details",component:QtUpdateDetailsComponent,canActivate:[AuthGuard]},
   {path:"payment-term-home-page",component:PaymentTermHomePageComponent,canActivate:[AuthGuard]},
-
+  {path:"price-type-home-page",component:PriceTypeHomePageComponent,canActivate:[AuthGuard]},
+  {path:"price-master-home-page",component:PriceMasterHomePageComponent,canActivate:[AuthGuard]},
+  {path:"dosage-from-home-page",component:DosageFormHomePageComponent,canActivate:[AuthGuard]},
+  {path:"numbering-system-home-page",component:NumberingSystemHomePageComponent,canActivate:[AuthGuard]},
 
   {path:"**",component:PageNotFoundComponent}
 ];

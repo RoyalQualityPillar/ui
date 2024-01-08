@@ -276,6 +276,17 @@ mat-row:nth-child(odd) {
   cursor: pointer;
 }
 
+/********************NEW MESSAGE **********************************************/
+.messages-container {
+  display: flex;
+  color: #a94442;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  font-family: Roboto;
+  position: relative;
+}
+
 
 
 

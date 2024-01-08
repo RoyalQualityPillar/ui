@@ -33,4 +33,9 @@ export class PaymentTermService {
     let createUserURL=this.API_URL+"gm/payment-terms-Master/save-update";
     return this.http.post(createUserURL,body)
 }
+onAllRoleAuditTrail(uc0001:any){
+  let queryParams=`?UC0001=${uc0001}`
+    const ALLSALEPRODUCTURL=this.API_URL+"gm/payment-terms-Master/get-by-code-all"+queryParams
+   return this.http.get(ALLSALEPRODUCTURL)
+}
 }
