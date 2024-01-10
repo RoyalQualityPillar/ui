@@ -34,13 +34,13 @@ export function changeStatusByCode(statusCode){
 }
 export function changeStatusByDescription(statusDesc){
     if(statusDesc=='ACTIVE'){
-        return 10001
+        return 1001
     }else if(statusDesc=='LOCKED'){
-        return 10004
+        return 1004
     }else if(statusDesc=='UNLOCKED'){
-        return 10005
+        return 1005
     }else if(statusDesc=='DISABLE'){
-        return 10006
+        return 1006
     }else{
         return ''
     }
