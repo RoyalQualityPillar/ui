@@ -69,22 +69,25 @@ export class HeaderComponent implements OnInit{
     if(subMenu =='CC-Cross Functional Reviewer'){
       this.route.navigate(['./master-data-management'])
     }else if(subMenu == 'CC-QA Approver'){
-      this.route.navigate(['./quotation-home-page']) 
+      this.route.navigate(['./sd/quotation-home-page']) 
     }else if(subMenu == 'AD-Administrator'){
-      this.route.navigate(['./ad-administrator']) 
+      console.log('working')
+      //this.route.navigate(['./admin/ad-administrator']) 
+      this.route.navigate(['./admin/ad-administrator']) 
     }else if(subMenu == 'AD-Master Data'){ 
-       this.route.navigate(['./ad-master']) 
+      console.log('working')
+       this.route.navigate(['./admin/ad-master']) 
      }else if(subMenu == 'QT-Initator'){
-      this.route.navigate(['./quotation-home-page']) 
+      this.route.navigate(['./sd/quotation-home-page']) 
     // }else if(subMenu == 'QT-Reviewer'){
      // this.route.navigate(['./rqp-pending-assignment']) 
      }else if(subMenu == 'QT-Update'){
       this.toolbarService.currentStage=1;
-      this.route.navigate(['./qt-update-page']) 
+      this.route.navigate(['./sd/qt-update-page']) 
      }else if(subMenu == 'QT-Master Data'){
-      this.route.navigate(['./qt-master-data-home-page']) 
+      this.route.navigate(['./sd/qt-master-data-home-page']) 
      }else if(this.toolbarService.currentStage>=2){
-      this.route.navigate(['./rqp-pending-assignment'])  
+      this.route.navigate(['./sd/rqp-pending-assignment'])  
      }
     //Module routing required based on submenu
   }

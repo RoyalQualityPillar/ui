@@ -156,83 +156,15 @@ mat-row:nth-child(odd) {
   background-color :rgb(204 217 255);
    
    }
-   mat-header-cell {
-     color: white;
-     padding: 4px;
-     display: -ms-flexbox;
-     display: -webkit-flex;
-     display: flex;
-     -webkit-align-self: stretch;
-     -ms-flex-item-align: stretch;
-     -ms-flex-item-justify: stretch;
-     align-self: stretch;
-     /* align-items center so that cell content is vertically centered */
-     -webkit-align-items: center;
-     -ms-flex-align: center;
-     align-items: center;
-     justify-content: center;
-     text-align: center;
-     border: 1px solid  #C0C0C0;;
-     font-size: 10px;
-     font-weight: 550;
-   }
+
    mat-header-cell{
      text-align: center !important;
-     
     }
-     mat-header-row{
-     /* // background-color: #6E9CCD; */
-      /* background-color: #135499;
-      color: white; */
-      background: #369 !important;
-      min-height: min-content;
-      border-bottom: 1;;
- 
-    }
+
    
-   mat-cell {
-     word-break: unset;
-     padding: 4px;
-     display: -ms-flexbox;
-     display: -webkit-flex;
-     display: flex;
-     -webkit-align-self: stretch;
-     -ms-flex-item-align: stretch;
-     align-self: stretch;
-     /* align-items center so that cell content is vertically centered */
-     -webkit-align-items: center;
-     -ms-flex-align: center;
-     align-items: center;
-     justify-items: center;
-     border: 1px solid  #C0C0C0;
-     
-     
-   }
-   mat-row{
-     min-height: min-content;
-     //border: 1px;
-   }
-   mat-card-header-text{
-     padding: 0px;
-   }
-   mat-cell, mat-footer-cell {
-     font-size: 10px;
-     line-height: 10px;
-     font-weight: 600;
-    // border: 1px;
-    //border: 1px solid springgreen;
-    border-bottom: 1px solid;
-    
-   }
-   button{
-       margin: 5px;
-   }
-   mat-footer-row {
-     border: 1px solid #e7e7e7;
-     font-weight: bold;
-     height: 10px !important;
-     
- }
+ 
+
+
  .containerBTN {
   background-color: #9fbce9;
   padding: 10px 0 !important;
@@ -286,8 +218,100 @@ mat-row:nth-child(odd) {
   font-family: Roboto;
   position: relative;
 }
+/*******************NEW CSS ADDED (08-01-2024)*********************************************/
+    .adjust{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: space-between;
+      }
+      .input-group-addon{color:#ff0000; background-color: #ffffff;}
 
+      mat-header-cell {
+        color: white !important;
+        padding: 4px;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-self: stretch;
+        -ms-flex-item-align: stretch;
+        -ms-flex-item-justify: stretch;
+        align-self: stretch;
+        /* align-items center so that cell content is vertically centered */
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: 1px solid  #C0C0C0;;
+        font-size: 10px;
+        font-weight: 550;
+      }
+  mat-footer-row {
+    border: 1px solid #e7e7e7;
+    font-weight: bold;
+    height: 10px !important;   
+}
+ mat-cell, mat-footer-cell {
+    font-size: 10px;
+    line-height: 10px;
+    font-weight: 600;
+   border-bottom: 1px solid;
+  }
+  mat-row{
+    min-height: min-content;
+  }
+  mat-card-header-text{
+    padding: 0px;
+  }
+ mat-cell {
+    word-break: unset;
+    padding: 4px;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-self: stretch;
+    -ms-flex-item-align: stretch;
+    align-self: stretch;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    justify-items: center;
+    border: 1px solid  #C0C0C0;
+  }
 
+     mat-header-row{
+     background: #369 !important;
+     min-height: min-content;
+     border-bottom: 1;;
 
+   }
+   .table-box{
+    box-shadow: 0px 0px 2px 2px #b6b5c0;
+    padding: 0px;
+    margin-top: 9px;
+  }
+     .headers{
+        background:#474668;
+        color: white;
+        font-size: 12px;
+        font-weight: 550;
+        padding-left: 5px;
+        padding-top: 4px;
+        }
+       .exportIconBtn{
+        background-color: Transparent;
+         background-repeat:no-repeat;
+         border: none;
+      }
+      .exportIcon{
+        height: 20px;
+        width: 20px;
+      }
 
-
+  .errorMsg{
+    color: red;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: monospace;
+  }       
