@@ -176,7 +176,7 @@ onClearFilter(){
 }
 onSubmit(){
   console.log(this.selectedRow)
-   this.router.navigate(['./qt-update-details'],{queryParams:this.selectedRow})
+   this.router.navigate(['./sd/qt-update-details'],{queryParams:this.selectedRow})
 }
 copyData() {
   var dataArray = "";

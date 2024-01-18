@@ -1,0 +1,65 @@
+<app-dms-common-header [pageData]="this.pageData"  (headerData)="getHeaderData($event)"></app-dms-common-header>
+
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Document Details</p>
+        </div>
+    </div>
+</mat-card>
+<div class="row no-gutters ms-1 me-1"style="padding-top:5px">
+    <div class="col-3 px-1" >
+      Document Type  
+    </div>
+    <div class="col-3 px-1" >
+        <select [(ngModel)]="selectedDataList.documentType"[ngModelOptions]="{standalone: true}" style="width: 83%;">
+            <option value="">Select</option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+            <option value="A">A</option>
+        </select>     
+    </div>
+    <div class="col-3 px-1" >
+       Attachement 
+    </div>
+    <div class="col-3 px-1" >
+        <input type="file" [(ngModel)]="selectedDataList.attachement"[ngModelOptions]="{standalone: true}" id="file"(change)="handleFileInput($event)">
+    </div>
+  </div>
+  <div class="row no-gutters ms-1 me-1" style="margin-top: 20px;">
+    <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onCreateSelectedDataList()"> Add Row</button>
+</div>
+
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+        </div>
+    </div>
+</mat-card>
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="UserRequirementForm">
+        <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Comments</mat-label>
+                <textarea type="text" matInput  placeholder="Comments" formControlName="comments"
+                >
+                        </textarea>
+            </mat-form-field>
+        </div>
+        </form>
+    </div>
+</div>
+
+<div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
+    <div class="d-flex justify-content-center">
+        <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveConfirmation('0')">Save</button>
+            <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;" (click)="onSubmit('1')">Submit</button>
+        <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
+    </div>
+</div>
+<mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>

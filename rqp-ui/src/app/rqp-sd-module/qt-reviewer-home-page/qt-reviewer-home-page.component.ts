@@ -177,7 +177,7 @@ onClearFilter(){
 }
 onSubmit(){
   console.log(this.selectedRow)
-   this.router.navigate(['./qt-review'],{queryParams:this.selectedRow})
+   this.router.navigate(['./sd/qt-review'],{queryParams:this.selectedRow})
 }
 copyData() {
   var dataArray = "";
