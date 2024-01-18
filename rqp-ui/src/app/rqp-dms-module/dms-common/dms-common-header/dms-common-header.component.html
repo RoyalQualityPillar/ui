@@ -1,0 +1,68 @@
+
+
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Headers</p>
+        </div>
+    </div>
+</mat-card>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="p-2">
+                <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
+                    <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
+                        denoted by an asterisk(<span style="color: red">*</span>).</span>
+                </div>
+                <form [formGroup]="HeaderForm">
+                <div class="row no-gutters ms-1 me-1 dense-4">
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Oarganization Unit Code</mat-label>
+                        <input type="text" matInput formControlName="unitcode" placeholder="Oarganization Unit Code"[readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly" >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Life Cycle No</mat-label>
+                        <input type="text" matInput formControlName="lcnum" placeholder="Life Cycle No" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Module Code</mat-label>
+                        <input type="text" matInput formControlName="modulecode" placeholder="Module Code" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Stage</mat-label>
+                        <input type="text" matInput formControlName="stage" placeholder="Stage"[readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                    </div>
+                    <div class="row no-gutters ms-1 me-1 dense-4">
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Department Code</mat-label>
+                        <input type="text" matInput formControlName="departmentcode" placeholder="Department Code" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Role</mat-label>
+                        <input type="text" matInput formControlName="role" placeholder="Role" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>User Id</mat-label>
+                        <input type="text" matInput formControlName="createdby" placeholder="Department Code" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                    <div *ngIf="pageData.pageName=='qt-review' || pageData.pageName== 'qtUpdateDetail'"class="col-3 px-1">
+                    <mat-form-field appearance="outline" class="col-12" >
+                        <mat-label>Request No</mat-label>
+                        <input type="text" matInput formControlName="requestNo" placeholder="Request No" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="pageData.pageName=='qt-review' ||pageData.pageName== 'qtUpdateDetail'" class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Request Version</mat-label>
+                    <input type="text" matInput formControlName="version" placeholder="Request version" [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                </mat-form-field>
+            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    

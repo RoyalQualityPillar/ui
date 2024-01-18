@@ -88,6 +88,8 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./sd/qt-master-data-home-page']) 
      }else if(this.toolbarService.currentStage>=2){
       this.route.navigate(['./sd/rqp-pending-assignment'])  
+     }else if(subMenu =='URS-Initator'){
+      this.route.navigate(['./dms/user-requirement-home-page'])  
      }
     //Module routing required based on submenu
   }

@@ -79,8 +79,14 @@
 
         <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
         </mat-paginator>
-        <button mat-raised-button color="primary" 
-          style="background-color: #295ea3;"(click)="onSubmit('view')">Submit</button>
+        <!-- <button mat-raised-button color="primary" 
+          style="background-color: #295ea3;"(click)="onSubmit('view')">Submit</button> -->
+          <button mat-raised-button color="primary" class="submitButton"
+          (click)="onSubmit('view')">Submit</button>
+
+
+
+          
       </div>
     </div>
     <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">

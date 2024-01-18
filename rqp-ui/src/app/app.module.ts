@@ -35,6 +35,7 @@ import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,7 @@ import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
     AttachmentPreviewComponent,
     CreateGuidelineComponent,
     LovDialogComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
     
   ],
   imports: [
