@@ -53,6 +53,9 @@ export class RqpHeaderComponent implements OnInit{
     //lcStage:this.headerRequestBody.stage
     lcStage:this.toolbarService.currentStage
   }
+  if(body.lcStage==undefined || body.lcStage==''){
+    body.lcStage=this.lifeCycleDataService.allQtHomePageStageValue;
+  }
   this.sdService.getHeaderData(body).subscribe((data:any)=>{
     this.headerDetail=data.data[0];
     this.isReadonly=true;
@@ -64,7 +67,8 @@ export class RqpHeaderComponent implements OnInit{
     this.HeaderForm.controls['stage'].setValue(this.headerDetail.stage);
     this.HeaderForm.controls['createdby'].setValue(this.headerDetail.createdby);
     if(this.pageData.pageName=='qt-review' || 'qtUpdateDetail' ){
-    this.headerDetail.requestNo=this.pageData.requestNo
+    this.headerDetail.requestNo=this.pageData.requestNo;
+    this.headerDetail.version=this.pageData.version
     }
     this.headerData.emit(this.headerDetail)
     

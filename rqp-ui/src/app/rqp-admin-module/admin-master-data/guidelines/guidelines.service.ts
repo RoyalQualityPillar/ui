@@ -60,7 +60,7 @@ export class GuidelinesService {
     };
     return this.http.post(fetchProfileListUrlAll,body,httpOptions)
   }
-  onCreate(docNos:any,docNames:any,categoryTypes:any,attachements:any,body:any){
+  onCreate1(docNos:any,docNames:any,categoryTypes:any,attachements:any,body:any){
       var formdata:FormData= new FormData();
         for (let file of attachements) {
           formdata.append('attachement', file);
@@ -76,6 +76,27 @@ export class GuidelinesService {
       };
       return this.http.post(createUserURL,formdata,httpOptions)
   }
+  onCreate(docNos:any,docNames:any,categoryTypes:any,attachements:any,body:any){
+    var formdata:FormData= new FormData();
+      for (let file of attachements) {
+        formdata.append('attachement', file);
+      }
+        // Append JSON data as a blob
+    const jsonBlob = new Blob([JSON.stringify(body)], { type: 'application/json' });
+    formdata.append('json', jsonBlob, 'data.json');
+
+
+    let token = this.cookieService.get('token');
+    let queryParams=`?docNos=${docNos}&docNames=${docNames}&categoryTypes=${categoryTypes}&status=${body.status}&category=${body.category}&subCategory=${body.subCategory}&createdBy=${body.createdby}`;
+    let createUserURL=this.API_URL+"gl/upload"+queryParams;
+    const httpOptions = {
+      headers: new HttpHeaders({      
+       'Content-Type':  'mutipart/form-data',
+       'Authorization': 'Bearer ' + token
+      })
+    };
+    return this.http.post(createUserURL,formdata,httpOptions)
+}
   onLoadUpdatePage(UC0001:any){
     let queryParams=`?UC0001=${UC0001}`;
     let token=this.cookieService.get('token');

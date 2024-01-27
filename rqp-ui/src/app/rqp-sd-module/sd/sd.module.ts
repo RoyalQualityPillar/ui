@@ -43,6 +43,16 @@ import { StockListComponent } from '../stock-list/stock-list.component';
 import { QtMasterDataHomePageComponent } from '../sd-master-data/qt-master-data-home-page/qt-master-data-home-page.component';
 import { AsCommonFooterComponent } from '../sd-common/as-common-footer/as-common-footer.component';
 import { ESignatureComponent } from '../sd-common/e-signature/e-signature.component';
+import { DraftQuotationHomePageComponent } from '../purchase/draft/draft-quotation-home-page/draft-quotation-home-page.component';
+import { DqUpdateHomePageComponent } from '../purchase/draft/dq-update-home-page/dq-update-home-page.component';
+import { DqReviewHomePageComponent } from '../purchase/draft/dq-review-home-page/dq-review-home-page.component';
+import { AllQuotationHomePageComponent } from '../all-quotation/all-quotation-home-page/all-quotation-home-page.component';
+import { AllQuotationPrintPageComponent } from '../all-quotation/all-quotation-print-page/all-quotation-print-page.component';
+import { DqReviewSaveSubmitComponent } from '../purchase/draft/dq-review-save-submit/dq-review-save-submit.component';
+import { FairQuotationHomePageComponent } from '../purchase/fair/fair-quotation-home-page/fair-quotation-home-page.component';
+import { FairReviewHomePageComponent } from '../purchase/fair/fair-review-home-page/fair-review-home-page.component';
+import { FairSaveUpdateComponent } from '../purchase/fair/fair-save-update/fair-save-update.component';
+import { FairUpdateHomePageComponent } from '../purchase/fair/fair-update-home-page/fair-update-home-page.component';
 
 
 
@@ -89,6 +99,16 @@ import { ESignatureComponent } from '../sd-common/e-signature/e-signature.compon
     QtMasterDataHomePageComponent,
     AsCommonFooterComponent,
     ESignatureComponent,
+    DraftQuotationHomePageComponent,
+    DqReviewHomePageComponent,
+    DqUpdateHomePageComponent,
+    DqReviewSaveSubmitComponent,
+    AllQuotationHomePageComponent,
+   AllQuotationPrintPageComponent,
+   FairReviewHomePageComponent,
+   FairSaveUpdateComponent,
+   FairUpdateHomePageComponent,
+   FairQuotationHomePageComponent
   ],
   imports: [
     CommonModule,

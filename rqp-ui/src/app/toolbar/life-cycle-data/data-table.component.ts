@@ -394,6 +394,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
  if(isfindSuccess>0){
    data.push(obj)
  }
+ //need to add DQ and fair object for update
  console.log(data)
   this.lifeCycleDataService.subMenuList=data
   // Module Value
@@ -403,6 +404,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
     this.route.navigate(['./admin/master-data-management']);
   //}else if (data[0].ff0001 == 'Quatetion') {
   }else if (data[0].uc0001 == 'QT') {
+    this.lifeCycleDataService.allQtHomePageStageValue=this.selectedRow.stage,
        this.route.navigate(['./sd/rqp-sd-module']);
   // } else if (data[0].lcnum == 'RQP1NCIQALC0002') {
   //   this.route.navigate(['./rqp-sd-module']);
@@ -411,6 +413,10 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   // }else if (data[0].lcnum == 'RQP1QTPDLC0002' || data[0].lcnum == 'RQP1QTPDLC0003') {
   //   this.route.navigate(['./rqp-sd-module']);
   }else if(data[0].uc0001 == 'URS'){
+    this.route.navigate(['./dms/dms-module-home-page']);
+  }else if(data[0].uc0001 == 'DQ'){
+    this.route.navigate(['./dms/dms-module-home-page']);
+  }else if(data[0].uc0001 == 'FQ'){
     this.route.navigate(['./dms/dms-module-home-page']);
   }
    else {
@@ -452,8 +458,9 @@ onPaginationCall(){
         this.tableDataLoaded=true;
         this.toolbarService.setTableData(this.dataSource)
 
-
+        this.isLoading=false;
   })
+  this.isLoading=false;
 }
   }
 

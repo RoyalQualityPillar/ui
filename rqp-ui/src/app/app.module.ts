@@ -31,11 +31,6 @@ import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.c
 import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
 
 
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +48,9 @@ import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
     AttachmentPreviewComponent,
     CreateGuidelineComponent,
     LovDialogComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+ 
+
     
   ],
   imports: [
