@@ -83,4 +83,12 @@ export class SdService {
     const lcRejectURL=this.API_URL+'gm/lc-reject/save-update';
     return this.http.post(lcRejectURL,body)
   }
+
+
+  /**************************************ALL ASSIGNMENT **************************************/
+  getAllAssignmentData(f0001: any, pageIndex: any, size: any) {
+    const queryParams = `?FF0001=${f0001}&pageIndex=${pageIndex}&size=${size}`;
+    const reviwerURL = this.API_URL + 'gm/gmur-record/complete-all' + queryParams;
+    return this.http.get(reviwerURL);
+  }
 }

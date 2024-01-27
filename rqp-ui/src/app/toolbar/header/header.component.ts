@@ -86,10 +86,20 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./sd/qt-update-page']) 
      }else if(subMenu == 'QT-Master Data'){
       this.route.navigate(['./sd/qt-master-data-home-page']) 
-     }else if(this.toolbarService.currentStage>=2){
-      this.route.navigate(['./sd/rqp-pending-assignment'])  
-     }else if(subMenu =='URS-Initator'){
+     }
+    //  else if(this.toolbarService.currentStage>=2){
+    //   this.route.navigate(['./sd/rqp-pending-assignment'])  need to check with @suresh
+    // }
+     else if(subMenu =='URS-Initator'){
       this.route.navigate(['./dms/user-requirement-home-page'])  
+     }else if(subMenu =='DQ-Initator'){
+      this.route.navigate(['./sd/draft-initator-home-page'])  
+     }else if(subMenu =='DQ-Reviewer'){
+      this.route.navigate(['./sd/draft-reviewer-home-page'])  
+     }else if(subMenu =='FQ-Initator'){
+      this.route.navigate(['./sd/fair-initator-home-page'])  
+     }else if(subMenu =='FQ-Reviewer'){
+      this.route.navigate(['./sd/fair-reviewer-home-page'])  
      }
     //Module routing required based on submenu
   }

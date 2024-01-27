@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 export class LifeCycleDataService {
   subMenuList:any;
   selectedRow:any;
+  allQtHomePageStageValue:any;
   private API_URL=environment.apiBaseURL;
   constructor(private http:HttpClient,private cookieService:CookieService) { }
 

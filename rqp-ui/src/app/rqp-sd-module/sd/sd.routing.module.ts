@@ -14,6 +14,16 @@ import { PriceTypeHomePageComponent } from "../sd-master-data/price-type/price-t
 import { QtMasterDataHomePageComponent } from "../sd-master-data/qt-master-data-home-page/qt-master-data-home-page.component";
 import { SaleProductMasterHomePageComponent } from "../sd-master-data/sale-product-master/sale-product-master-home-page/sale-product-master-home-page.component";
 import { StockLedgerHomePageComponent } from "../sd-master-data/stock-ledger/stock-ledger-home-page/stock-ledger-home-page.component";
+import { DraftQuotationHomePageComponent } from "../purchase/draft/draft-quotation-home-page/draft-quotation-home-page.component";
+import { DqReviewHomePageComponent } from "../purchase/draft/dq-review-home-page/dq-review-home-page.component";
+import { DqUpdateHomePageComponent } from "../purchase/draft/dq-update-home-page/dq-update-home-page.component";
+import { AllQuotationHomePageComponent } from "../all-quotation/all-quotation-home-page/all-quotation-home-page.component";
+import { AllQuotationPrintPageComponent } from "../all-quotation/all-quotation-print-page/all-quotation-print-page.component";
+import { DqReviewSaveSubmitComponent } from "../purchase/draft/dq-review-save-submit/dq-review-save-submit.component";
+import { FairQuotationHomePageComponent } from "../purchase/fair/fair-quotation-home-page/fair-quotation-home-page.component";
+import { FairReviewHomePageComponent } from "../purchase/fair/fair-review-home-page/fair-review-home-page.component";
+import { FairUpdateHomePageComponent } from "../purchase/fair/fair-update-home-page/fair-update-home-page.component";
+import { FairSaveUpdateComponent } from "../purchase/fair/fair-save-update/fair-save-update.component";
 
 
 
@@ -35,6 +45,16 @@ const routes: Routes = [
   {path:"price-master-home-page",component:PriceMasterHomePageComponent},
   {path:"dosage-from-home-page",component:DosageFormHomePageComponent},
   {path:"numbering-system-home-page",component:NumberingSystemHomePageComponent},
+  {path:"draft-initator-home-page",component:DraftQuotationHomePageComponent},
+  {path:"draft-reviewer-home-page",component:DqReviewHomePageComponent},
+  {path:"draft-update-home-page",component:DqUpdateHomePageComponent},
+  {path:"all-quotation-home-page",component:AllQuotationHomePageComponent},
+  {path:"all-quotation-print-page",component:AllQuotationPrintPageComponent},
+  {path:"dq-review-save-submit",component:DqReviewSaveSubmitComponent},
+  {path:"fair-initator-home-page",component:FairQuotationHomePageComponent},
+  {path:"fair-reviewer-home-page",component:FairReviewHomePageComponent},
+  {path:"fair-update-home-page",component:FairUpdateHomePageComponent},
+  {path:"fair-review-save-submit",component:FairSaveUpdateComponent},
 ]
 
 @NgModule({

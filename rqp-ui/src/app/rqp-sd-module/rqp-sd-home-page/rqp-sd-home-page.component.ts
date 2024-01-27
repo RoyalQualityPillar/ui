@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rqp-sd-home-page',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class RqpSdHomePageComponent {
 
+  constructor(private router:Router){
+
+  }
+  onAllAssignment(){
+   this.router.navigate(['/sd/all-quotation-home-page'])
+  }
 }
