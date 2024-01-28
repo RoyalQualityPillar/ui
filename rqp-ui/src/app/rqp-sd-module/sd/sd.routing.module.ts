@@ -45,12 +45,15 @@ const routes: Routes = [
   {path:"price-master-home-page",component:PriceMasterHomePageComponent},
   {path:"dosage-from-home-page",component:DosageFormHomePageComponent},
   {path:"numbering-system-home-page",component:NumberingSystemHomePageComponent},
+  
   {path:"draft-initator-home-page",component:DraftQuotationHomePageComponent},
   {path:"draft-reviewer-home-page",component:DqReviewHomePageComponent},
   {path:"draft-update-home-page",component:DqUpdateHomePageComponent},
+  {path:"dq-review-save-submit",component:DqReviewSaveSubmitComponent},
+
   {path:"all-quotation-home-page",component:AllQuotationHomePageComponent},
   {path:"all-quotation-print-page",component:AllQuotationPrintPageComponent},
-  {path:"dq-review-save-submit",component:DqReviewSaveSubmitComponent},
+ 
   {path:"fair-initator-home-page",component:FairQuotationHomePageComponent},
   {path:"fair-reviewer-home-page",component:FairReviewHomePageComponent},
   {path:"fair-update-home-page",component:FairUpdateHomePageComponent},

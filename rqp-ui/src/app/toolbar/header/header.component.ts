@@ -96,11 +96,18 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./sd/draft-initator-home-page'])  
      }else if(subMenu =='DQ-Reviewer'){
       this.route.navigate(['./sd/draft-reviewer-home-page'])  
-     }else if(subMenu =='FQ-Initator'){
+     }else if(subMenu =='DQ-Update'){
+      this.route.navigate(['./sd/draft-update-home-page'])  
+     }
+     else if(subMenu =='FQ-Initator'){
       this.route.navigate(['./sd/fair-initator-home-page'])  
      }else if(subMenu =='FQ-Reviewer'){
       this.route.navigate(['./sd/fair-reviewer-home-page'])  
      }
+     else if(subMenu =='FQ-Update'){
+      this.route.navigate(['./sd/fair-update-home-page'])  
+     }
+     
     //Module routing required based on submenu
   }
   //without login
