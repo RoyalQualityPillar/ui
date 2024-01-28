@@ -178,7 +178,7 @@ onClearFilter(){
 }
 onSubmit(){
   console.log(this.selectedRow)
-   this.router.navigate(['./sd/dq-review-save-submit'],{queryParams:this.selectedRow})
+   this.router.navigate(['./sd/fair-review-save-submit'],{queryParams:this.selectedRow})
 }
 copyData() {
   var dataArray = "";

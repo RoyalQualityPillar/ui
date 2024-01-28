@@ -394,7 +394,28 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
  if(isfindSuccess>0){
    data.push(obj)
  }
+ 
  //need to add DQ and fair object for update
+ let isfindSuccessDQ=0;
+ let dqObj={ff0001: "Draft Quatetion",lcnum: "RQP1DQWHLC0002",lcrole: "DQ-Update",stage:1,userId: this.selectedRow.userid}
+ data.forEach((ele)=>{
+  if(ele.lcrole=='DQ-Initator' || ele.lcrole=='DQ-Reviewer'){
+    ++isfindSuccessDQ;
+  }
+ })
+ if(isfindSuccessDQ>0){
+  data.push(dqObj)
+ }
+ let isfindSuccessFQ=0;
+ let fqObj={ff0001: "Fair Quatetion",lcnum: "RQP1FQWHLC0002",lcrole: "FQ-Update",stage:1,userId: this.selectedRow.userid}
+ data.forEach((ele)=>{
+  if(ele.lcrole=='FQ-Initator' || ele.lcrole=='FQ-Reviewer'){
+    ++isfindSuccessFQ;
+  }
+ })
+ if(isfindSuccessFQ>0){
+  data.push(fqObj)
+ }
  console.log(data)
   this.lifeCycleDataService.subMenuList=data
   // Module Value
@@ -457,7 +478,6 @@ onPaginationCall(){
         this.tableData.sort = this.sort;
         this.tableDataLoaded=true;
         this.toolbarService.setTableData(this.dataSource)
-
         this.isLoading=false;
   })
   this.isLoading=false;

@@ -16,4 +16,8 @@ export class FairService {
     const reviwerURL = this.API_URL + 'gm/gmur-record/todo-all' + queryParams;
     return this.http.get(reviwerURL);
   }
+  onSaveUpdateDQ(requestBody: any) {
+    const saveUpdateURL = this.API_URL + 'sdfqt/fqt-items/save-update';
+    return this.http.post(saveUpdateURL, requestBody);
+  }
 }

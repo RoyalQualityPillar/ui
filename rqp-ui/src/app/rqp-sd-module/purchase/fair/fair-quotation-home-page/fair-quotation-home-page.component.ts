@@ -13,7 +13,7 @@ import { MessageDialogComponent } from 'src/app/common/message-dialog/message-di
 import {MessageService} from '../../../../service/message.service';
 import { ESignatureComponent } from '../../../sd-common/e-signature/e-signature.component';
 import { ToolbarService } from 'src/app/service/toolbar.service';
-import { DraftService } from '../../draft.service';
+import { FairService } from '../fair.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -48,7 +48,7 @@ export class FairQuotationHomePageComponent implements OnInit{
               private lifeCycleDataService:LifeCycleDataService,
               public dialog: MatDialog,
               private toolbarService:ToolbarService,
-              private draftService:DraftService,
+              private fairService:FairService,
               public messageService:MessageService){
                 this.HeaderForm=this.fb.group({
                   oucode:['',Validators.required],
@@ -510,7 +510,7 @@ export class FairQuotationHomePageComponent implements OnInit{
    
     console.log(requestBody)
     this.isLoading=true;
-    this.draftService.onSaveUpdateDQ(requestBody).subscribe((data:any)=>{
+    this.fairService.onSaveUpdateDQ(requestBody).subscribe((data:any)=>{
      // console.log(data)
       if(data.errorInfo !=null){
         this.dialog.open(MessageDialogComponent, {
