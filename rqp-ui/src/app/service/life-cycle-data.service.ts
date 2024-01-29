@@ -12,8 +12,6 @@ export class LifeCycleDataService {
   allQtHomePageStageValue:any;
   private API_URL=environment.apiBaseURL;
   constructor(private http:HttpClient,private cookieService:CookieService) { }
-
-
   getLifeCycleInfo(pageIndex:any,size:any){
     let userId=this.cookieService.get('userId');
     const queryParams = `?userId=${userId}&pageIndex=${pageIndex}&size=${size}`;
@@ -30,6 +28,6 @@ export class LifeCycleDataService {
   }
   getSelectedRowData(){
     return this.selectedRow
-    
+
   }
 }

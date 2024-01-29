@@ -418,6 +418,26 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
     this.route.navigate(['./dms/dms-module-home-page']);
   }else if(data[0].uc0001 == 'FQ'){
     this.route.navigate(['./dms/dms-module-home-page']);
+  }else if(data[0].uc0001 == 'LMS'){
+    this.route.navigate(['./lms/lms-module-home-page']);
+  }
+  else if(data[0].uc0001 == 'QMS'){
+    this.route.navigate(['./qms/qms-module-home-page']);
+  }
+  else if(data[0].uc0001 == 'CAPA'){
+    this.route.navigate(['./qms/capa-home']);
+  }
+  else if(data[0].uc0001 == 'DEV'){
+    this.route.navigate(['./qms/dev-home']);
+  }
+  else if(data[0].uc0001 == 'NCI'){
+    this.route.navigate(['./qms/nci-home']);
+  }
+  else if(data[0].uc0001 == 'CC'){
+    this.route.navigate(['./qms/cc-home']);
+  }
+  else if(data[0].uc0001 == 'MM'){
+    this.route.navigate(['./mm/mm-module-home-page']);
   }
    else {
     this.dialog.open(MessageDialogComponent, {

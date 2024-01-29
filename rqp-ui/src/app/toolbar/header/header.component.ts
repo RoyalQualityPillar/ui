@@ -100,6 +100,26 @@ export class HeaderComponent implements OnInit{
       this.route.navigate(['./sd/fair-initator-home-page'])  
      }else if(subMenu =='FQ-Reviewer'){
       this.route.navigate(['./sd/fair-reviewer-home-page'])  
+     }else if(subMenu =='LMS-Master Data'){
+      this.route.navigate(['./lms/lms-master-data-home-page'])  
+     }
+     else if(subMenu =='QMS-Master Data'){
+      this.route.navigate(['./qms/qms-master-data-home-page'])  
+     }
+     else if(subMenu =='CAPA-Initiator'){
+      this.route.navigate(['./qms/capa-initiator'])  
+     }
+     else if(subMenu =='DEV-Initiator'){
+      this.route.navigate(['./qms/dev-initiator'])  
+     }
+     else if(subMenu =='NCI-Initiator'){
+      this.route.navigate(['./qms/nci-initiator'])  
+     }
+     else if(subMenu =='CC-Initiator'){
+      this.route.navigate(['./qms/cc-initiator'])  
+     }
+     else if(subMenu =='MM-Master Data'){
+      this.route.navigate(['./mm/mm-master-data-home-page'])  
      }
     //Module routing required based on submenu
   }

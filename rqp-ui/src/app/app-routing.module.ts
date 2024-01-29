@@ -8,6 +8,7 @@ import { LoginComponent } from './toolbar/login/login.component';
 import { AuthGuard } from '../interceptor/auth.guard';
 
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
+import { MmModule } from './rqp-mm-module/mm/mm.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -28,6 +29,22 @@ const routes: Routes = [
     path: 'dms',
     loadChildren: () =>
       import('./rqp-dms-module/dms/dms.module').then((m) => m.DmsModule),
+  },
+  {
+    path: 'lms',
+    loadChildren: () =>
+      import('./rqp-lms-module/lms/lms.module').then((m) => m.LmsModule),
+  },
+  {
+    path: 'qms',
+    loadChildren: () =>
+      import('./rqp-qms-module/qms/qms.module').then((m) => m.QmsModule),
+  },
+
+  {
+    path: 'mm',
+    loadChildren: () =>
+      import('./rqp-mm-module/mm/mm.module').then((m) => MmModule),
   },
   { path: 'login', component: LoginComponent },
   {
