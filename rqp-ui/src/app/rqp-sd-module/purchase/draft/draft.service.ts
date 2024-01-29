@@ -10,7 +10,7 @@ export class DraftService {
   private API_URL = environment.apiBaseURL;
   constructor(private http: HttpClient, private cookieService: CookieService) {}
   /************************************** DRAFT QUOTATION ************************************************* */
-  onSaveUpdateDQ(requestBody: any) {
+  onSaveUpdate(requestBody: any) {
     const saveUpdateURL = this.API_URL + 'sddq/dq-items/save-update';
     return this.http.post(saveUpdateURL, requestBody);
   }
