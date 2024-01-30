@@ -29,7 +29,6 @@ import { CreateGuidelineComponent } from './home-page-menubar/create-guideline/c
 import { LovDialogComponent } from './common/lov-dialog/lov-dialog.component';
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
 import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
-import { CapaInitiatorComponent } from './rqp-qms-module/capa-initiator/capa-initiator.component';
 
 
 
@@ -53,7 +52,7 @@ import { CapaInitiatorComponent } from './rqp-qms-module/capa-initiator/capa-ini
     CreateGuidelineComponent,
     LovDialogComponent,
     PageNotFoundComponent,
-    CapaInitiatorComponent,
+    
     
     
     
