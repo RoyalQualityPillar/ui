@@ -29,6 +29,33 @@
   <div class="row no-gutters ms-1 me-1" style="margin-top: 20px;">
     <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onCreateSelectedDataList()"> Add Row</button>
 </div>
+<mat-card style="margin-top: 2px;background-color: #fdfdfd;" *ngIf="this.UserRoleTable.length>0">
+    <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
+    style="background-color: ghostwhite;" matSort id="dataTable">
+    <ng-container matColumnDef="docNames">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</mat-header-cell>
+        <mat-cell *matCellDef="let row">docNames  </mat-cell>
+      </ng-container>
+    <ng-container matColumnDef="categoryTypes">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Category Types </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.categoryTypes}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="attachmentName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Attachment </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.attachmentName}}</mat-cell>
+      </ng-container>
+   
+ 
+    <mat-header-row *matHeaderRowDef="AddedUserdisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: AddedUserdisplayedColumns;"></mat-row>
+  </mat-table> 
+
+  <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
+  </mat-paginator>
+</mat-card>
+
+
+
 
 <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
     <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
@@ -51,8 +78,23 @@
         </form>
     </div>
 </div>
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="UserRequirementForm">
+            <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Next Stage</mat-label>
+                    <input type="text" matInput formControlName="stage2" placeholder="Next Stage">
+                    <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                    class="icon-size lovSearchButton" color="primary"(click)="openNextStageLov()"> 
+                </mat-form-field>
+            
+                </div>
+                </form>
+        </div>
 
-<div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
+        </div>
+<div class="containerBTN" style="margin-top: 2px; margin-bottom: 35px;">
     <div class="d-flex justify-content-center">
         <button mat-raised-button color="primary"
             style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveConfirmation('0')">Save</button>

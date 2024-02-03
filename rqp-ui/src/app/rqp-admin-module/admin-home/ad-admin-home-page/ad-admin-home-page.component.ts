@@ -20,4 +20,7 @@ ngOnInit(): void {}
   onLifeCycle(){
     this.route.navigate(['./admin/life-cycle'])
   }
+  urs(){
+    this.route.navigate(['./dms/user-requirement-home-page'])
+  }
 }
