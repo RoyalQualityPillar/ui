@@ -29,34 +29,6 @@ import { CreateGuidelineComponent } from './home-page-menubar/create-guideline/c
 import { LovDialogComponent } from './common/lov-dialog/lov-dialog.component';
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
 import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
-import { DqHomeComponent } from './rqp-mm-module/purchase/draft-quotation/dq-home/dq-home.component';
-import { DqInitiatorComponent } from './rqp-mm-module/purchase/draft-quotation/dq-initiator/dq-initiator.component';
-import { DqReviewerComponent } from './rqp-mm-module/purchase/draft-quotation/dq-reviewer/dq-reviewer.component';
-import { DqUpdateComponent } from './rqp-mm-module/purchase/draft-quotation/dq-update/dq-update.component';
-import { FqHomeComponent } from './rqp-mm-module/purchase/fair-quotation/fq-home/fq-home.component';
-import { FqInitiatorComponent } from './rqp-mm-module/purchase/fair-quotation/fq-initiator/fq-initiator.component';
-import { FqReviewerComponent } from './rqp-mm-module/purchase/fair-quotation/fq-reviewer/fq-reviewer.component';
-import { FqUpdateComponent } from './rqp-mm-module/purchase/fair-quotation/fq-update/fq-update.component';
-import { PoHomeComponent } from './rqp-mm-module/purchase/purches-order/po-home/po-home.component';
-import { PoInitiatorComponent } from './rqp-mm-module/purchase/purches-order/po-initiator/po-initiator.component';
-import { PoReviewerComponent } from './rqp-mm-module/purchase/purches-order/po-reviewer/po-reviewer.component';
-import { PoUpdateComponent } from './rqp-mm-module/purchase/purches-order/po-update/po-update.component';
-import { QtHomeComponent } from './rqp-mm-module/sale/quotation/qt-home/qt-home.component';
-import { QtInitiatorComponent } from './rqp-mm-module/sale/quotation/qt-initiator/qt-initiator.component';
-import { QtReviewerComponent } from './rqp-mm-module/sale/quotation/qt-reviewer/qt-reviewer.component';
-import { QtUpdateComponent } from './rqp-mm-module/sale/quotation/qt-update/qt-update.component';
-import { SiHomeComponent } from './rqp-mm-module/sale/sale-invoice/si-home/si-home.component';
-import { SiInitiatorComponent } from './rqp-mm-module/sale/sale-invoice/si-initiator/si-initiator.component';
-import { SiReviewerComponent } from './rqp-mm-module/sale/sale-invoice/si-reviewer/si-reviewer.component';
-import { SiUpdateComponent } from './rqp-mm-module/sale/sale-invoice/si-update/si-update.component';
-import { SoHomeComponent } from './rqp-mm-module/sale/sale-order/so-home/so-home.component';
-import { SoInitiatorComponent } from './rqp-mm-module/sale/sale-order/so-initiator/so-initiator.component';
-import { SoReviewerComponent } from './rqp-mm-module/sale/sale-order/so-reviewer/so-reviewer.component';
-import { SoUpdateComponent } from './rqp-mm-module/sale/sale-order/so-update/so-update.component';
-import { DoHomeComponent } from './rqp-mm-module/sale/delivery-order/do-home/do-home.component';
-import { DoInitiatorComponent } from './rqp-mm-module/sale/delivery-order/do-initiator/do-initiator.component';
-import { DoReviewerComponent } from './rqp-mm-module/sale/delivery-order/do-reviewer/do-reviewer.component';
-import { DoUpdateComponent } from './rqp-mm-module/sale/delivery-order/do-update/do-update.component';
 
 
 
@@ -80,34 +52,7 @@ import { DoUpdateComponent } from './rqp-mm-module/sale/delivery-order/do-update
     CreateGuidelineComponent,
     LovDialogComponent,
     PageNotFoundComponent,
-    DqHomeComponent,
-    DqInitiatorComponent,
-    DqReviewerComponent,
-    DqUpdateComponent,
-    FqHomeComponent,
-    FqInitiatorComponent,
-    FqReviewerComponent,
-    FqUpdateComponent,
-    PoHomeComponent,
-    PoInitiatorComponent,
-    PoReviewerComponent,
-    PoUpdateComponent,
-    QtHomeComponent,
-    QtInitiatorComponent,
-    QtReviewerComponent,
-    QtUpdateComponent,
-    SiHomeComponent,
-    SiInitiatorComponent,
-    SiReviewerComponent,
-    SiUpdateComponent,
-    SoHomeComponent,
-    SoInitiatorComponent,
-    SoReviewerComponent,
-    SoUpdateComponent,
-    DoHomeComponent,
-    DoInitiatorComponent,
-    DoReviewerComponent,
-    DoUpdateComponent,
+    
    
     
     
