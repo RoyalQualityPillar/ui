@@ -460,6 +460,30 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   else if(data[0].uc0001 == 'MM'){
     this.route.navigate(['./mm/mm-module-home-page']);
   }
+  else if(data[0].uc0001 == 'PDQ'){
+    this.route.navigate(['./mm/dq-home']);
+  }
+  else if(data[0].uc0001 == 'PFQ'){
+    this.route.navigate(['./mm/fq-home']);
+  }
+  else if(data[0].uc0001 == 'PPO'){
+    this.route.navigate(['./mm/po-home']);
+  }
+  else if(data[0].uc0001 == 'PPT'){
+    this.route.navigate(['./mm/po-home']);
+  }
+  else if(data[0].uc0001 == 'PQT'){
+    this.route.navigate(['./mm/qt-home']);
+  }
+  else if(data[0].uc0001 == 'PSI'){
+    this.route.navigate(['./mm/si-home']);
+  }
+  else if(data[0].uc0001 == 'PSO'){
+    this.route.navigate(['./mm/so-home']);
+  }
+  else if(data[0].uc0001 == 'PDO'){
+    this.route.navigate(['./mm/do-home']);
+  }
    else {
     this.dialog.open(MessageDialogComponent, {
       data: {
