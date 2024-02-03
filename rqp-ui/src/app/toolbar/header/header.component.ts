@@ -127,7 +127,27 @@ export class HeaderComponent implements OnInit{
      else if(subMenu =='FQ-Update'){
       this.route.navigate(['./sd/fair-update-home-page'])  
      }
-     
+     else if(subMenu =='PDQ-Initiator'){
+      this.route.navigate(['./mm/dq-initiator'])  
+     }
+     else if(subMenu =='PFQ-Initiator'){
+      this.route.navigate(['./mm/fq-initiator'])  
+     }
+     else if(subMenu =='PPO-Initiator'){
+      this.route.navigate(['./mm/po-initiator'])  
+     }
+     else if(subMenu =='PQT-Initiator'){
+      this.route.navigate(['./mm/qt-initiator'])  
+     }
+     else if(subMenu =='PSI-Initiator'){
+      this.route.navigate(['./mm/si-initiator'])  
+     }
+     else if(subMenu =='PSO-Initiator'){
+      this.route.navigate(['./mm/so-initiator'])  
+     }
+     else if(subMenu =='PDO-Initiator'){
+      this.route.navigate(['./mm/do-initiator'])  
+     }
     //Module routing required based on submenu
   }
   //without login

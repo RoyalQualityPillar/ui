@@ -15,6 +15,7 @@ import { CcHomeComponent } from '../cc/cc-home/cc-home.component';
 import { CcInitiatorComponent } from '../cc/cc-initiator/cc-initiator.component';
 
 
+
 @NgModule({
   declarations: [
     QmsModuleHomePageComponent,
@@ -27,6 +28,7 @@ import { CcInitiatorComponent } from '../cc/cc-initiator/cc-initiator.component'
     NciInitiatorComponent,
     CcHomeComponent,
     CcInitiatorComponent,
+   
   
 
     

@@ -41,7 +41,7 @@ const routes: Routes = [
       import('./rqp-qms-module/qms/qms.module').then((m) => m.QmsModule),
   },
 
-  {
+ {
     path: 'mm',
     loadChildren: () =>
       import('./rqp-mm-module/mm/mm.module').then((m) => MmModule),
