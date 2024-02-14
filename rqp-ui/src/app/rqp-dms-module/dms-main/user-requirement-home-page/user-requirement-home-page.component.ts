@@ -8,6 +8,13 @@ import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.compone
 import { ToolbarService } from 'src/app/service/toolbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
+import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { MessageService } from 'src/app/service/message.service';
+import {CookieService} from 'ngx-cookie-service';
+import { ESignatureDMSComponent } from '../../dms-common/dms-common-header/e-signature/e-signature.component';
+interface Row {
+  files: File[];
+}
 @Component({
   selector: 'app-user-requirement-home-page',
   templateUrl: './user-requirement-home-page.component.html',
@@ -21,13 +28,18 @@ pageData:any;
 UserRequirementForm:FormGroup;
 isLoading:boolean;
 headerRequestBody:any;
-AddedUserdisplayedColumns: string[] =['docNames','categoryTypes','attachmentName']
+AddedUserdisplayedColumns: string[] =['documentName','categoryTypes','uploadedDocfileName']
+AddedAttachmentisplayedColumns: string[] =['attachmentName']
 constructor(private fb:FormBuilder,private dmsService:DmsService,
   private toolbarService:ToolbarService,public dialog: MatDialog,
-  private lifeCycleDataService:LifeCycleDataService){
+  private lifeCycleDataService:LifeCycleDataService,private messageService: MessageService,
+  private cookieService: CookieService){
  this.UserRequirementForm=this.fb.group({
   comments:[''],
-  stage2:['']
+  stage2:[''],
+  attachmentName:[''],
+  documentName:[''],
+  categoryTypes:[''],
  })
 }
 ngOnInit(): void {
@@ -42,27 +54,78 @@ selectedDataList={
   docNames:'',
   categoryTypes:'',
   attachement:File,
+  documentName:''
+}
+selectedAttachmentDataList={
+  attachmentName:''
 }
 testfile:any
 selectedFiles:any;
+selectedAttachmentFiles:any;
 attachmentName:any;
 UserRoleTable:any[]=[]
+UserRoleAttachmentTable:any[]=[]
 tableData:any;
+tableAttachmentData:any;
 fileToUpload:File|null=null;
+uploadedDocfileName:any
+
 handleFileInput(event:any){
-this.selectedFiles=event.target.files;
-console.log(this.selectedFiles[0].name);
-this.attachmentName=this.selectedFiles[0].name
-const target =event.target as HTMLInputElement;
-this.fileToUpload=(target.files as FileList)[0]
-this.testfile=this.selectedFiles.item(0)
+this.selectedFiles= event.target.files[0];
+if(this.selectedFiles){
+ this.uploadedDocfileName=this.selectedFiles.name;
 }
+}
+
+uploadedAttachmentfileName:any;
+handleAttachmentFileInput(event:any){
+  this.selectedAttachmentFiles= event.target.files[0];
+  if(this.selectedAttachmentFiles){
+    this.uploadedAttachmentfileName=this.selectedAttachmentFiles.name;
+   }
+}
+selectedAttachmentFileList: File[] = [];
+attachmentDtoList:any[]=[]
+onCreateSelectedAttachmentList(){
+  this.selectedAttachmentFileList.push(this.selectedAttachmentFiles)
+  this.UserRoleAttachmentTable.push({
+    attachmentName:this.UserRequirementForm.controls['attachmentName'].value,
+    uploadedAttachmentfileName:this.uploadedAttachmentfileName
+  })
+  this.attachmentDtoList.push({
+    ff0002:this.headerData.unitcode,
+    ff0003:this.headerData.departmentcode,
+    ff0004:this.headerData.modulecode,
+    //ff0004:'URS',
+    ff0006:this.uploadedAttachmentfileName,
+    ff0011:this.headerData.stage
+  })
+  console.log(this.UserRoleAttachmentTable);
+  this.tableAttachmentData = new MatTableDataSource(this.UserRoleAttachmentTable);
+  this.tableAttachmentData.paginator = this.paginator;
+  this.tableAttachmentData.sort = this.sort;
+}
+documentDtoList:any[]=[]
+selectedFileList: File[] = [];
   onCreateSelectedDataList(){
+    console.log(this.UserRequirementForm.controls['categoryTypes'].value)
+    this.selectedFileList.push(this.selectedFiles)
     this.UserRoleTable.push({
-      docNames:this.selectedDataList.docNames,
-      categoryTypes:this.selectedDataList.documentType,
-      attachement:this.selectedFiles.item(0),
-      attachmentName:this.attachmentName
+      //documentName:this.selectedDataList.documentName,
+      documentName:this.UserRequirementForm.controls['documentName'].value,
+      categoryTypes:this.UserRequirementForm.controls['categoryTypes'].value,
+      uploadedDocfileName:this.uploadedDocfileName,
+     
+    })
+    this.documentDtoList.push({
+      ff0001:this.UserRequirementForm.controls['documentName'].value,
+      ff0002:this.headerData.unitcode,
+      ff0003:this.headerData.departmentcode,
+      ff0004:this.headerData.modulecode,
+      //ff0004:'URS',
+      ff0005:this.UserRequirementForm.controls['categoryTypes'].value,
+      ff0006:this.uploadedDocfileName,
+      ff0011:this.headerData.stage
     })
     console.log(this.UserRoleTable);
     this.tableData = new MatTableDataSource(this.UserRoleTable);
@@ -74,10 +137,46 @@ getHeaderData(event:any){
  console.log(event)
  this.headerData=event;
 }
-onSaveConfirmation(value:any){
-
+onSaveConfirmation(){
+  const dialogRef = this.dialog.open(ESignatureDMSComponent, {
+    height: "300px",
+    width: "600px",
+    data: {},
+    disableClose: true
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.selectedDialogData = result.data;
+      if(this.selectedDialogData){
+        this.onSubmit('0')
+      }
+    }
+  })
 }
+selectedDialogData:any;
+onSubmitConfirmation(){
+    const dialogRef = this.dialog.open(ESignatureDMSComponent, {
+      height: "300px",
+      width: "600px",
+      data: {},
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        if(this.selectedDialogData){
+          this.onSubmit('1')
+        }
+      }
+    })
+  }
 onSubmit(value:any){
+  let draftValue:boolean;
+  if(value ==1){
+    draftValue=false;
+  }else{
+    draftValue=true;
+  }
   let attachement=[];
   let docNames=[];
   let categoryTypes=[];
@@ -96,14 +195,27 @@ onSubmit(value:any){
       "lcNumber": this.headerData.lcnum,
       "lcStage":this.headerData.stage,
       "stage2":this.UserRequirementForm.controls['stage2'].value,
-      "draft": true
+      "draft": draftValue,
+      "comments":this.UserRequirementForm.controls['comments'].value,
+      "createdBy":this.cookieService.get('userId'),
+      "lcRole":this.headerData.role
     },
-    documentDtoList:[]
+    documentDtoList:this.documentDtoList,
+    attachmentDtoList:this.attachmentDtoList
   }
 }
 console.log(body)
-this.dmsService.onCreate(attachement,body).subscribe((data:any)=>{
-
+this.isLoading=true;
+this.dmsService.onCreate(this.selectedFileList,this.selectedAttachmentFileList,body).subscribe((data:any)=>{
+  if (data.errorInfo != null) {
+    this.isLoading = false;
+    this.dialog.open(MessageDialogComponent, {
+      data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
+    });
+  } else {
+    this.isLoading = false;
+    this.messageService.sendSnackbar('success', 'Record Created Successfully');
+  }
 })
 
 
@@ -111,7 +223,6 @@ this.dmsService.onCreate(attachement,body).subscribe((data:any)=>{
 }
 //******************************LOV IMPLEMENTATION *******************************************/
 nextStageListData:any;
-selectedDialogData:any;
 onLoadNextStageData(){
   let body:any;
   body={
@@ -148,4 +259,5 @@ openNextStageLov(){
     }
   })
 }
+
 }

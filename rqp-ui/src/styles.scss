@@ -70,6 +70,11 @@ mat-label{
 .dense-2 {
   @include mat.all-component-densities(-2);
 }
+
+.mat-option {
+  height: 24px; /* Set your desired height */
+  line-height: 24px; /* Set the same or adjusted line height */
+}
 .global-loading-spinner{
   left: 45vw;
   top: 30vh;

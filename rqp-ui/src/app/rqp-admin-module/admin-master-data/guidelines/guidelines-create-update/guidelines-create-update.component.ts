@@ -54,13 +54,17 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
       subCategory: ['', Validators.required],
       createdby: [''],
       status: [''],
-      comments: ['']
+      comments: [''],
+      documentNumber:[''],
+      categoryTypes:[''],
+      documentName:[''],
+      documentType:['']
     })
   }
   selectedDataList={
-    docNos:'',
-    docNames:'',
-    categoryTypes:'',
+    docNo:'',
+    docName:'',
+    categoryType:'',
     attachement:File,
   }
   ngOnInit(): void {
@@ -82,9 +86,11 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
   onloadDropDown() {
     this.isLoading = true;
     this.guidelinesService.getDropDownList().subscribe((data: any) => {
+      console.log(data.data)
       this.categoryList = data.data.categoryList;
       this.categorySubList = data.data.subCategoryList;
       this.fileCayegory = data.data.fileCategoryList;
+      console.log(this.categoryList)
       this.isLoading = false;
     })
   }
@@ -128,21 +134,28 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
   onCreate(){
     this.isLoading = true;
     this.DepartmentMaster.controls['createdby'].setValue(this.cookieService.get('userId'))
-    let docNos =[];
-    let docNames=[];
-    let categoryTypes=[];
+    let docNo =[];
+    let docName=[];
+    let categoryType=[];
     let attachement=[]
     this.UserRoleTable.forEach(element=>{
-      docNos.push(element.docNos);
-      docNames.push(element.docNames);
-      categoryTypes.push(element.categoryTypes);
+      docNo.push(element.docNo);
+      docName.push(element.docName);
+      categoryType.push(element.categoryType);
       attachement.push(element.attachement);
     })
-    console.log(docNos)
-    console.log(docNames)
-    console.log(categoryTypes)
+    let body ={
+      documentDTOList:this.UserRoleTable,
+      subCategory: this.DepartmentMaster.controls['subCategory'].value,
+      category: this.DepartmentMaster.controls['category'].value,
+      createdBy: this.cookieService.get('userId'),
+      status:this.DepartmentMaster.controls['status'].value
+    }
+    console.log(body)
+    console.log(docName)
+    console.log(categoryType)
     console.log(attachement)
-    this.guidelinesService.onCreate(docNos,docNames,categoryTypes,attachement,this.DepartmentMaster.value).subscribe((data: any) => {
+    this.guidelinesService.onCreate(this.selectedFileList,body).subscribe((data: any) => {
       if (data.errorInfo != null) {
         this.isLoading = false;
         this.dialog.open(MessageDialogComponent, {
@@ -159,15 +172,18 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
   this.DepartmentMaster.reset();
   }
   openSubCategoryCodeLOV(){
-    this.displayedColumns = ['catCode', 'catName']
+    this.displayedColumns = [
+      {field:'catCode',title:"Code"},
+      {field:'catName',title:"Descritption"}
+    ]
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
       width: "600px",
       data: {
-        dialogTitle: "Sub Category",
+        dialogTitle: "Status",
         dialogColumns: this.displayedColumns,
         dialogData: this.categorySubList,
-        lovName: 'uploadSubCategoryList'
+        lovName: 'statusList'
       },
       disableClose: true
     });
@@ -179,15 +195,18 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
     }) 
   }
   openCategoryLOV(){
-    this.displayedColumns = ['subCatCode', 'subCatName']
+    this.displayedColumns = [
+      {field:'subCatCode',title:"Code"},
+      {field:'subCatName',title:"Descritption"}
+    ]
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
       width: "600px",
       data: {
-        dialogTitle: "Category",
+        dialogTitle: "Status",
         dialogColumns: this.displayedColumns,
         dialogData: this.categoryList,
-        lovName: 'uploadCategoryList'
+        lovName: 'statusList'
       },
       disableClose: true
     });
@@ -237,6 +256,29 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
     }
   }
   openStatusLOV() {
+    this.displayedColumns = [
+      {field:'code',title:"Code"},
+      {field:'description',title:"Descritption"}
+    ]
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Status",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.statusList,
+        lovName: 'statusList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.DepartmentMaster.controls['status'].setValue(this.selectedDialogData.code)
+      }
+    })
+  }
+  openStatusLOV1() {
     this.displayedColumns = ['code', 'description']
     const dialogRef = this.dialog.open(LovDialogComponent, {
       height: "500px",
@@ -278,24 +320,31 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
   attachmentName:any;
   testfile:any;
   fileToUpload:File|null=null;
+  uploadedDocfileName:any
   handleFileInput(event:any){
-  this.selectedFiles=event.target.files;
-  console.log(this.selectedFiles[0].name);
-  this.attachmentName=this.selectedFiles[0].name
-  const target =event.target as HTMLInputElement;
-  this.fileToUpload=(target.files as FileList)[0]
-  this.testfile=this.selectedFiles.item(0)
+  // this.selectedFiles=event.target.files;
+  // console.log(this.selectedFiles[0].name);
+  // this.attachmentName=this.selectedFiles[0].name
+  // const target =event.target as HTMLInputElement;
+  // this.fileToUpload=(target.files as FileList)[0]
+  // this.testfile=this.selectedFiles.item(0)
+  this.selectedFiles= event.target.files[0];
+if(this.selectedFiles){
+ this.uploadedDocfileName=this.selectedFiles.name;
+}
   }
   UserRoleTable:any[]=[]
   tableData:any;
-  AddedUserdisplayedColumns: string[] =['docNos','docNames','categoryTypes','attachmentName']
+  AddedUserdisplayedColumns: string[] =['docNo','docName','categoryType','attachmentName'];
+  selectedFileList: File[] = [];
   onCreateSelectedDataList(){
+    this.selectedFileList.push(this.selectedFiles)
+
     this.UserRoleTable.push({
-      docNos:this.selectedDataList.docNos,
-      docNames:this.selectedDataList.docNames,
-      categoryTypes:this.selectedDataList.categoryTypes,
-      attachement:this.selectedFiles.item(0),
-      attachmentName:this.attachmentName
+      docNo:this.DepartmentMaster.controls['documentNumber'].value,
+      docName:this.DepartmentMaster.controls['documentName'].value,
+      categoryType:this.DepartmentMaster.controls['documentType'].value,
+      attachmentName:this.uploadedDocfileName
     })
     console.log(this.UserRoleTable);
     this.tableData = new MatTableDataSource(this.UserRoleTable);
