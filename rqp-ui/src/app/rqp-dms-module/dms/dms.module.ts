@@ -9,6 +9,7 @@ import { DmsRoutingModule } from './dms.routing.module';
 import { DmsModuleHomePageComponent } from '../dms-module-home-page/dms-module-home-page.component';
 import { DmsCommonHeaderComponent } from '../dms-common/dms-common-header/dms-common-header.component';
 import { UserRequirementHomePageComponent } from '../dms-main/user-requirement-home-page/user-requirement-home-page.component';
+import { ESignatureDMSComponent } from '../dms-common/dms-common-header/e-signature/e-signature.component';
 
 
 
@@ -17,7 +18,8 @@ import { UserRequirementHomePageComponent } from '../dms-main/user-requirement-h
   declarations: [
     DmsModuleHomePageComponent,
     DmsCommonHeaderComponent,
-    UserRequirementHomePageComponent
+    UserRequirementHomePageComponent,
+    ESignatureDMSComponent
   ],
   imports: [
     CommonModule,

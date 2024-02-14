@@ -7,42 +7,55 @@
         </div>
     </div>
 </mat-card>
-<div class="row no-gutters ms-1 me-1"style="padding-top:5px">
-    <div class="col-3 px-1" >
-      Document Type  
-    </div>
-    <div class="col-3 px-1" >
-        <select [(ngModel)]="selectedDataList.documentType"[ngModelOptions]="{standalone: true}" style="width: 83%;">
-            <option value="">Select</option>
-            <option value="M">M</option>
-            <option value="F">F</option>
-            <option value="A">A</option>
-        </select>     
-    </div>
-    <div class="col-3 px-1" >
-       Attachement 
-    </div>
-    <div class="col-3 px-1" >
-        <input type="file" [(ngModel)]="selectedDataList.attachement"[ngModelOptions]="{standalone: true}" id="file"(change)="handleFileInput($event)">
+<div class="adjust">
+  <div class="example-input-container">
+<form [formGroup]="UserRequirementForm">
+<div class="row no-gutters ms-1 me-1 dense-4"style="padding-top:5px">  
+        <!-- Document Name: <input type="text" [(ngModel)]="selectedDataList.documentName"[ngModelOptions]="{standalone: true}" style="width: 70%;"> -->
+        <mat-form-field appearance="outline" class="col-4 px-1">
+          <mat-label>Document Name</mat-label>
+          <input type="text" matInput formControlName="documentName" placeholder="Document Name">
+      </mat-form-field>
+   
+      <mat-form-field appearance="outline" class="col-3 px-1" >
+        <mat-label>Document Type</mat-label>
+        <mat-select formControlName="categoryTypes">
+            <mat-option value="M">M</mat-option>
+            <mat-option value="F">F</mat-option>
+            <mat-option value="A">A</mat-option>
+        </mat-select>
+    </mat-form-field>
+      <!-- Document Type: <select [(ngModel)]="selectedDataList.documentType"[ngModelOptions]="{standalone: true}" style="width: 87%;height: 30px;">
+        <option value="">Select</option>
+        <option value="M">M</option>
+        <option value="F">F</option>
+        <option value="A">A</option>
+    </select>   -->
+ 
+    <div class="col-5 px-1" style="margin-top: 5px;" >
+       <input type="file" id="file"(change)="handleFileInput($event)">
     </div>
   </div>
-  <div class="row no-gutters ms-1 me-1" style="margin-top: 20px;">
+  </form>
+  <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;">
     <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onCreateSelectedDataList()"> Add Row</button>
 </div>
+</div>
+  <div class="example-table-container">
 <mat-card style="margin-top: 2px;background-color: #fdfdfd;" *ngIf="this.UserRoleTable.length>0">
     <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
     style="background-color: ghostwhite;" matSort id="dataTable">
-    <ng-container matColumnDef="docNames">
+    <ng-container matColumnDef="documentName">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</mat-header-cell>
-        <mat-cell *matCellDef="let row">docNames  </mat-cell>
+        <mat-cell *matCellDef="let row">{{row.documentName}}  </mat-cell>
       </ng-container>
     <ng-container matColumnDef="categoryTypes">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Category Types </mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.categoryTypes}}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="attachmentName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Attachment </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.attachmentName}}</mat-cell>
+    <ng-container matColumnDef="uploadedDocfileName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded Document Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.uploadedDocfileName}}</mat-cell>
       </ng-container>
    
  
@@ -50,13 +63,55 @@
     <mat-row *matRowDef="let row; columns: AddedUserdisplayedColumns;"></mat-row>
   </mat-table> 
 
-  <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
-  </mat-paginator>
+  <!-- <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
+  </mat-paginator> -->
 </mat-card>
+</div>
+</div>
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Attachment Details</p>
+        </div>
+    </div>
+</mat-card>
+<div class="adjust">
+  <div class="example-input-container">
+    <form [formGroup]="UserRequirementForm">
+<div class="row no-gutters ms-1 me-1 dense-4"style="padding-top:5px">
+    <!-- <div class="col-6 px-1" >
+      Attachment Name: <input type="text" [(ngModel)]="selectedAttachmentDataList.attachmentName"[ngModelOptions]="{standalone: true}" style="width: 73%;">
+    </div> -->
+    <mat-form-field appearance="outline" class="col-4 px-1">
+      <mat-label>Attachment Name</mat-label>
+      <input type="text" matInput formControlName="attachmentName" placeholder="Attachment Name">
+  </mat-form-field>
+    <div class="col-6 px-1" style="margin-top: 5px;">
+     <input type="file" id="file1"(change)="handleAttachmentFileInput($event)">
+    </div>
+  </div>
+  <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;">
+    <button mat-raised-button color="primary"  style="font-size: smaller;background-color: #295ea3;height: 25px; width: fit-content;" (click)="onCreateSelectedAttachmentList()"> Add Row</button>
+</div>
+</form>
+</div>
+<div class="example-table-container">
+<mat-card style="margin-top: 2px;background-color: #fdfdfd;" *ngIf="this.UserRoleAttachmentTable.length>0">
+    <mat-table [dataSource]="tableAttachmentData"
+    style="background-color: ghostwhite;" matSort id="dataAttachmentTable">
+    <ng-container matColumnDef="attachmentName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Attachment Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.attachmentName}}</mat-cell>
+      </ng-container>
+    <mat-header-row *matHeaderRowDef="AddedAttachmentisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: AddedAttachmentisplayedColumns;"></mat-row>
+  </mat-table> 
 
-
-
-
+  <!-- <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
+  </mat-paginator> -->
+</mat-card>
+</div>
+</div>
 <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
     <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
         <div style="float: left;">
@@ -78,6 +133,7 @@
         </form>
     </div>
 </div>
+
 <div class="row">
     <div class="col-12">
         <form [formGroup]="UserRequirementForm">
@@ -97,11 +153,12 @@
 <div class="containerBTN" style="margin-top: 2px; margin-bottom: 35px;">
     <div class="d-flex justify-content-center">
         <button mat-raised-button color="primary"
-            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveConfirmation('0')">Save</button>
+            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onSaveConfirmation()">Save</button>
             <button mat-raised-button color="primary"
-            style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;" (click)="onSubmit('1')">Submit</button>
+            style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;" (click)="onSubmitConfirmation()">Submit</button>
         <button mat-raised-button color="primary"
             style="font-size: smaller;background-color: #295ea3;height: 25px; margin-left: 5px;">Clear</button>
     </div>
 </div>
 <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary" mode="indeterminate" ></mat-spinner>
+<div style="height: 5px;"></div>
