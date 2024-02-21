@@ -23,9 +23,7 @@ import { ForgetPasswordComponent } from './toolbar/forget-password/forget-passwo
 import { LogoutConfirmComponent } from './toolbar/logout-confirm/logout-confirm.component';
 import { MessageDialogComponent } from './common/message-dialog/message-dialog.component';
 import { ErrorInterceptor } from 'src/interceptor/error.interceptor';
-import { GuidelinesComponent } from './home-page-menubar/guidelines/guidelines.component';
 import { AttachmentPreviewComponent } from './home-page-menubar/attachment-preview/attachment-preview.component';
-import { CreateGuidelineComponent } from './home-page-menubar/create-guideline/create-guideline.component';
 import { LovDialogComponent } from './common/lov-dialog/lov-dialog.component';
 import { PageNotFoundComponent } from './toolbar/page-not-found/page-not-found.component';
 import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
@@ -47,9 +45,9 @@ import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
     ForgetPasswordComponent,
     LogoutConfirmComponent,
     MessageDialogComponent,
-    GuidelinesComponent,
+   // GuidelinesComponent,
     AttachmentPreviewComponent,
-    CreateGuidelineComponent,
+   // CreateGuidelineComponent,
     LovDialogComponent,
     PageNotFoundComponent,
     
