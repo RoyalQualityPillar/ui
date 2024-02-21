@@ -65,6 +65,7 @@ export class HeaderComponent implements OnInit{
   }
   onSelectSubMenu(subMenu:any,stage:any){
     console.log(stage)
+    console.log(subMenu)
      this.toolbarService.currentStage=stage;
     if(subMenu =='CC-Cross Functional Reviewer'){
       this.route.navigate(['./master-data-management'])
@@ -77,14 +78,14 @@ export class HeaderComponent implements OnInit{
     }else if(subMenu == 'AD-Master Data'){ 
       console.log('working')
        this.route.navigate(['./admin/ad-master']) 
-     }else if(subMenu == 'QT-Initator'){
+     }else if(subMenu == 'SQT-Initiator'){
       this.route.navigate(['./sd/quotation-home-page']) 
-    // }else if(subMenu == 'QT-Reviewer'){
-     // this.route.navigate(['./rqp-pending-assignment']) 
-     }else if(subMenu == 'QT-Update'){
+    }else if(subMenu == 'SQT-Reviewer'){
+     this.route.navigate(['./sd/rqp-pending-assignment']) 
+     }else if(subMenu == 'SQT-Update'){
       this.toolbarService.currentStage=1;
       this.route.navigate(['./sd/qt-update-page']) 
-     }else if(subMenu == 'QT-Master Data'){
+     }else if(subMenu == 'SQT-Master Data'){
       this.route.navigate(['./sd/qt-master-data-home-page']) 
      }
     //  else if(this.toolbarService.currentStage>=2){
