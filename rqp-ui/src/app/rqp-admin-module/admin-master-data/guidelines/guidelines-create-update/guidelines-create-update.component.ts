@@ -139,7 +139,7 @@ export class GuidelinesCreateUpdateComponent implements OnInit  {
     let categoryType=[];
     let attachement=[]
     this.UserRoleTable.forEach(element=>{
-      docNo.push(element.docNo);
+     // docNo.push(element.docNo);
       docName.push(element.docName);
       categoryType.push(element.categoryType);
       attachement.push(element.attachement);
@@ -341,7 +341,7 @@ if(this.selectedFiles){
     this.selectedFileList.push(this.selectedFiles)
 
     this.UserRoleTable.push({
-      docNo:this.DepartmentMaster.controls['documentNumber'].value,
+     // docNo:this.DepartmentMaster.controls['documentNumber'].value,
       docName:this.DepartmentMaster.controls['documentName'].value,
       categoryType:this.DepartmentMaster.controls['documentType'].value,
       attachmentName:this.uploadedDocfileName

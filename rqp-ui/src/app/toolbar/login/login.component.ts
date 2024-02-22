@@ -77,4 +77,14 @@ export class LoginComponent implements OnInit{
     console.log(sessionStorage.getItem('isLogin'))
      this.route.navigate(['./forget-password']);
   }
+  onSelectSignUp(){
+    console.log('click')
+    this.route.navigate(['./change-password'])
+  }
+  onForgotPassword(){
+    this.toolbarService.isLogin='forgetPassword';
+    sessionStorage.setItem('isLogin','forgetPassword')
+    console.log(sessionStorage.getItem('isLogin'))
+     this.route.navigate(['./forget-password']);
+  }
 }

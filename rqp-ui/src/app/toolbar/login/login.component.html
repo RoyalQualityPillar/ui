@@ -1,15 +1,13 @@
 
 <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
 mode="indeterminate" ></mat-spinner>
-<div 
-class="bg-image d-flex justify-content-center align-items-center"
-  style="
+<div class="bg-image d-flex justify-content-center align-items-center" style="
     background-image: url('../../../assets/test1.jpg');
-    height: 87vh;
     background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  " >
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden; /* Prevent scrolling */
+">
 <div class="mat-card-cvr" >
 <mat-card class="login_card" style="margin-top: 10px;">
     <mat-card-content>
@@ -46,7 +44,15 @@ class="bg-image d-flex justify-content-center align-items-center"
           </form>
           <div mat-dialog-actions style="margin-top: 2px;">
           <button mat-raised-button color="primary" style="width:100%;height: 45px;" (click)="onLogin()">Log In</button>
-          <button mat-raised-button  style="width:100%;height: 45px; margin-top: 10px;" (click)="onForgetPassword()">Forgot Password</button>
+          <!-- <button mat-raised-button  style="width:100%;height: 45px; margin-top: 10px;" (click)="onForgetPassword()">Forgot Password</button> -->
+        </div>
+        <div style="margin: 4px; display: flex; justify-content: space-between;">
+          <div>
+            Don't have an account? <a class="custom-link" (click)="onSelectSignUp()">Sign up</a>
+          </div>
+          <div>
+            <a class="custom-link" (click)="onForgotPassword()">Forgot password</a>
+          </div>
         </div>
         <div>
             <h4 style="color: red;font-family: ui-monospace;" >Pharma Compliance</h4>
