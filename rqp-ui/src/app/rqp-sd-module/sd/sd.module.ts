@@ -53,6 +53,7 @@ import { FairQuotationHomePageComponent } from '../purchase/fair/fair-quotation-
 import { FairReviewHomePageComponent } from '../purchase/fair/fair-review-home-page/fair-review-home-page.component';
 import { FairSaveUpdateComponent } from '../purchase/fair/fair-save-update/fair-save-update.component';
 import { FairUpdateHomePageComponent } from '../purchase/fair/fair-update-home-page/fair-update-home-page.component';
+import { SdMasterHomePageComponent } from '../sd-master-home-page/sd-master-home-page.component';
 
 
 
@@ -108,7 +109,8 @@ import { FairUpdateHomePageComponent } from '../purchase/fair/fair-update-home-p
    FairReviewHomePageComponent,
    FairSaveUpdateComponent,
    FairUpdateHomePageComponent,
-   FairQuotationHomePageComponent
+   FairQuotationHomePageComponent,
+   SdMasterHomePageComponent
   ],
   imports: [
     CommonModule,

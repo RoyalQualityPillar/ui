@@ -433,7 +433,10 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   //   this.route.navigate(['./rqp-sd-module']);
   // }else if (data[0].lcnum == 'RQP1QTPDLC0002' || data[0].lcnum == 'RQP1QTPDLC0003') {
   //   this.route.navigate(['./rqp-sd-module']);
-  }else if(data[0].uc0001 == 'URS'){
+  }else if(data[0].uc0001 == 'SD'){
+    this.route.navigate(['./sd/sd-home-page']);
+  
+}else if(data[0].uc0001 == 'URS'){
     this.route.navigate(['./dms/dms-module-home-page']);
   }else if(data[0].uc0001 == 'DQ'){
     this.route.navigate(['./dms/dms-module-home-page']);

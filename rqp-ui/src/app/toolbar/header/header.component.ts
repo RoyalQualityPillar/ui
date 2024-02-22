@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit{
      }else if(subMenu == 'SQT-Update'){
       this.toolbarService.currentStage=1;
       this.route.navigate(['./sd/qt-update-page']) 
-     }else if(subMenu == 'SQT-Master Data'){
+     }else if(subMenu == 'SD-Master Data'){
       this.route.navigate(['./sd/qt-master-data-home-page']) 
      }
     //  else if(this.toolbarService.currentStage>=2){
