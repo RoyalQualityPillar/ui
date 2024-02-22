@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
@@ -34,7 +34,7 @@ export const MY_FORMATS = {
   providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
   { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },]
 })
-export class QtInitiatorComponent {
+export class QtInitiatorComponent implements OnInit {
   QuotationForm: FormGroup;
   HeaderForm: FormGroup;
   ViewDetailForm: FormGroup;

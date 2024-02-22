@@ -23,6 +23,8 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
 import { MmCommonHeaderComponent } from '../mm-common/mm-common-header/mm-common-header.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
+import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
+import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common-footer.component';
 
 
 @NgModule({
@@ -40,12 +42,14 @@ import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.c
     QtInitiatorComponent,
     QtReviewerComponent,
     QtUpdateComponent,
+    QtReviewSaveSubmitComponent,
     SiHomeComponent,
     SiInitiatorComponent,
     SoHomeComponent,
     SoInitiatorComponent,
     DoHomeComponent,
     DoInitiatorComponent,
+    AsCommonFooterComponent
   ],
   imports: [
     CommonModule,

@@ -18,6 +18,7 @@ import { DoHomeComponent } from '../sale/delivery-order/do-home/do-home.componen
 import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-initiator.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
+import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: "qt-initiator", component: QtInitiatorComponent },
   { path: "qt-reviewer", component: QtReviewerComponent },
   { path: "qt-update", component: QtUpdateComponent },
+  { path: "qt-review-save", component: QtReviewSaveSubmitComponent },
   { path: "si-home", component: SiHomeComponent },
   { path: "si-initiator", component: SiInitiatorComponent },
   { path: "so-home", component: SoHomeComponent },
