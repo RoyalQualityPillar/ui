@@ -20,10 +20,14 @@ import { SoHomeComponent } from '../sale/sale-order/so-home/so-home.component';
 import { SoInitiatorComponent } from '../sale/sale-order/so-initiator/so-initiator.component';
 import { DoHomeComponent } from '../sale/delivery-order/do-home/do-home.component';
 import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-initiator.component';
+import { MmCommonHeaderComponent } from '../mm-common/mm-common-header/mm-common-header.component';
+import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
+import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
 
 
 @NgModule({
   declarations: [
+    MmCommonHeaderComponent,
     MmModuleHomePageComponent,
     MmMasterDataHomePageComponent,
     DqHomeComponent,
@@ -34,6 +38,8 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
     PoInitiatorComponent,
     QtHomeComponent,
     QtInitiatorComponent,
+    QtReviewerComponent,
+    QtUpdateComponent,
     SiHomeComponent,
     SiInitiatorComponent,
     SoHomeComponent,
@@ -43,10 +49,9 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
   ],
   imports: [
     CommonModule,
-    
- AngularMaterialModule,
- ReactiveFormsModule,
- FormsModule,
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
     MmRoutingModule
   ]
 })

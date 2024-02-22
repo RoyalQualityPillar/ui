@@ -530,7 +530,3 @@ onPaginationCall(){
   this.isLoading=false;
 }
   }
-
-
-
-
