@@ -51,18 +51,6 @@ import { RqpInterceptor } from 'src/interceptor/rqp.interceptor';
     LovDialogComponent,
     PageNotFoundComponent,
     
-   
-    
-    
-    
-    
-    
-    
-    
-
- 
-
-    
   ],
   imports: [
     BrowserModule,

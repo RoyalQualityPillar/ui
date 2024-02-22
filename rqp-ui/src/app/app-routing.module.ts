@@ -55,8 +55,7 @@ const routes: Routes = [
   { path: 'forget-password', component: ForgetPasswordComponent },
   {
     path: 'change-password',
-    component: ChangePasswordComponent,
-    canActivate: [AuthGuard],
+    component: ChangePasswordComponent
   },
   {
     path: 'module-home-page',

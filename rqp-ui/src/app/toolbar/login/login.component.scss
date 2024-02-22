@@ -34,3 +34,20 @@
 //     transform: translateY(-1.1em) scale(.75);
 //     width: 133.33333%;
 // }
+a.custom-link {
+  cursor: pointer; /* Change mouse pointer to pointer style */
+  text-decoration: underline; /* Add underline effect */
+}
+
+a.custom-link:hover {
+  color: blue; /* Change color on hover if needed */
+  text-decoration: none; /* Remove underline effect on hover if needed */
+}
+.bg-image {
+  background-image: url('../../../assets/test1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 82vh;
+  overflow: hidden; /* Prevent scrolling */
+}
