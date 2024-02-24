@@ -37,6 +37,7 @@ export class CreateActiveLifeCycleComponent implements OnInit{
       module:['',Validators.required],
       lifeCycleCode:['',Validators.required],
       status:['',Validators.required],
+      lc_req_code:[''],
       comments:[''],
     })
   }
@@ -147,6 +148,7 @@ this.UserRoleTable.push({
   userList:useridList,
   useridList:this.selectedUser
 })
+this.UserRoleTable = this.reformatTabeData(this.UserRoleTable)
 this.tableData = new MatTableDataSource(this.UserRoleTable);
 this.tableData.paginator = this.paginator;
 this.tableData.sort = this.sort;
@@ -154,7 +156,18 @@ this.tableData.sort = this.sort;
 console.log(this.UserRoleTable)
 console.log(this.selectedDataList)
 }
-
+reformatTabeData(data:any){
+  let highestStage = 1; 
+data.forEach(stage => {
+    if (stage.role === "Update" || stage.role === 'Initiator') {
+        stage.stage = 1;
+    } else {
+        stage.stage = ++highestStage;
+    }
+});
+data.sort((a, b) => a.stage - b.stage);
+return data;
+}
 onUserRemove(row:any){
   this.UserRoleTable.splice(this.UserRoleTable.indexOf(row),1);
   this.tableData = new MatTableDataSource(this.UserRoleTable);
@@ -192,20 +205,24 @@ onDisplayList(row:any){
       lifecycle:this.LifeCycleForm.controls['lifeCycleCode'].value,
       status:this.LifeCycleForm.controls['status'].value,
       //role:this.LifeCycleForm.controls['role'].value,
+      lc_req_code:this.LifeCycleForm.controls['lc_req_code'].value,
       comments:this.LifeCycleForm.controls['comments'].value,
     }
    
     body.lifeCycleStageList=this.UserRoleTable;
+    let highestStage = 1; // Initialize the highest stage number
+
     body.lifeCycleStageList.forEach(stage => {
-      // Check if the role is "Update"
-      if (stage.role === "Update") {
-        // Set stage value to 1
-        stage.stage = 1;
-      } else {
-        // For other roles, follow the existing sequence
-        stage.stage = stage.stage + 1;
-      }
+        // Check if the role is "Update" or "Initiator"
+        if (stage.role === "Update" || stage.role === 'Initiator') {
+            // Set stage value to 1
+            stage.stage = 1;
+        } else {
+            // Increment the stage value using the current highest stage number
+            stage.stage = ++highestStage;
+        }
     });
+    body.lifeCycleStageList.sort((a, b) => a.stage - b.stage);
     console.log(this.UserRoleTable.length)
     console.log(body)
     if(this.UserRoleTable.length==0){
