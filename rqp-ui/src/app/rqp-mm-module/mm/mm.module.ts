@@ -25,6 +25,8 @@ import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.compone
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
 import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
 import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common-footer.component';
+import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
+import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common
     SiInitiatorComponent,
     SoHomeComponent,
     SoInitiatorComponent,
+    SoReviewerComponent,
+    SoReviewSaveSubmitComponent,
     DoHomeComponent,
     DoInitiatorComponent,
     AsCommonFooterComponent

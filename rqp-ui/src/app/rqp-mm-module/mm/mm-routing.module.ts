@@ -19,6 +19,9 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
 import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
+import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
+import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.component';
+import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -37,6 +40,9 @@ const routes: Routes = [
   { path: "si-initiator", component: SiInitiatorComponent },
   { path: "so-home", component: SoHomeComponent },
   { path: "so-initiator", component: SoInitiatorComponent },
+  { path: "so-reviewer", component: SoReviewerComponent },
+  { path: 'so-review-save', component: SoReviewSaveSubmitComponent },
+  { path: "so-update", component: SoUpdateComponent },
   { path: "do-home", component: DoHomeComponent },
   { path: "do-initiator", component: DoInitiatorComponent },
   { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent }
