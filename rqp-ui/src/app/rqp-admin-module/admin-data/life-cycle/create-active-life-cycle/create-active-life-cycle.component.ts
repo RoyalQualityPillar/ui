@@ -196,6 +196,16 @@ onDisplayList(row:any){
     }
    
     body.lifeCycleStageList=this.UserRoleTable;
+    body.lifeCycleStageList.forEach(stage => {
+      // Check if the role is "Update"
+      if (stage.role === "Update") {
+        // Set stage value to 1
+        stage.stage = 1;
+      } else {
+        // For other roles, follow the existing sequence
+        stage.stage = stage.stage + 1;
+      }
+    });
     console.log(this.UserRoleTable.length)
     console.log(body)
     if(this.UserRoleTable.length==0){

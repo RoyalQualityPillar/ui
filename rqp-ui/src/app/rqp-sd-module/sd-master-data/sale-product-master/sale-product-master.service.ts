@@ -14,16 +14,16 @@ export class SaleProductMasterService {
 
   getAllSaleProduct(size:any,index:any){
     let queryParams=`?pageIndex=${index}&size=${size}`
-    const ALLSALEPRODUCTURL=this.API_URL+"gm/sp-master/get-all"+queryParams
+    const ALLSALEPRODUCTURL=this.API_URL+"sd/sp-master/get-all"+queryParams
    return this.http.post(ALLSALEPRODUCTURL,'')
   }
   getUserProfileFilterData(body){
-    let fetchProfileListUrlAll=this.API_URL+"gm/sp-master/search";
+    let fetchProfileListUrlAll=this.API_URL+"sd/sp-master/search";
     return this.http.post(fetchProfileListUrlAll,body,)
   }
   getActiveSaleProduct(size:any,index:any){
     let queryParams=`?pageIndex=${index}&size=${size}`
-    let fetchProfileListUrlAll=this.API_URL+"gm/sp-master/get-max-all"+queryParams;
+    let fetchProfileListUrlAll=this.API_URL+"sd/sp-master/get-max-all"+queryParams;
     return this.http.post(fetchProfileListUrlAll,'')
   }
   onLoadUpdatePage(UC0001:any){
@@ -37,7 +37,7 @@ export class SaleProductMasterService {
 }
 onAllRoleAuditTrail(uc0001:any){
   let queryParams=`?UC0001=${uc0001}`;
-let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"gm/ut-master/get-by-code-all"+queryParams;
+let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"sd/ut-master/get-by-code-all"+queryParams;
 
  return this.http.get(fetchAllBusinessUnitInfoApiUrl) 
 }
