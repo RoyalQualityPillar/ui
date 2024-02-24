@@ -156,6 +156,17 @@ onDisplayList(row:any){
       comments:this.LifeCycleForm.controls['comments'].value,
     }
     body.lifeCycleStageList=this.UserRoleTable
+    body.lifeCycleStageList.forEach(stage => {
+      // Check if the role is "Update"
+      if (stage.role === "Update") {
+        // Set stage value to 1
+        stage.stage = 1;
+      } else {
+        // For other roles, follow the existing sequence
+        stage.stage = stage.stage + 1;
+      }
+    });
+    console.log(body)
     console.log(this.UserRoleTable)
     console.log(this.LifeCycleForm.value)
     let merge =Object.assign(this.UserRoleTable,this.LifeCycleForm.value);
