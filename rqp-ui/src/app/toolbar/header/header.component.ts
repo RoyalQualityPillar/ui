@@ -102,7 +102,7 @@ export class HeaderComponent implements OnInit {
     //  else if(this.toolbarService.currentStage>=2){
     //   this.route.navigate(['./sd/rqp-pending-assignment'])  need to check with @suresh
     // }
-    else if (subMenu == 'URS-Initator') {
+    else if (subMenu == 'URS-Initiator') {
       this.route.navigate(['./dms/user-requirement-home-page'])
     } else if (subMenu == 'DQ-Initator') {
       this.route.navigate(['./sd/draft-initator-home-page'])
