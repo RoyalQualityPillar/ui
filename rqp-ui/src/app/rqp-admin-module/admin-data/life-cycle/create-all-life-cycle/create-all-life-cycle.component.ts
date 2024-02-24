@@ -34,6 +34,7 @@ export class CreateAllLifeCycleComponent implements OnInit{
       module:['',Validators.required],
       lifeCycleCode:['',Validators.required],
       status:['',Validators.required],
+      lc_req_code:[''],
       comments:[''],
     })
   }
