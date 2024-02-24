@@ -166,6 +166,9 @@ export class HeaderComponent implements OnInit {
     else if (subMenu == 'PSO-Reviewer' || subMenu == 'PSO Approver') {
       this.route.navigate(['/mm/so-reviewer']);
     }
+    else if (subMenu == 'PSO-Update') {
+      this.route.navigate(['./mm/so-update']);
+    }
     else if (subMenu == 'PDO-Initiator') {
       this.route.navigate(['./mm/do-initiator'])
     }

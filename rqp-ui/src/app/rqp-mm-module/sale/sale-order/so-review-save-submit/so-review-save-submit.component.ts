@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -31,7 +31,7 @@ export const MY_FORMATS = {
   templateUrl: './so-review-save-submit.component.html',
   styleUrls: ['./so-review-save-submit.component.scss']
 })
-export class SoReviewSaveSubmitComponent {
+export class SoReviewSaveSubmitComponent implements OnInit {
   ff0001: any;
   pageData: any;
   isReadonly: boolean;

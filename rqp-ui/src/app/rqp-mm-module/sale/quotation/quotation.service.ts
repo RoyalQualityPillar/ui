@@ -15,4 +15,10 @@ export class QuotationService {
     const saveUpdateURL = this.API_URL + 'pmmpqtitem/pqt_item/save-update';
     return this.http.post(saveUpdateURL, requestBody);
   }
+
+  getResquestNoID(lc0002: any) { ///1st
+    const queryParams = `?lc0002=${lc0002}`;
+    const reviewURL = this.API_URL + 'pmmpqtitem/module-request-no' + queryParams;
+    return this.http.get(reviewURL);
+  }
 }

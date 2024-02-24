@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +18,7 @@ import { ToolbarService } from 'src/app/service/toolbar.service';
   templateUrl: './so-reviewer.component.html',
   styleUrls: ['./so-reviewer.component.scss']
 })
-export class SoReviewerComponent {
+export class SoReviewerComponent implements OnInit, AfterViewInit, OnDestroy {
   selection = new SelectionModel<any>(true, [])
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
@@ -168,7 +168,7 @@ export class SoReviewerComponent {
   }
   onSubmit() {
     console.log(this.selectedRow)
-    this.router.navigate(['./mm/qt-review-save'], { queryParams: this.selectedRow })
+    this.router.navigate(['./mm/so-review-save'], { queryParams: this.selectedRow })
   }
   copyData() {
     var dataArray = "";

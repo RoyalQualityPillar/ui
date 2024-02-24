@@ -13,6 +13,7 @@ import { StockListComponent } from 'src/app/rqp-sd-module/stock-list/stock-list.
 import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import { MessageService } from 'src/app/service/message.service';
 import { ToolbarService } from 'src/app/service/toolbar.service';
+import { QuotationService } from '../quotation.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,7 +45,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   constructor(public router: ActivatedRoute, private sdService: SdService, public fb: FormBuilder, public dialog: MatDialog,
     private lifeCycleDataService: LifeCycleDataService, private messageService: MessageService,
     private fairService: DraftService,
-    private toolbarService: ToolbarService) {
+    private toolbarService: ToolbarService, private quotationService: QuotationService) {
     this.ViewDetailForm = this.fb.group({
       orgUnitCode: ['', Validators.required],
       salesUnitCode: ['', Validators.required],
@@ -117,7 +118,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   }
   requestNoID: any;
   onGetRequestNo() {
-    this.sdService.getResquestNoID(this.ff0001).subscribe((data: any) => {
+    this.quotationService.getResquestNoID(this.ff0001).subscribe((data: any) => {
       console.log(data)
       this.requestNoID = data.data[0].uc0001;
       if (this.requestNoID) {
