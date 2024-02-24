@@ -37,6 +37,7 @@ export class CreateActiveLifeCycleComponent implements OnInit{
       module:['',Validators.required],
       lifeCycleCode:['',Validators.required],
       status:['',Validators.required],
+      lc_req_code:[''],
       comments:[''],
     })
   }
@@ -192,6 +193,7 @@ onDisplayList(row:any){
       lifecycle:this.LifeCycleForm.controls['lifeCycleCode'].value,
       status:this.LifeCycleForm.controls['status'].value,
       //role:this.LifeCycleForm.controls['role'].value,
+      lc_req_code:this.LifeCycleForm.controls['lc_req_code'].value,
       comments:this.LifeCycleForm.controls['comments'].value,
     }
    
