@@ -161,6 +161,12 @@ export class HeaderComponent implements OnInit {
     else if (subMenu == 'PSI-Initiator') {
       this.route.navigate(['./mm/si-initiator'])
     }
+    else if (subMenu == 'PSI-Reviewer' || subMenu == 'PSI-Approver') {
+      this.route.navigate(['./mm/si-reviewer'])
+    }
+    else if (subMenu == 'PSI-Update') {
+      this.route.navigate(['./mm/si-update']);
+    }
     else if (subMenu == 'PSO-Initiator') {
       this.route.navigate(['./mm/so-initiator'])
     }

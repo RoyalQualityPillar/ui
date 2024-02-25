@@ -1,71 +1,43 @@
 <div class="adjust">
     <div class="example-table-container">
-        <app-mm-common-header [pageData]="this.pageData" (headerData)="getHeaderData($event)"></app-mm-common-header>
-        <!-- <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-        <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
-            <div style="float: left;">
-                <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Headers</p>
-            </div>
-        </div>
-    </mat-card> -->
 
-        <!-- <div class="row">
-            <div class="col-12">
-                <div class="p-2">
-                    <div class="row no-gutters mt-1 pb-2 ms-1 me-1">
-                        <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
-                            denoted by an asterisk(<span style="color: red">*</span>).</span>
-                    </div>
-                    <form [formGroup]="HeaderForm">
-                    <div class="row no-gutters ms-1 me-1 dense-4">
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Oarganization Unit Code</mat-label>
-                            <input type="text" matInput formControlName="oucode" placeholder="Oarganization Unit Code">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Life Cycle No</mat-label>
-                            <input type="text" matInput formControlName="lc0001" placeholder="Life Cycle No">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Request No</mat-label>
-                            <input type="text" matInput formControlName="lc0002" placeholder="Request No">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Stage</mat-label>
-                            <input type="text" matInput formControlName="lc0003" placeholder="Stage">
-                        </mat-form-field>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div> -->
+        <app-mm-common-header [pageData]="this.pageData" (headerData)="getHeaderData($event)"></app-mm-common-header>
         <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
             <div class="btn-group" class="headers"
                 style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
                 <div style="float: left;">
-                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Company Information</p>
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">
+                        Quotation Information</p>
                 </div>
             </div>
         </mat-card>
-        <!--address -->
+        <form [formGroup]="ViewDetailForm">
+            <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+                <mat-form-field appearance="outline" class="col-12 px-1">
+                    <mat-label>Quotation No.</mat-label>
+                    <input type="text" matInput placeholder="Quotation No." formControlName="quotationNo"
+                        [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
+                </mat-form-field>
+            </div>
+        </form>
         <div class="adjust">
             <div class="unit-code-container">
                 <div class="unit-code-box">
                     <form [formGroup]="ViewDetailForm">
-                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
 
                             <mat-form-field appearance="outline" class="col-12 px-1">
-                                <mat-label>Oarganization Unit Code</mat-label>
+                                <mat-label>Organization Unit Code</mat-label>
                                 <input type="text" matInput placeholder="Oarganization Unit Code"
-                                    formControlName="orgUnitCode" (change)="onChangeOrgUnitCode()">
-                                <img alt="lov img" src="../../../../../../assets/searchfind.svg"
-                                    class="icon-size lovSearchButton" color="primary" (click)="openOrgUnitCodeLov()">
+                                    formControlName="orgUnitCode" [readonly]="isReadonly"
+                                    [class.isReadonlyFieldForQuotation]="isReadonly">
                             </mat-form-field>
                         </div>
                     </form>
                     <div class="supplier-content-code" *ngIf="this.unitCodeData">
                         <div class="sup-head-code" style="background-color: #bcceea;">
-                            <div class="sup-fields-code" style="padding: 4px;">Address of organization unit</div>
+                            <div class="sup-fields-code" style="padding: 4px;font-weight: 700;">Address of organization
+                                unit</div>
                             <div class="sup-values-code" style="padding: 4px;">{{unitCodeData[0].ff0003}},
                                 {{unitCodeData[0].ff0004}},
                                 {{unitCodeData[0].ff0005}},{{unitCodeData[0].ff0007}},{{unitCodeData[0].ff0007}},<br>
@@ -88,15 +60,14 @@
                             <mat-form-field appearance="outline" class="col-12 px-1">
                                 <mat-label>Sale Unit Code</mat-label>
                                 <input type="text" matInput placeholder="Sale Unit Code" formControlName="salesUnitCode"
-                                    (change)="onChangeSalesUnitCode()">
-                                <img alt="lov img" src="../../../../../../assets/searchfind.svg"
-                                    class="icon-size lovSearchButton" color="primary" (click)="openSalesUnitLov()">
+                                    [readonly]="isReadonly" [class.isReadonlyFieldForQuotation]="isReadonly">
                             </mat-form-field>
                         </div>
                     </form>
-                    <div class="supplier-content-code" *ngIf="this.unitCodeData">
+                    <div class="supplier-content-code" *ngIf="unitCodeData">
                         <div class="sup-head-code" style="background-color: #bcceea;">
-                            <div class="sup-fields-code" style="padding: 4px;">Address of sales unit</div>
+                            <div class="sup-fields-code" style="padding: 4px;font-weight: 700;">Address of sales unit
+                            </div>
                             <div class="sup-values-code" style="padding: 4px;">{{unitCodeData[1].ff0003}},
                                 {{unitCodeData[1].ff0004}},
                                 {{unitCodeData[1].ff0005}},{{unitCodeData[1].ff0007}},{{unitCodeData[1].ff0007}},<br>
@@ -112,48 +83,7 @@
                 </div>
             </div>
         </div>
-        <!--address-->
-        <!-- <div class="row">
-            <div class="col-12">
-                <div class="p-2">
-    
-                <form [formGroup]="ViewDetailForm">
-                <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
-    
-                    <mat-form-field appearance="outline" class="col-3 px-1">
-                        <mat-label>Oarganization Unit Code</mat-label>
-                        <input type="text" matInput placeholder="Oarganization Unit Code"formControlName="orgUnitCode"
-                        (change)="onChangeOrgUnitCode()">
-                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
-                        class="icon-size lovSearchButton" color="primary"(click)="openOrgUnitCodeLov()"> 
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-3 px-1">
-                        <mat-label>Sale Unit Code</mat-label>
-                        <input type="text" matInput placeholder="Sale Unit Code"formControlName="salesUnitCode"
-                        (change)="onChangeSalesUnitCode()">
-                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
-                        class="icon-size lovSearchButton" color="primary"(click)="openSalesUnitLov()"> 
-                    </mat-form-field>
-                
-                </div>
-            </form>
-        </div>
-            </div>
-        </div> -->
-        <!-- <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-    <div class="btn-group" class="headers"
-    style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
-    <div style="float: left;">
-        <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Details</p>
-    </div>
-    </div>
-    </mat-card>
-    <div class="row">
-        <div class="col-12">
-          
-    
-            </div>
-            </div> -->
+        <!--Product Information start-->
         <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
             <div class="btn-group" class="headers"
                 style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
@@ -177,7 +107,7 @@
                             <thead style="background:#369 !important;">
                                 <tr>
                                     <th></th>
-
+                                    <th style="color: white;">Item Number</th>
                                     <th style="color: white;">Price Code</th>
                                     <th style="color: white;">Product Code</th>
                                     <th style="color: white;">Product Name</th>
@@ -203,13 +133,19 @@
                                     <td><img src="/assets/delete.png" (click)="deleteTodo(idx)"></td>
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
-                                            style="width: 150px;" [class.isReadonlyFieldForQuotation]="isReadonly"
-                                            [(ngModel)]="item.ff0020" [ngModelOptions]="{standalone: true}" required
+                                            style="width: 140px;" [class.isReadonlyFieldForQuotation]="isReadonly"
+                                            [(ngModel)]="item.itemNo" [ngModelOptions]="{standalone: true}" required
                                             [readonly]="isReadonly">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
                                             style="width: 140px;" [class.isReadonlyFieldForQuotation]="isReadonly"
+                                            [(ngModel)]="item.ff0020" [ngModelOptions]="{standalone: true}" required
+                                            [readonly]="isReadonly">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm txt-box"
+                                            style="width: 110px;" [class.isReadonlyFieldForQuotation]="isReadonly"
                                             [(ngModel)]="item.productCode" [ngModelOptions]="{standalone: true}"
                                             required [readonly]="isReadonly">
                                     </td>
@@ -238,10 +174,9 @@
                                 </td> -->
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
-                                            style="width: 140px;" [(ngModel)]="item.gethSNCode"
+                                            style="width: 140px;" [readonly]="isReadonly" [(ngModel)]="item.gethSNCode"
                                             [ngModelOptions]="{standalone: true}"
-                                            [class.isReadonlyFieldForQuotation]="isReadonly" required
-                                            [readonly]="isReadonly">
+                                            [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
 
 
@@ -339,148 +274,108 @@
                         </table>
                     </div>
                 </div>
-                <div style="padding-right: 15px;padding-left: 15px;">
 
-                    <mat-card style="margin-top: 2px;background-color:#dfece0;">
-                        <div class="supplier-content">
-                            <div class="sup-head" style="background-color: #bcceea;">
-                                <div class="sup-fields">Total Discount : </div>
-                                <div class="sup-values">{{totalDisAmt | number:'1.2-2'}}</div>
-                            </div>
-                            <div class="sup-head" style="background-color: #bcceea;">
-                                <div class="sup-fields">After Discount Sub Total Amount : </div>
-                                <div class="sup-values">{{afterDisAmt | number:'1.2-2'}}</div>
-                            </div>
-
-                            <div class="sup-head">
-                                <div class="sup-fields">SGST : </div>
-                                <div class="sup-values">{{SGST | number:'1.2-2'}}</div>
-                            </div>
-                            <div class="sup-head">
-                                <div class="sup-fields">CGST </div>
-                                <div class="sup-values">{{CGST | number:'1.2-2'}}</div>
-                            </div>
-                            <div class="sup-head" style="background-color: #bcceea;">
-                                <div class="sup-fields">IGST</div>
-                                <div class="sup-values">{{IGST | number:'1.2-2'}}</div>
-                            </div>
-                            <div class="sup-head" style="background-color: #bcceea;">
-                                <div class="sup-fields">Total GST Amount </div>
-                                <div class="sup-values">{{totalGst | number:'1.2-2'}}</div>
-                            </div>
-                            <div class="sup-head">
-                                <div class="sup-fields">Total Amount : </div>
-                                <div class="sup-values">{{totalAmt | number:'1.2-2'}}</div>
-                            </div>
-                        </div>
-                    </mat-card>
-
-                    <form [formGroup]="QuotationForm">
-                        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
-                            <mat-form-field appearance="outline" class="col-4 px-1">
-                                <mat-label>Quotetion Valid To Date</mat-label>
-                                <input type="text" matInput formControlName="quotationValidDate"
-                                    placeholder="Quotetion Valid  To Date" [matDatepicker]="picker1">
-                                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="col-4 px-1">
-                                <mat-label>Delivery Date </mat-label>
-                                <input type="text" matInput formControlName="deliveryDate" placeholder="Delivery Date"
-                                    [matDatepicker]="picker2">
-                                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                                <mat-datepicker #picker2></mat-datepicker>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" class="col-4 px-1">
-                                <mat-label>Payment Terms Code</mat-label>
-                                <input type="text" matInput formControlName="paymentTermsCode"
-                                    placeholder="Payment Terms Code">
-                            </mat-form-field>
-                            <!-- <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Disount Amount</mat-label>
-                            <input type="text" matInput formControlName="ff0007" [class.isReadonlyFieldForQuotation]="isReadonly" placeholder="Disount Amount">
-                        </mat-form-field> -->
-                        </div>
-                        <!-- <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
-    
-                       
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>After Discount Sub Total Amount</mat-label>
-                            <input type="text" matInput formControlName="ff0008"[class.isReadonlyFieldForQuotation]="isReadonly"
-                                placeholder="After Discount Sub Total Amount">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>SGST</mat-label>
-                            <input type="number" matInput formControlName="ff0009" [class.isReadonlyFieldForQuotation]="isReadonly"
-                                placeholder="SGST">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>CGST</mat-label>
-                            <input type="number" matInput formControlName="ff0010" [class.isReadonlyFieldForQuotation]="isReadonly"
-                                placeholder="CGST">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>IGST</mat-label>
-                            <input matInput formControlName="ff0011" placeholder="IGST" [class.isReadonlyFieldForQuotation]="isReadonly">
-                        </mat-form-field>
-                    </div> -->
-                        <!-- <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
-                      
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Total GST</mat-label>
-                            <input matInput formControlName="ff0012" placeholder="Total GST" [class.isReadonlyFieldForQuotation]="isReadonly">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Total Amount </mat-label>
-                            <input matInput formControlName="ff0013" placeholder="Total Amount" [class.isReadonlyFieldForQuotation]="isReadonly">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Order Status</mat-label>
-                            <input type="text" matInput formControlName="ff0014" placeholder="Order Status">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" class="col-3 px-1">
-                            <mat-label>Stage</mat-label>
-                            <input type="text" matInput formControlName="ff0015" placeholder="Stage">
-                        </mat-form-field>
-                    </div> -->
-                    </form>
-                </div>
 
             </div>
         </div>
+        <!--Product Information end-->
+        <div style="padding-right: 15px;padding-left: 15px;" *ngIf="this.indexList">
 
-        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
-            <div class="btn-group" class="headers"
-                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
-                <div style="float: left;">
-                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+            <mat-card style="margin-top: 2px;background-color:#dfece0;">
+                <div class="supplier-content">
+                    <div class="sup-head" style="background-color: #bcceea;">
+                        <div class="sup-fields">Total Discount : </div>
+                        <div class="sup-values">{{indexList.ff0007 }}</div>
+                    </div>
+                    <div class="sup-head" style="background-color: #bcceea;">
+                        <div class="sup-fields">After Discount Sub Total Amount : </div>
+                        <div class="sup-values">{{indexList.ff0006 | number:'1.2-2'}}</div>
+                    </div>
+
+                    <div class="sup-head">
+                        <div class="sup-fields">SGST : </div>
+                        <div class="sup-values">{{indexList.ff0009 | number:'1.2-2'}}</div>
+                    </div>
+                    <div class="sup-head">
+                        <div class="sup-fields">CGST </div>
+                        <div class="sup-values">{{indexList.ff0010 | number:'1.2-2'}}</div>
+                    </div>
+                    <div class="sup-head" style="background-color: #bcceea;">
+                        <div class="sup-fields">IGST</div>
+                        <div class="sup-values">{{indexList.ff0011 | number:'1.2-2'}}</div>
+                    </div>
+                    <div class="sup-head" style="background-color: #bcceea;">
+                        <div class="sup-fields">Total GST Amount </div>
+                        <div class="sup-values">{{indexList.ff0011 | number:'1.2-2'}}</div>
+                    </div>
+                    <div class="sup-head">
+                        <div class="sup-fields">Total Amount : </div>
+                        <div class="sup-values">{{indexList.ff0013 | number:'1.2-2'}}</div>
+                    </div>
                 </div>
-            </div>
-        </mat-card>
-        <div class="row">
-            <div class="col-12">
-                <form [formGroup]="QuotationForm">
-                    <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;">
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Comments</mat-label>
-                            <textarea type="text" matInput placeholder="Comments" formControlName="comments">
-                                </textarea>
-                        </mat-form-field>
-                    </div>
-
-                    <div class="row no-gutters ms-1 me-1 dense-4">
-                        <mat-form-field appearance="outline" class="col-4 px-1">
-                            <mat-label>Next stage</mat-label>
-                            <input type="text" matInput formControlName="nextStage" placeholder="Next Stage"
-                                (change)="onChangeNextStage()">
-                            <img alt="lov img" src="../../../../../../assets/searchfind.svg"
-                                class="icon-size lovSearchButton" color="primary" (click)="openNextStageLov()">
-                        </mat-form-field>
-                    </div>
-                </form>
-            </div>
+            </mat-card>
         </div>
+        <form [formGroup]="QuotationForm">
+            <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 10px;">
+                <mat-form-field appearance="outline" class="col-4 px-1">
+                    <mat-label>Quotetion Valid To Date</mat-label>
+                    <input type="text" matInput formControlName="quotationValidDate"
+                        placeholder="Quotetion Valid  To Date" [matDatepicker]="picker1">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-4 px-1">
+                    <mat-label>Delivery Date </mat-label>
+                    <input type="text" matInput formControlName="deliveryDate" placeholder="Delivery Date"
+                        [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-4 px-1">
+                    <mat-label>Payment Terms Code</mat-label>
+                    <input type="text" matInput formControlName="paymentTermsCode" placeholder="Payment Terms Code">
+                </mat-form-field>
+            </div>
 
+        </form>
+        <app-as-common-footer [pageData]="this.pageData" (comments)="getCommentsData($event)">
+            <div class="table-box" style="margin-left: 10px;margin-right: 10px;margin-top: 4px;">
+                <mat-table [dataSource]="dataSource" id="datTable" matTableExporter #exporter="matTableExporter" matSort
+                    style="background-color: ghostwhite;">
+                    <ng-container matColumnDef="createdby">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ff0003">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Role Name</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ff0005">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Comments Version</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{onRequestVersion(row)}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="comments">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Comments</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.comments}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="resviewCommentsDisplayColumn"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns:resviewCommentsDisplayColumn"></mat-row>
+                </mat-table>
+            </div>
+
+        </app-as-common-footer>
+        <form [formGroup]="FooterForm">
+            <div class="row no-gutters ms-1 me-1 dense-4">
+                <mat-form-field appearance="outline" class="col-4 px-1">
+                    <mat-label>Next stage</mat-label>
+                    <input type="text" matInput formControlName="nextStage" placeholder="Next Stage">
+                    <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                        color="primary" (click)="openNextStageLov()">
+                </mat-form-field>
+            </div>
+        </form>
         <div class="containerBTN" style="margin-top: 2px; margin-bottom: 5px;">
             <div class="d-flex justify-content-center">
                 <button mat-raised-button color="primary"
@@ -496,7 +391,6 @@
         <mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
             mode="indeterminate"></mat-spinner>
     </div>
-
 </div>
 
 <div style="height: 35px;"></div>

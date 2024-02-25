@@ -25,6 +25,9 @@ import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-s
 import { DoReviewerComponent } from '../sale/delivery-order/do-reviewer/do-reviewer.component';
 import { DoUpdateComponent } from '../sale/delivery-order/do-update/do-update.component';
 import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-save-submit/do-review-save-submit.component';
+import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
+import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
+import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -41,6 +44,9 @@ const routes: Routes = [
   { path: "qt-review-save", component: QtReviewSaveSubmitComponent },
   { path: "si-home", component: SiHomeComponent },
   { path: "si-initiator", component: SiInitiatorComponent },
+  { path: "si-reviewer", component: SiReviewerComponent },
+  { path: 'si-update', component: SiUpdateComponent },
+  { path: 'si-review-save', component: SiReviewSaveSubmitComponent },
   { path: "so-home", component: SoHomeComponent },
   { path: "so-initiator", component: SoInitiatorComponent },
   { path: "so-reviewer", component: SoReviewerComponent },

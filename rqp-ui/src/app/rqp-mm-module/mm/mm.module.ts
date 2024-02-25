@@ -31,6 +31,9 @@ import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.compon
 import { DoReviewerComponent } from '../sale/delivery-order/do-reviewer/do-reviewer.component';
 import { DoUpdateComponent } from '../sale/delivery-order/do-update/do-update.component';
 import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-save-submit/do-review-save-submit.component';
+import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
+import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
+import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
 
 
 @NgModule({
@@ -51,6 +54,9 @@ import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-sa
     QtReviewSaveSubmitComponent,
     SiHomeComponent,
     SiInitiatorComponent,
+    SiUpdateComponent,
+    SiReviewerComponent,
+    SiReviewSaveSubmitComponent,
     SoHomeComponent,
     SoInitiatorComponent,
     SoReviewerComponent,
