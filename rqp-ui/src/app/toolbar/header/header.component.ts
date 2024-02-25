@@ -102,7 +102,7 @@ export class HeaderComponent implements OnInit {
     //  else if(this.toolbarService.currentStage>=2){
     //   this.route.navigate(['./sd/rqp-pending-assignment'])  need to check with @suresh
     // }
-    
+
     else if (subMenu == 'URS-Initiator') {
       this.route.navigate(['./dms/user-requirement-home-page'])
     } else if (subMenu == 'DQ-Initator') {
@@ -172,6 +172,12 @@ export class HeaderComponent implements OnInit {
     }
     else if (subMenu == 'PDO-Initiator') {
       this.route.navigate(['./mm/do-initiator'])
+    }
+    else if (subMenu == 'PDO-Reviewer' || subMenu == 'PDO-Approver') {
+      this.route.navigate(['/mm/do-reviewer']);
+    }
+    else if (subMenu == 'PDO-Update') {
+      this.route.navigate(['/mm/do-update']);
     }
     //Module routing required based on submenu
   }

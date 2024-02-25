@@ -243,7 +243,7 @@ export class SoReviewerComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     });
-    let fileName = 'pqt';
+    let fileName = 'pso';
     doc.save(fileName + '.pdf');
   }
   downloadExcel() {
@@ -263,7 +263,7 @@ export class SoReviewerComponent implements OnInit, AfterViewInit, OnDestroy {
         "Created Date ": excelData[i].createdon,
       })
     }
-    exportData(arrExcel, 'role', 'pqt', 'excel')
+    exportData(arrExcel, 'role', 'pso', 'excel')
   }
   downloadTxt() {
     let excelData: any;
@@ -282,7 +282,7 @@ export class SoReviewerComponent implements OnInit, AfterViewInit, OnDestroy {
         "Created Date ": excelData[i].createdon,
       })
     }
-    exportData(arrExcel, 'role', 'pqt', 'txt')
+    exportData(arrExcel, 'role', 'pso', 'txt')
   }
 
   downloadCsvFile() {
@@ -302,7 +302,7 @@ export class SoReviewerComponent implements OnInit, AfterViewInit, OnDestroy {
         "Created Date ": excelData[i].createdon,
       })
     }
-    exportData(arrExcel, 'role', 'pqt', 'csv')
+    exportData(arrExcel, 'role', 'pso', 'csv')
   }
 
 

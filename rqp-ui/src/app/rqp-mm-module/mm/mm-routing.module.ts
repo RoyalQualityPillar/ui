@@ -22,6 +22,9 @@ import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-su
 import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
 import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.component';
 import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
+import { DoReviewerComponent } from '../sale/delivery-order/do-reviewer/do-reviewer.component';
+import { DoUpdateComponent } from '../sale/delivery-order/do-update/do-update.component';
+import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-save-submit/do-review-save-submit.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -45,6 +48,9 @@ const routes: Routes = [
   { path: "so-update", component: SoUpdateComponent },
   { path: "do-home", component: DoHomeComponent },
   { path: "do-initiator", component: DoInitiatorComponent },
+  { path: 'do-reviewer', component: DoReviewerComponent },
+  { path: 'do-update', component: DoUpdateComponent },
+  { path: 'do-review-save', component: DoReviewSaveSubmitComponent },
   { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent }
 ];
 

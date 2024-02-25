@@ -28,6 +28,9 @@ import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common
 import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
 import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
 import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.component';
+import { DoReviewerComponent } from '../sale/delivery-order/do-reviewer/do-reviewer.component';
+import { DoUpdateComponent } from '../sale/delivery-order/do-update/do-update.component';
+import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-save-submit/do-review-save-submit.component';
 
 
 @NgModule({
@@ -55,6 +58,9 @@ import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.compon
     SoUpdateComponent,
     DoHomeComponent,
     DoInitiatorComponent,
+    DoReviewerComponent,
+    DoUpdateComponent,
+    DoReviewSaveSubmitComponent,
     AsCommonFooterComponent
   ],
   imports: [

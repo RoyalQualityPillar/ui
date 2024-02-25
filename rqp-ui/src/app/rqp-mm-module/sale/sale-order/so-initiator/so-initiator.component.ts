@@ -12,6 +12,18 @@ import { MessageDialogComponent } from 'src/app/common/message-dialog/message-di
 import { ESignatureComponent } from 'src/app/rqp-sd-module/sd-common/e-signature/e-signature.component';
 import { SalaOrderService } from '../sala-order.service';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'L',
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @Component({
   selector: 'app-so-initiator',
   templateUrl: './so-initiator.component.html',

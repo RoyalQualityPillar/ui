@@ -429,6 +429,17 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       data.push(psoObj)
     }
 
+    let isfindSuccessPdo = 0;
+    let pdoObj = { ff0001: "Delivery Order", lcnum: "RQP1DQWHLC0002", lcrole: "PDO-Update", stage: 1, userId: this.selectedRow.userid }
+    data.forEach((ele) => {
+      if (ele.lcrole == 'PDO-Initator' || ele.lcrole == 'PDO-Reviewer') {
+        ++isfindSuccessPdo;
+      }
+    })
+    if (isfindSuccessPdo > 0) {
+      data.push(pdoObj)
+    }
+
     let isfindSuccessFQ = 0;
     let fqObj = { ff0001: "Fair Quatetion", lcnum: "RQP1FQWHLC0002", lcrole: "FQ-Update", stage: 1, userId: this.selectedRow.userid }
     data.forEach((ele) => {

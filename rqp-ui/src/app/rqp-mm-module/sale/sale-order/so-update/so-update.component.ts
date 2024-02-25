@@ -243,7 +243,7 @@ export class SoUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     });
-    let fileName = 'so';
+    let fileName = 'pso';
     doc.save(fileName + '.pdf');
   }
   downloadExcel() {
@@ -263,7 +263,7 @@ export class SoUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
         "Created Date ": excelData[i].createdon,
       })
     }
-    exportData(arrExcel, 'role', 'so', 'excel')
+    exportData(arrExcel, 'role', 'pso', 'excel')
   }
   downloadTxt() {
     let excelData: any;
@@ -282,7 +282,7 @@ export class SoUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
         "Created Date ": excelData[i].createdon,
       })
     }
-    exportData(arrExcel, 'role', 'so', 'txt')
+    exportData(arrExcel, 'role', 'pso', 'txt')
   }
 
   downloadCsvFile() {
@@ -302,7 +302,7 @@ export class SoUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
         "Created Date ": excelData[i].createdon,
       })
     }
-    exportData(arrExcel, 'role', 'so', 'csv')
+    exportData(arrExcel, 'role', 'pso', 'csv')
   }
 
 
