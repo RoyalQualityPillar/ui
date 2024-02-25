@@ -163,7 +163,7 @@ export class HeaderComponent implements OnInit {
     else if (subMenu == 'PSO-Initiator') {
       this.route.navigate(['./mm/so-initiator'])
     }
-    else if (subMenu == 'PSO-Reviewer' || subMenu == 'PSO Approver') {
+    else if (subMenu == 'PSO-Reviewer' || subMenu == 'PSO-Approver') {
       this.route.navigate(['/mm/so-reviewer']);
     }
     else if (subMenu == 'PSO-Update') {
