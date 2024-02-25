@@ -57,7 +57,7 @@ export class UserProfileCreateComponent implements OnInit  {
       //   userId:['',Validators.required],
       //   version:['1']
       // }),
-      employeeId:['',Validators.required],
+      employeeId:['',[Validators.required,Validators.pattern('^[0-9]+$')]],
       userId:['',Validators.required],
       version:['1'],
       altEmail:['',Validators.email],
@@ -243,6 +243,7 @@ export class UserProfileCreateComponent implements OnInit  {
     
     //this.BusinessUnit.controls['dob'].setValue(dob);
     console.log(this.BusinessUnit.value);
+    this.BusinessUnit.controls['status'].setValue(1000)
     this.adminService.saveUserData(this.BusinessUnit.value).subscribe((data: any) => {
       console.log(data);
       if(data.errorInfo !=null){

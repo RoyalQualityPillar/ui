@@ -54,7 +54,11 @@
                        <input type="text" matInput formControlName="lifeCycleCode" value="LC" [readonly]="isReadOnly"
                            placeholder="Life Cycle Code" maxlength="6">
                    </mat-form-field>
-                 
+                   <mat-form-field appearance="outline" class="col-4 px-1">
+                    <mat-label>LC Request No Code</mat-label>
+                    <input type="text" matInput formControlName="lc_req_code" 
+                        placeholder="LC Request No Code" >
+                </mat-form-field>
                     <mat-form-field appearance="outline" class="col-4 px-1" >
                         <mat-label>Status</mat-label>
                         <input type="text" matInput formControlName="status" 
@@ -164,8 +168,7 @@
                                 <mat-row *matRowDef="let row; columns: AddedUserdisplayedColumns;"></mat-row>
                               </mat-table> 
                        
-                              <mat-paginator [pageSizeOptions]="[10, 15, 20,25]"  showFirstLastButtons aria-label="Select page of periodic rows">
-                              </mat-paginator>
+                             
                             </mat-card>
                         </mat-card>
 

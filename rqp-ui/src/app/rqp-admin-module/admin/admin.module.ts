@@ -86,6 +86,8 @@ import { ActivePackMasterAuditTrailComponent } from '../admin-master-data/pack-m
 import { AllPackMasterAuditTrailComponent } from '../admin-master-data/pack-master/all-pack-master-audit-trail/all-pack-master-audit-trail.component';
 import { PackMasterCreateUpdateComponent } from '../admin-master-data/pack-master/pack-master-create-update/pack-master-create-update.component';
 import { PackMasterHomePageComponent } from '../admin-master-data/pack-master/pack-master-home-page/pack-master-home-page.component';
+import { CreateGuidelineComponent } from 'src/app/home-page-menubar/create-guideline/create-guideline.component';
+import { GuidelinesComponent } from 'src/app/home-page-menubar/guidelines/guidelines.component';
 
 ///************************ Master Data *******************************
 
@@ -169,7 +171,9 @@ import { PackMasterHomePageComponent } from '../admin-master-data/pack-master/pa
     ActivePackMasterAuditTrailComponent,
     AllPackMasterAuditTrailComponent,
     PackMasterCreateUpdateComponent,
-    PackMasterHomePageComponent
+    PackMasterHomePageComponent,
+      GuidelinesComponent,
+      CreateGuidelineComponent,
   ],
   imports: [
     CommonModule,

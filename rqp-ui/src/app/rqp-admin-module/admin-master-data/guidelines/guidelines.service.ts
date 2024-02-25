@@ -50,26 +50,33 @@ export class GuidelinesService {
       };
       return this.http.post(createUserURL,formdata)
   }
-  onCreate(docNos:any,docNames:any,categoryTypes:any,attachements:any,body:any){
-    var formdata:FormData= new FormData();
-      for (let file of attachements) {
-        formdata.append('attachement', file);
-      }
-        // Append JSON data as a blob
-    const jsonBlob = new Blob([JSON.stringify(body)], { type: 'application/json' });
-    formdata.append('json', jsonBlob, 'data.json');
-
-
+  onCreate(attachments:any, body: any){
     let token = this.cookieService.get('token');
-    let queryParams=`?docNos=${docNos}&docNames=${docNames}&categoryTypes=${categoryTypes}&status=${body.status}&category=${body.category}&subCategory=${body.subCategory}&createdBy=${body.createdby}`;
-    let createUserURL=this.API_URL+"gl/upload"+queryParams;
-    const httpOptions = {
-      headers: new HttpHeaders({      
-       'Content-Type':  'mutipart/form-data',
-      // 'Authorization': 'Bearer ' + token
-      })
-    };
-    return this.http.post(createUserURL,formdata,httpOptions)
+      let formData: FormData = new FormData();
+    
+      for (let file of attachments) {
+        formData.append('docFiles', file);
+      }
+    
+      // for (let file of reffereceAttachments) {
+      //   formData.append('referenceAttachments', file);
+      // }
+    
+      // Append JSON data as a blob
+      const jsonBlob = new Blob([JSON.stringify(body)],{ type: 'application/json' });
+      formData.append('documentInfo', jsonBlob, 'data.json');
+       //formData.append('ursDTO', JSON.stringify(body.ursDTO));
+      console.log(formData);
+    
+      let createUserURL = this.API_URL + "gl/upload";
+    
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + token
+        })
+      };
+    
+      return this.http.post(createUserURL, formData, httpOptions);
 }
   onLoadUpdatePage(UC0001:any){
     let queryParams=`?UC0001=${UC0001}`;

@@ -24,6 +24,7 @@ import { FairQuotationHomePageComponent } from "../purchase/fair/fair-quotation-
 import { FairReviewHomePageComponent } from "../purchase/fair/fair-review-home-page/fair-review-home-page.component";
 import { FairUpdateHomePageComponent } from "../purchase/fair/fair-update-home-page/fair-update-home-page.component";
 import { FairSaveUpdateComponent } from "../purchase/fair/fair-save-update/fair-save-update.component";
+import { SdMasterHomePageComponent } from "../sd-master-home-page/sd-master-home-page.component";
 
 
 
@@ -58,6 +59,8 @@ const routes: Routes = [
   {path:"fair-reviewer-home-page",component:FairReviewHomePageComponent},
   {path:"fair-update-home-page",component:FairUpdateHomePageComponent},
   {path:"fair-review-save-submit",component:FairSaveUpdateComponent},
+
+  {path:"sd-home-page",component:SdMasterHomePageComponent},
 ]
 
 @NgModule({

@@ -385,9 +385,9 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
  // this.cookieService.set('subMenu1',subMenuList)//
  console.log(data);
  let isfindSuccess=0;
- let obj={ff0001: "Quatetion",lcnum: "RQP1QTSDLCBBB1",lcrole: "QT-Update",userId: this.selectedRow.userid}
+ let obj={ff0001: "Sale Quotation",lcnum: "RQP1QTSDLCBBB1",lcrole: "SQT-Update",userId: this.selectedRow.userid}
  data.forEach((ele,index)=>{
-  if(ele.lcrole=='QT-Initator' || ele.lcrole=='QT-Reviewer'){
+  if(ele.lcrole=='SQT-Initiator' || ele.lcrole=='SQT-Reviewer'){
     ++isfindSuccess;
   }
  })
@@ -424,7 +424,7 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   } else if (data[0].lcnum == 'RQP1ADQALC0007') {
     this.route.navigate(['./admin/master-data-management']);
   //}else if (data[0].ff0001 == 'Quatetion') {
-  }else if (data[0].uc0001 == 'QT') {
+  }else if (data[0].uc0001 == 'SQT') {
     this.lifeCycleDataService.allQtHomePageStageValue=this.selectedRow.stage,
        this.route.navigate(['./sd/rqp-sd-module']);
   // } else if (data[0].lcnum == 'RQP1NCIQALC0002') {
@@ -433,7 +433,10 @@ export class DataTableComponent implements OnInit ,AfterViewInit {
   //   this.route.navigate(['./rqp-sd-module']);
   // }else if (data[0].lcnum == 'RQP1QTPDLC0002' || data[0].lcnum == 'RQP1QTPDLC0003') {
   //   this.route.navigate(['./rqp-sd-module']);
-  }else if(data[0].uc0001 == 'URS'){
+  }else if(data[0].uc0001 == 'SD'){
+    this.route.navigate(['./sd/sd-home-page']);
+  
+}else if(data[0].uc0001 == 'URS'){
     this.route.navigate(['./dms/dms-module-home-page']);
   }else if(data[0].uc0001 == 'DQ'){
     this.route.navigate(['./dms/dms-module-home-page']);
@@ -527,7 +530,3 @@ onPaginationCall(){
   this.isLoading=false;
 }
   }
-
-
-
-
