@@ -12,7 +12,7 @@ export class DeliveryOrderService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
   /************************************** DRAFT QUOTATION ************************************************* */
   onSaveUpdate(requestBody: any) {
-    const saveUpdateURL = this.API_URL + 'pmmpso/pdo_item/save-update';
+    const saveUpdateURL = this.API_URL + 'pmmpdo/pmmpdo-items/save-update';
     return this.http.post(saveUpdateURL, requestBody);
   }
 }
