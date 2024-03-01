@@ -1,1 +1,164 @@
-<p>si-update works!</p>
+
+<mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
+mode="indeterminate" ></mat-spinner>
+<div class="adjust">
+  <div class="example-table-container">
+    <!-- Table Part-->
+    <div class="table-box" style="margin-left: 10px;margin-right: 10px;background-color:#474668;">
+      <div class="btn-group" class="headers"
+        style="padding-left: 5px;padding-right: 5px; margin-top: 4px;height: 33px;">
+        <div style="float: left;">
+          <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Pending Assignment </p>
+        </div>
+        <div style="float: right;">
+        
+          <input type="text" (keyup)="applyFilter(filterField.value)" #filterField placeholder="Search">
+          
+        </div>
+      </div>
+    </div>
+    <div class="table-box" style="margin-left: 10px; margin-right: 10px;">
+
+      <mat-table [dataSource]="tableData" matTableExporter #exporter="matTableExporter"
+        style="background-color: ghostwhite;" matSort id="dataTable">
+        <!-- Position Column -->
+        <!-- <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container> -->
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+          <mat-radio-button name="selectrow" (change)="setSelectedID(row)"></mat-radio-button></mat-cell> 
+      </ng-container> 
+        <!-- Name Column -->
+        <ng-container matColumnDef="uc0001">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Request No. </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.uc0001}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ff0001">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Life Cycle Code </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ff0001}} </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <!-- <ng-container matColumnDef="ff0002">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> LC Role </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ff0002}} </mat-cell>
+        </ng-container> -->
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="ff0003">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Unit Code </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ff0003}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ff0004">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Department </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ff0004}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ff0005">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Module Code </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ff0005}} </mat-cell>
+        </ng-container>
+
+         <ng-container matColumnDef="ff0007">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Request Version </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{onRequestVersion(row)}} </mat-cell>
+          </ng-container>
+        <!--  <ng-container matColumnDef="ff0007">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Module Name </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.ff0007}} </mat-cell>
+          </ng-container> -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Status </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{onStatus(row.status)}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="createdon">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Created Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.createdon |date :'dd-MMM-yyyy'}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="createdby">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Created By </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.createdby}} </mat-cell>
+          </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[10, 15, 20,25]" (page)="pageChanged($event)" showFirstLastButtons aria-label="Select page of periodic rows">
+      </mat-paginator>
+      <button mat-raised-button color="primary" 
+        style="background-color: #295ea3;"(click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+  <div class="filter" style="padding-left: 1rem;padding-right: 1rem; margin-top: 4px;">
+    <div class="filter-box">
+      <!-- Filter part-->
+      <div class="headers" style="height: 30px;">Data Filter</div>
+      <div style="background-color: ghostwhite;">
+        <span *ngIf= "this.filterFieldError" class="errorMsg">Please select filter field </span>
+        <span *ngIf= "this.filterValueError" class="errorMsg">Please enter filter field value</span>
+        <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.field" required>
+          <option value="SELECT">Please select field</option>
+          <option value="userid">User ID</option>
+          <option value="lcnum">Life Cycle Code</option>
+          <option value="lcrole">LC Role</option>
+          <option value="stage">Stage</option>
+          <option value="uc0001">Module Code</option>
+          <option value="ff0001">Module Name</option>
+        </select>
+        <!-- <select style="font-size: 0.95em; width: 100%;margin-top: 5px;" [(ngModel)]="filterObject.condition">
+          <option value="SELECT">Please select condition</option>
+          <option value="equal">Equals</option>
+          <option value="notEqual">Not Equals</option>
+          <option value="contain">Contains</option>
+          <option value="notContain">Not Contains</option>
+          <option value="module">Module</option>
+        </select> -->
+         <!-- <div style="width: 100%;display: flex;"class="example-button-row">
+           Value -->
+        <input style="margin-top: 5px;width: 100%;" type="txt" name="value" placeholder="Enter Value"
+          [(ngModel)]="filterObject.value" required>
+        <!-- </div> -->
+        <div class="example-button-row" style="text-align: center;padding-top: 12px;">
+          <button mat-raised-button color="primary" style="font-size: smaller;background-color: #295ea3;height: 25px;"
+            (click)="applyFilterByColumn()">Apply</button>
+          <button mat-raised-button color="primary"
+            style="font-size: smaller;background-color: #295ea3;height: 25px;" (click)="onClearFilter()">Clear</button>
+        </div>
+      
+      </div>
+    </div>
+    <div class="filter-box">
+      <!-- Filter part-->
+      <div class="headers" style="height: 30px;">Export</div>
+      <div style="background-color: ghostwhite;">
+        <div style="font-size: 10px; font-weight:bold;">Export data list to following format:</div>
+        <div style="text-align: center;">
+          
+          <!-- <button  class="exportIconBtn"
+          ><img  class="exportIcon" src="../../../assets/copy.png"></button> -->
+          <button *ngIf="this.tableDataLoaded" [cdkCopyToClipboard]="copyData()" class="exportIconBtn"><img class="exportIcon" src="../../../assets/copy.png"></button>
+          <!-- <button (click)="exporter.exportTable('txt')" class="exportIconBtn"><img class="exportIcon"
+              src="../../../assets/txt.png"></button> -->
+              <button (click)="downloadTxt()" class="exportIconBtn"><img class="exportIcon"
+                src="../../../assets/txt.png"></button>
+          <button (click)="downloadCsvFile()" class="exportIconBtn"><img class="exportIcon"
+              src="../../../assets/csv.png"></button>
+          <button (click)="downloadPdf()" class="exportIconBtn"><img style="height: 15px;width: 15px;" src="../../../assets/pdf.png"></button>
+          <!-- <button (click)="exporter.exportTable('xlsx')" class="exportIconBtn"> <img class="exportIcon"
+              src="../../../assets/excel.png"></button> -->
+              <button (click)="downloadExcel()" class="exportIconBtn"> <img class="exportIcon"
+                src="../../../assets/excel.png"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height: 100px;"></div>

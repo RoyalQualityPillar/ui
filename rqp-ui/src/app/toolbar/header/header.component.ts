@@ -86,23 +86,23 @@ export class HeaderComponent implements OnInit {
       this.route.navigate(['./sd/qt-update-page'])
     } else if (subMenu == 'QT-Master Data') {
       this.route.navigate(['./sd/qt-master-data-home-page'])
-    }else if(subMenu == 'AD-Master Data'){ 
+    } else if (subMenu == 'AD-Master Data') {
       console.log('working')
-       this.route.navigate(['./admin/ad-master']) 
-     }else if(subMenu == 'SQT-Initiator'){
-      this.route.navigate(['./sd/quotation-home-page']) 
-    }else if(subMenu == 'SQT-Reviewer'){
-     this.route.navigate(['./sd/rqp-pending-assignment']) 
-     }else if(subMenu == 'SQT-Update'){
-      this.toolbarService.currentStage=1;
-      this.route.navigate(['./sd/qt-update-page']) 
-     }else if(subMenu == 'SD-Master Data'){
-      this.route.navigate(['./sd/qt-master-data-home-page']) 
-     }
+      this.route.navigate(['./admin/ad-master'])
+    } else if (subMenu == 'SQT-Initiator') {
+      this.route.navigate(['./sd/quotation-home-page'])
+    } else if (subMenu == 'SQT-Reviewer') {
+      this.route.navigate(['./sd/rqp-pending-assignment'])
+    } else if (subMenu == 'SQT-Update') {
+      this.toolbarService.currentStage = 1;
+      this.route.navigate(['./sd/qt-update-page'])
+    } else if (subMenu == 'SD-Master Data') {
+      this.route.navigate(['./sd/qt-master-data-home-page'])
+    }
     //  else if(this.toolbarService.currentStage>=2){
     //   this.route.navigate(['./sd/rqp-pending-assignment'])  need to check with @suresh
     // }
-    
+
     else if (subMenu == 'URS-Initiator') {
       this.route.navigate(['./dms/user-requirement-home-page'])
     } else if (subMenu == 'DQ-Initator') {
@@ -161,11 +161,29 @@ export class HeaderComponent implements OnInit {
     else if (subMenu == 'PSI-Initiator') {
       this.route.navigate(['./mm/si-initiator'])
     }
+    else if (subMenu == 'PSI-Reviewer' || subMenu == 'PSI-Approver') {
+      this.route.navigate(['./mm/si-reviewer'])
+    }
+    else if (subMenu == 'PSI-Update') {
+      this.route.navigate(['./mm/si-update']);
+    }
     else if (subMenu == 'PSO-Initiator') {
       this.route.navigate(['./mm/so-initiator'])
     }
+    else if (subMenu == 'PSO-Reviewer' || subMenu == 'PSO-Approver') {
+      this.route.navigate(['/mm/so-reviewer']);
+    }
+    else if (subMenu == 'PSO-Update') {
+      this.route.navigate(['./mm/so-update']);
+    }
     else if (subMenu == 'PDO-Initiator') {
       this.route.navigate(['./mm/do-initiator'])
+    }
+    else if (subMenu == 'PDO-Reviewer' || subMenu == 'PDO-Approver') {
+      this.route.navigate(['/mm/do-reviewer']);
+    }
+    else if (subMenu == 'PDO-Update') {
+      this.route.navigate(['/mm/do-update']);
     }
     //Module routing required based on submenu
   }
