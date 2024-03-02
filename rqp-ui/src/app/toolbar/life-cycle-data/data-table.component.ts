@@ -407,17 +407,6 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       data.push(dqObj)
     }
 
-    let isfindSuccessPQT = 0;
-    let pqtObj = { ff0001: "Sale Quatetion", lcnum: "RQP1DQWHLC0002", lcrole: "PQT-Update", stage: 1, userId: this.selectedRow.userid }
-    data.forEach((ele) => {
-      if (ele.lcrole == 'PQT-Initator' || ele.lcrole == 'PQT-Reviewer') {
-        ++isfindSuccessPQT;
-      }
-    })
-    if (isfindSuccessPQT > 0) {
-      data.push(pqtObj)
-    }
-
     let isfindSuccessPso = 0;
     let psoObj = { ff0001: "Sale Quatetion", lcnum: "RQP1DQWHLC0002", lcrole: "PSO-Update", stage: 1, userId: this.selectedRow.userid }
     data.forEach((ele) => {
