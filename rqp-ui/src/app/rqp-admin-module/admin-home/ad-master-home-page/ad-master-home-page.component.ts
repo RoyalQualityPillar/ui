@@ -69,4 +69,11 @@ ngOnInit(): void {}
   onGuidelines(){
     this.route.navigate(['./admin/guidelines-home-page'])
   }
+  onDosageForm(){
+    this.route.navigate(['./admin/dosage-from-home-page'])
+  }
+    onPaymentTerm(){
+    this.route.navigate(['/admin/payment-term-home-page'])
+  }
+
 }

@@ -8,6 +8,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { changeStatusByCode ,changeStatusByDescription} from 'src/app/common/removeEmptyStrings';
 import { PriceMasterService } from '../price-master.service';
 import { AdminService } from 'src/app/rqp-admin-module/admin-data/admin.service';
+import { StockLedgerService } from '../../stock-ledger/stock-ledger.service';
 export interface userData {
   userData: any;
   type:any;
@@ -40,6 +41,7 @@ export class CreateUpdatePriceMasterComponent implements OnInit  {
     public dialog: MatDialog,
     private messageService: MessageService,
     private cookieService: CookieService,
+    private ledgerService:StockLedgerService,
     public dialogRef: MatDialogRef<CreateUpdatePriceMasterComponent>,
     @Inject(MAT_DIALOG_DATA) public userData: userData,
     private stockLedgerService:PriceMasterService) {
@@ -68,6 +70,7 @@ export class CreateUpdatePriceMasterComponent implements OnInit  {
   ngOnInit(): void {
    // this.onLoadStatusDropDown();
     //this.onloadDropDown();
+    this.onloadDropDown();
     if (this.userData.type == 'Update') {
       this.isReadOnly = true;
       this.isUpdate = true;
@@ -77,7 +80,23 @@ export class CreateUpdatePriceMasterComponent implements OnInit  {
       this.isUpdate = false;
     }
   }
+  saleProductList:any;
   buUnitList:any;
+  suUnitList:any;
+  puUnitList:any;
+  stageMasterList:any;
+  onloadDropDown() {
+    this.isLoading = true;
+    this.ledgerService.getDropDownList().subscribe((data: any) => {
+      console.log(data)
+      this.saleProductList = data.data.saleProductList;
+       this.buUnitList = data.data.buUnitList;
+       this.suUnitList = data.data.suUnitList;
+       this.puUnitList=data.data.puUnitList;
+      this.isLoading = false;
+    })
+  }
+ // buUnitList:any;
   mtMasterList:any;
   utMasterList:any;
   // onloadDropDown() {
@@ -127,6 +146,8 @@ export class CreateUpdatePriceMasterComponent implements OnInit  {
    this.DepartmentMaster.controls['ff0010'].setValue(this.formData.ff0010)
    this.DepartmentMaster.controls['ff0011'].setValue(this.formData.ff0011)
    this.DepartmentMaster.controls['ff0012'].setValue(this.formData.ff0012)
+   this.DepartmentMaster.controls['ff0013'].setValue(this.formData.ff0013)
+   this.DepartmentMaster.controls['ff0014'].setValue(this.formData.ff0014)
     this.DepartmentMaster.controls['comments'].setValue(this.formData.comments)
      let statusByValue=changeStatusByCode(this.formData.status)
     this.DepartmentMaster.controls['status'].setValue(statusByValue)
@@ -330,6 +351,96 @@ export class CreateUpdatePriceMasterComponent implements OnInit  {
       if (this.isStatusSuccess == false) {
         this.DepartmentMaster.controls['status'].setErrors({ 'incorrect': true })
         this.openStatusLOV();
+      }
+    }
+  }
+
+  openSaleProductListLOV(){
+    this.displayedColumns = [
+      { field: 'punumber', title: 'Name' },
+      { field: 'puunitcode', title: 'Code' },
+      { field: 'puunitname', title: 'Description' },
+    ];
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Sales Product List",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.saleProductList,
+        lovName: 'businessUnitList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.DepartmentMaster.controls['ff0001'].setValue(this.selectedDialogData.punumber);
+        this.DepartmentMaster.controls['ff0003'].setValue(this.selectedDialogData.puunitname);
+        this.DepartmentMaster.controls['ff0002'].setValue(this.selectedDialogData.puunitcode);
+      }
+    })
+  }
+  onChangeByProductCode(){
+    if (this.DepartmentMaster.controls['ff0002'].value == '') {
+      this.DepartmentMaster.controls['ff0003'].setValue('')
+      this.DepartmentMaster.controls['ff0002'].setValue('')
+      this.DepartmentMaster.controls['ff0001'].setValue('')
+    } else {
+      this.isStatusSuccess = false;
+      let statusCurrentValue = this.DepartmentMaster.controls['ff0002'].value;
+      this.saleProductList.forEach(elements => {
+        if (elements.puunitcode == statusCurrentValue) {
+          this.isStatusSuccess = true;
+        }
+      })
+      if (this.isStatusSuccess == false) {
+        this.DepartmentMaster.controls['ff0002'].setErrors({ 'incorrect': true })
+        this.DepartmentMaster.controls['ff0003'].setErrors({ 'incorrect': true })
+        this.DepartmentMaster.controls['ff0001'].setErrors({ 'incorrect': true })
+        this.openSaleProductListLOV();
+      }
+    }
+  }
+  onChangeProductCode(){
+    if (this.DepartmentMaster.controls['ff0001'].value == '') {
+      this.DepartmentMaster.controls['ff0001'].setValue('')
+      this.DepartmentMaster.controls['ff0002'].setValue('');
+      this.DepartmentMaster.controls['ff0003'].setValue('')
+    } else {
+      this.isStatusSuccess = false;
+      let statusCurrentValue = this.DepartmentMaster.controls['ff0001'].value;
+      this.saleProductList.forEach(elements => {
+        if (elements.punumber == statusCurrentValue) {
+          this.isStatusSuccess = true;
+        }
+      })
+      if (this.isStatusSuccess == false) {
+        this.DepartmentMaster.controls['ff0001'].setErrors({ 'incorrect': true })
+        this.DepartmentMaster.controls['ff0002'].setErrors({ 'incorrect': true })
+        this.DepartmentMaster.controls['ff0003'].setErrors({ 'incorrect': true })
+        this.openSaleProductListLOV();
+      }
+    }
+  }
+  onChangeProductName(){
+    if (this.DepartmentMaster.controls['ff0003'].value == '') {
+      this.DepartmentMaster.controls['ff0003'].setValue('')
+      this.DepartmentMaster.controls['ff0002'].setValue('')
+      this.DepartmentMaster.controls['ff0001'].setValue('')
+    } else {
+      this.isStatusSuccess = false;
+      let statusCurrentValue = this.DepartmentMaster.controls['ff0003'].value;
+      this.saleProductList.forEach(elements => {
+        if (elements.puunitname == statusCurrentValue) {
+          this.isStatusSuccess = true;
+        }
+      })
+      if (this.isStatusSuccess == false) {
+        this.DepartmentMaster.controls['ff0003'].setErrors({ 'incorrect': true })
+        this.DepartmentMaster.controls['ff0002'].setErrors({ 'incorrect': true })
+        this.DepartmentMaster.controls['ff0001'].setErrors({ 'incorrect': true })
+        this.openSaleProductListLOV();
       }
     }
   }

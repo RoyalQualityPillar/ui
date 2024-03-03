@@ -8,6 +8,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { SaleProductMasterService } from '../sale-product-master.service';
 import { changeStatusByCode ,changeStatusByDescription} from 'src/app/common/removeEmptyStrings';
 import { AdminService } from 'src/app/rqp-admin-module/admin-data/admin.service';
+import { StockLedgerService } from '../../stock-ledger/stock-ledger.service';
 export interface userData {
   userData: any;
   type:any;
@@ -41,6 +42,7 @@ export class CreateUpdateSaleProductMasterComponent implements OnInit  {
     public dialog: MatDialog,
     private messageService: MessageService,
     private cookieService: CookieService,
+    private stockLedgerService:StockLedgerService,
     public dialogRef: MatDialogRef<CreateUpdateSaleProductMasterComponent>,
     @Inject(MAT_DIALOG_DATA) public userData: userData,
     private saleProductMasterService:SaleProductMasterService) {
@@ -53,6 +55,11 @@ export class CreateUpdateSaleProductMasterComponent implements OnInit  {
       ff0005: ['', Validators.required],
       ff0006: ['', Validators.required],
       ff0007: ['', Validators.required],
+      ff0010: [''],
+      ff0012: [''],
+      ff0013: [''],
+      ff0014: [''],
+      ff0015: [''],
       createdby: [''],
       status: [''],
       comments: ['']
@@ -62,6 +69,7 @@ export class CreateUpdateSaleProductMasterComponent implements OnInit  {
   ngOnInit(): void {
    // this.onLoadStatusDropDown();
     this.onloadDropDown();
+    this.onloadDFListDropDown();
     if (this.userData.type == 'Update') {
       this.isReadOnly = true;
       this.isUpdate = true;
@@ -70,6 +78,15 @@ export class CreateUpdateSaleProductMasterComponent implements OnInit  {
       this.isReadOnly = false;
       this.isUpdate = false;
     }
+  }
+  dfList:any;
+  onloadDFListDropDown() {
+    this.isLoading = true;
+    this.stockLedgerService.getDropDownList().subscribe((data: any) => {
+      console.log(data)
+      this.dfList = data.data.dfList;
+      this.isLoading = false;
+    })
   }
   buUnitList:any;
   mtMasterList:any;
@@ -138,6 +155,11 @@ export class CreateUpdateSaleProductMasterComponent implements OnInit  {
   }
   onCreate(){
     this.isLoading = true;
+    this.DepartmentMaster.controls['ff0010'].setValue('test')
+    this.DepartmentMaster.controls['ff0012'].setValue('test')
+    this.DepartmentMaster.controls['ff0013'].setValue('test')
+    this.DepartmentMaster.controls['ff0014'].setValue('test')
+    this.DepartmentMaster.controls['ff0015'].setValue('test')
     this.DepartmentMaster.controls['createdby'].setValue(this.cookieService.get('userId'))
     this.saleProductMasterService.onCreate(this.DepartmentMaster.value).subscribe((data: any) => {
       if (data.errorInfo != null) {
@@ -260,10 +282,44 @@ export class CreateUpdateSaleProductMasterComponent implements OnInit  {
     })
   }
   onChangeDosageForm(){
-
+    if (this.DepartmentMaster.controls['ff0006'].value == '') {
+      this.DepartmentMaster.controls['ff0006'].setValue('')
+    } else {
+      this.isStatusSuccess = false;
+      let statusCurrentValue = this.DepartmentMaster.controls['ff0006'].value;
+      this.dfList.forEach(elements => {
+        if (elements.dfCode == statusCurrentValue) {
+          this.isStatusSuccess = true;
+        }
+      })
+      if (this.isStatusSuccess == false) {
+        this.DepartmentMaster.controls['ff0006'].setErrors({ 'incorrect': true })
+        this.openProductCategoryLOV();
+      }
+    }
   }
   openDosageFormLOV(){
-
+    this.displayedColumns = [
+      {field:'dfCode',title:"Code"},
+      {field:'dfName',title:"Descritption"}
+    ]
+    const dialogRef = this.dialog.open(LovDialogComponent, {
+      height: "500px",
+      width: "600px",
+      data: {
+        dialogTitle: "Status",
+        dialogColumns: this.displayedColumns,
+        dialogData: this.dfList,
+        lovName: 'statusList'
+      },
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedDialogData = result.data;
+        this.DepartmentMaster.controls['ff0006'].setValue(this.selectedDialogData.dfCode)
+      }
+    })
   }
   openUOMLOV(){
     this.displayedColumns = [

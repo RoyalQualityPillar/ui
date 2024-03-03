@@ -21,6 +21,8 @@ import { OrganizationHomePageComponent } from "../admin-master-data/organization
 import { TaxMasterHomePageComponent } from "../admin-master-data/tax-master/tax-master-home-page/tax-master-home-page.component";
 import { SecurityProfileHomePageComponent } from "../admin-master-data/security-profile-setting/security-profile-home-page/security-profile-home-page.component";
 import { PackMasterHomePageComponent } from "../admin-master-data/pack-master/pack-master-home-page/pack-master-home-page.component";
+import { PaymentTermHomePageComponent } from "../admin-master-data/payment-term/payment-term-home-page/payment-term-home-page.component";
+import { DosageFormHomePageComponent } from "../admin-master-data/dosage-form/dosage-form-home-page/dosage-form-home-page.component";
 
 
 
@@ -46,6 +48,8 @@ const routes: Routes = [
   {path:"tax-master-home-page",component:TaxMasterHomePageComponent},
   {path:"security-profile-type-home-page",component:SecurityProfileHomePageComponent},
   {path:"pack-master-home-page",component:PackMasterHomePageComponent},
+  {path:"payment-term-home-page",component:PaymentTermHomePageComponent},
+  {path:"dosage-from-home-page",component:DosageFormHomePageComponent},
   ]
   @NgModule({
     imports: [
