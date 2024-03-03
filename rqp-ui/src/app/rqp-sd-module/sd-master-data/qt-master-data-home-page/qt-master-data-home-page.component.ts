@@ -15,18 +15,14 @@ export class QtMasterDataHomePageComponent {
   onSaleProductMaster(){
     this.router.navigate(['/sd/sale-product-master-home-page'])
   }
-  onPaymentTerm(){
-    this.router.navigate(['/sd/payment-term-home-page'])
-  }
+
   onPriceType(){
     this.router.navigate(['/sd/price-type-home-page'])
   }
   onPriceMaster(){
     this.router.navigate(['/sd/price-master-home-page'])
   }
-  onDosageForm(){
-    this.router.navigate(['./sd/dosage-from-home-page'])
-  }
+
   onNumberingSystem(){
     this.router.navigate(['./sd/numbering-system-home-page'])
   }
