@@ -11,18 +11,10 @@ import { QtUpdateComponent } from '../qt-update-section/qt-update/qt-update.comp
 import { QtUpdateDetailsComponent } from '../qt-update-section/qt-update-details/qt-update-details.component';
 import { QuotationHomePageComponent } from '../quotation-home-page/quotation-home-page.component';
 import { QuotationMasterPageComponent } from '../quotation-master-page/quotation-master-page.component';
-import { ActiveDosageFormAtComponent } from '../sd-master-data/dosage-form/active-dosage-form-at/active-dosage-form-at.component';
-import { AllDosageFormAtComponent } from '../sd-master-data/dosage-form/all-dosage-form-at/all-dosage-form-at.component';
-import { CreateUpdateDosageFormComponent } from '../sd-master-data/dosage-form/create-update-dosage-form/create-update-dosage-form.component';
-import { DosageFormHomePageComponent } from '../sd-master-data/dosage-form/dosage-form-home-page/dosage-form-home-page.component';
 import { ActiveNumberingSystemAtComponent } from '../sd-master-data/numbering-system/active-numbering-system-at/active-numbering-system-at.component';
 import { AllNumberingSystemAtComponent } from '../sd-master-data/numbering-system/all-numbering-system-at/all-numbering-system-at.component';
 import { CreateUpdateNumberingSystemComponent } from '../sd-master-data/numbering-system/create-update-numbering-system/create-update-numbering-system.component';
 import { NumberingSystemHomePageComponent } from '../sd-master-data/numbering-system/numbering-system-home-page/numbering-system-home-page.component';
-import { ActivePaymentTermATComponent } from '../sd-master-data/payment-term/active-payment-term-at/active-payment-term-at.component';
-import { AllPaymentTermATComponent } from '../sd-master-data/payment-term/all-payment-term-at/all-payment-term-at.component';
-import { CreateUpdatePaymentTermComponent } from '../sd-master-data/payment-term/create-update-payment-term/create-update-payment-term.component';
-import { PaymentTermHomePageComponent } from '../sd-master-data/payment-term/payment-term-home-page/payment-term-home-page.component';
 import { ActivePriceMasterAtComponent } from '../sd-master-data/price-master/active-price-master-at/active-price-master-at.component';
 import { AllPriceMasterAtComponent } from '../sd-master-data/price-master/all-price-master-at/all-price-master-at.component';
 import { CreateUpdatePriceMasterComponent } from '../sd-master-data/price-master/create-update-price-master/create-update-price-master.component';
@@ -68,18 +60,10 @@ import { SdMasterHomePageComponent } from '../sd-master-home-page/sd-master-home
     QtUpdateDetailsComponent,
     QuotationHomePageComponent,
     QuotationMasterPageComponent,
-    ActiveDosageFormAtComponent,
-    AllDosageFormAtComponent,
-    CreateUpdateDosageFormComponent,
-    DosageFormHomePageComponent,
     ActiveNumberingSystemAtComponent,
     AllNumberingSystemAtComponent,
     CreateUpdateNumberingSystemComponent,
     NumberingSystemHomePageComponent,
-    ActivePaymentTermATComponent,
-    AllPaymentTermATComponent,
-    CreateUpdatePaymentTermComponent,
-    PaymentTermHomePageComponent,
     ActivePriceMasterAtComponent,
     AllPriceMasterAtComponent,
     CreateUpdatePriceMasterComponent,
@@ -96,7 +80,6 @@ import { SdMasterHomePageComponent } from '../sd-master-home-page/sd-master-home
     AllStockLedgerAuditTrailComponent,
     CreateUpdateStockLedgerComponent,
     StockLedgerHomePageComponent,
-    StockListComponent,
     QtMasterDataHomePageComponent,
     AsCommonFooterComponent,
     ESignatureComponent,
@@ -110,7 +93,8 @@ import { SdMasterHomePageComponent } from '../sd-master-home-page/sd-master-home
    FairSaveUpdateComponent,
    FairUpdateHomePageComponent,
    FairQuotationHomePageComponent,
-   SdMasterHomePageComponent
+   SdMasterHomePageComponent,
+   StockListComponent
   ],
   imports: [
     CommonModule,

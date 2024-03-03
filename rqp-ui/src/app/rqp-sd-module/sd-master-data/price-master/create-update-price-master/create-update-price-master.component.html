@@ -27,35 +27,45 @@
                                 <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
                                     denoted by an asterisk(<span style="color: red">*</span>).</span>
                             </div>
-                            <div class="row no-gutters ms-1 me-1 dense-4" >
+                            <div class="row no-gutters ms-1 me-1 dense-4" *ngIf="isUpdate">
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Price Code</mat-label>
                                     <input type="text" matInput formControlName="uc0001"[readonly]="isUpdate" [class.isReadonlyField]="isUpdate"
                                         placeholder="Price Code" >
                                 </mat-form-field>
+                                </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4" >
+                               
                                 <mat-form-field appearance="outline" class="col-3 px-1">
-                                    <mat-label>Product No</mat-label>
+                                    <mat-label>Product Number</mat-label>
                                     <input type="text" matInput formControlName="ff0001"
-                                        placeholder="Product No" >
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" class="col-3 px-1">
-                                    <mat-label>Product Code</mat-label>
-                                    <input type="text" matInput formControlName="ff0002"
-                                        placeholder="Product Code" >
-                                </mat-form-field>
+                                        placeholder="Product Number" (change)="onChangeProductCode()" >
+                                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openSaleProductListLOV()"> 
+                                    </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Product Name</mat-label>
-                                    <input type="text" matInput formControlName="ff0003"
+                                    <input type="text" matInput formControlName="ff0003"(change)="onChangeProductName()"
                                         placeholder="Product Name" >
-                                </mat-form-field>
+                                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openSaleProductListLOV()"> 
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Product Code</mat-label>
+                                        <input type="text" matInput formControlName="ff0002"(change)="onChangeByProductCode()"
+                                            placeholder="Product Code" >
+                                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                            class="icon-size lovSearchButton" color="primary"(click)="openSaleProductListLOV()"> 
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline" class="col-3 px-1">
+                                            <mat-label>Purches Rate </mat-label>
+                                            <input type="text" matInput formControlName="ff0004"placeholder="Purches Rate"
+                                             >
+                                        </mat-form-field>
                                 </div>
                                 <div class="row no-gutters ms-1 me-1 dense-4">
                                      
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Purches Rate </mat-label>
-                                        <input type="text" matInput formControlName="ff0004"placeholder="Purches Rate"
-                                         >
-                                    </mat-form-field>
+                                   
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Charges-1</mat-label>
                                         <input type="text" matInput formControlName="ff0005"placeholder="Charges-1"
@@ -69,12 +79,13 @@
                                         <mat-label>Charges-3</mat-label>
                                         <input type="text" matInput formControlName="ff0007"placeholder="Charges-3" >
                                     </mat-form-field>
-                                    </div>
-                                    <div class="row no-gutters ms-1 me-1 dense-4" >
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Rate</mat-label>
                                         <input type="text" matInput formControlName="ff0008"  placeholder="Rate" >
                                     </mat-form-field> 
+                                    </div>
+                                    <div class="row no-gutters ms-1 me-1 dense-4" >
+                                  
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>GST %</mat-label>
                                         <input type="text" matInput formControlName="ff0009"placeholder="GST %" >
@@ -87,12 +98,13 @@
                                         <mat-label>Product Discout %</mat-label>
                                         <input type="text" matInput formControlName="ff0011"placeholder="Product Discout %" >
                                     </mat-form-field>
-                                </div>
-                                <div class="row no-gutters ms-1 me-1 dense-4" style="margin-bottom: 4px;">
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Price Type</mat-label>
                                         <input type="text" matInput formControlName="ff0012"placeholder="Price Type" >
                                     </mat-form-field>
+                                </div>
+                                <div class="row no-gutters ms-1 me-1 dense-4" style="margin-bottom: 4px;">
+                                 
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Pack</mat-label>
                                         <input type="text" matInput formControlName="ff0013"placeholder="Pack" >
@@ -101,10 +113,16 @@
                                         <mat-label>Business Unit Code</mat-label>
                                         <input type="text" matInput formControlName="ff0014"placeholder="Business Unit Code" >
                                     </mat-form-field>
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Status</mat-label>
-                                        <input type="text" matInput formControlName="status"placeholder="Status" >
-                                    </mat-form-field>
+                                    <div class="col-3 px-1" *ngIf="isUpdate">
+                                        <mat-form-field appearance="outline" class="col-12">
+                                            <mat-label>Status</mat-label>
+                                            <input type="text" matInput formControlName="status"placeholder="Status" 
+                                            (change)="onChangeStatus()" >
+                                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                       class="icon-size lovSearchButton" color="primary"(click)="openStatusLOV()"> 
+                                        </mat-form-field>
+                                    </div>
+                                 
                                     </div>
                                     <div class="row no-gutters ms-1 me-1 dense-4">
                                     <!-- <mat-form-field appearance="outline" class="col-3 px-1">
