@@ -167,6 +167,7 @@
                         (click)="addNewRow()">Add</button>
                 </div>
             </div>
+
         </mat-card>
         <div class="row">
             <div class="col-12">
@@ -183,14 +184,16 @@
                                     <th style="color: white;">Product Name</th>
                                     <th style="color: white;">Product No</th>
                                     <th col="7" style="color: white;">Quantity</th>
+                                    <th col="11" style="color: white;">Pack</th>
                                     <!-- <th style="color: white;">PO Date</th> -->
                                     <th style="color: white;">HSN Code</th>
 
                                     <th col="10" style="color: white;">Rate</th>
                                     <th col="11" style="color: white;">% Discount</th>
                                     <th col="12" style="color: white;">Discount Amount</th>
+                                    <th col="12" style="color: white;">Discount Rate</th>
                                     <th col="12" style="color: white;">Total Discount</th>
-                                    <th col="13" style="color: white;">After Discount Rate </th>
+                                    <th col="13" style="color: white;">After Discount Amount </th>
                                     <th style="color: white;">%GST</th>
                                     <th style="color: white;">GST Amount</th>
                                     <th style="color: white;">Amount</th>
@@ -204,7 +207,7 @@
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
                                             style="width: 150px;" [class.isReadonlyFieldForQuotation]="isReadonly"
-                                            [(ngModel)]="item.ff0020" [ngModelOptions]="{standalone: true}" required
+                                            [(ngModel)]="item.priceCode" [ngModelOptions]="{standalone: true}" required
                                             [readonly]="isReadonly">
                                     </td>
                                     <td>
@@ -232,13 +235,19 @@
                                             [ngModelOptions]="{standalone: true}" (change)="onCalAllFieldAmount(idx)"
                                             required>
                                     </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm txt-box"
+                                            style="width: 100px;" [(ngModel)]="item.pack"
+                                            [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
+                                            [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                    </td>
                                     <!-- <td>
                                     <input type="date" class="form-control form-control-sm txt-box"style="width: 120px;"
                                         [(ngModel)]="item.ff0008" [ngModelOptions]="{standalone: true}" required>
                                 </td> -->
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
-                                            style="width: 140px;" [(ngModel)]="item.gethSNCode"
+                                            style="width: 140px;" [(ngModel)]="item.gstcode"
                                             [ngModelOptions]="{standalone: true}"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required
                                             [readonly]="isReadonly">
@@ -258,21 +267,29 @@
                                             [ngModelOptions]="{standalone: true}" (change)="onCalAllFieldAmount(idx)"
                                             required>
                                     </td>
+
                                     <td>
                                         <input type="number" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.discount"
+                                            style="width: 100px;" [(ngModel)]="item.discountAmount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
+
                                     <td>
-                                        <input type="text" class="form-control form-control-sm txt-box"
+                                        <input type="number" class="form-control form-control-sm txt-box"
                                             style="width: 100px;" [(ngModel)]="item.discountedRate"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
                                     <td>
+                                        <input type="text" class="form-control form-control-sm txt-box"
+                                            style="width: 100px;" [(ngModel)]="item.totalDiscount"
+                                            [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
+                                            [class.isReadonlyFieldForQuotation]="isReadonly" required>
+                                    </td>
+                                    <td>
                                         <input type="number" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.ff0013"
+                                            style="width: 100px;" [(ngModel)]="item.afterdiscountAmount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
@@ -301,7 +318,7 @@
                                     <!-- <td><button (click)="deleteTodo(idx)">delete</button></td> -->
                                 </tr>
                             </tbody>
-                            <tfoot>
+                            <!--<tfoot>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -312,7 +329,7 @@
                                 <td></td>
                                 <td></td>
 
-                                <td style="text-align: left;
+                                 <td style="text-align: left;
                             color: black;
                             font-weight: 700;
                             border-radius: 25px;
@@ -335,7 +352,7 @@
                             background-color: #dfecec;
                             border-radius: 25px;
                             box-shadow: 1px 1px 1px 1px #0f3064;">{{totalAmt | number:'1.2-2'}}</td>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
                 </div>

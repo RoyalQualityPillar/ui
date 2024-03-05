@@ -40,7 +40,7 @@ export class SiInitiatorComponent implements OnInit {
     private lifeCycleDataService: LifeCycleDataService,
     public dialog: MatDialog,
     private toolbarService: ToolbarService,
-    private salaInvoiceService: SalaInvoiceService,
+    private saleInvoiceService: SalaInvoiceService,
     public messageService: MessageService) {
     this.HeaderForm = this.fb.group({
       oucode: ['', Validators.required],
@@ -142,18 +142,82 @@ export class SiInitiatorComponent implements OnInit {
   stockList = [];
   addSelectedRows(selectedRow: any) {
     console.log(selectedRow);
-    selectedRow.data.forEach(elements => {
+    selectedRow.data.forEach((elements, index: number) => {
+      console.log(elements);
+      let getPriceCode = elements.aUC0001;
+      let getProductCode = elements.aFF0002;
+      let getProductName = elements.aFF0003;
+      let getQuantity = elements.bFF0010;
+      let getProductNumber = elements.aFF0001;
+      let getGstCode = elements.aFF0010;
+      let getRate = elements.aFF0008;
+      let getDiscountPercentage = elements.aFF0011;
+      let getDiscount = ((elements.aFF0008) * (elements.aFF0011)) / 100;
+      let getdiscountedRate = getRate - getDiscount;
+      let getdiscountedAmount = getDiscount * getQuantity;
+      let getAfterdiscountRate = (getRate * getQuantity) - (getDiscount * getQuantity);
+      let getGST = elements.aFF0009;
+      let getGstAmount = (getAfterdiscountRate * getGST) / 100;
+      let getFinalPrice = getAfterdiscountRate + getGstAmount;
+
+      this.totalDisAmt += getdiscountedRate;
+      this.afterDisAmt += getAfterdiscountRate;
+      this.totalAmt += getFinalPrice;
+      this.totalGst += getGstAmount;
+
       this.stockList.push(
         {
-          'ff0020': elements.aUC0001,
-          'productCode': elements.aFF0002,
-          'productName': elements.aFF0003,
-          'quantity': elements.bFF0010,
-          'productNumber': elements.aFF0001,
-          'gethSNCode': elements.aFF0010,
-          'rate': elements.aFF0008,
-          //'sumOfTotalDisc':num,
-        });
+          "quotationNo": "",
+          "poNumber": elements.aFF0001,
+          "poDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+          "deliveryDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+          "productCode": getProductCode,
+          "productName": getProductName,
+          "quantity": getQuantity,
+          "pack": elements.aFF0013,
+          "rate": getRate,
+          "discountPercentage": getDiscountPercentage,
+          "discountAmount": getDiscount,
+          "totalDiscount": getdiscountedAmount,
+          "gstType": elements.aFF0012,
+          "gst": getGST,
+          "gstAmount": getGstAmount,
+          "finalPrice": getFinalPrice,
+          "productNumber": getProductNumber,
+          "afterdiscountAmount": getAfterdiscountRate,
+          "priceCode": getPriceCode,
+          "batchNumber": elements.bFF0011,
+          "mfgDate": elements.bFF0012,
+          "expDate": elements.bFF0013,
+          "gstcode": getGstCode,
+          "discountedRate": getdiscountedRate
+        }
+
+        // "quotationNo": "string",
+        // "poNumber": "RQP1FP001",
+        // "poDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+        // "deliveryDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+        // "productCode": "TME1CC",
+        // "productName": "Metformin Tablets BP 850 mg",
+        // "quantity": 800,
+        // "pack": "BOX",
+        // "rate": 155,
+        // "discountPercentage": 5,
+        // "discountAmount": 7.75,
+        // "totalDiscount": 6200,
+        // "gstType": "Shop Price",
+        // "gst": 18,
+        // "gstAmount": 21204,
+        // "finalPrice": 139004,
+        // "productNumber": "RQP1FP001",
+        // "afterdiscountAmount": 117800,
+        // "priceCode": "RQP1FP001/P3",
+        // "batchNumber": "ABC001",
+        // "mfgDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+        // "expDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+        // "gstcode": "1000009",
+        // "discontedRate": 147.25
+      )
     })
   }
   deleteTodo(id: number) {
@@ -174,11 +238,11 @@ export class SiInitiatorComponent implements OnInit {
     let totalGstAmount = 0;
     console.log(this.stockList)
     this.stockList.forEach(ele => {
-      if (ele.discountedRate > 0) {
-        totalDiscountAmount = totalDiscountAmount + ele.discountedRate
+      if (ele.totalDiscount > 0) {
+        totalDiscountAmount = totalDiscountAmount + ele.totalDiscount
       }
-      if (ele.ff0013 > 0) {
-        afterDiscountAmount = afterDiscountAmount + ele.ff0013
+      if (ele.afterdiscountAmount > 0) {
+        afterDiscountAmount = afterDiscountAmount + ele.afterdiscountAmount
       }
       if (ele.finalPrice > 0) {
         totalAmountWithGST = totalAmountWithGST + ele.finalPrice
@@ -220,7 +284,7 @@ export class SiInitiatorComponent implements OnInit {
   CGST: any;
   IGST: any;
   setGSTData(data) {
-    if (data[0].ff0013 == data[1].ff0013) {
+    if (data[0].afterdiscountAmount == data[1].afterdiscountAmount) {
       this.CGST = this.totalGst / 2
       this.SGST = this.totalGst / 2
       this.IGST = 0;
@@ -250,8 +314,8 @@ export class SiInitiatorComponent implements OnInit {
   /****************************************** VALIDATION *******************************/
   onCalAllFieldAmount(idx) {
     if (this.stockList[idx].quantity != null) {
-      if (Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount == undefined) {
-        this.stockList[idx].discount = 0;
+      if (Number.isNaN(this.stockList[idx].discountAmount) || this.stockList[idx].discountAmount == undefined) {
+        this.stockList[idx].discountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage == undefined) {
         this.stockList[idx].discountPercentage = 0;
@@ -259,8 +323,8 @@ export class SiInitiatorComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].rate) || this.stockList[idx].rate == undefined) {
         this.stockList[idx].rate = 0;
       }
-      if (Number.isNaN(this.stockList[idx].ff0013) || this.stockList[idx].ff0013 == undefined) {
-        this.stockList[idx].ff0013 = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount) || this.stockList[idx].afterdiscountAmount == undefined) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
         this.stockList[idx].gstAmount = 0;
@@ -268,18 +332,19 @@ export class SiInitiatorComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].gst) || this.stockList[idx].gst == undefined) {
         this.stockList[idx].gst = 0;
       }
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedRate = (this.stockList[idx].discount * this.stockList[idx].quantity)
-      this.stockList[idx].ff0013 = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)));
-      this.stockList[idx].gstAmount = (((this.stockList[idx].ff0013) * (this.stockList[idx].gst)) / 100);
-      this.stockList[idx].finalPrice = (this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
+      this.stockList[idx].discountAmount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].discountedRate = (this.stockList[idx].rate) - (this.stockList[idx].discountAmount);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity)
+      this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)));
+      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountAmount) * (this.stockList[idx].gst)) / 100);
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
     }
   }
   onChangeDiscountAmount(idx) {
     if (this.stockList[idx].discountPercentage != null) {
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedRate = (this.stockList[idx].discount * this.stockList[idx].quantity)
+      this.stockList[idx].discountAmount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity)
       this.onChangeAfterDiscount(idx)
     }
   }
@@ -287,21 +352,21 @@ export class SiInitiatorComponent implements OnInit {
     if (Number.isNaN(this.stockList[idx].quantity)) {
       this.stockList[idx].quantity = 1;
     }
-    if (Number.isNaN(this.stockList[idx].discount)) {
-      this.stockList[idx].discount = 0;
+    if (Number.isNaN(this.stockList[idx].discountAmount)) {
+      this.stockList[idx].discountAmount = 0;
     }
     if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
       this.stockList[idx].gstAmount = 0;
     }
-    this.stockList[idx].ff0013 = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)))
-    this.stockList[idx].finalPrice = (this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
+    this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)))
+    this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
     this.onCalTotalValue();
   }
 
   onChangeQTY(idx) {
     if (this.stockList[idx].quantity != null) {
-      if (Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount == undefined) {
-        this.stockList[idx].discount = 0;
+      if (Number.isNaN(this.stockList[idx].discountAmount) || this.stockList[idx].discountAmount == undefined) {
+        this.stockList[idx].discountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage == undefined) {
         this.stockList[idx].discountPercentage = 0;
@@ -309,27 +374,27 @@ export class SiInitiatorComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].rate)) {
         this.stockList[idx].rate = 0;
       }
-      if (Number.isNaN(this.stockList[idx].ff0013)) {
-        this.stockList[idx].ff0013 = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount)) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
         this.stockList[idx].gstAmount = 0;
       }
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedRate = (this.stockList[idx].discount * this.stockList[idx].quantity)
-      this.stockList[idx].ff0013 = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)))
-      this.stockList[idx].finalPrice = (this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
+      this.stockList[idx].discountAmount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity)
+      this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)))
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
     }
   }
   onChangeGST(idx) {
     if (this.stockList[idx].gst != null) {
-      if (Number.isNaN(this.stockList[idx].ff0013) || this.stockList[idx].ff0013 == undefined) {
-        this.stockList[idx].ff0013 = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount) || this.stockList[idx].afterdiscountAmount == undefined) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
-      this.stockList[idx].gstAmount = (((this.stockList[idx].ff0013) * (this.stockList[idx].gst)) / 100);
-      this.stockList[idx].finalPrice = (this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
-      this.onCalTotalValue()
+      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountAmount) * (this.stockList[idx].gst)) / 100);
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
+      this.onCalTotalValue();
     }
   }
 
@@ -472,39 +537,43 @@ export class SiInitiatorComponent implements OnInit {
       draftValue = true;
     }
     requestBody = {
-      pmmquotationItemList: this.stockList,
-      lcRequest: {
-        unitCode: this.headerData.unitcode,
-        moduleCode: this.headerData.modulecode,
-        departmentCode: this.headerData.departmentcode,
-        lcrqNumber: '',
-        lcNumber: this.headerData.lcnum,
-        lcStage: this.headerData.stage,
-        lcRole: this.headerData.role,
-        stage2: 0,
-        createdBy: this.headerData.createdby,
-        comments: this.QuotationForm.controls['comments'].value,
-        draft: draftValue
+      "lcRequest": {
+        "unitCode": this.headerData.unitcode,
+        "moduleCode": this.headerData.modulecode,
+        "departmentCode": this.headerData.departmentcode,
+        "lcrqNumber": "",
+        "lcNumber": this.headerData.lcnum,
+        "lcStage": this.headerData.stage,
+        "lcRole": this.headerData.role,
+        "stage2": 0,
+        "createdBy": this.headerData.createdby,
+        "comments": this.QuotationForm.controls['comments'].value,
+        "draft": draftValue
       },
-      saleUnitCode: this.ViewDetailForm.controls['salesUnitCode'].value,
-      quotationValidDate: moment(this.QuotationForm.controls['quotationValidDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
-      deliveryDate: moment(this.QuotationForm.controls['deliveryDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
-      paymentTermsCode: this.QuotationForm.controls['paymentTermsCode'].value,
-      subTotalAmount: 1000000,
-      discountAmount: this.totalDisAmt,
-      discountedSubTotalAmount: this.afterDisAmt,
-      sgst: this.SGST,
-      cgst: this.CGST,
-      igst: this.IGST,
-      totalGST: this.totalGst,
-      finalTotalAmount: this.totalAmt,
-      orderStatus: this.headerData.modulecode,
-      quotationStage: this.headerData.modulecode,
+
+      "quotationNumber": "",
+      "poNumber": "",
+      "poDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+      "saleUnitCode": "PM1",
+      "deliveryDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+      "paymentTermsCode": "P",
+      "subTotalAmount": 1000000,
+      "discountAmount": 147.25,
+      "discountedSubTotalAmount": 117800,
+      "sgst": 0,
+      "cgst": 0,
+      "igst": 0,
+      "totalGST": 21204,
+      "finalTotalAmount": 139004,
+      "orderStatus": "PSI",
+      pmmsalesInvoiceItemList: this.stockList,
+      "quotationValidDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS')
+
     }
 
     console.log(requestBody)
     this.isLoading = true;
-    this.salaInvoiceService.onSaveUpdate(requestBody).subscribe((data: any) => {
+    this.saleInvoiceService.onSaveUpdate(requestBody).subscribe((data: any) => {
       // console.log(data)
       if (data.errorInfo != null) {
         this.dialog.open(MessageDialogComponent, {
