@@ -34,7 +34,10 @@ import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-sa
 import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
 import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
 import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
-
+import { AllMaterialMasterAtComponent } from '../material-master/all-material-master-at/all-material-master-at.component';
+import { CreateUpdateMaterialMasterComponent } from '../material-master/create-update-material-master/create-update-material-master.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
+import { ActiveMaterialMasterAtComponent } from '../material-master/active-material-master-at/active-material-master-at.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,12 @@ import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save
     DoReviewerComponent,
     DoUpdateComponent,
     DoReviewSaveSubmitComponent,
-    AsCommonFooterComponent
+    AsCommonFooterComponent,
+    AllMaterialMasterAtComponent,
+    CreateUpdateMaterialMasterComponent,
+    MaterialMasterHomePageComponent,
+    ActiveMaterialMasterAtComponent
+
   ],
   imports: [
     CommonModule,
