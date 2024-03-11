@@ -193,7 +193,7 @@
                                     <th col="12" style="color: white;">Discount Amount</th>
                                     <th col="12" style="color: white;">Discount Rate</th>
                                     <th col="12" style="color: white;">Total Discount</th>
-                                    <th col="13" style="color: white;">After Discount Rate </th>
+                                    <th col="13" style="color: white;">After Discount Amount </th>
                                     <th style="color: white;">%GST</th>
                                     <th style="color: white;">GST Amount</th>
                                     <th style="color: white;">Amount</th>
@@ -270,7 +270,7 @@
 
                                     <td>
                                         <input type="number" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.discount"
+                                            style="width: 100px;" [(ngModel)]="item.discountAmount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
@@ -283,13 +283,13 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.discountedAmount"
+                                            style="width: 100px;" [(ngModel)]="item.totalDiscount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
                                     <td>
                                         <input type="number" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.afterdiscountRate"
+                                            style="width: 100px;" [(ngModel)]="item.afterdiscountAmount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
