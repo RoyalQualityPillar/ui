@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
-import { DraftService } from 'src/app/rqp-sd-module/purchase/draft/draft.service';
 import { ESignatureComponent } from 'src/app/rqp-sd-module/sd-common/e-signature/e-signature.component';
 import { SdService } from 'src/app/rqp-sd-module/sd.service';
 import { StockListComponent } from 'src/app/rqp-sd-module/stock-list/stock-list.component';
@@ -14,6 +13,7 @@ import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import { MessageService } from 'src/app/service/message.service';
 import { ToolbarService } from 'src/app/service/toolbar.service';
 import { QuotationService } from '../quotation.service';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -44,7 +44,6 @@ export class QtReviewSaveSubmitComponent implements OnInit {
 
   constructor(public router: ActivatedRoute, private sdService: SdService, public fb: FormBuilder, public dialog: MatDialog,
     private lifeCycleDataService: LifeCycleDataService, private messageService: MessageService,
-    private fairService: DraftService,
     private toolbarService: ToolbarService, private quotationService: QuotationService) {
     this.ViewDetailForm = this.fb.group({
       orgUnitCode: ['', Validators.required],
@@ -132,7 +131,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   }
   indexList: any
   onQTIndexList() {
-    this.sdService.getQTIndexList(this.requestNoID).subscribe((data: any) => {
+    this.quotationService.getQTIndexList(this.requestNoID).subscribe((data: any) => {
       console.log(data)
       this.indexList = data.data[0];
       if (this.indexList) {
@@ -207,7 +206,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   qtItemListdataSource: any;
   previousList: any;
   onQTList() {
-    this.sdService.onQTList(this.requestNoID).subscribe((data: any) => {
+    this.quotationService.onQTList(this.requestNoID).subscribe((data: any) => {
       console.log(data)
       //this.qtItemListdataSource=data;
       //this.stockList=[...data]
@@ -427,7 +426,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
     // }
     console.log(requestBody)
     this.isLoading = true;
-    this.fairService.onSaveUpdate(requestBody).subscribe((data: any) => {
+    this.quotationService.onSaveUpdate(requestBody).subscribe((data: any) => {
       // console.log(data)
       if (data.errorInfo != null) {
         this.dialog.open(MessageDialogComponent, {

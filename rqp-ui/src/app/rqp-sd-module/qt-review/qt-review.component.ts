@@ -34,7 +34,7 @@ export class QtReviewComponent implements OnInit {
   qtListDisplayColumn: string[] = ['ff0005', 'ff0006', 'ff0018', 'ff0007', 'ff0009', 'ff0010', 'ff0011', 'ff0012', 'ff0019', 'ff0013', 'ff0015', 'ff0016', 'ff0017']
   constructor(public router: ActivatedRoute, public sdService: SdService, public lifeCycleDataService: LifeCycleDataService,
     public dialog: MatDialog, private fb: FormBuilder, private toolbarService: ToolbarService,
-    public messageService: MessageService, private quotationService: QuotationService) {
+    public messageService: MessageService) {
     this.FooterForm = this.fb.group({
       nextStage: [''],
       previousStage: ['']
@@ -112,7 +112,7 @@ export class QtReviewComponent implements OnInit {
     return row.ff0005 + "." + row.ff0006 + "." + row.ff0007 + "." + row.ff0008;
   }
   onGetRequestNo() {
-    this.quotationService.getResquestNoID(this.pageData.requestNo).subscribe((data: any) => {
+    this.sdService.getResquestNoID(this.pageData.requestNo).subscribe((data: any) => {
       console.log(data)
       this.requestNoID = data.data[0].uc0001;
       if (this.requestNoID) {
