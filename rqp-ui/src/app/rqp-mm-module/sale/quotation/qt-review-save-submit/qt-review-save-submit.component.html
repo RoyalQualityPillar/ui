@@ -286,7 +286,7 @@
                 <div class="supplier-content">
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">Total Discount : </div>
-                        <div class="sup-values">{{indexList.ff0007 }}</div>
+                        <div class="sup-values">{{totalDisAmt}}</div>
                     </div>
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">After Discount Sub Total Amount : </div>
@@ -307,11 +307,11 @@
                     </div>
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">Total GST Amount </div>
-                        <div class="sup-values">{{indexList.ff0011 | number:'1.2-2'}}</div>
+                        <div class="sup-values">{{afterDisAmt | number:'1.2-2'}}</div>
                     </div>
                     <div class="sup-head">
                         <div class="sup-fields">Total Amount : </div>
-                        <div class="sup-values">{{indexList.ff0013 | number:'1.2-2'}}</div>
+                        <div class="sup-values">{{totalAmt | number:'1.2-2'}}</div>
                     </div>
                 </div>
             </mat-card>
