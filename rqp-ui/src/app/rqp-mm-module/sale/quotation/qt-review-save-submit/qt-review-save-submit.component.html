@@ -1,7 +1,8 @@
 <div class="adjust">
     <div class="example-table-container">
 
-        <app-mm-common-header [pageData]="this.pageData" (headerData)="getHeaderData($event)"></app-mm-common-header>
+        <app-mm-common-header [pageData]="this.pageData" (headerData)="getHeaderData($event)">
+        </app-mm-common-header>
         <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
             <div class="btn-group" class="headers"
                 style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
@@ -285,7 +286,7 @@
                 <div class="supplier-content">
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">Total Discount : </div>
-                        <div class="sup-values">{{indexList.ff0007 }}</div>
+                        <div class="sup-values">{{totalDisAmt}}</div>
                     </div>
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">After Discount Sub Total Amount : </div>
@@ -306,11 +307,11 @@
                     </div>
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">Total GST Amount </div>
-                        <div class="sup-values">{{indexList.ff0011 | number:'1.2-2'}}</div>
+                        <div class="sup-values">{{afterDisAmt | number:'1.2-2'}}</div>
                     </div>
                     <div class="sup-head">
                         <div class="sup-fields">Total Amount : </div>
-                        <div class="sup-values">{{indexList.ff0013 | number:'1.2-2'}}</div>
+                        <div class="sup-values">{{totalAmt | number:'1.2-2'}}</div>
                     </div>
                 </div>
             </mat-card>

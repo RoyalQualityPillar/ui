@@ -387,7 +387,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     let isfindSuccess = 0;
     let obj = { ff0001: "Sale Quotation", lcnum: "RQP1QTSDLCBBB1", lcrole: "SQT-Update", userId: this.selectedRow.userid }
     data.forEach((ele, index) => {
-      if (ele.lcrole == 'SQT-Initiator' || ele.lcrole == 'SQT-Reviewer') {
+      if (ele.lcrole == 'SQT-Initiator' || ele.lcrole == 'SQT-Reviewer' || ele.lcrole == "SQT-Approver") {
         ++isfindSuccess;
       }
     })

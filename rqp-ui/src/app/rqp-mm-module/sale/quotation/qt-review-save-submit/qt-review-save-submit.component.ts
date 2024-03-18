@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
-import { DraftService } from 'src/app/rqp-sd-module/purchase/draft/draft.service';
 import { ESignatureComponent } from 'src/app/rqp-sd-module/sd-common/e-signature/e-signature.component';
 import { SdService } from 'src/app/rqp-sd-module/sd.service';
 import { StockListComponent } from 'src/app/rqp-sd-module/stock-list/stock-list.component';
@@ -14,6 +13,7 @@ import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import { MessageService } from 'src/app/service/message.service';
 import { ToolbarService } from 'src/app/service/toolbar.service';
 import { QuotationService } from '../quotation.service';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -44,7 +44,6 @@ export class QtReviewSaveSubmitComponent implements OnInit {
 
   constructor(public router: ActivatedRoute, private sdService: SdService, public fb: FormBuilder, public dialog: MatDialog,
     private lifeCycleDataService: LifeCycleDataService, private messageService: MessageService,
-    private fairService: DraftService,
     private toolbarService: ToolbarService, private quotationService: QuotationService) {
     this.ViewDetailForm = this.fb.group({
       orgUnitCode: ['', Validators.required],
@@ -132,7 +131,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   }
   indexList: any
   onQTIndexList() {
-    this.sdService.getQTIndexList(this.requestNoID).subscribe((data: any) => {
+    this.quotationService.getQTIndexList(this.requestNoID).subscribe((data: any) => {
       console.log(data)
       this.indexList = data.data[0];
       if (this.indexList) {
@@ -207,15 +206,28 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   qtItemListdataSource: any;
   previousList: any;
   onQTList() {
-    this.sdService.onQTList(this.requestNoID).subscribe((data: any) => {
-      console.log(data)
-      //this.qtItemListdataSource=data;
-      //this.stockList=[...data]
-      this.previousList = data.data
+    this.quotationService.onQTList(this.requestNoID).subscribe((data: any) => {
+      this.previousList = data.data;
       this.previousList.forEach((elements) => {
+        console.log(elements);
+        let getDiscount = ((elements.ff0010) * (elements.ff0011)) / 100;
+        let getQuantity = elements.ff0007;
+        let getdiscountedAmount = getDiscount * getQuantity;
+        let getRate = elements.ff0010;
+        let getdiscountedRate = getRate - getDiscount;
+        let getAfterdiscountRate = (getRate * getQuantity) - (getDiscount * getQuantity);
+        let getGST = elements.ff0015;
+        let getGstAmount = (getAfterdiscountRate * getGST) / 100;
+        let getFinalPrice = getAfterdiscountRate + getGstAmount;
+        this.totalDisAmt += getdiscountedRate;
+        this.afterDisAmt += getAfterdiscountRate;
+        this.totalAmt += getFinalPrice;
+        this.totalGst += getGstAmount;
+
+
         this.stockList.push({
           'itemNo': elements.uc0001,
-          'ff0020': elements.ff0020,
+          'ff0020': getAfterdiscountRate,
           'productCode': elements.ff0005,
           'productName': elements.ff0006,
           'productNumber': elements.ff0018,
@@ -224,19 +236,11 @@ export class QtReviewSaveSubmitComponent implements OnInit {
           'rate': elements.ff0010,
           'discountPercentage': elements.ff0011,
           'discount': elements.ff0012,
-          'discountedRate': elements.ff0019,
-          'ff0013': elements.ff0013,
+          'discountedRate': getdiscountedAmount,
+          'ff0013': elements.ff0016,
           'gst': elements.ff0015,
           'gstAmount': elements.ff0016,
           'finalPrice': elements.ff0017,
-
-
-
-
-
-
-
-
           // 'productName':elements.aFF0003,
           // 'quantity':elements.bFF0010,
           // 'productNumber':elements.aFF0001,
@@ -281,12 +285,10 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       }
     })
     this.totalGst = totalGstAmount;
-    console.log(this.totalGst)
-    console.log(totalDiscountAmount)
     this.QuotationForm.controls['quantity'].setValue(totalDiscountAmount);
     this.totalDisAmt = totalDiscountAmount;
     this.QuotationForm.controls['ff0008'].setValue(afterDiscountAmount);
-    this.afterDisAmt = afterDiscountAmount
+    this.afterDisAmt = afterDiscountAmount;
     this.QuotationForm.controls['ff0013'].setValue(totalAmountWithGST);
     this.totalAmt = totalAmountWithGST;
     this.setGSTData(this.unitCodeData)
@@ -390,12 +392,12 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       draftValue = true;
     }
     requestBody = {
-      quationItemList: this.stockList,
+      pmmquotationItemList: this.stockList,
       lcRequest: {
         unitCode: this.headerData.unitcode,
         moduleCode: this.headerData.modulecode,
         departmentCode: this.headerData.departmentcode,
-        lcrqNumber: this.headerData.requestNo,//added later
+        lcrqNumber: '',
         lcNumber: this.headerData.lcnum,
         lcStage: this.headerData.stage,
         lcRole: this.headerData.role,
@@ -408,8 +410,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       quotationValidDate: moment(this.QuotationForm.controls['quotationValidDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
       deliveryDate: moment(this.QuotationForm.controls['deliveryDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
       paymentTermsCode: this.QuotationForm.controls['paymentTermsCode'].value,
-      //subTotalAmount: 1000000,
-      indexNo: this.ViewDetailForm.controls['quotationNo'].value,
+      subTotalAmount: 1000000,
       discountAmount: this.totalDisAmt,
       discountedSubTotalAmount: this.afterDisAmt,
       sgst: this.SGST,
@@ -427,7 +428,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
     // }
     console.log(requestBody)
     this.isLoading = true;
-    this.fairService.onSaveUpdate(requestBody).subscribe((data: any) => {
+    this.quotationService.onSaveUpdate(requestBody).subscribe((data: any) => {
       // console.log(data)
       if (data.errorInfo != null) {
         this.dialog.open(MessageDialogComponent, {

@@ -21,4 +21,17 @@ export class QuotationService {
     const reviewURL = this.API_URL + 'pmmpqtitem/module-request-no' + queryParams;
     return this.http.get(reviewURL);
   }
+
+
+  onQTList(ff0001:any){  //1st response data
+    const queryParams =`?ff0001=${ff0001}`;
+    const reviewURL=this.API_URL+'pmmpqtitem/get-pqt-item-list'+queryParams;
+    return this.http.get(reviewURL);
+  }
+
+  getQTIndexList(uc0001:any){
+    const queryParams =`?uc0001=${uc0001}`;
+    const reviewURL=this.API_URL+'pmmpqtitem/get-pqt-index-list'+queryParams;
+    return this.http.get(reviewURL);
+  }
 }
