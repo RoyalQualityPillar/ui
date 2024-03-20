@@ -206,10 +206,6 @@ export class QtUpdateSaveSubmitComponent implements OnInit {
       let getGstAmount = (getAfterdiscountRate * getGST) / 100;
       let getFinalPrice = getAfterdiscountRate + getGstAmount;
 
-      // this.totalDisAmt += getdiscountedRate;
-      // this.afterDisAmt += getAfterdiscountRate;
-      // this.totalAmt += getFinalPrice;
-      // this.totalGst += getGstAmount;
 
       this.stockList.push(
         {
@@ -462,7 +458,7 @@ export class QtUpdateSaveSubmitComponent implements OnInit {
       paymentTermsCode: this.QuotationForm.controls['paymentTermsCode'].value,
       subTotalAmount: 1000000,
       discountAmount: this.totalDisAmt,
-      discountedSubTotalAmount: this.afterDisAmt,
+      discountedSubTotalAmount: Number(this.afterDisAmt).toFixed(2),
       sgst: this.SGST,
       cgst: this.CGST,
       igst: this.IGST,
