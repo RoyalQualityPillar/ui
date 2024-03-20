@@ -23,7 +23,7 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
 import { MmCommonHeaderComponent } from '../mm-common/mm-common-header/mm-common-header.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
-import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
+import { QtUpdateSaveSubmitComponent } from '../sale/quotation/qt-update-save-submit/qt-update-save-submit.component';
 import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common-footer.component';
 import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
 import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
@@ -54,7 +54,7 @@ import { ActiveMaterialMasterAtComponent } from '../material-master/active-mater
     QtInitiatorComponent,
     QtReviewerComponent,
     QtUpdateComponent,
-    QtReviewSaveSubmitComponent,
+    QtUpdateSaveSubmitComponent,
     SiHomeComponent,
     SiInitiatorComponent,
     SiUpdateComponent,

@@ -168,7 +168,7 @@ export class QtUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   onSubmit() {
     console.log(this.selectedRow)
-    this.router.navigate(['./mm/qt-review-save'], { queryParams: this.selectedRow })
+    this.router.navigate(['./mm/qt-update-save'], { queryParams: this.selectedRow })
   }
   copyData() {
     var dataArray = "";
