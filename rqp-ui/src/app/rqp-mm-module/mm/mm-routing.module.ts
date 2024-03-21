@@ -29,6 +29,7 @@ import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewe
 import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
 import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
 import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
+import { QtReviewerSaveComponent } from '../sale/quotation/qt-reviewer-save/qt-reviewer-save.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: "qt-home", component: QtHomeComponent },
   { path: "qt-initiator", component: QtInitiatorComponent },
   { path: "qt-reviewer", component: QtReviewerComponent },
+  { path: "qt-review-save", component: QtReviewerSaveComponent },
   { path: "qt-update", component: QtUpdateComponent },
   { path: "qt-update-save", component: QtUpdateSaveSubmitComponent },
   { path: "si-home", component: SiHomeComponent },
