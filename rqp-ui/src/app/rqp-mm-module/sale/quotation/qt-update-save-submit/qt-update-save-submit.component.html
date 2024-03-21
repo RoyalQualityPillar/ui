@@ -141,8 +141,8 @@
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
                                             style="width: 140px;" [class.isReadonlyFieldForQuotation]="isReadonly"
-                                            [(ngModel)]="item.ff0020" [ngModelOptions]="{standalone: true}" required
-                                            [readonly]="isReadonly">
+                                            [(ngModel)]="item.afterdiscountAmount" [ngModelOptions]="{standalone: true}"
+                                            required [readonly]="isReadonly">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
@@ -175,7 +175,7 @@
                                 </td> -->
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
-                                            style="width: 140px;" [readonly]="isReadonly" [(ngModel)]="item.gethSNCode"
+                                            style="width: 140px;" [readonly]="isReadonly" [(ngModel)]="item.gstcode"
                                             [ngModelOptions]="{standalone: true}"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
@@ -196,19 +196,19 @@
                                     </td>
                                     <td>
                                         <input type="number" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.discount"
+                                            style="width: 100px;" [(ngModel)]="item.discountAmount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.discountedRate"
+                                            style="width: 100px;" [(ngModel)]="item.totalDiscount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
                                     <td>
                                         <input type="number" class="form-control form-control-sm txt-box"
-                                            style="width: 100px;" [(ngModel)]="item.ff0013"
+                                            style="width: 100px;" [(ngModel)]="item.afterdiscountAmount"
                                             [ngModelOptions]="{standalone: true}" [readonly]="isReadonly"
                                             [class.isReadonlyFieldForQuotation]="isReadonly" required>
                                     </td>
@@ -248,6 +248,7 @@
                                 <td></td>
                                 <td></td>
 
+
                                 <td style="text-align: left;
                             color: black;
                             font-weight: 700;
@@ -286,7 +287,7 @@
                 <div class="supplier-content">
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">Total Discount : </div>
-                        <div class="sup-values">{{totalDisAmt}}</div>
+                        <div class="sup-values">{{totalDisAmt | number:'1.2-2'}}</div>
                     </div>
                     <div class="sup-head" style="background-color: #bcceea;">
                         <div class="sup-fields">After Discount Sub Total Amount : </div>
