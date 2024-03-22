@@ -1,1 +1,22 @@
-<p>as-common-footer works!</p>
+<mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers" style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Comments</p>
+        </div>
+    </div>
+</mat-card>
+<ng-content></ng-content>
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="QuotationForm">
+        <div class="row no-gutters ms-1 me-1" style="margin-top: 10px;">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Comments</mat-label>
+                <textarea type="text" matInput  placeholder="Comments" formControlName="comments"
+                (change)="onChangeCommentsValue()">
+                        </textarea>
+            </mat-form-field>
+        </div>
+        </form>
+    </div>
+</div>

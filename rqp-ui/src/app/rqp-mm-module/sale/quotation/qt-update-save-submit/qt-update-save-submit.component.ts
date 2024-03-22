@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
-import { DraftService } from 'src/app/rqp-sd-module/purchase/draft/draft.service';
 import { ESignatureComponent } from 'src/app/rqp-sd-module/sd-common/e-signature/e-signature.component';
 import { SdService } from 'src/app/rqp-sd-module/sd.service';
 import { StockListComponent } from 'src/app/rqp-sd-module/stock-list/stock-list.component';
@@ -14,6 +13,7 @@ import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import { MessageService } from 'src/app/service/message.service';
 import { ToolbarService } from 'src/app/service/toolbar.service';
 import { QuotationService } from '../quotation.service';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -28,11 +28,11 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-qt-review-save-submit',
-  templateUrl: './qt-review-save-submit.component.html',
-  styleUrls: ['./qt-review-save-submit.component.scss']
+  selector: 'app-qt-update-save-submit',
+  templateUrl: './qt-update-save-submit.component.html',
+  styleUrls: ['./qt-update-save-submit.component.scss']
 })
-export class QtReviewSaveSubmitComponent implements OnInit {
+export class QtUpdateSaveSubmitComponent implements OnInit {
   ff0001: any;
   pageData: any;
   isReadonly: boolean;
@@ -44,7 +44,6 @@ export class QtReviewSaveSubmitComponent implements OnInit {
 
   constructor(public router: ActivatedRoute, private sdService: SdService, public fb: FormBuilder, public dialog: MatDialog,
     private lifeCycleDataService: LifeCycleDataService, private messageService: MessageService,
-    private fairService: DraftService,
     private toolbarService: ToolbarService, private quotationService: QuotationService) {
     this.ViewDetailForm = this.fb.group({
       orgUnitCode: ['', Validators.required],
@@ -132,7 +131,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   }
   indexList: any
   onQTIndexList() {
-    this.sdService.getQTIndexList(this.requestNoID).subscribe((data: any) => {
+    this.quotationService.getQTIndexList(this.requestNoID).subscribe((data: any) => {
       console.log(data)
       this.indexList = data.data[0];
       if (this.indexList) {
@@ -191,59 +190,104 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   stockList = [];
   addSelectedRows(selectedRow: any) {
     selectedRow.data.forEach(elements => {
+      let getPriceCode = elements.aUC0001;
+      let getProductCode = elements.aFF0002;
+      let getProductName = elements.aFF0003;
+      let getQuantity = elements.bFF0010;
+      let getProductNumber = elements.aFF0001;
+      let getGstCode = elements.aFF0010;
+      let getRate = elements.aFF0008;
+      let getDiscountPercentage = elements.aFF0011;
+      let getDiscount = ((elements.aFF0008) * (elements.aFF0011)) / 100;
+      let getdiscountedRate = getRate - getDiscount;
+      let getdiscountedAmount = getDiscount * getQuantity;
+      let getAfterdiscountRate = (getRate * getQuantity) - (getDiscount * getQuantity);
+      let getGST = elements.aFF0009;
+      let getGstAmount = (getAfterdiscountRate * getGST) / 100;
+      let getFinalPrice = getAfterdiscountRate + getGstAmount;
+
+
       this.stockList.push(
         {
-          'ff0020': elements.aUC0001,
-          'productCode': elements.aFF0002,
-          'productName': elements.aFF0003,
-          'quantity': elements.bFF0010,
-          'productNumber': elements.aFF0001,
-          'gethSNCode': elements.aFF0010,
-          'rate': elements.aFF0008,
+          "itemNo": elements.ff0020,
+          "quotationNo": "",
+          "poNumber": elements.aFF0001,
+          "poDate": new Date(),
+          "deliveryDate": new Date(),
+          'productCode': getProductCode,
+          'productName': getProductName,
+          'quantity': getQuantity,
+          'pack': elements.aFF0013,
+          'rate': getRate,
+          'discountPercentage': getDiscountPercentage,
+          'discountAmount': getDiscount,
+          'totalDiscount': getdiscountedAmount,
+          'gstType': '',
+          'gst': getGST,
+          'gstAmount': getGstAmount,
+          'finalPrice': getFinalPrice,
+          'productNumber': getProductNumber,
+          'afterdiscountAmount': getAfterdiscountRate,
+          'priceCode': getPriceCode,
+          'gstcode': getGstCode,
+          'discountedRate': getdiscountedRate,
           //'sumOfTotalDisc':num,
         });
-    })
+    });
+    this.onCalTotalValue();
   }
   qtItemListdataSource: any;
   previousList: any;
   onQTList() {
-    this.sdService.onQTList(this.requestNoID).subscribe((data: any) => {
-      console.log(data)
-      //this.qtItemListdataSource=data;
-      //this.stockList=[...data]
-      this.previousList = data.data
+    this.quotationService.onQTList(this.requestNoID).subscribe((data: any) => {
+      this.previousList = data.data;
       this.previousList.forEach((elements) => {
+
+        const getproductCode = elements.ff0005;
+        const getProductName = elements.ff0006;
+        const getQuantity = elements.ff0007;
+        const getPack = elements.ff0008;
+        const getGSTCode = elements.ff0009;
+        const getRate = elements.ff0010;
+        const getDiscountPercentage = elements.ff0011;
+        const getDiscountAmount = elements.ff0012;
+        const getTotalDiscount = elements.ff0013;
+        const getGstType = elements.ff0014;
+        const getGst = elements.ff0015;
+        const getGstAmount = elements.ff0016;
+        const getFinalPrice = elements.ff0017;
+        const getProductNumber = elements.ff0018;
+        const getAfterdiscountAmount = elements.ff0019;
+        const getPriceCode = elements.ff0020;
+        const getDiscountedRate = elements.ff0019;
         this.stockList.push({
-          'itemNo': elements.uc0001,
-          'ff0020': elements.ff0020,
-          'productCode': elements.ff0005,
-          'productName': elements.ff0006,
-          'productNumber': elements.ff0018,
-          'quantity': elements.ff0007,
-          'gethSNCode': elements.ff0009,
-          'rate': elements.ff0010,
-          'discountPercentage': elements.ff0011,
-          'discount': elements.ff0012,
-          'discountedRate': elements.ff0019,
-          'ff0013': elements.ff0013,
-          'gst': elements.ff0015,
-          'gstAmount': elements.ff0016,
-          'finalPrice': elements.ff0017,
-
-
-
-
-
-
-
-
-          // 'productName':elements.aFF0003,
-          // 'quantity':elements.bFF0010,
-          // 'productNumber':elements.aFF0001,
-          // 'gethSNCode':elements.aFF0010,
-          // 'rate':elements.aFF0008,
+          "itemNo": elements.uc0001,
+          "quotationNo": " ",
+          "poNumber": "",
+          "poDate": moment(new Date).format('DD-MM-YYYY HH:mm:ss.SSS'),
+          "deliveryDate": moment(new Date).format('DD-MM-YYYY HH:mm:ss.SSS'),
+          "productCode": getproductCode,
+          "productName": getProductName,
+          "quantity": getQuantity,
+          "pack": getPack,
+          "rate": getRate,
+          "discountPercentage": getDiscountPercentage,
+          "discountAmount": getDiscountAmount,
+          "totalDiscount": getTotalDiscount,
+          "gstType": getGstType,
+          "gst": getGst,
+          "gstAmount": getGstAmount,
+          "finalPrice": getFinalPrice,
+          "productNumber": getProductNumber,
+          "afterdiscountAmount": getAfterdiscountAmount,
+          "priceCode": getPriceCode,
+          "gstcode": getGSTCode,
+          "discountedRate": getDiscountedRate
         })
-      })
+      });
+
+      
+      console.log(this.totalDisAmt);
       //  this.checkUnitCode();//
       console.log(this.unitCodeData)
       this.onCalTotalValue()
@@ -261,17 +305,19 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   totalAmt = 0;
   totalGst = 0;
   onCalTotalValue() {
+
     let totalDiscountAmount = 0;
     let afterDiscountAmount = 0;
     let totalAmountWithGST = 0;
     let totalGstAmount = 0;
     console.log(this.stockList)
     this.stockList.forEach(ele => {
-      if (ele.discountedRate > 0) {
-        totalDiscountAmount = totalDiscountAmount + ele.discountedRate
+
+      if (ele.totalDiscount > 0) {
+        totalDiscountAmount = totalDiscountAmount + ele.totalDiscount;
       }
-      if (ele.ff0013 > 0) {
-        afterDiscountAmount = afterDiscountAmount + ele.ff0013
+      if (ele.afterdiscountAmount > 0) {
+        afterDiscountAmount = afterDiscountAmount + ele.afterdiscountAmount
       }
       if (ele.finalPrice > 0) {
         totalAmountWithGST = totalAmountWithGST + ele.finalPrice
@@ -279,14 +325,13 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       if (ele.gstAmount) {
         totalGstAmount = totalGstAmount + ele.gstAmount
       }
+
     })
     this.totalGst = totalGstAmount;
-    console.log(this.totalGst)
-    console.log(totalDiscountAmount)
     this.QuotationForm.controls['quantity'].setValue(totalDiscountAmount);
     this.totalDisAmt = totalDiscountAmount;
     this.QuotationForm.controls['ff0008'].setValue(afterDiscountAmount);
-    this.afterDisAmt = afterDiscountAmount
+    this.afterDisAmt = afterDiscountAmount;
     this.QuotationForm.controls['ff0013'].setValue(totalAmountWithGST);
     this.totalAmt = totalAmountWithGST;
     this.setGSTData(this.unitCodeData)
@@ -297,7 +342,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
 
   setGSTData(data) {
     console.log(data)
-    if (data[0].ff0013 == data[1].ff0013) {
+    if (data[0].afterdiscountAmount == data[1].afterdiscountAmount) {
       this.CGST = this.totalGst / 2
       this.SGST = this.totalGst / 2
       this.IGST = 0;
@@ -310,8 +355,8 @@ export class QtReviewSaveSubmitComponent implements OnInit {
   /****************************************** VALIDATION *******************************/
   onCalAllFieldAmount(idx) {
     if (this.stockList[idx].quantity != null) {
-      if (Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount == undefined) {
-        this.stockList[idx].discount = 0;
+      if (Number.isNaN(this.stockList[idx].discountAmount) || this.stockList[idx].discountAmount == undefined) {
+        this.stockList[idx].discountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage == undefined) {
         this.stockList[idx].discountPercentage = 0;
@@ -319,8 +364,8 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].rate) || this.stockList[idx].rate == undefined) {
         this.stockList[idx].rate = 0;
       }
-      if (Number.isNaN(this.stockList[idx].ff0013) || this.stockList[idx].ff0013 == undefined) {
-        this.stockList[idx].ff0013 = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount) || this.stockList[idx].afterdiscountAmount == undefined) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
         this.stockList[idx].gstAmount = 0;
@@ -328,11 +373,13 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].gst) || this.stockList[idx].gst == undefined) {
         this.stockList[idx].gst = 0;
       }
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedRate = (this.stockList[idx].discount * this.stockList[idx].quantity)
-      this.stockList[idx].ff0013 = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)));
-      this.stockList[idx].gstAmount = (((this.stockList[idx].ff0013) * (this.stockList[idx].gst)) / 100);
-      this.stockList[idx].finalPrice = (this.stockList[idx].ff0013 + this.stockList[idx].gstAmount);
+
+      this.stockList[idx].discountAmount = Number((this.stockList[idx].rate * this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].discountedRate = (this.stockList[idx].rate - this.stockList[idx].discountAmount);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity);
+      this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)));
+      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountAmount) * (this.stockList[idx].gst)) / 100);
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
     }
   }
@@ -390,12 +437,12 @@ export class QtReviewSaveSubmitComponent implements OnInit {
       draftValue = true;
     }
     requestBody = {
-      quationItemList: this.stockList,
+      pmmquotationItemList: this.stockList,
       lcRequest: {
         unitCode: this.headerData.unitcode,
         moduleCode: this.headerData.modulecode,
         departmentCode: this.headerData.departmentcode,
-        lcrqNumber: this.headerData.requestNo,//added later
+        lcrqNumber: this.headerData.requestNo,
         lcNumber: this.headerData.lcnum,
         lcStage: this.headerData.stage,
         lcRole: this.headerData.role,
@@ -404,14 +451,14 @@ export class QtReviewSaveSubmitComponent implements OnInit {
         comments: this.QuotationForm.controls['comments'].value,
         draft: draftValue
       },
+      indexNo: String(this.stockList[0].itemNo).slice(0, 16),
       saleUnitCode: this.ViewDetailForm.controls['salesUnitCode'].value,
       quotationValidDate: moment(this.QuotationForm.controls['quotationValidDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
       deliveryDate: moment(this.QuotationForm.controls['deliveryDate'].value).format('DD-MM-YYYY HH:mm:ss.SSS'),
       paymentTermsCode: this.QuotationForm.controls['paymentTermsCode'].value,
-      //subTotalAmount: 1000000,
-      indexNo: this.ViewDetailForm.controls['quotationNo'].value,
+      subTotalAmount: 1000000,
       discountAmount: this.totalDisAmt,
-      discountedSubTotalAmount: this.afterDisAmt,
+      discountedSubTotalAmount: Number(this.afterDisAmt).toFixed(2),
       sgst: this.SGST,
       cgst: this.CGST,
       igst: this.IGST,
@@ -427,7 +474,7 @@ export class QtReviewSaveSubmitComponent implements OnInit {
     // }
     console.log(requestBody)
     this.isLoading = true;
-    this.fairService.onSaveUpdate(requestBody).subscribe((data: any) => {
+    this.quotationService.onSaveUpdate(requestBody).subscribe((data: any) => {
       // console.log(data)
       if (data.errorInfo != null) {
         this.dialog.open(MessageDialogComponent, {

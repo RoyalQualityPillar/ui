@@ -18,7 +18,7 @@ import { DoHomeComponent } from '../sale/delivery-order/do-home/do-home.componen
 import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-initiator.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
-import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
+import { QtUpdateSaveSubmitComponent } from '../sale/quotation/qt-update-save-submit/qt-update-save-submit.component';
 import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
 import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.component';
 import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
@@ -28,6 +28,7 @@ import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-sa
 import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
 import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
 import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -41,7 +42,7 @@ const routes: Routes = [
   { path: "qt-initiator", component: QtInitiatorComponent },
   { path: "qt-reviewer", component: QtReviewerComponent },
   { path: "qt-update", component: QtUpdateComponent },
-  { path: "qt-review-save", component: QtReviewSaveSubmitComponent },
+  { path: "qt-update-save", component: QtUpdateSaveSubmitComponent },
   { path: "si-home", component: SiHomeComponent },
   { path: "si-initiator", component: SiInitiatorComponent },
   { path: "si-reviewer", component: SiReviewerComponent },
@@ -57,7 +58,8 @@ const routes: Routes = [
   { path: 'do-reviewer', component: DoReviewerComponent },
   { path: 'do-update', component: DoUpdateComponent },
   { path: 'do-review-save', component: DoReviewSaveSubmitComponent },
-  { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent }
+  { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent },
+  { path: 'material-master-home-page', component: MaterialMasterHomePageComponent }
 ];
 
 @NgModule({

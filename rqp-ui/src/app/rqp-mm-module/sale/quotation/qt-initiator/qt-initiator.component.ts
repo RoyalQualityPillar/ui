@@ -147,7 +147,7 @@ export class QtInitiatorComponent implements OnInit {
   stockList = [];
   addSelectedRows(selectedRow: any) {
     console.log(selectedRow);
-    selectedRow.data.forEach((elements) => {
+    selectedRow.data.forEach((elements, index: number) => {
       console.log(elements);
       let getPriceCode = elements.aUC0001;
       let getProductCode = elements.aFF0002;
@@ -172,22 +172,29 @@ export class QtInitiatorComponent implements OnInit {
 
       this.stockList.push(
         {
-          'priceCode': getPriceCode,
+          "quotationNo": "string",
+          "poNumber": elements.aFF0001,
+          "poDate": new Date(),
+          "deliveryDate": new Date(),
           'productCode': getProductCode,
           'productName': getProductName,
           'quantity': getQuantity,
-          'productNumber': getProductNumber,
-          'gstcode': getGstCode,
+          'pack': elements.aFF0013,
           'rate': getRate,
           'discountPercentage': getDiscountPercentage,
-          'pack': elements.aFF0013,
-          'discount': getDiscount,
-          'discountedRate': getdiscountedRate,
-          'discountedAmount': getdiscountedAmount,
-          'afterdiscountRate': getAfterdiscountRate,
+          'discountAmount': getDiscount,
+          'totalDiscount': getdiscountedAmount,
+          'gstType': '',
           'gst': getGST,
           'gstAmount': getGstAmount,
-          'finalPrice': getFinalPrice
+          'finalPrice': getFinalPrice,
+          'productNumber': getProductNumber,
+          'afterdiscountAmount': getAfterdiscountRate,
+          'priceCode': getPriceCode,
+          'gstcode': getGstCode,
+          'discountedRate': getdiscountedRate,
+          // 'discount': getDiscount,
+
           //'sumOfTotalDisc':num,
         });
     })
@@ -210,11 +217,11 @@ export class QtInitiatorComponent implements OnInit {
     let totalGstAmount = 0;
     console.log(this.stockList)
     this.stockList.forEach(ele => {
-      if (ele.discountedAmount > 0) {
-        totalDiscountAmount = totalDiscountAmount + ele.discountedAmount
+      if (ele.totalDiscount > 0) {
+        totalDiscountAmount = totalDiscountAmount + ele.totalDiscount
       }
-      if (ele.afterdiscountRate > 0) {
-        afterDiscountAmount = afterDiscountAmount + ele.afterdiscountRate
+      if (ele.afterdiscountAmount > 0) {
+        afterDiscountAmount = afterDiscountAmount + ele.afterdiscountAmount
       }
       if (ele.finalPrice > 0) {
         totalAmountWithGST = totalAmountWithGST + ele.finalPrice
@@ -256,7 +263,7 @@ export class QtInitiatorComponent implements OnInit {
   CGST: any;
   IGST: any;
   setGSTData(data) {
-    if (data[0].afterdiscountRate == data[1].afterdiscountRate) {
+    if (data[0].afterdiscountAmount == data[1].afterdiscountAmount) {
       this.CGST = this.totalGst / 2
       this.SGST = this.totalGst / 2
       this.IGST = 0;
@@ -286,8 +293,8 @@ export class QtInitiatorComponent implements OnInit {
   /****************************************** VALIDATION *******************************/
   onCalAllFieldAmount(idx) {
     if (this.stockList[idx].quantity != null) {
-      if (Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount == undefined) {
-        this.stockList[idx].discount = 0;
+      if (Number.isNaN(this.stockList[idx].discountAmount) || this.stockList[idx].discountAmount == undefined) {
+        this.stockList[idx].discountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage == undefined) {
         this.stockList[idx].discountPercentage = 0;
@@ -295,8 +302,8 @@ export class QtInitiatorComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].rate) || this.stockList[idx].rate == undefined) {
         this.stockList[idx].rate = 0;
       }
-      if (Number.isNaN(this.stockList[idx].afterdiscountRate) || this.stockList[idx].afterdiscountRate == undefined) {
-        this.stockList[idx].afterdiscountRate = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount) || this.stockList[idx].afterdiscountAmount == undefined) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
         this.stockList[idx].gstAmount = 0;
@@ -304,19 +311,19 @@ export class QtInitiatorComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].gst) || this.stockList[idx].gst == undefined) {
         this.stockList[idx].gst = 0;
       }
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedRate = (this.stockList[idx].rate) - (this.stockList[idx].discount);
-      this.stockList[idx].discountedAmount = (this.stockList[idx].discount * this.stockList[idx].quantity)
-      this.stockList[idx].afterdiscountRate = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)));
-      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountRate) * (this.stockList[idx].gst)) / 100);
-      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountRate + this.stockList[idx].gstAmount);
+      this.stockList[idx].discountAmount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].discountedRate = (this.stockList[idx].rate) - (this.stockList[idx].discountAmount);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity)
+      this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)));
+      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountAmount) * (this.stockList[idx].gst)) / 100);
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
     }
   }
   onChangeDiscountAmount(idx) {
     if (this.stockList[idx].discountPercentage != null) {
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedAmount = (this.stockList[idx].discount * this.stockList[idx].quantity)
+      this.stockList[idx].discountAmount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity)
       this.onChangeAfterDiscount(idx)
     }
   }
@@ -324,21 +331,21 @@ export class QtInitiatorComponent implements OnInit {
     if (Number.isNaN(this.stockList[idx].quantity)) {
       this.stockList[idx].quantity = 1;
     }
-    if (Number.isNaN(this.stockList[idx].discount)) {
-      this.stockList[idx].discount = 0;
+    if (Number.isNaN(this.stockList[idx].discountAmount)) {
+      this.stockList[idx].discountAmount = 0;
     }
     if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
       this.stockList[idx].gstAmount = 0;
     }
-    this.stockList[idx].afterdiscountRate = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)))
-    this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountRate + this.stockList[idx].gstAmount);
+    this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)))
+    this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
     this.onCalTotalValue();
   }
 
   onChangeQTY(idx) {
     if (this.stockList[idx].quantity != null) {
-      if (Number.isNaN(this.stockList[idx].discount) || this.stockList[idx].discount == undefined) {
-        this.stockList[idx].discount = 0;
+      if (Number.isNaN(this.stockList[idx].discountAmount) || this.stockList[idx].discountAmount == undefined) {
+        this.stockList[idx].discountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].discountPercentage) || this.stockList[idx].discountPercentage == undefined) {
         this.stockList[idx].discountPercentage = 0;
@@ -346,27 +353,27 @@ export class QtInitiatorComponent implements OnInit {
       if (Number.isNaN(this.stockList[idx].rate)) {
         this.stockList[idx].rate = 0;
       }
-      if (Number.isNaN(this.stockList[idx].afterdiscountRate)) {
-        this.stockList[idx].afterdiscountRate = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount)) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
       if (Number.isNaN(this.stockList[idx].gstAmount) || this.stockList[idx].gstAmount == undefined) {
         this.stockList[idx].gstAmount = 0;
       }
-      this.stockList[idx].discount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
-      this.stockList[idx].discountedAmount = (this.stockList[idx].discount * this.stockList[idx].quantity)
-      this.stockList[idx].afterdiscountRate = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discount) * (this.stockList[idx].quantity)))
-      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountRate + this.stockList[idx].gstAmount);
+      this.stockList[idx].discountAmount = ((this.stockList[idx].rate) * (this.stockList[idx].discountPercentage) / 100);
+      this.stockList[idx].totalDiscount = (this.stockList[idx].discountAmount * this.stockList[idx].quantity)
+      this.stockList[idx].afterdiscountAmount = (((this.stockList[idx].rate) * (this.stockList[idx].quantity)) - ((this.stockList[idx].discountAmount) * (this.stockList[idx].quantity)))
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
       this.onCalTotalValue();
     }
   }
   onChangeGST(idx) {
     if (this.stockList[idx].gst != null) {
-      if (Number.isNaN(this.stockList[idx].afterdiscountRate) || this.stockList[idx].afterdiscountRate == undefined) {
-        this.stockList[idx].afterdiscountRate = 0;
+      if (Number.isNaN(this.stockList[idx].afterdiscountAmount) || this.stockList[idx].afterdiscountAmount == undefined) {
+        this.stockList[idx].afterdiscountAmount = 0;
       }
-      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountRate) * (this.stockList[idx].gst)) / 100);
-      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountRate + this.stockList[idx].gstAmount);
-      this.onCalTotalValue()
+      this.stockList[idx].gstAmount = (((this.stockList[idx].afterdiscountAmount) * (this.stockList[idx].gst)) / 100);
+      this.stockList[idx].finalPrice = (this.stockList[idx].afterdiscountAmount + this.stockList[idx].gstAmount);
+      this.onCalTotalValue();
     }
   }
 

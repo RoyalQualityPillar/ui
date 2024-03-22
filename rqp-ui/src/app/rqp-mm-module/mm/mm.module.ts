@@ -23,7 +23,7 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
 import { MmCommonHeaderComponent } from '../mm-common/mm-common-header/mm-common-header.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
-import { QtReviewSaveSubmitComponent } from '../sale/quotation/qt-review-save-submit/qt-review-save-submit.component';
+import { QtUpdateSaveSubmitComponent } from '../sale/quotation/qt-update-save-submit/qt-update-save-submit.component';
 import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common-footer.component';
 import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
 import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
@@ -34,7 +34,10 @@ import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-sa
 import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
 import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
 import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
-
+import { AllMaterialMasterAtComponent } from '../material-master/all-material-master-at/all-material-master-at.component';
+import { CreateUpdateMaterialMasterComponent } from '../material-master/create-update-material-master/create-update-material-master.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
+import { ActiveMaterialMasterAtComponent } from '../material-master/active-material-master-at/active-material-master-at.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,7 @@ import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save
     QtInitiatorComponent,
     QtReviewerComponent,
     QtUpdateComponent,
-    QtReviewSaveSubmitComponent,
+    QtUpdateSaveSubmitComponent,
     SiHomeComponent,
     SiInitiatorComponent,
     SiUpdateComponent,
@@ -67,7 +70,12 @@ import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save
     DoReviewerComponent,
     DoUpdateComponent,
     DoReviewSaveSubmitComponent,
-    AsCommonFooterComponent
+    AsCommonFooterComponent,
+    AllMaterialMasterAtComponent,
+    CreateUpdateMaterialMasterComponent,
+    MaterialMasterHomePageComponent,
+    ActiveMaterialMasterAtComponent
+
   ],
   imports: [
     CommonModule,

@@ -4,17 +4,14 @@ import { SdService } from '../../sd.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StockListComponent } from '../../stock-list/stock-list.component';
 import { MatDialog } from '@angular/material/dialog';
-import { elements } from 'chart.js';
 import { MatTableDataSource } from '@angular/material/table';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';
 import { LifeCycleDataService } from 'src/app/service/life-cycle-data.service';
 import { ESignatureComponent } from '../../sd-common/e-signature/e-signature.component';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { MessageService } from 'src/app/service/message.service';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
 import { ToolbarService } from 'src/app/service/toolbar.service';
-import { QuotationService } from 'src/app/rqp-mm-module/sale/quotation/quotation.service';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'L',
@@ -43,7 +40,7 @@ export class QtUpdateDetailsComponent implements OnInit {
 
   constructor(public router: ActivatedRoute, private sdService: SdService, public fb: FormBuilder, public dialog: MatDialog,
     private lifeCycleDataService: LifeCycleDataService, private messageService: MessageService,
-    private toolbarService: ToolbarService, private quotationService: QuotationService) {
+    private toolbarService: ToolbarService) {
     this.ViewDetailForm = this.fb.group({
       orgUnitCode: ['', Validators.required],
       salesUnitCode: ['', Validators.required],
@@ -116,7 +113,7 @@ export class QtUpdateDetailsComponent implements OnInit {
   }
   requestNoID: any;
   onGetRequestNo() {
-    this.quotationService.getResquestNoID(this.ff0001).subscribe((data: any) => {
+    this.sdService.getResquestNoID(this.ff0001).subscribe((data: any) => {
       console.log(data)
       this.requestNoID = data.data[0].uc0001;
       if (this.requestNoID) {

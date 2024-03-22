@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QtReviewSaveSubmitComponent } from './qt-review-save-submit.component';
+import { QtUpdateSaveSubmitComponent } from './qt-update-save-submit.component';
 
 describe('QtReviewSaveSubmitComponent', () => {
-  let component: QtReviewSaveSubmitComponent;
-  let fixture: ComponentFixture<QtReviewSaveSubmitComponent>;
+  let component: QtUpdateSaveSubmitComponent;
+  let fixture: ComponentFixture<QtUpdateSaveSubmitComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QtReviewSaveSubmitComponent ]
+      declarations: [ QtUpdateSaveSubmitComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(QtReviewSaveSubmitComponent);
+    fixture = TestBed.createComponent(QtUpdateSaveSubmitComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
