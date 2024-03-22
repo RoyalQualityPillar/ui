@@ -174,8 +174,8 @@ export class QtInitiatorComponent implements OnInit {
         {
           "quotationNo": "string",
           "poNumber": elements.aFF0001,
-          "poDate": new Date(),
-          "deliveryDate": new Date(),
+          "poDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
+          "deliveryDate": moment(new Date()).format('DD-MM-YYYY HH:mm:ss.SSS'),
           'productCode': getProductCode,
           'productName': getProductName,
           'quantity': getQuantity,
