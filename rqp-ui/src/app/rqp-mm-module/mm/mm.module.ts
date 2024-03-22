@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MmRoutingModule } from './mm-routing.module';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +37,9 @@ import { AllMaterialMasterAtComponent } from '../material-master/all-material-ma
 import { CreateUpdateMaterialMasterComponent } from '../material-master/create-update-material-master/create-update-material-master.component';
 import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
 import { ActiveMaterialMasterAtComponent } from '../material-master/active-material-master-at/active-material-master-at.component';
+import { QtReviewerSaveComponent } from '../sale/quotation/qt-reviewer-save/qt-reviewer-save.component';
+import { RqpHeaderComponent } from '../mm-common/rqp-header/rqp-header.component';
+
 
 @NgModule({
   declarations: [
@@ -74,8 +76,9 @@ import { ActiveMaterialMasterAtComponent } from '../material-master/active-mater
     AllMaterialMasterAtComponent,
     CreateUpdateMaterialMasterComponent,
     MaterialMasterHomePageComponent,
-    ActiveMaterialMasterAtComponent
-
+    ActiveMaterialMasterAtComponent,
+    QtReviewerSaveComponent,
+    RqpHeaderComponent
   ],
   imports: [
     CommonModule,
