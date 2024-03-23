@@ -14,6 +14,7 @@ import { DevInitiatorComponent } from '../dev/dev-initiator/dev-initiator.compon
 import { CcHomeComponent } from '../cc/cc-home/cc-home.component';
 import { CcInitiatorComponent } from '../cc/cc-initiator/cc-initiator.component';
 import { QMSESignatureComponent } from '../qms-common/e-signature/qms-e-signature.component';
+import { QmsCommonHeaderComponent } from '../qms-common/qms-common-header/qms-common-header.component';
 
 
 
@@ -29,7 +30,8 @@ import { QMSESignatureComponent } from '../qms-common/e-signature/qms-e-signatur
     NciInitiatorComponent,
     CcHomeComponent,
     CcInitiatorComponent,
-    QMSESignatureComponent  
+    QMSESignatureComponent,
+    QmsCommonHeaderComponent
   ],
   imports: [
     CommonModule,
