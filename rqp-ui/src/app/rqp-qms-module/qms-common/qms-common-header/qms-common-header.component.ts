@@ -11,7 +11,7 @@ import { QmsService } from '../../qms.service';
   templateUrl: './qms-common-header.component.html',
   styleUrls: ['./qms-common-header.component.scss']
 })
-export class DmsCommonHeaderComponent implements OnInit{
+export class QmsCommonHeaderComponent implements OnInit{
   @Output() headerData = new EventEmitter<any>();
  // @Output() requestNo = new EventEmitter<any>();
   @Input() pageData:any;
