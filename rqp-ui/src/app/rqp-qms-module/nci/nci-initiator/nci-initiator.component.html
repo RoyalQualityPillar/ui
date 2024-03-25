@@ -26,31 +26,41 @@
                         <div class="row no-gutters ms-1 me-1 dense-4">
                             <mat-form-field appearance="outline" class="col-4 px-1">
                                 <mat-label>Severity of the Event</mat-label>
-                                <input type="text" matInput formControlName="severityEvent" placeholder="Severity of the Event">
+                                <input type="text" matInput formControlName="ff0001" placeholder="Severity of the Event">
                                 <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
                                     color="primary" (click)="openSeverityEventLov()">
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4 px-1">
                                 <mat-label>Probability of Occurrence</mat-label>
-                                <input type="text" matInput formControlName="severityEvent" placeholder="Probability of Occurrence">
+                                <input type="text" matInput formControlName="ff0002" placeholder="Probability of Occurrence">
                                 <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
-                                    color="primary" (click)="openSeverityEventLov()">
+                                    color="primary" (click)="openOccurenceLov()">
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4 px-1">
                                 <mat-label>Detection Mechanism</mat-label>
-                                <input type="text" matInput formControlName="severityEvent" placeholder="Detection Mechanism">
+                                <input type="text" matInput formControlName="ff0003" placeholder="Detection Mechanism">
                                 <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
-                                    color="primary" (click)="openSeverityEventLov()">
+                                    color="primary" (click)="openDetectionLov()">
                             </mat-form-field>
                         </div>
                         <div class="row no-gutters ms-1 me-1 dense-4">
                             <mat-form-field appearance="outline" class="col-4 px-1">
                                 <mat-label>Risk Priority Number (RPN)</mat-label>
-                                <input type="text" matInput formControlName="severityEvent" placeholder="Risk Priority Number (RPN)">
+                                <input type="text" matInput formControlName="ff0004" placeholder="Risk Priority Number (RPN)"
+                                    [readonly]="isReadonly"
+                                    [class.isReadonlyFieldForQuotation]="isReadonly"
+                                    [class.isReadonlyFieldForQuotationWithRisk]="isRiskFlag"
+                                    [class.isReadonlyFieldForQuotationMediumRisk]="mediumRisk"
+                                    [class.isReadonlyFieldForQuotationNoRisk]="noRisk">
                             </mat-form-field>
                             <mat-form-field appearance="outline" class="col-4 px-1">
                                 <mat-label>Category Event Classification</mat-label>
-                                <input type="text" matInput formControlName="severityEvent" placeholder="Category Event Classification">
+                                <input type="text" matInput formControlName="ff0005" placeholder="Category Event Classification"
+                                [readonly]="isReadonly"
+                                [class.isReadonlyFieldForQuotationWithRisk]="isRiskFlag"
+                                [class.isReadonlyFieldForQuotationMediumRisk]="mediumRisk"
+                                [class.isReadonlyFieldForQuotationNoRisk]="noRisk"
+                                [class.isReadonlyFieldForQuotation]="isReadonly">
                             </mat-form-field>
                         </div>
                     </form>
@@ -85,35 +95,31 @@
                         </div>
                     </div>
                 </mat-card>                
-            <form [formGroup]="EventForm">
-                <div class="row no-gutters ms-1 me-1 dense-4">
+            
+                <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
                     <mat-form-field appearance="outline" class="col-3 px-1">
                         <mat-label>Item Category</mat-label>
-                        <input type="text" matInput formControlName="severityEvent1" placeholder="Item Category">
+                        <input type="text" [(ngModel)]="item.ff0001" matInput  placeholder="Item Category">
                         <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
-                            color="primary" (click)="openSeverityEventLov()">
+                            color="primary" (click)="openItemCategoryLov(i)">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-3 px-1">
                         <mat-label>Item Subcategory</mat-label>
-                        <input type="text" matInput formControlName="severityEvent2" placeholder="Item Subcategory">
+                        <input type="text" [(ngModel)]="item.ff0002" matInput  placeholder="Item Subcategory">
                         <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
-                            color="primary" (click)="openSeverityEventLov()">
+                            color="primary" (click)="openItemSubCategoryLov(i)">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-3 px-1">
                         <mat-label>Item Name</mat-label>
-                        <input type="text" matInput formControlName="severityEvent3" placeholder="Item Name">
-                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
-                            color="primary" (click)="openSeverityEventLov()">
+                        <input type="text" [(ngModel)]="item.ff0007" matInput  placeholder="Item Name">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="col-3 px-1">
                         <mat-label>Item No</mat-label>
-                        <input type="text" matInput formControlName="severityEvent4" placeholder="Item No">
-                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
-                            color="primary" (click)="openSeverityEventLov()">
+                        <input type="text" [(ngModel)]="item.ff0008" matInput  placeholder="Item No">
                     </mat-form-field>
                 </div>
          
-            </form>
+         
             <!--Table start-->
             <div class="tabOverFlowX" *ngIf="item.lineList.length>0">
                 <button mat-raised-button color="primary"
@@ -130,7 +136,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let element of item.lineList; let idx=index">
-                            <td><img src="/assets/delete.png" (click)="deleteTodo(idx)"></td>
+                            <td><img src="/assets/delete.png" (click)="deleteTodo(i,idx)"></td>
                             <td>
                                 <textarea type="text" class="form-control form-control-sm txt-box"
                                     style="width: 100% !important;"[(ngModel)]="element.itemNo" rows="3">
@@ -156,6 +162,144 @@
                 </div>
                 </div>
                 </div>
+
+ <!---->
+ <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+    <div class="btn-group" class="headers"
+        style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+        <div style="float: left;">
+            <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Action Items Comments</p>
+        </div>
+        <div style="float: right;">
+            <button mat-raised-button color="primary"
+                style="background-color: #099622;font-size: smaller;height: 25px;font-weight: 700;"
+                (click)="addActionItemRow()">Add</button>
+        </div>
+    </div>
+</mat-card>    
+<ng-container *ngFor="let item of actionItem; let i = index">
+    <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+        <div class="btn-group" class="headers" 
+            style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;background: #28694a;">
+            <div style="float: left;">
+                 <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">{{i+1}}</p> 
+            </div>
+            <div style="float: right;">
+                <button mat-raised-button color="primary"
+                    style="background-color: #960917;font-size: smaller;height: 25px;font-weight: 700;"
+                    (click)="addRemoveRow()">Remove</button>
+            </div>
+        </div>
+    </mat-card>  
+    <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+        <!-- <mat-form-field appearance="outline" class="col-3 px-1">
+            <mat-label>Action Item No</mat-label>
+            <input type="text" [(ngModel)]="item.ff0001" matInput  placeholder="Action Item No">
+        </mat-form-field> -->
+        <mat-form-field appearance="outline" class="col-3 px-1">
+            <mat-label>Lifecycle No</mat-label>
+            <input type="text" [(ngModel)]="item.ff0001" matInput  placeholder="Lifecycle No" (change)="onChangeLifeCycle(i)">
+            <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openLifeCycleNoLov(i)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-3 px-1">
+            <mat-label>Department Code</mat-label>
+            <input type="text" [(ngModel)]="item.ff0002" matInput  placeholder="Department Code" (change)="onChangeDepartmentCode(i)">
+            <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openLifeCycleNoLov(i)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-3 px-1">
+            <mat-label>Module Code </mat-label>
+            <input type="text" [(ngModel)]="item.ff0014" matInput  placeholder="Module Code" (change)="onChangeModuleCode(i)">
+            <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openLifeCycleNoLov(i)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-3 px-1">
+            <mat-label>Action Type</mat-label>
+            <input type="text" [(ngModel)]="item.ff0003" matInput  placeholder="Action Type">
+        </mat-form-field>
+        </div>
+        <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+          
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Action Type Name</mat-label>
+                <input type="text" [(ngModel)]="item.ff0013" matInput  placeholder="Action Type Name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Item Category </mat-label>
+                <input type="text" [(ngModel)]="item.ff0004" matInput  placeholder="Item Category">
+                <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openActionItemCategoryLov(i)">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Item Sub Category</mat-label>
+                <input type="text" [(ngModel)]="item.ff0015" matInput  placeholder="Item Sub Category">
+                <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openActionItemSubCategoryLov(i)">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-3 px-1">
+                <mat-label>Item Name No</mat-label>
+                <input type="text" [(ngModel)]="item.ff0006" matInput  placeholder="Item Name No">
+            </mat-form-field>
+            </div>
+            <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+             
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Item Name</mat-label>
+                    <input type="text" [(ngModel)]="item.ff0005" matInput  placeholder="Item Name">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Product Code </mat-label>
+                    <input type="text" [(ngModel)]="item.ff0007" matInput  placeholder="Product Code">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Batch No</mat-label>
+                    <input type="text" [(ngModel)]="item.ff0008" matInput  placeholder="Batch No">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-3 px-1">
+                    <mat-label>Root Cause Type</mat-label>
+                    <input type="text" [(ngModel)]="item.ff0009" matInput  placeholder="Root Cause Type">
+                    <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openActionRootCauseTypeLov(i)">
+                </mat-form-field>
+                </div>
+                <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+                   
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Root Cause</mat-label>
+                        <input type="text" [(ngModel)]="item.ff0010" matInput  placeholder="Root Cause">
+                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+            color="primary" (click)="openActionRootCauseLov(i)">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Action Due date </mat-label>
+                        <!-- <input type="text" [(ngModel)]="item.ff0011" matInput  placeholder="Action Due date">
+                        <mat-label>Date of Birth</mat-label> -->
+                        <input type="text" matInput [(ngModel)]="item.ff0011" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Root Initited Date</mat-label>
+                        <input type="text" matInput [matDatepicker]="picker1">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <!-- <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Root Initited Date</mat-label>
+                        <input type="text" matInput [matDatepicker]="picker2">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field> -->
+                    </div>
+                    <div class="row no-gutters ms-1 me-1 dense-4" style="margin-top: 5px;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Action Description</mat-label>
+                            <textarea type="text" [(ngModel)]="item.ff0012" matInput  placeholder="Action Description"></textarea>
+                        </mat-form-field>
+                        </div>
+    </ng-container>          
 </div>
 </div>
+
 <div style="height: 100px;"></div>

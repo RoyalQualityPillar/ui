@@ -229,7 +229,21 @@ mat-row:nth-child(odd) {
   {
     opacity: 0.8;
   }
-  
+  .isReadonlyFieldForQuotationWithRisk
+  {
+    opacity: 0.8;
+    background-color: #eb4343;
+  }
+  .isReadonlyFieldForQuotationMediumRisk
+  {
+    opacity: 0.8;
+    background-color: yellow;
+  }
+  .isReadonlyFieldForQuotationNoRisk
+  {
+    opacity: 0.8;
+    background-color: green;
+  }
   
   .supplier-content{
     display: flex;

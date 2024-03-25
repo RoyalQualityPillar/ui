@@ -15,4 +15,8 @@ export class QmsService {
     let getHederURL = this.API_URL + 'admin/input/lcinfo';
     return this.http.post(getHederURL, body);
   }
+  onLoadInputAPI(){
+    let URL= this.API_URL + 'qms/input';
+    return this.http.get(URL);
+  }
 }
