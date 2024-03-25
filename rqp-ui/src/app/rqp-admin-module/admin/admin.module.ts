@@ -88,6 +88,14 @@ import { PackMasterCreateUpdateComponent } from '../admin-master-data/pack-maste
 import { PackMasterHomePageComponent } from '../admin-master-data/pack-master/pack-master-home-page/pack-master-home-page.component';
 import { CreateGuidelineComponent } from 'src/app/home-page-menubar/create-guideline/create-guideline.component';
 import { GuidelinesComponent } from 'src/app/home-page-menubar/guidelines/guidelines.component';
+import { ActiveDosageFormAtComponent } from '../admin-master-data/dosage-form/active-dosage-form-at/active-dosage-form-at.component';
+import { AllDosageFormAtComponent } from '../admin-master-data/dosage-form/all-dosage-form-at/all-dosage-form-at.component';
+import { CreateUpdateDosageFormComponent } from '../admin-master-data/dosage-form/create-update-dosage-form/create-update-dosage-form.component';
+import { DosageFormHomePageComponent } from '../admin-master-data/dosage-form/dosage-form-home-page/dosage-form-home-page.component';
+import { ActivePaymentTermATComponent } from '../admin-master-data/payment-term/active-payment-term-at/active-payment-term-at.component';
+import { AllPaymentTermATComponent } from '../admin-master-data/payment-term/all-payment-term-at/all-payment-term-at.component';
+import { CreateUpdatePaymentTermComponent } from '../admin-master-data/payment-term/create-update-payment-term/create-update-payment-term.component';
+import { PaymentTermHomePageComponent } from '../admin-master-data/payment-term/payment-term-home-page/payment-term-home-page.component';
 
 ///************************ Master Data *******************************
 
@@ -174,6 +182,14 @@ import { GuidelinesComponent } from 'src/app/home-page-menubar/guidelines/guidel
     PackMasterHomePageComponent,
       GuidelinesComponent,
       CreateGuidelineComponent,
+      DosageFormHomePageComponent,
+      CreateUpdateDosageFormComponent,
+      AllDosageFormAtComponent,
+      ActiveDosageFormAtComponent,
+      PaymentTermHomePageComponent,
+      CreateUpdatePaymentTermComponent,
+      AllPaymentTermATComponent,
+      ActivePaymentTermATComponent
   ],
   imports: [
     CommonModule,

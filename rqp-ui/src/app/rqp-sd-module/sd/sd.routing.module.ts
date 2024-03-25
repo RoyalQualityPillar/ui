@@ -6,9 +6,7 @@ import { QtUpdateDetailsComponent } from "../qt-update-section/qt-update-details
 import { QtUpdateComponent } from "../qt-update-section/qt-update/qt-update.component";
 import { QtReviewerHomePageComponent } from "../qt-reviewer-home-page/qt-reviewer-home-page.component";
 import { QtReviewComponent } from "../qt-review/qt-review.component";
-import { DosageFormHomePageComponent } from "../sd-master-data/dosage-form/dosage-form-home-page/dosage-form-home-page.component";
 import { NumberingSystemHomePageComponent } from "../sd-master-data/numbering-system/numbering-system-home-page/numbering-system-home-page.component";
-import { PaymentTermHomePageComponent } from "../sd-master-data/payment-term/payment-term-home-page/payment-term-home-page.component";
 import { PriceMasterHomePageComponent } from "../sd-master-data/price-master/price-master-home-page/price-master-home-page.component";
 import { PriceTypeHomePageComponent } from "../sd-master-data/price-type/price-type-home-page/price-type-home-page.component";
 import { QtMasterDataHomePageComponent } from "../sd-master-data/qt-master-data-home-page/qt-master-data-home-page.component";
@@ -41,10 +39,10 @@ const routes: Routes = [
   {path:"sale-product-master-home-page",component:SaleProductMasterHomePageComponent},
   {path:"qt-update-page",component:QtUpdateComponent},
   {path:"qt-update-details",component:QtUpdateDetailsComponent},
-  {path:"payment-term-home-page",component:PaymentTermHomePageComponent},
+
   {path:"price-type-home-page",component:PriceTypeHomePageComponent},
   {path:"price-master-home-page",component:PriceMasterHomePageComponent},
-  {path:"dosage-from-home-page",component:DosageFormHomePageComponent},
+  
   {path:"numbering-system-home-page",component:NumberingSystemHomePageComponent},
   
   {path:"draft-initator-home-page",component:DraftQuotationHomePageComponent},

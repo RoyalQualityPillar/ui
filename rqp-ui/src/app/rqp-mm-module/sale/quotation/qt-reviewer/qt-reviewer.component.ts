@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +18,7 @@ import { ToolbarService } from 'src/app/service/toolbar.service';
   templateUrl: './qt-reviewer.component.html',
   styleUrls: ['./qt-reviewer.component.scss']
 })
-export class QtReviewerComponent {
+export class QtReviewerComponent implements OnInit, AfterViewInit, OnDestroy {
   selection = new SelectionModel<any>(true,[])
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
@@ -169,7 +169,7 @@ onClearFilter(){
 }
 onSubmit(){
   console.log(this.selectedRow)
-   this.router.navigate(['./sd/dq-review-save-submit'],{queryParams:this.selectedRow})
+   this.router.navigate(['./mm/qt-review-save'],{queryParams:this.selectedRow})
 }
 copyData() {
   var dataArray = "";
@@ -244,7 +244,7 @@ copyData() {
 
       }
     });
-    let fileName='pqt';
+    let fileName='qt';
     doc.save(fileName + '.pdf');
   }
   downloadExcel(){
@@ -264,7 +264,7 @@ copyData() {
     "Created Date ":excelData[i].createdon,
   })
 }
-  exportData(arrExcel,'role','pqt','excel')
+  exportData(arrExcel,'role','qt','excel')
   }
   downloadTxt(){
   let excelData:any;
@@ -283,7 +283,7 @@ copyData() {
     "Created Date ":excelData[i].createdon,
   })
 }
-  exportData(arrExcel,'role','pqt','txt')
+  exportData(arrExcel,'role','qt','txt')
   }
 
   downloadCsvFile() {
@@ -303,7 +303,7 @@ copyData() {
       "Created Date ":excelData[i].createdon,
     })
   }
-    exportData(arrExcel,'role','pqt','csv')
+    exportData(arrExcel,'role','qt','csv')
 }
 
 

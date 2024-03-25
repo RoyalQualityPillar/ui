@@ -1,1 +1,161 @@
-<p>nci-initiator works!</p>
+<mat-spinner *ngIf="isLoading" class="global-loading-spinner" color="primary"
+    mode="indeterminate" ></mat-spinner>
+<div class="adjust">
+    <div class="example-table-container">
+        <app-qms-common-header [pageData]="this.pageData" (headerData)="getHeaderData($event)">
+        </app-qms-common-header>
+
+        
+        <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers"
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;">
+                <div style="float: left;">
+                    <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Event Classification</p>
+                </div>
+                <!-- <div style="float: right;">
+                    <button mat-raised-button color="primary"
+                        style="background-color: #099622;font-size: smaller;height: 25px;font-weight: 700;"
+                        (click)="addNewRow()">Add</button>
+                </div> -->
+            </div>
+        </mat-card>
+        <div class="row">
+            <div class="col-12">
+                <div class="p-2">
+                    <form [formGroup]="EventForm">
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+                            <mat-form-field appearance="outline" class="col-4 px-1">
+                                <mat-label>Severity of the Event</mat-label>
+                                <input type="text" matInput formControlName="severityEvent" placeholder="Severity of the Event">
+                                <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                                    color="primary" (click)="openSeverityEventLov()">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-4 px-1">
+                                <mat-label>Probability of Occurrence</mat-label>
+                                <input type="text" matInput formControlName="severityEvent" placeholder="Probability of Occurrence">
+                                <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                                    color="primary" (click)="openSeverityEventLov()">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-4 px-1">
+                                <mat-label>Detection Mechanism</mat-label>
+                                <input type="text" matInput formControlName="severityEvent" placeholder="Detection Mechanism">
+                                <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                                    color="primary" (click)="openSeverityEventLov()">
+                            </mat-form-field>
+                        </div>
+                        <div class="row no-gutters ms-1 me-1 dense-4">
+                            <mat-form-field appearance="outline" class="col-4 px-1">
+                                <mat-label>Risk Priority Number (RPN)</mat-label>
+                                <input type="text" matInput formControlName="severityEvent" placeholder="Risk Priority Number (RPN)">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="col-4 px-1">
+                                <mat-label>Category Event Classification</mat-label>
+                                <input type="text" matInput formControlName="severityEvent" placeholder="Category Event Classification">
+                            </mat-form-field>
+                        </div>
+                    </form>
+
+
+          <!--line item-->  
+          <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <div class="btn-group" class="headers" 
+                style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;background: #81928a;">
+                <div style="float: left;">
+                    <!-- <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">Event Classification</p> -->
+                </div>
+                <div style="float: right;">
+                    <button mat-raised-button color="primary"
+                        style="background-color: #099622;font-size: smaller;height: 25px;font-weight: 700;"
+                        (click)="addNewRow()">Add</button>
+                </div>
+            </div>
+        </mat-card>          
+          <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+            <ng-container *ngFor="let item of eventClassification; let i = index">
+                <mat-card style="margin-top: 2px;background-color:#fdfdfd;">
+                    <div class="btn-group" class="headers" 
+                        style="padding-left: 5px;padding-right: 5px; margin: 4px;height: 33px;background: #28694a;">
+                        <div style="float: left;">
+                             <p style="color: aliceblue;font-size: 12px;margin-top: 2px;">{{i+1}}</p> 
+                        </div>
+                        <div style="float: right;">
+                            <button mat-raised-button color="primary"
+                                style="background-color: #960917;font-size: smaller;height: 25px;font-weight: 700;"
+                                (click)="addRemoveRow()">Remove</button>
+                        </div>
+                    </div>
+                </mat-card>                
+            <form [formGroup]="EventForm">
+                <div class="row no-gutters ms-1 me-1 dense-4">
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Item Category</mat-label>
+                        <input type="text" matInput formControlName="severityEvent1" placeholder="Item Category">
+                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                            color="primary" (click)="openSeverityEventLov()">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Item Subcategory</mat-label>
+                        <input type="text" matInput formControlName="severityEvent2" placeholder="Item Subcategory">
+                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                            color="primary" (click)="openSeverityEventLov()">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Item Name</mat-label>
+                        <input type="text" matInput formControlName="severityEvent3" placeholder="Item Name">
+                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                            color="primary" (click)="openSeverityEventLov()">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="col-3 px-1">
+                        <mat-label>Item No</mat-label>
+                        <input type="text" matInput formControlName="severityEvent4" placeholder="Item No">
+                        <img alt="lov img" src="../../../../../../assets/searchfind.svg" class="icon-size lovSearchButton"
+                            color="primary" (click)="openSeverityEventLov()">
+                    </mat-form-field>
+                </div>
+         
+            </form>
+            <!--Table start-->
+            <div class="tabOverFlowX" *ngIf="item.lineList.length>0">
+                <button mat-raised-button color="primary"
+                        style="background-color: #099622;font-size: smaller;height: 25px;font-weight: 700;"
+                        (click)="addLineItem(item)">Add Line Item</button>
+                <table class="display-table" id="dataTable"style="width:100%">
+                    <thead style="background:#369 !important;">
+                        <tr>
+                            <th></th>
+                            <th style="color: white;">What happened? (Actual Observation)</th>
+                            <th style="color: white;">Requirement</th>
+                            <th style="color: white;">How Observed?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let element of item.lineList; let idx=index">
+                            <td><img src="/assets/delete.png" (click)="deleteTodo(idx)"></td>
+                            <td>
+                                <textarea type="text" class="form-control form-control-sm txt-box"
+                                    style="width: 100% !important;"[(ngModel)]="element.itemNo" rows="3">
+                                    </textarea>
+                            </td>
+                            <td>
+                                <textarea type="text" class="form-control form-control-sm txt-box"
+                                    style="width: 100% !important" [(ngModel)]="element.itemNo1" rows="3">
+                                    </textarea>
+                            </td>
+                            <td>
+                                <textarea type="text" class="form-control form-control-sm txt-box"
+                                    style="width: 100% !important" [(ngModel)]="element.itemNo2" rows="3">
+                                    </textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+            <!--Table end-->
+        </mat-card>       
+                </div>
+                </div>
+                </div>
+</div>
+</div>
+<div style="height: 100px;"></div>

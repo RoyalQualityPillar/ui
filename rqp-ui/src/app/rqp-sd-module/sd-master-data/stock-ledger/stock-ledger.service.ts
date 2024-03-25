@@ -26,16 +26,20 @@ export class StockLedgerService {
   }
   onLoadUpdatePage(UC0001:any){
     let queryParams=`?UC0001=${UC0001}`;
-    let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"sd/sp-master/get-by-max-code"+queryParams;
+    let fetchAllBusinessUnitInfoApiUrl=this.API_URL+"sd/sl-master/get-by-max-code"+queryParams;
      return this.http.post(fetchAllBusinessUnitInfoApiUrl,'')
   }
   onCreate(body:any){
-    let createUserURL=this.API_URL+"sd/sp-master/save-update";
+    let createUserURL=this.API_URL+"sd/sl-master/save-update";
     return this.http.post(createUserURL,body)
 }
 onAllRoleAuditTrail(uc0001:any){
   let queryParams=`?UC0001=${uc0001}`
     const ALLSALEPRODUCTURL=this.API_URL+"sd/sp-master/get-by-code-all"+queryParams
    return this.http.get(ALLSALEPRODUCTURL)
+  }
+  getDropDownList(){
+    const ALLSALEPRODUCTURL=this.API_URL+"sd/input"
+   return this.http.get(ALLSALEPRODUCTURL) 
   }
 }

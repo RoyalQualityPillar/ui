@@ -27,90 +27,125 @@
                                 <span style="padding-left: 4px;color: mediumblue;font-size: 12px;">Required Fields are
                                     denoted by an asterisk(<span style="color: red">*</span>).</span>
                             </div>
+                            <div class="row no-gutters ms-1 me-1 dense-4" *ngIf="isUpdate">
+                                <mat-form-field appearance="outline" class="col-3 px-1">
+                                    <mat-label>Stock item No</mat-label>
+                                    <input type="text" matInput formControlName="uc0001"
+                                        placeholder="Stock item No" [readonly]="isUpdate" [class.isReadonlyField]="isUpdate">
+                                </mat-form-field>  
+                            </div>
                             <div class="row no-gutters ms-1 me-1 dense-4" >
                                 <mat-form-field appearance="outline" class="col-3 px-1">
-                                    <mat-label>Stock Item No</mat-label>
-                                    <input type="text" matInput formControlName="uc0001"[readonly]="isUpdate" [class.isReadonlyField]="isUpdate"
-                                        placeholder="Stock Item No" >
-                                </mat-form-field>
+                                    <mat-label>Product Number</mat-label>
+                                    <input type="text" matInput formControlName="ff0015"
+                                        placeholder="Product Number" (change)="onChangeProductCode()" >
+                                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openSaleProductListLOV()"> 
+                                    </mat-form-field>
                                 <mat-form-field appearance="outline" class="col-3 px-1">
-                                    <mat-label>Product Code</mat-label>
-                                    <input type="text" matInput formControlName="ff0001"
-                                        placeholder="Product Code" >
-                                </mat-form-field>
+                                    <mat-label>Product Name</mat-label>
+                                    <input type="text" matInput formControlName="ff0016"(change)="onChangeProductName()"
+                                        placeholder="Product Name" >
+                                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                        class="icon-size lovSearchButton" color="primary"(click)="openSaleProductListLOV()"> 
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Product Code</mat-label>
+                                        <input type="text" matInput formControlName="ff0001"(change)="onChangeByProductCode()"
+                                            placeholder="Product Code" >
+                                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                            class="icon-size lovSearchButton" color="primary"(click)="openSaleProductListLOV()"> 
+                                        </mat-form-field>
+                                   
                                 <mat-form-field appearance="outline" class="col-3 px-1">
                                     <mat-label>Sale Order No</mat-label>
                                     <input type="text" matInput formControlName="ff0002"
                                         placeholder="Sale Order No" >
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" class="col-3 px-1">
-                                    <mat-label>Purches Order No</mat-label>
-                                    <input type="text" matInput formControlName="ff0003"
-                                        placeholder="Purches Order No" >
-                                </mat-form-field>
+                              
                                 </div>
                                 <div class="row no-gutters ms-1 me-1 dense-4">
-                                     
                                     <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Order Date </mat-label>
-                                        <input type="text" matInput formControlName="ff0004"placeholder="Order Date"
-                                         >
+                                        <mat-label>Purches Order No</mat-label>
+                                        <input type="text" matInput formControlName="ff0003"
+                                            placeholder="Purches Order No" >
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Oarganization Unit Code</mat-label>
-                                        <input type="text" matInput formControlName="ff0005"placeholder="Organization Unit Code"
+                                        <mat-label>Order Date </mat-label>
+                                        <input type="text" matInput formControlName="ff0004"placeholder="Order Date"[matDatepicker]="picker3"
                                          >
+                                         <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                                         <mat-datepicker #picker3></mat-datepicker>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Organization Unit Code</mat-label>
+                                        <input type="text" matInput formControlName="ff0005"placeholder="Organization Unit Code"
+                                         (change)="onChageOrgUnitCode()">
+                                         <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                         class="icon-size lovSearchButton" color="primary"(click)="openOrgUnitCodeListLOV()"> 
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Sell Unit Code</mat-label>
-                                        <input type="text" matInput formControlName="ff0006"placeholder="Sell Unit Code">
+                                        <input type="text" matInput formControlName="ff0006"placeholder="Sell Unit Code"
+                                        (change)="onChangeSellUnitCode()">
+                                        <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                         class="icon-size lovSearchButton" color="primary"(click)="openSalesUnitCodeListLOV()"> 
                                     </mat-form-field>
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Purches Unit Code</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Purches Unit Code" >
-                                    </mat-form-field>
+                                    
                                     </div>
+
                                     <div class="row no-gutters ms-1 me-1 dense-4" >
+                                        <mat-form-field appearance="outline" class="col-3 px-1">
+                                            <mat-label>Purches Unit Code</mat-label>
+                                            <input type="text" matInput formControlName="ff0007"placeholder="Purches Unit Code"
+                                            (change)="onChangePurchaseUnitCode()" >
+                                            <img  alt="lov img"  src="../../../../../../assets/searchfind.svg"
+                                            class="icon-size lovSearchButton" color="primary"(click)="openPurchaseUnitCodeLOV()"> 
+                                        </mat-form-field>
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Quantity Recived</mat-label>
-                                        <input type="text" matInput formControlName="status"  placeholder="Quantity Recived" >
+                                        <input type="text" matInput formControlName="ff0008"  placeholder="Quantity Recived" >
                                     </mat-form-field> 
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Quantity Consumed</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Quantity Consumed" >
+                                        <input type="text" matInput formControlName="ff0009"placeholder="Quantity Consumed" >
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Avialble Quantity</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Avialble Quantity" >
+                                        <input type="text" matInput formControlName="ff0010"placeholder="Avialble Quantity" >
                                     </mat-form-field>
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Lot No/ Batch No</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Lot No/ Batch No" >
-                                    </mat-form-field>
+                                  
+                                  
                                 </div>
                                 <div class="row no-gutters ms-1 me-1 dense-4">
                                     <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Lot No/ Batch No</mat-label>
+                                        <input type="text" matInput formControlName="ff0011"placeholder="Lot No/ Batch No" >
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Mfg Date</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Mfg Date" >
+                                        <input type="text" matInput formControlName="ff0012"placeholder="Mfg Date" [matDatepicker]="picker1">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Exp Date</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Exp Date" >
+                                        <input type="text" matInput formControlName="ff0013"placeholder="Exp Date"[matDatepicker]="picker2" >
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
                                     </mat-form-field>
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Stage</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Stage" >
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                   
+                                    <!-- <mat-form-field appearance="outline" class="col-3 px-1">
                                         <mat-label>Lot No/ Batch No</mat-label>
                                         <input type="text" matInput formControlName="ff0007"placeholder="Lot No/ Batch No" >
+                                    </mat-form-field> -->
+                                    <mat-form-field appearance="outline" class="col-3 px-1">
+                                        <mat-label>Product No</mat-label>
+                                        <input type="text" matInput formControlName="ff0014"placeholder="Product No" >
                                     </mat-form-field>
                                     </div>
                                     <div class="row no-gutters ms-1 me-1 dense-4">
-                                    <mat-form-field appearance="outline" class="col-3 px-1">
-                                        <mat-label>Product No</mat-label>
-                                        <input type="text" matInput formControlName="ff0007"placeholder="Product No" >
-                                    </mat-form-field>
+                                   
                                 </div>
                         </div>
                     </div>

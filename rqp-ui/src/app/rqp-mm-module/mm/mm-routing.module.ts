@@ -18,6 +18,18 @@ import { DoHomeComponent } from '../sale/delivery-order/do-home/do-home.componen
 import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-initiator.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
+import { QtUpdateSaveSubmitComponent } from '../sale/quotation/qt-update-save-submit/qt-update-save-submit.component';
+import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
+import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.component';
+import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
+import { DoReviewerComponent } from '../sale/delivery-order/do-reviewer/do-reviewer.component';
+import { DoUpdateComponent } from '../sale/delivery-order/do-update/do-update.component';
+import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-save-submit/do-review-save-submit.component';
+import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
+import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
+import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
+import { QtReviewerSaveComponent } from '../sale/quotation/qt-reviewer-save/qt-reviewer-save.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -30,14 +42,26 @@ const routes: Routes = [
   { path: "qt-home", component: QtHomeComponent },
   { path: "qt-initiator", component: QtInitiatorComponent },
   { path: "qt-reviewer", component: QtReviewerComponent },
+  { path: "qt-review-save", component: QtReviewerSaveComponent },
   { path: "qt-update", component: QtUpdateComponent },
+  { path: "qt-update-save", component: QtUpdateSaveSubmitComponent },
   { path: "si-home", component: SiHomeComponent },
   { path: "si-initiator", component: SiInitiatorComponent },
+  { path: "si-reviewer", component: SiReviewerComponent },
+  { path: 'si-update', component: SiUpdateComponent },
+  { path: 'si-review-save', component: SiReviewSaveSubmitComponent },
   { path: "so-home", component: SoHomeComponent },
   { path: "so-initiator", component: SoInitiatorComponent },
+  { path: "so-reviewer", component: SoReviewerComponent },
+  { path: 'so-review-save', component: SoReviewSaveSubmitComponent },
+  { path: "so-update", component: SoUpdateComponent },
   { path: "do-home", component: DoHomeComponent },
   { path: "do-initiator", component: DoInitiatorComponent },
-  { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent }
+  { path: 'do-reviewer', component: DoReviewerComponent },
+  { path: 'do-update', component: DoUpdateComponent },
+  { path: 'do-review-save', component: DoReviewSaveSubmitComponent },
+  { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent },
+  { path: 'material-master-home-page', component: MaterialMasterHomePageComponent }
 ];
 
 @NgModule({

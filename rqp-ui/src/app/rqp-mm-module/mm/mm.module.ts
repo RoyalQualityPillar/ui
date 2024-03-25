@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { MmRoutingModule } from './mm-routing.module';
 import { AngularMaterialModule } from 'src/app/angular-material/angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +22,23 @@ import { DoInitiatorComponent } from '../sale/delivery-order/do-initiator/do-ini
 import { MmCommonHeaderComponent } from '../mm-common/mm-common-header/mm-common-header.component';
 import { QtUpdateComponent } from '../sale/quotation/qt-update/qt-update.component';
 import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.component';
+import { QtUpdateSaveSubmitComponent } from '../sale/quotation/qt-update-save-submit/qt-update-save-submit.component';
+import { AsCommonFooterComponent } from '../mm-common/as-common-footer/as-common-footer.component';
+import { SoReviewerComponent } from '../sale/sale-order/so-reviewer/so-reviewer.component';
+import { SoReviewSaveSubmitComponent } from '../sale/sale-order/so-review-save-submit/so-review-save-submit.component';
+import { SoUpdateComponent } from '../sale/sale-order/so-update/so-update.component';
+import { DoReviewerComponent } from '../sale/delivery-order/do-reviewer/do-reviewer.component';
+import { DoUpdateComponent } from '../sale/delivery-order/do-update/do-update.component';
+import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-save-submit/do-review-save-submit.component';
+import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
+import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
+import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
+import { AllMaterialMasterAtComponent } from '../material-master/all-material-master-at/all-material-master-at.component';
+import { CreateUpdateMaterialMasterComponent } from '../material-master/create-update-material-master/create-update-material-master.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
+import { ActiveMaterialMasterAtComponent } from '../material-master/active-material-master-at/active-material-master-at.component';
+import { QtReviewerSaveComponent } from '../sale/quotation/qt-reviewer-save/qt-reviewer-save.component';
+import { RqpHeaderComponent } from '../mm-common/rqp-header/rqp-header.component';
 
 
 @NgModule({
@@ -40,12 +56,29 @@ import { QtReviewerComponent } from '../sale/quotation/qt-reviewer/qt-reviewer.c
     QtInitiatorComponent,
     QtReviewerComponent,
     QtUpdateComponent,
+    QtUpdateSaveSubmitComponent,
     SiHomeComponent,
     SiInitiatorComponent,
+    SiUpdateComponent,
+    SiReviewerComponent,
+    SiReviewSaveSubmitComponent,
     SoHomeComponent,
     SoInitiatorComponent,
+    SoReviewerComponent,
+    SoReviewSaveSubmitComponent,
+    SoUpdateComponent,
     DoHomeComponent,
     DoInitiatorComponent,
+    DoReviewerComponent,
+    DoUpdateComponent,
+    DoReviewSaveSubmitComponent,
+    AsCommonFooterComponent,
+    AllMaterialMasterAtComponent,
+    CreateUpdateMaterialMasterComponent,
+    MaterialMasterHomePageComponent,
+    ActiveMaterialMasterAtComponent,
+    QtReviewerSaveComponent,
+    RqpHeaderComponent
   ],
   imports: [
     CommonModule,
