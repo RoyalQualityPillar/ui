@@ -120,7 +120,7 @@ export class HeaderComponent implements OnInit {
       this.route.navigate(['./lms/lms-master-data-home-page'])
     }
     else if (subMenu == 'QMS-Master Data') {
-      this.route.navigate(['./qms/qms-master-data-home-page'])
+      this.route.navigate(['./qms/qms-master-home-page'])
     }
     else if (subMenu == 'CAPA-Initiator') {
       this.route.navigate(['./qms/capa-initiator'])
