@@ -33,12 +33,17 @@ import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-sa
 import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
 import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
 import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
-import { AllMaterialMasterAtComponent } from '../material-master/all-material-master-at/all-material-master-at.component';
-import { CreateUpdateMaterialMasterComponent } from '../material-master/create-update-material-master/create-update-material-master.component';
-import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
-import { ActiveMaterialMasterAtComponent } from '../material-master/active-material-master-at/active-material-master-at.component';
+import { AllMaterialMasterAtComponent } from '../material-master/material-master-product/all-material-master-at/all-material-master-at.component';
+import { CreateUpdateMaterialMasterComponent } from '../material-master/material-master-product/create-update-material-master/create-update-material-master.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-product/material-master-home-page/material-master-home-page.component';
+import { ActiveMaterialMasterAtComponent } from '../material-master/material-master-product/active-material-master-at/active-material-master-at.component';
 import { QtReviewerSaveComponent } from '../sale/quotation/qt-reviewer-save/qt-reviewer-save.component';
 import { RqpHeaderComponent } from '../mm-common/rqp-header/rqp-header.component';
+import { ActiveStockLedgerAuditTrailComponent } from './../material-master/stock-ledger/active-stock-ledger-audit-trail/active-stock-ledger-audit-trail.component';
+import { AllStockLedgerAuditTrailComponent } from './../material-master/stock-ledger/all-stock-ledger-audit-trail/all-stock-ledger-audit-trail.component';
+import { CreateUpdateStockLedgerComponent } from './../material-master/stock-ledger/create-update-stock-ledger/create-update-stock-ledger.component';
+import { StockLedgerHomePageComponent } from './../material-master/stock-ledger/stock-ledger-home-page/stock-ledger-home-page.component';
+
 
 
 @NgModule({
@@ -78,7 +83,11 @@ import { RqpHeaderComponent } from '../mm-common/rqp-header/rqp-header.component
     MaterialMasterHomePageComponent,
     ActiveMaterialMasterAtComponent,
     QtReviewerSaveComponent,
-    RqpHeaderComponent
+    RqpHeaderComponent,
+    ActiveStockLedgerAuditTrailComponent,
+    AllStockLedgerAuditTrailComponent,
+    CreateUpdateStockLedgerComponent,
+    StockLedgerHomePageComponent
   ],
   imports: [
     CommonModule,

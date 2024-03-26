@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { downloadCanvasArea } from 'bk-export';
 import { changeStatusByCode } from 'src/app/common/removeEmptyStrings';
 import { AdminService } from 'src/app/rqp-admin-module/admin-data/admin.service';
-import { MaterialMasterService } from '../material-master.service';
+import { MaterialMasterService } from '../../material-master.service';
 import { AllMaterialMasterAtComponent } from '../all-material-master-at/all-material-master-at.component';
 
 export interface userData {
