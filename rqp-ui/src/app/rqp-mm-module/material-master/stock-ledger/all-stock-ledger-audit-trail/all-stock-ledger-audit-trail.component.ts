@@ -1,11 +1,11 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { downloadCanvasArea } from 'bk-export';
-import { openPDFByFive, openPDFByFour, openPDFByThree, openPDFByTwo } from 'rqp-audit-trail';
-import { changeStatusByCode } from 'src/app/common/removeEmptyStrings';
 import { AdminService } from 'src/app/rqp-admin-module/admin-data/admin.service';
+import { StockLedgerService } from '../stock-ledger.service';
 import { MessageService } from 'src/app/service/message.service';
-import { MaterialMasterService } from '../material-master.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { openPDFByFive, openPDFByFour, openPDFByThree, openPDFByTwo } from 'rqp-audit-trail';
+import { downloadCanvasArea } from 'bk-export';
+import { changeStatusByCode } from 'src/app/common/removeEmptyStrings';
 
 export interface userData {
   userData: any;
@@ -14,38 +14,37 @@ export interface userData {
 }
 
 @Component({
-  selector: 'app-all-material-master-at',
-  templateUrl: './all-material-master-at.component.html',
-  styleUrls: ['./all-material-master-at.component.scss']
+  selector: 'app-all-stock-ledger-audit-trail',
+  templateUrl: './all-stock-ledger-audit-trail.component.html',
+  styleUrls: ['./all-stock-ledger-audit-trail.component.scss']
 })
-export class AllMaterialMasterAtComponent implements OnInit {
+export class AllStockLedgerAuditTrailComponent implements OnInit {
   @ViewChild('htmlData') htmlData!: ElementRef;
 
   constructor(public adminService: AdminService,
-    private materialMasterService: MaterialMasterService,
+    private saleProductMasterService: StockLedgerService,
     public messageService: MessageService,
-    public dialogRef: MatDialogRef<AllMaterialMasterAtComponent>,
+    public dialogRef: MatDialogRef<AllStockLedgerAuditTrailComponent>,
     @Inject(MAT_DIALOG_DATA) public userData: userData
   ) { }
 
   data: any;
   isLoading = false;
   ngOnInit() {
-    //this.data=this.userData.userData
-    console.log(this.userData.tableData.uc0001)
-    console.log(this.userData.type)
-    //this.setFormValue();
     this.onSearch()
   }
   dataLength: any
   onSearch() {
     this.isLoading = true;
-    this.materialMasterService.onAllRoleAuditTrail(this.userData.tableData.uc0001).subscribe((data: any) => {
-      console.log(data);
+    this.saleProductMasterService.onAllRoleAuditTrail(this.userData.tableData.uc0001).subscribe((data: any) => {
       this.data = data.data;
-      this.dataLength = data.data.length;
+      if (this.data) {
+        this.dataLength = data.data.length;
+      } else {
+        this.data = [];
+        this.dataLength = 0;
+      }
       this.isLoading = false;
-      //this.setFormValue();
     })
   }
 
@@ -107,5 +106,4 @@ export class AllMaterialMasterAtComponent implements OnInit {
   onChangeStatus(data: any) {
     return changeStatusByCode(data);
   }
-
 }

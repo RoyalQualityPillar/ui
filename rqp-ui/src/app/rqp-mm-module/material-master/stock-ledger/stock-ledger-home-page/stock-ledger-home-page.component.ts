@@ -1,31 +1,33 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+import { CreateUpdateStockLedgerComponent } from '../create-update-stock-ledger/create-update-stock-ledger.component';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
+import { AllStockLedgerAuditTrailComponent } from '../all-stock-ledger-audit-trail/all-stock-ledger-audit-trail.component';
+import * as moment from 'moment';
+import { ActiveStockLedgerAuditTrailComponent } from '../active-stock-ledger-audit-trail/active-stock-ledger-audit-trail.component';
+import { exportData } from 'bk-export';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { MaterialMasterService } from '../material-master.service';
-import { exportData } from 'bk-export';
-import { CreateUpdateMaterialMasterComponent } from '../create-update-material-master/create-update-material-master.component';
-import { AllMaterialMasterAtComponent } from '../all-material-master-at/all-material-master-at.component';
+import { StockLedgerService } from '../stock-ledger.service';
 
 @Component({
-  selector: 'app-material-master-home-page',
-  templateUrl: './material-master-home-page.component.html',
-  styleUrls: ['./material-master-home-page.component.scss']
+  selector: 'app-stock-ledger-home-page',
+  templateUrl: './stock-ledger-home-page.component.html',
+  styleUrls: ['./stock-ledger-home-page.component.scss']
 })
-export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
+export class StockLedgerHomePageComponent implements OnInit {
+
   @ViewChild("tableWrapper", { static: true }) tableWrapper: ElementRef;
   @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
-  alldisplayedColumns: string[] = ['action', 'uc0001', 'ff0001', 'ff0002', 'ff0003', 'ff0004', 'ff0005', 'ff0006'];
-  activedisplayedColumns: string[] = ['action', 'uc0001', 'ff0001', 'ff0002', 'ff0003', 'ff0004', 'ff0005', 'ff0006'];
+  alldisplayedColumns: string[] = ['action', 'uc0001', 'ff0001', 'ff0002', 'ff0003', 'ff0004', 'ff0005', 'ff0006', 'ff0007', 'ff0008', 'ff0009', 'ff0010'];
+  activedisplayedColumns: string[] = ['action', 'uc0001', 'ff0001', 'ff0002', 'ff0003', 'ff0004', 'ff0005', 'ff0006', 'ff0007', 'ff0008', 'ff0009', 'ff0010'];
   isLoading = false;
   pageIndex: number;
   size: number;
@@ -34,7 +36,8 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
   activeUserFilterFieldError = false;
   activeUserFilterValueError = false;
   tableData: MatTableDataSource<any>;
-  constructor(private router: Router, private materialService: MaterialMasterService,
+  constructor(private router: Router,
+    private stockLedgerService: StockLedgerService,
     public dialog: MatDialog,
   ) { }
   filterObject: any;
@@ -76,7 +79,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
   }
   selectedRow = [];
   onOpenRolePOPUP() {
-    const dialogRef = this.dialog.open(CreateUpdateMaterialMasterComponent, {
+    const dialogRef = this.dialog.open(CreateUpdateStockLedgerComponent, {
       minWidth: "80%",
       data: { tableData: this.selectedRow, type: 'Create' }
     })
@@ -104,7 +107,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
         data: { 'message': 'Please select any row', 'heading': "Error Information" }
       })
     } else {
-      const dialogRef = this.dialog.open(AllMaterialMasterAtComponent, {
+      const dialogRef = this.dialog.open(AllStockLedgerAuditTrailComponent, {
         minWidth: "80%",
         data: { tableData: this.selectedAllRow, type: 'Update' }
       })
@@ -119,7 +122,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
     //todo
     this.pageIndex = 0;
     this.size = GlobalConstants.size;
-    this.materialService.getAllMaterial(this.size, this.pageIndex).subscribe((data: any) => {
+    this.stockLedgerService.getAllSaleProduct(this.size, this.pageIndex).subscribe((data: any) => {
       if (data.errorInfo != null) {
         this.dialog.open(MessageDialogComponent, {
           data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
@@ -144,7 +147,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
     this.size = GlobalConstants.size;
     this.dataSource = null;
     this.pageIndex = 0;
-    this.materialService.getActiveMaterial(this.size, this.pageIndex).subscribe((data: any) => {
+    this.stockLedgerService.getActiveSaleProduct(this.size, this.pageIndex).subscribe((data: any) => {
       if (data.errorInfo != null) {
         this.dialog.open(MessageDialogComponent, {
           data: { 'message': data.errorInfo.message, 'heading': "Error Information" }
@@ -211,7 +214,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
       filetrDataBody.condition = 'between';
     }
     this.isLoading = true;
-    this.materialService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
+    this.stockLedgerService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
       console.log(data)
       if (data.data) {
         this.dataSource = data.data;
@@ -291,7 +294,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
         data: { 'message': 'Please select any row', 'heading': "Error Information" }
       })
     } else {
-      const dialogRef = this.dialog.open(CreateUpdateMaterialMasterComponent, {
+      const dialogRef = this.dialog.open(CreateUpdateStockLedgerComponent, {
         minWidth: "80%",
         data: { tableData: this.selectedRow, type: 'Update' }
       })
@@ -307,7 +310,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
         data: { 'message': 'Please select any row', 'heading': "Error Information" }
       })
     } else {
-      const dialogRef = this.dialog.open(AllMaterialMasterAtComponent, {
+      const dialogRef = this.dialog.open(ActiveStockLedgerAuditTrailComponent, {
         minWidth: "80%",
         data: { tableData: this.selectedRow, type: 'Update' }
       })
@@ -379,7 +382,7 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
       filetrDataBody.condition = 'between';
     }
     this.isLoading = true;
-    this.materialService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
+    this.stockLedgerService.getUserProfileFilterData(filetrDataBody).subscribe((data: any) => {
       console.log(data)
       if (data.data) {
         this.activeUserDataSource = data.data;
@@ -594,8 +597,6 @@ export class MaterialMasterHomePageComponent implements OnInit, AfterViewInit {
       'ff0004': any;
       'ff0005': any;
       'ff0006': any;
-
-
     }) => {
       var temp = [
         element['uc0001'],
