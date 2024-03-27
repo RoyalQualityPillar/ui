@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AdminService } from 'src/app/rqp-admin-module/admin-data/admin.service';
 import { StockLedgerService } from 'src/app/rqp-sd-module/sd-master-data/stock-ledger/stock-ledger.service';
 import { MessageService } from 'src/app/service/message.service';
-import { MaterialMasterService } from '../material-master.service';
+import { MaterialMasterService } from '../../material-master.service';
 import { MessageDialogComponent } from 'src/app/common/message-dialog/message-dialog.component';
 import { changeStatusByCode, changeStatusByDescription } from 'src/app/common/removeEmptyStrings';
 import { LovDialogComponent } from 'src/app/common/lov-dialog/lov-dialog.component';

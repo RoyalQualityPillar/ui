@@ -28,8 +28,9 @@ import { DoReviewSaveSubmitComponent } from '../sale/delivery-order/do-review-sa
 import { SiReviewerComponent } from '../sale/sale-invoice/si-reviewer/si-reviewer.component';
 import { SiUpdateComponent } from '../sale/sale-invoice/si-update/si-update.component';
 import { SiReviewSaveSubmitComponent } from '../sale/sale-invoice/si-review-save-submit/si-review-save-submit.component';
-import { MaterialMasterHomePageComponent } from '../material-master/material-master-home-page/material-master-home-page.component';
+import { MaterialMasterHomePageComponent } from '../material-master/material-master-product/material-master-home-page/material-master-home-page.component';
 import { QtReviewerSaveComponent } from '../sale/quotation/qt-reviewer-save/qt-reviewer-save.component';
+import { StockLedgerHomePageComponent } from '../material-master/stock-ledger/stock-ledger-home-page/stock-ledger-home-page.component';
 
 const routes: Routes = [
   { path: "mm-module-home-page", component: MmModuleHomePageComponent },
@@ -61,7 +62,8 @@ const routes: Routes = [
   { path: 'do-update', component: DoUpdateComponent },
   { path: 'do-review-save', component: DoReviewSaveSubmitComponent },
   { path: "mm-master-data-home-page", component: MmMasterDataHomePageComponent },
-  { path: 'material-master-home-page', component: MaterialMasterHomePageComponent }
+  { path: 'material-master-home-page', component: MaterialMasterHomePageComponent },
+  { path: 'stock-ledger-home-page', component: StockLedgerHomePageComponent }
 ];
 
 @NgModule({

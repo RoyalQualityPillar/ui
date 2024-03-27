@@ -42,7 +42,6 @@ export class MaterialMasterService {
   }
   getDropDownList() {
     let fetchAllBusinessUnitInfoApiUrl = this.API_URL + "pmm/input";
-
     return this.http.get(fetchAllBusinessUnitInfoApiUrl)
   }
 }

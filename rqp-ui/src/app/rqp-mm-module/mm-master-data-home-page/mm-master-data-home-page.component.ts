@@ -10,7 +10,7 @@ export class MmMasterDataHomePageComponent {
   constructor(private router: Router) { }
 
   onStockLedger() {
-    this.router.navigate(['/sd/stock-ledger-home-page'])
+    this.router.navigate(['/mm/stock-ledger-home-page'])
   }
   onMaterialMaster() {
     this.router.navigate(['/mm/material-master-home-page'])
