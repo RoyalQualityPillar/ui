@@ -10,6 +10,8 @@ import { NciHomeComponent } from '../nci/nci-home/nci-home.component';
 import { NciInitiatorComponent } from '../nci/nci-initiator/nci-initiator.component';
 import { CcHomeComponent } from '../cc/cc-home/cc-home.component';
 import { CcInitiatorComponent } from '../cc/cc-initiator/cc-initiator.component';
+import { RctHomePageComponent } from '../rqp-qms-master/rct-master/rct-home-page/rct-home-page.component';
+import { QmsMasterHomePageComponent } from '../rqp-qms-master/rct-master/qms-master-home-page/qms-master-home-page.component';
 
 const routes: Routes = [
   {    path:"qms-module-home-page",    component:QmsModuleHomePageComponent },
@@ -22,6 +24,8 @@ const routes: Routes = [
  {  path:"nci-initiator", component:NciInitiatorComponent},
  {  path:"cc-home", component:CcHomeComponent},
  {  path:"cc-initiator", component:CcInitiatorComponent},
+ { path:"qms-rct-home-page", component:RctHomePageComponent},
+ {path:"qms-master-home-page", component:QmsMasterHomePageComponent},
  
 ];
 

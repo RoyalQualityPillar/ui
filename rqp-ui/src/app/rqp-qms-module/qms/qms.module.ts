@@ -15,6 +15,11 @@ import { CcHomeComponent } from '../cc/cc-home/cc-home.component';
 import { CcInitiatorComponent } from '../cc/cc-initiator/cc-initiator.component';
 import { QMSESignatureComponent } from '../qms-common/e-signature/qms-e-signature.component';
 import { QmsCommonHeaderComponent } from '../qms-common/qms-common-header/qms-common-header.component';
+import { RctHomePageComponent } from '../rqp-qms-master/rct-master/rct-home-page/rct-home-page.component';
+import { CreateUpdateRctComponent } from '../rqp-qms-master/rct-master/create-update-rct/create-update-rct.component';
+import { ActiveRctAtComponent } from '../rqp-qms-master/rct-master/active-rct-at/active-rct-at.component';
+import { AllRctAtComponent } from '../rqp-qms-master/rct-master/all-rct-at/all-rct-at.component';
+import { QmsMasterHomePageComponent } from '../rqp-qms-master/rct-master/qms-master-home-page/qms-master-home-page.component';
 
 
 
@@ -31,7 +36,12 @@ import { QmsCommonHeaderComponent } from '../qms-common/qms-common-header/qms-co
     CcHomeComponent,
     CcInitiatorComponent,
     QMSESignatureComponent,
-    QmsCommonHeaderComponent
+    QmsCommonHeaderComponent,
+    RctHomePageComponent,
+    CreateUpdateRctComponent,
+    ActiveRctAtComponent,
+    AllRctAtComponent,
+    QmsMasterHomePageComponent,
   ],
   imports: [
     CommonModule,

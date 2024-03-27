@@ -431,9 +431,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     console.log(data)
     this.lifeCycleDataService.subMenuList = data
     // Module Value
-    if (data[0].lcnum == 'AD') {
+    if (data[0].uc0001 == 'AD') {
       this.route.navigate(['./admin/master-data-management']);
-    } else if (data[0].lcnum == 'AD') {
+    } else if (data[0].uc0001 == 'AD') {
       this.route.navigate(['./admin/master-data-management']);
       //}else if (data[0].ff0001 == 'Quatetion') {
     } else if (data[0].uc0001 == 'SQT') {
